@@ -198,7 +198,13 @@ input{ font:inherit; color:inherit; }
   display:flex; flex-direction:column; gap:10px;
 }
 .crop{
-  position:relative; width:100%; height:164px;
+  position:relative; width:100%;
+  /* 164px is the design's height and what a 390x844 phone gets. On a short
+     screen the strip is flex:none and the completion bar can be tall, so a
+     fixed crop would squeeze the field column to nothing and push rows under
+     the bar. Tying the crop to the viewport keeps the strip a bounded share
+     of the screen; the tablet rule below overrides it to fill the pane. */
+  height:clamp(110px, 20vh, 164px);
   overflow:hidden;
   background:var(--photo-ground);
   border:2px solid var(--line);
