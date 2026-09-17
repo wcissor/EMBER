@@ -586,6 +586,11 @@ input{ font:inherit; color:inherit; }
   .verify-body{
     flex:1; min-height:0;
     display:grid; grid-template-columns:minmax(320px,44%) 1fr;
+    /* The single row must be capped at the container's height. Left to
+       `auto` it sizes to the tallest child, so the field column would
+       overflow the pane and slide under the completion bar instead of
+       scrolling inside itself. */
+    grid-template-rows:minmax(0,1fr);
     gap:0;
   }
   /* The strip stops being a strip: it is a real left pane showing the whole
