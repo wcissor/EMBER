@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #DAD6CD; -webkit-font-smoothing: antialiased; }
+  a { color: #1F2E63; }
+  a:hover { color: #111111; }
+  input { font-family: 'IBM Plex Sans', sans-serif; }
+</style>
+</helmet>
+
+<div style="font-family:'IBM Plex Sans',sans-serif;background:#DAD6CD;color:#111111;padding:40px 32px 80px;display:flex;gap:40px;flex-wrap:wrap;align-items:flex-start;justify-content:center">
+
+  <!-- ============ PHONE ============ -->
+  <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+      <div style="font-size:21px;font-weight:700">Verify</div>
+      <div style="font-size:16px">clickable</div>
+    </div>
+
+    <div style="width:390px;height:844px;background:#FFFFFF;border:2px solid #111111;display:flex;flex-direction:column;overflow:hidden;position:relative;box-shadow:0 2px 0 0 #B8B2A6">
+
+      <div style="height:40px;flex:none;border-bottom:1px solid #E2DED6;display:flex;align-items:center;justify-content:space-between;padding:0 18px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums">19:04</div>
+        <div style="display:flex;align-items:center;gap:7px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">LTE</div>
+          <div style="width:26px;height:13px;border:2px solid #111111;border-radius:2px;padding:1.5px"><div style="width:72%;height:100%;background:#111111"></div></div>
+        </div>
+      </div>
+
+      <div style="height:58px;flex:none;border-bottom:2px solid #111111;display:flex;align-items:center;gap:10px;padding:0 12px">
+        <div style="width:44px;height:44px;flex:none;border:2px solid #111111;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700">&#8592;</div>
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:600;line-height:20px;font-variant-numeric:tabular-nums">Рецепт №4471</div>
+          <div style="font-size:16px;line-height:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Филиал «Низами 42»</div>
+        </div>
+        <div style="height:44px;flex:none;border:2px solid #111111;border-radius:8px;display:flex;align-items:center;gap:8px;padding:0 10px 0 5px;cursor:pointer">
+          <div style="width:32px;height:32px;flex:none;background:#1F2E63;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#FFFFFF">АГ</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;line-height:1">&#9662;</div>
+        </div>
+      </div>
+
+      <!-- evidence strip -->
+      <div style="flex:none;background:#EEEBE5;border-bottom:2px solid #111111;padding:12px;display:flex;flex-direction:column;gap:10px">
+        <div style="position:relative;width:100%;height:164px;overflow:hidden;background:#D9D2C2;border:2px solid #8F887E;cursor:zoom-in" onClick="{{ openPhoto }}">
+          <img src="rx-photo.svg" alt="Prescription photo, placeholder" style="position:absolute;top:0;left:0;width:700px;height:900px;transform-origin:0 0;transition:transform 340ms cubic-bezier(0.2,0.7,0.2,1),filter 160ms linear;transform:{{ crop }};filter:{{ filter }}">
+          <div style="position:absolute;left:53.7px;border:2.5px solid #1F2E63;box-shadow:0 0 0 2px rgba(255,255,255,0.85);transition:top 340ms cubic-bezier(0.2,0.7,0.2,1),height 340ms cubic-bezier(0.2,0.7,0.2,1);top:{{ outT }};width:{{ outW }};height:{{ outH }}"></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px">
+            <div style="font-size:16px;font-weight:600;line-height:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ stripLabel }}</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;line-height:19px;font-variant-numeric:tabular-nums">{{ stripIndex }}</div>
+          </div>
+          <sc-if value="{{ boostOff }}" hint-placeholder-val="{{ true }}">
+            <div style="height:44px;padding:0 13px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer" onClick="{{ toggleBoost }}">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1">&#9680;</span>
+              <span style="font-size:16px;font-weight:600">Ярче</span>
+            </div>
+          </sc-if>
+          <sc-if value="{{ boostOn }}" hint-placeholder-val="{{ false }}">
+            <div style="height:44px;padding:0 13px;flex:none;border:2px solid #111111;background:#111111;color:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer" onClick="{{ toggleBoost }}">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1">&#9685;</span>
+              <span style="font-size:16px;font-weight:600">Ярче</span>
+            </div>
+          </sc-if>
+          <div style="width:44px;height:44px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:pointer" onClick="{{ openPhoto }}">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700;line-height:1">&#10530;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- field column -->
+      <div style="flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;background:#FFFFFF;display:flex;flex-direction:column">
+        <sc-for list="{{ rows }}" as="r" hint-placeholder-count="5">
+
+          <!-- PENDING -->
+          <sc-if value="{{ r.isPending }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex:none;background:#FFFFFF;border-bottom:2px solid #8F887E;cursor:pointer" onClick="{{ r.onFocus }}">
+              <div style="width:6px;flex:none;background:#FFFFFF;border-left:2px solid #8F887E;border-right:2px solid #8F887E"></div>
+              <div style="flex:1;min-width:0;padding:11px 14px 13px;display:flex;flex-direction:column;gap:6px">
+                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+                  <div style="font-size:16px;font-weight:600;line-height:20px">{{ r.label }}</div>
+                  <div style="width:28px;height:28px;flex:none;border:2px solid #8F887E;color:#111111;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700;line-height:1">&middot;</div>
+                </div>
+                <div style="font-size:20px;line-height:25px;font-weight:600">{{ r.value }}</div>
+                <div style="font-size:16px;line-height:20px;padding-top:5px;border-top:2px solid #8F887E">Ждёт второго прочтения</div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- SETTLED -->
+          <sc-if value="{{ r.isSettled }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex:none;background:#FFFFFF;border-bottom:2px solid #8F887E;cursor:pointer" onClick="{{ r.onFocus }}">
+              <div style="width:6px;flex:none;background:#111111"></div>
+              <div style="flex:1;min-width:0;padding:11px 14px 13px;display:flex;flex-direction:column;gap:5px">
+                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+                  <div style="font-size:16px;font-weight:600;line-height:20px">{{ r.label }}</div>
+                  <div style="width:28px;height:28px;flex:none;border:2px solid #111111;background:#111111;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;line-height:1">{{ r.badge }}</div>
+                </div>
+                <div style="font-size:20px;line-height:25px;font-weight:600">{{ r.value }}</div>
+                <div style="font-size:16px;line-height:20px">{{ r.note }}</div>
+                <div style="display:flex;justify-content:flex-start;padding-top:4px">
+                  <div style="min-height:44px;padding:10px 12px;border:2px solid #8F887E;border-radius:3px;display:flex;align-items:center;cursor:pointer" onClick="{{ r.onReopen }}">
+                    <span style="font-size:16px;font-weight:600;line-height:20px">Изменить решение</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- AGREED -->
+          <sc-if value="{{ r.isAgreed }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex:none;background:#FFFFFF;border-bottom:2px solid #8F887E;cursor:pointer" onClick="{{ r.onFocus }}">
+              <div style="width:6px;flex:none;background:#111111"></div>
+              <div style="flex:1;min-width:0;padding:11px 14px 13px;display:flex;flex-direction:column;gap:9px">
+                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+                  <div style="font-size:16px;font-weight:600;line-height:20px">{{ r.label }}</div>
+                  <div style="width:28px;height:28px;flex:none;border:2px solid #111111;color:#111111;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;line-height:1">=</div>
+                </div>
+                <div style="font-size:20px;line-height:25px;font-weight:600">{{ r.value }}</div>
+                <div style="font-size:17px;line-height:21px;font-weight:600">Оба прочтения совпали</div>
+                <div style="height:56px;flex:none;border:2px solid #1F2E63;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;gap:9px;cursor:pointer" onClick="{{ r.onConfirm }}">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1">=</span>
+                  <span style="font-size:17px;font-weight:600">Подтвердить</span>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- DISAGREEMENT -->
+          <sc-if value="{{ r.isDisagree }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex:none;background:#FFFFFF;border-bottom:2px solid #8F887E">
+              <div style="width:6px;flex:none;background:#7A4A00"></div>
+              <div style="flex:1;min-width:0;padding:11px 14px 13px;display:flex;flex-direction:column;gap:10px;cursor:pointer" onClick="{{ r.onFocus }}">
+                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+                  <div style="font-size:16px;font-weight:600;line-height:20px">{{ r.label }}</div>
+                  <div style="width:28px;height:28px;flex:none;border:2px solid #7A4A00;color:#7A4A00;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;line-height:1">&#8644;</div>
+                </div>
+                <div style="font-size:17px;line-height:21px;font-weight:600;color:#7A4A00">Два прочтения разошлись</div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <div style="min-height:56px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;padding:10px 13px;display:flex;align-items:center;cursor:pointer" onClick="{{ r.onPickA }}">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:20px;line-height:25px;font-weight:600;font-variant-numeric:tabular-nums">{{ r.optA }}</span>
+                  </div>
+                  <div style="min-height:56px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;padding:10px 13px;display:flex;align-items:center;cursor:pointer" onClick="{{ r.onPickB }}">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:20px;line-height:25px;font-weight:600;font-variant-numeric:tabular-nums">{{ r.optB }}</span>
+                  </div>
+                  <div style="min-height:56px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;padding:10px 13px;display:flex;align-items:center;cursor:pointer" onClick="{{ r.onEdit }}">
+                    <span style="font-size:17px;line-height:25px;font-weight:600">Ввести своё</span>
+                  </div>
+                </div>
+                <div style="font-size:16px;line-height:20px">{{ r.orderNote }}</div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ILLEGIBLE -->
+          <sc-if value="{{ r.isIllegible }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex:none;background:#FFFFFF;border-bottom:2px solid #8F887E">
+              <div style="width:6px;flex:none;background:#7A4A00"></div>
+              <div style="flex:1;min-width:0;padding:11px 14px 13px;display:flex;flex-direction:column;gap:10px;cursor:pointer" onClick="{{ r.onFocus }}">
+                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+                  <div style="font-size:16px;font-weight:600;line-height:20px">{{ r.label }}</div>
+                  <div style="width:28px;height:28px;flex:none;border:2px solid #7A4A00;color:#7A4A00;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700;line-height:1">~</div>
+                </div>
+                <div style="font-size:17px;line-height:21px;font-weight:600;color:#7A4A00">Не разобрать</div>
+                <div style="display:flex;gap:10px">
+                  <div style="flex:1;min-width:0;min-height:56px;border:2px solid #111111;background:#FFFFFF;border-radius:3px;padding:8px;display:flex;align-items:center;justify-content:center;text-align:center;cursor:pointer" onClick="{{ r.onEdit }}">
+                    <span style="font-size:17px;line-height:21px;font-weight:600">Ввести вручную</span>
+                  </div>
+                  <div style="flex:1;min-width:0;min-height:56px;border:2px solid #111111;background:#FFFFFF;border-radius:3px;padding:8px;display:flex;align-items:center;justify-content:center;text-align:center;cursor:pointer" onClick="{{ r.onQuery }}">
+                    <span style="font-size:17px;line-height:21px;font-weight:600">Уточнить у врача</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ABSENT -->
+          <sc-if value="{{ r.isAbsent }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex:none;background:#FFFFFF;border-bottom:2px solid #8F887E">
+              <div style="width:6px;flex:none;border-left:6px dashed #7A4A00"></div>
+              <div style="flex:1;min-width:0;padding:11px 14px 13px;display:flex;flex-direction:column;gap:10px;cursor:pointer" onClick="{{ r.onFocus }}">
+                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+                  <div style="font-size:16px;font-weight:600;line-height:20px">{{ r.label }}</div>
+                  <div style="width:28px;height:28px;flex:none;border:2px dashed #7A4A00;color:#7A4A00;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;line-height:1">&#8709;</div>
+                </div>
+                <div style="height:32px;flex:none;border:2px dashed #8F887E;background:#EEEBE5;display:flex;align-items:center;padding:0 11px">
+                  <div style="height:2px;width:100%;background:#8F887E"></div>
+                </div>
+                <div style="font-size:17px;line-height:21px;font-weight:600;color:#7A4A00">В рецепте не указано</div>
+                <div style="min-height:56px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;gap:9px;padding:8px 10px;cursor:pointer" onClick="{{ r.onConfirmAbsent }}">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;line-height:1">&#8709;</span>
+                  <span style="font-size:17px;line-height:21px;font-weight:600">Подтвердить отсутствие</span>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- LOOK-ALIKE -->
+          <sc-if value="{{ r.isLookalike }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex:none;background:#FFFFFF;border-bottom:2px solid #8E1420;border-top:2px solid #8E1420">
+              <div style="width:6px;flex:none;background:#8E1420"></div>
+              <div style="flex:1;min-width:0;padding:11px 14px 13px;display:flex;flex-direction:column;gap:10px;cursor:pointer" onClick="{{ r.onFocus }}">
+                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+                  <div style="font-size:16px;font-weight:600;line-height:20px">{{ r.label }}</div>
+                  <div style="width:28px;height:28px;flex:none;border:2px solid #8E1420;color:#8E1420;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;line-height:1">&#8800;</div>
+                </div>
+                <div style="font-size:26px;line-height:30px;font-weight:700;letter-spacing:-0.005em">{{ r.value }}</div>
+                <div style="margin-left:16px;border-left:2px solid #8E1420;background:#EEEBE5;padding:11px 12px;display:flex;flex-direction:column;gap:9px">
+                  <div style="display:flex;gap:9px;align-items:baseline">
+                    <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;line-height:20px;color:#8E1420;flex:none">&#8800;</div>
+                    <div style="font-size:16px;line-height:20px;font-weight:600;color:#8E1420;min-width:0">Похоже на AMOKLAVIN &mdash; другое действующее вещество</div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:7px">
+                    <div style="display:flex;flex-direction:column;gap:1px;padding:7px 9px;background:#FFFFFF;border:2px solid #8F887E">
+                      <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;line-height:19px">в рецепте &middot; AMOKSİKLAV</div>
+                      <div style="font-size:20px;line-height:25px;font-weight:700">амоксициллин + клавуланат</div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:1px;padding:7px 9px;background:#FFFFFF;border:2px solid #8E1420">
+                      <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;line-height:19px">похожее &middot; AMOKLAVIN</div>
+                      <div style="font-size:20px;line-height:25px;font-weight:700;color:#8E1420">ампициллин + сульбактам</div>
+                    </div>
+                  </div>
+                  <div style="font-size:16px;line-height:20px">Сверьте написание с фото. Справка не подставляет значение.</div>
+                </div>
+                <div style="min-height:56px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;padding:8px 10px;cursor:pointer" onClick="{{ r.onQuery }}">
+                  <span style="font-size:17px;line-height:21px;font-weight:600;text-align:center">Уточнить у врача</span>
+                </div>
+                <div style="min-height:56px;flex:none;border:2px solid #1F2E63;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;padding:8px 10px;cursor:pointer;margin-top:14px" onClick="{{ r.onConfirm }}">
+                  <span style="font-size:17px;line-height:21px;font-weight:600;text-align:center">Подтвердить AMOKSİKLAV</span>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- MANUAL ENTRY -->
+          <sc-if value="{{ r.isEditing }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex:none;background:#FFFFFF;border-bottom:2px solid #8F887E;border-top:2px solid #1F2E63">
+              <div style="width:6px;flex:none;background:#1F2E63"></div>
+              <div style="flex:1;min-width:0;padding:11px 14px 13px;display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+                  <div style="font-size:16px;font-weight:600;line-height:20px">{{ r.label }}</div>
+                  <div style="width:28px;height:28px;flex:none;border:2px solid #1F2E63;color:#1F2E63;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1">&#9998;</div>
+                </div>
+                <div style="font-size:17px;line-height:21px;font-weight:600;color:#1F2E63">Ввожу вручную</div>
+                <input value="{{ r.draft }}" onChange="{{ r.onDraft }}" placeholder="Как в рецепте" style="height:56px;width:100%;border:2px solid #1F2E63;border-radius:3px;padding:0 13px;font-size:20px;font-weight:600;font-family:'IBM Plex Mono',monospace;color:#111111;background:#FFFFFF;outline:none">
+                <div style="display:flex;gap:10px">
+                  <div style="flex:1;min-height:56px;border:2px solid #8F887E;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:pointer" onClick="{{ r.onCancel }}">
+                    <span style="font-size:17px;font-weight:600">Отмена</span>
+                  </div>
+                  <div style="flex:1;min-height:56px;border:2px solid #1F2E63;background:#1F2E63;border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:pointer" onClick="{{ r.onSave }}">
+                    <span style="font-size:17px;font-weight:600;color:#FFFFFF">Сохранить</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+        </sc-for>
+      </div>
+
+      <!-- completion bar -->
+      <sc-if value="{{ barLoading }}" hint-placeholder-val="{{ true }}">
+        <div style="flex:none;background:#EEEBE5;border-top:2px solid #111111;padding:14px;display:flex;flex-direction:column;gap:11px">
+          <div style="display:flex;gap:3px;align-items:stretch;height:10px">
+            <sc-for list="{{ barCells }}" as="c" hint-placeholder-count="7">
+              <div style="flex:1;background:{{ c.bg }};border:{{ c.border }}"></div>
+            </sc-for>
+          </div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:19px;line-height:23px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap">{{ barText }}</div>
+          <div style="font-size:16px;line-height:20px">Завершение станет доступно после второго прочтения.</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ barBlocked }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:none;background:#EEEBE5;border-top:2px solid #111111;padding:14px;display:flex;flex-direction:column;gap:11px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:6px;align-self:stretch;min-height:23px;background:#7A4A00;flex:none"></div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:19px;line-height:23px;font-weight:600;color:#7A4A00;font-variant-numeric:tabular-nums;white-space:nowrap">{{ barText }}</div>
+          </div>
+          <div style="min-height:56px;flex:none;background:#EEEBE5;border:2px dashed #8F887E;border-radius:3px;display:flex;align-items:center;justify-content:center;padding:8px 10px">
+            <span style="font-size:17px;font-weight:600;text-align:center;line-height:21px">{{ barNames }}</span>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ barReady }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:none;background:#EEEBE5;border-top:2px solid #111111;padding:14px;display:flex;flex-direction:column;gap:11px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;line-height:21px;font-variant-numeric:tabular-nums;white-space:nowrap">{{ barText }}</div>
+          <div style="height:56px;flex:none;background:#1F2E63;border:2px solid #1F2E63;border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:pointer" onClick="{{ onComplete }}">
+            <span style="font-size:19px;font-weight:700;color:#FFFFFF">Завершить</span>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- FULL PHOTO OVERLAY -->
+      <sc-if value="{{ photoOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;background:#FFFFFF;display:flex;flex-direction:column;z-index:20">
+          <div style="height:40px;flex:none;border-bottom:1px solid #E2DED6;display:flex;align-items:center;justify-content:space-between;padding:0 18px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums">19:04</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">LTE</div>
+          </div>
+          <div style="height:58px;flex:none;border-bottom:2px solid #111111;display:flex;align-items:center;gap:10px;padding:0 12px">
+            <div style="width:44px;height:44px;flex:none;border:2px solid #111111;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700;cursor:pointer" onClick="{{ closePhoto }}">&#10005;</div>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+              <div style="font-size:17px;font-weight:600;line-height:20px">{{ stripLabel }}</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;line-height:19px;font-variant-numeric:tabular-nums">{{ stripIndex }} &middot; выделено на фото</div>
+            </div>
+          </div>
+          <div style="flex:1;min-height:0;background:#DAD6CD;overflow:hidden;display:flex;align-items:center;justify-content:center">
+            <div style="position:relative;width:386px;height:496px;flex:none">
+              <img src="rx-photo.svg" alt="Prescription photo, placeholder" style="position:absolute;top:0;left:0;width:700px;height:900px;transform-origin:0 0;transform:scale(0.551);filter:{{ filter }}">
+              <div style="position:absolute;border:2.5px solid #1F2E63;box-shadow:0 0 0 2px rgba(255,255,255,0.9);transition:all 300ms cubic-bezier(0.2,0.7,0.2,1);left:{{ fullL }};top:{{ fullT }};width:{{ fullW }};height:{{ fullH }}"></div>
+            </div>
+          </div>
+          <div style="flex:none;background:#EEEBE5;border-top:2px solid #111111;padding:14px;display:flex;flex-direction:column;gap:11px">
+            <div style="font-size:16px;line-height:20px">Разведите пальцами, чтобы увеличить. Фото не редактируется.</div>
+            <div style="display:flex;gap:10px">
+              <sc-if value="{{ boostOff }}" hint-placeholder-val="{{ true }}">
+                <div style="flex:1;height:56px;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer" onClick="{{ toggleBoost }}">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1">&#9680;</span>
+                  <span style="font-size:17px;font-weight:600">Ярче</span>
+                </div>
+              </sc-if>
+              <sc-if value="{{ boostOn }}" hint-placeholder-val="{{ false }}">
+                <div style="flex:1;height:56px;border:2px solid #111111;background:#111111;border-radius:3px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer" onClick="{{ toggleBoost }}">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1;color:#FFFFFF">&#9685;</span>
+                  <span style="font-size:17px;font-weight:600;color:#FFFFFF">Ярче</span>
+                </div>
+              </sc-if>
+              <div style="flex:1;height:56px;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:pointer" onClick="{{ closePhoto }}">
+                <span style="font-size:17px;font-weight:600">К полям</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- COMPLETED -->
+      <sc-if value="{{ done }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;background:#FFFFFF;display:flex;flex-direction:column;z-index:30">
+          <div style="height:40px;flex:none;border-bottom:1px solid #E2DED6;display:flex;align-items:center;justify-content:space-between;padding:0 18px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums">19:08</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">LTE</div>
+          </div>
+          <div style="flex:1;min-height:0;padding:20px 16px;display:flex;flex-direction:column;gap:16px;overflow-y:auto">
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:600;font-variant-numeric:tabular-nums">Рецепт №4471 закрыт</div>
+              <div style="font-size:16px;line-height:21px">А. Гулиева &middot; 14.09 19:08 &middot; «Низами 42»</div>
+            </div>
+            <div style="border:2px solid #111111;display:flex;flex-direction:column">
+              <sc-for list="{{ summary }}" as="s" hint-placeholder-count="7">
+                <div style="display:flex;align-items:flex-start;gap:11px;padding:10px 12px;border-bottom:2px solid #8F887E">
+                  <div style="width:26px;height:26px;flex:none;border:2px solid #111111;color:#111111;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;line-height:1">{{ s.glyph }}</div>
+                  <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px">
+                    <div style="font-size:16px;font-weight:600;line-height:20px">{{ s.label }}</div>
+                    <div style="font-size:17px;line-height:22px;font-weight:600">{{ s.value }}</div>
+                    <div style="font-size:16px;line-height:20px">{{ s.note }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="font-size:16px;line-height:21px;background:#EEEBE5;border-left:6px solid #111111;padding:11px 12px">{{ doneNote }}</div>
+          </div>
+          <div style="flex:none;background:#EEEBE5;border-top:2px solid #111111;padding:14px;display:flex;gap:10px">
+            <div style="flex:1;height:64px;background:#1F2E63;border:2px solid #1F2E63;border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:pointer" onClick="{{ reset }}">
+              <span style="font-size:19px;font-weight:700;color:#FFFFFF">Новый снимок</span>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+  </div>
+
+  <!-- ============ LEGEND ============ -->
+  <div style="width:380px;flex:none;display:flex;flex-direction:column;gap:16px">
+    <div style="background:#FFFFFF;border:2px solid #111111;padding:18px;display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:19px;font-weight:700">Try it in this order</div>
+      <div style="display:flex;flex-direction:column;gap:11px;font-size:16px;line-height:1.45">
+        <div style="display:flex;gap:11px"><div style="font-family:'IBM Plex Mono',monospace;font-weight:700;flex:none">1</div><div>Watch the rails fill in. All seven start hollow; the second reading lands one field at a time and the bar counts it. Nothing is tappable until a field&rsquo;s reading arrives.</div></div>
+        <div style="display:flex;gap:11px"><div style="font-family:'IBM Plex Mono',monospace;font-weight:700;flex:none">2</div><div>Tap any row. The crop above slides to that field&rsquo;s handwriting and the caption names it.</div></div>
+        <div style="display:flex;gap:11px"><div style="font-family:'IBM Plex Mono',monospace;font-weight:700;flex:none">3</div><div>Resolve <span style="font-weight:600">Дозировка</span> &mdash; two readings, pick either, or enter your own.</div></div>
+        <div style="display:flex;gap:11px"><div style="font-family:'IBM Plex Mono',monospace;font-weight:700;flex:none">4</div><div>Send <span style="font-weight:600">Количество</span> to the doctor. Same one tap as typing it.</div></div>
+        <div style="display:flex;gap:11px"><div style="font-family:'IBM Plex Mono',monospace;font-weight:700;flex:none">5</div><div>Try to finish early. Завершить does not exist until every field is closed &mdash; the bar tells you which are left.</div></div>
+        <div style="display:flex;gap:11px"><div style="font-family:'IBM Plex Mono',monospace;font-weight:700;flex:none">6</div><div>Tap the photo for the full sheet with the active region outlined, and <span style="font-weight:600">Ярче</span> for glare.</div></div>
+      </div>
+    </div>
+
+    <div style="background:#EEEBE5;border:2px solid #111111;padding:18px;display:flex;flex-direction:column;gap:10px;font-size:16px;line-height:1.45">
+      <div style="font-size:19px;font-weight:700">What is being demonstrated</div>
+      <div>There is <span style="font-weight:600">no code path that completes this record with an open field</span>. The button is not disabled; it is not rendered. The slot in its place names what is outstanding.</div>
+      <div>A field cannot reach a settled state before its second reading lands, because the settled row is only reachable from a resolution action and no resolution action is rendered while the rail is hollow.</div>
+      <div>Every resolved field keeps <span style="font-weight:600">Изменить решение</span>, so nothing is a trap &mdash; but reopening puts the decision back in the open count and the completion control disappears again.</div>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <div style="min-height:48px;padding:12px 16px;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;cursor:pointer;white-space:nowrap" onClick="{{ reset }}">
+        <span style="font-size:17px;font-weight:600">Начать заново</span>
+      </div>
+      <div style="min-height:48px;padding:12px 16px;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;cursor:pointer;white-space:nowrap" onClick="{{ landAll }}">
+        <span style="font-size:17px;font-weight:600">Второе прочтение &mdash; целиком</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:880,&quot;height&quot;:980},&quot;confirmAgreed&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Verification policy&quot;},&quot;showOrderingRule&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Verification policy&quot;},&quot;landingMs&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:900,&quot;min&quot;:200,&quot;max&quot;:2500,&quot;step&quot;:100,&quot;unit&quot;:&quot;ms&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Second reading&quot;}}">
+const CROP = {
+  patient:  { t: "scale(0.737) translate(20.9px,-88.7px)",    top: "61.4px", w: "250.6px", h: "41.3px", box: [52, 172, 340, 56] },
+  medicine: { t: "scale(0.6265) translate(33.7px,-198.1px)",  top: "62.6px", w: "250.6px", h: "38.8px", box: [52, 298, 400, 62] },
+  dose:     { t: "scale(1.205) translate(-7.5px,-348px)",     top: "45.8px", w: "250.6px", h: "72.3px", box: [52, 386, 208, 60] },
+  form:     { t: "scale(1.319) translate(-351.3px,-357.8px)", top: "50.4px", w: "250.6px", h: "63.3px", box: [392, 396, 190, 48] },
+  qty:      { t: "scale(2.088) translate(-26.3px,-458.7px)",  top: "36.1px", w: "250.6px", h: "91.9px", box: [52, 476, 120, 44] },
+  schedule: { t: "scale(0.5695) translate(42.3px,-527px)",    top: "64.4px", w: "250.6px", h: "35.3px", box: [52, 640, 440, 62] },
+  doctor:   { t: "scale(1.002) translate(-332.4px,-702.2px)", top: "39.9px", w: "250.5px", h: "84.2px", box: [386, 742, 250, 84] }
+};
+
+const FULL_SCALE = 0.551;
+
+const ORDER_NUM = "Порядок — по возрастанию числа. Ни один не выбран заранее.";
+
+// Second-reading outcome per field. Order below is the on-screen order.
+const FIELDS = [
+  { id: "patient",  label: "Пациент",      region: "patient",  first: "Алиева Н. М.",                   outcome: "agree" },
+  { id: "medicine", label: "Препарат",     region: "medicine", first: "AMOKSİKLAV 875/125",             outcome: "lookalike" },
+  { id: "dose",     label: "Дозировка",    region: "dose",     first: "875 мг",                         outcome: "disagree", optA: "375 мг", optB: "875 мг" },
+  { id: "form",     label: "Форма",        region: "form",     first: "таблетки, покрытые оболочкой",   outcome: "agree" },
+  { id: "qty",      label: "Количество",   region: "qty",      first: "14 шт.",                         outcome: "illegible" },
+  { id: "schedule", label: "Схема приёма", region: "schedule", first: "по 1 таблетке 2 раза в день, 7 дней", outcome: "agree" },
+  { id: "doctor",   label: "Срок приёма",  region: "schedule", first: "",                               outcome: "absent" }
+];
+
+// Order in which the second reading lands (not the display order).
+const LAND_ORDER = ["patient", "dose", "form", "medicine", "schedule", "qty", "doctor"];
+
+class Component extends DCLogic {
+  state = { landedCount: 0, focus: "medicine", boost: false, photoOpen: false, res: {}, editing: null, draft: "", done: false };
+  // state.focus is always a FIELD id; the photo region is derived from it.
+
+  componentDidMount() { this.start(); }
+  componentWillUnmount() { clearInterval(this.timer); }
+
+  start() {
+    clearInterval(this.timer);
+    this.timer = setInterval(() => {
+      this.setState(s => {
+        const n = s.landedCount + 1;
+        if (n >= LAND_ORDER.length) clearInterval(this.timer);
+        return { landedCount: Math.min(n, LAND_ORDER.length) };
+      });
+    }, this.props.landingMs ?? 900);
+  }
+
+  landed(id) { return LAND_ORDER.indexOf(id) < this.state.landedCount; }
+
+  resolve(id, value, note, glyph) {
+    this.setState(s => {
+      const res = Object.assign({}, s.res);
+      res[id] = { value: value, note: note, glyph: glyph };
+      return { res: res, editing: null, draft: "", focus: id };
+    });
+  }
+
+  reopen(id) {
+    this.setState(s => {
+      const res = Object.assign({}, s.res);
+      delete res[id];
+      return { res: res, focus: id };
+    });
+  }
+
+  renderVals() {
+    const s = this.state;
+    const confirmAgreed = this.props.confirmAgreed ?? true;
+    const showOrderingRule = this.props.showOrderingRule ?? true;
+    // With confirmAgreed off, a matched field settles on arrival and never asks for a tap.
+    const autoSettled = f => !confirmAgreed && f.outcome === "agree" && this.landed(f.id);
+    const rows = FIELDS.map(f => {
+      const done = s.res[f.id];
+      const isLanded = this.landed(f.id);
+      const editing = s.editing === f.id;
+      const r = {
+        id: f.id, label: f.label, value: f.first, optA: f.optA, optB: f.optB,
+        orderNote: showOrderingRule ? ORDER_NUM : "", draft: s.draft,
+        isPending: false, isSettled: false, isAgreed: false, isDisagree: false,
+        isIllegible: false, isAbsent: false, isLookalike: false, isEditing: false,
+        badge: "", note: "",
+        onFocus: () => this.setState({ focus: f.id }),
+        onReopen: () => this.reopen(f.id),
+        onConfirm: () => this.resolve(f.id, f.first, "Решено · АГ 19:0" + (4 + LAND_ORDER.indexOf(f.id) % 5) + " · оба прочтения совпали", "✓"),
+        onPickA: () => this.resolve(f.id, f.optA, "Решено · выбрано из двух прочтений", "✓"),
+        onPickB: () => this.resolve(f.id, f.optB, "Решено · выбрано из двух прочтений", "✓"),
+        onQuery: () => this.resolve(f.id, "Уточняется у врача", "АГ 19:08 · запись закроется после ответа", "~"),
+        onConfirmAbsent: () => this.resolve(f.id, "В рецепте не указано", "Решено · подтверждено отсутствие", "∅"),
+        onEdit: () => this.setState({ editing: f.id, draft: "", focus: f.id }),
+        onDraft: e => this.setState({ draft: e.target.value }),
+        onCancel: () => this.setState({ editing: null, draft: "" }),
+        onSave: () => this.resolve(f.id, s.draft || "—", "Решено · введено вручную", "✎")
+      };
+
+      if (editing) { r.isEditing = true; return r; }
+      if (done) {
+        r.isSettled = true; r.value = done.value; r.note = done.note; r.badge = done.glyph;
+        return r;
+      }
+      if (!isLanded) { r.isPending = true; return r; }
+      if (autoSettled(f)) {
+        r.isSettled = true; r.badge = "="; r.note = "Оба прочтения совпали · подтверждение не требуется";
+        return r;
+      }
+      if (f.outcome === "agree") r.isAgreed = true;
+      else if (f.outcome === "disagree") r.isDisagree = true;
+      else if (f.outcome === "illegible") r.isIllegible = true;
+      else if (f.outcome === "absent") r.isAbsent = true;
+      else if (f.outcome === "lookalike") r.isLookalike = true;
+      return r;
+    });
+
+    let idx = FIELDS.findIndex(f => f.id === s.focus);
+    if (idx < 0) idx = 1;
+    const focusField = FIELDS[idx];
+    const c = CROP[focusField.region] || CROP.medicine;
+    const box = c.box;
+
+    const openIds = FIELDS.filter(f => this.landed(f.id) && !s.res[f.id] && !autoSettled(f)).map(f => f.label);
+    const unresolved = FIELDS.filter(f => !s.res[f.id] && !autoSettled(f)).length;
+    const allLanded = s.landedCount >= LAND_ORDER.length;
+    const queriedCount = FIELDS.filter(f => s.res[f.id] && s.res[f.id].glyph === "~").length;
+
+    const barCells = LAND_ORDER.map((id, i) => i < s.landedCount
+      ? { bg: "#111111", border: "2px solid #111111" }
+      : { bg: "#FFFFFF", border: "2px solid #8F887E" });
+
+    // Russian plural agreement: 1 уточнение · 2–4 уточнения · 5+ уточнений
+    const plural = n => {
+      const d10 = n % 10, d100 = n % 100;
+      if (d10 === 1 && d100 !== 11) return "уточнение";
+      if (d10 >= 2 && d10 <= 4 && (d100 < 12 || d100 > 14)) return "уточнения";
+      return "уточнений";
+    };
+    const queryClause = queriedCount > 0 ? " · " + queriedCount + " " + plural(queriedCount) + " у врача" : "";
+    const barLoading = !allLanded;
+    const barReady = allLanded && unresolved === 0 && !s.done;
+    const barBlocked = allLanded && unresolved > 0;
+
+    return {
+      rows: rows,
+      crop: c.t, outT: c.top, outW: c.w, outH: c.h,
+      fullL: (box[0] * FULL_SCALE).toFixed(1) + "px",
+      fullT: (box[1] * FULL_SCALE).toFixed(1) + "px",
+      fullW: (box[2] * FULL_SCALE).toFixed(1) + "px",
+      fullH: (box[3] * FULL_SCALE).toFixed(1) + "px",
+      filter: s.boost ? "contrast(1.52) brightness(0.88) saturate(0.35)" : "none",
+      stripLabel: focusField.label,
+      stripIndex: "поле " + (idx + 1) + " из 7",
+      boostOn: s.boost, boostOff: !s.boost,
+      toggleBoost: () => this.setState(p => ({ boost: !p.boost })),
+      photoOpen: s.photoOpen && !s.done,
+      openPhoto: () => this.setState({ photoOpen: true }),
+      closePhoto: () => this.setState({ photoOpen: false }),
+
+      barLoading: barLoading, barBlocked: barBlocked, barReady: barReady,
+      barCells: barCells,
+      barText: barLoading
+        ? "Второе прочтение: " + s.landedCount + " из 7 полей"
+        : (barBlocked ? "Осталось решений: " + openIds.length : "7 из 7 решено" + queryClause),
+      barNames: openIds.join(" · "),
+
+      onComplete: () => this.setState({ done: true, photoOpen: false }),
+      done: s.done,
+      doneNote: queriedCount > 0
+        ? "К врачу ушло: " + queriedCount + ". Запись видна в архиве как обычная — это нормальный исход, а не ошибка."
+        : "Все поля решены на месте.",
+      summary: FIELDS.map(f => ({
+        label: f.label,
+        value: (s.res[f.id] && s.res[f.id].value) || f.first,
+        note: (s.res[f.id] && s.res[f.id].note) || (autoSettled(f) ? "Оба прочтения совпали · подтверждение не требуется" : ""),
+        glyph: (s.res[f.id] && s.res[f.id].glyph) || (autoSettled(f) ? "=" : "·")
+      })),
+
+      reset: () => { this.setState({ landedCount: 0, focus: "medicine", boost: false, photoOpen: false, res: {}, editing: null, draft: "", done: false }); this.start(); },
+      landAll: () => { clearInterval(this.timer); this.setState({ landedCount: LAND_ORDER.length }); }
+    };
+  }
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #DAD6CD; -webkit-font-smoothing: antialiased; }
+  a { color: #1F2E63; }
+  a:hover { color: #111111; }
+</style>
+</helmet>
+
+<div style="font-family:'IBM Plex Sans',sans-serif;background:#DAD6CD;color:#111111;padding:56px 40px 120px;display:flex;flex-direction:column;gap:64px;align-items:flex-start">
+
+  <div style="display:flex;flex-direction:column;gap:8px;border-bottom:2px solid #111111;padding-bottom:24px;max-width:900px">
+    <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap">
+      <div style="font-size:38px;font-weight:700;letter-spacing:-0.01em">Siruply</div>
+      <div style="font-size:21px">Frames</div>
+    </div>
+    <div style="font-size:17px;line-height:1.5;max-width:66ch;text-wrap:pretty">Phone 390&times;844 and tablet 1024&times;768 landscape. Russian throughout, with two Azerbaijani Verify frames at the longest plausible string lengths.</div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px;max-width:900px;background:#FFFFFF;border:2px solid #111111;padding:26px 28px">
+    <div style="font-size:23px;font-weight:700">Rationale</div>
+    <div style="font-size:17px;line-height:1.55;text-wrap:pretty">A phone cannot show a prescription photo and seven fields side by side at a legible size, so this design stops trying. The fields are the whole column and the photo is reduced to a <span style="font-weight:600">pinned strip above them that only ever shows one thing: the handwriting for the field currently in focus</span>, cropped to that region plus about a third again of surrounding paper and outlined inside the crop. Tapping a row slides the crop; the zoom is computed per field, so a two-character quantity arrives at 2.1&times; and a full directions line at 0.57&times;, and the handwriting lands at a readable size either way. The strip is small because it does not need to be big &mdash; it is not a document viewer, it is the answer to one question asked seven times. The full sheet is one tap away for the rare case where the surrounding lines matter, and on tablet landscape the strip becomes a real left pane with the whole photo and the same linked outline, because there the room genuinely exists.</div>
+    <div style="font-size:17px;line-height:1.55;text-wrap:pretty">Keeping the two readings unranked took removing things rather than balancing them. There are <span style="font-weight:600">no confidence numbers anywhere in the product</span>, because a number is a ranking and a ranking reads as permission; no model names, because they become a folk hierarchy within a week; no preselected option and no &ldquo;recommended&rdquo; marker. The two readings render in one component with identical borders, fills, heights and type, and &ldquo;enter my own&rdquo; is the third option in that same stack rather than a link underneath, so disagreeing with both machines costs the same single tap as agreeing with one. That left position itself as the last hidden ranking, and the fix is that <span style="font-weight:600">the row states its own sort rule in the last line</span> &mdash; numeric values ascend, text sorts alphabetically. Naming the rule is what turns the top option from a recommendation into an accident of arithmetic.</div>
+    <div style="font-size:17px;line-height:1.55;text-wrap:pretty">A partial result is made unmistakable by withholding <span style="font-weight:600">capability rather than information</span>. The fast reading&rsquo;s value appears immediately at full size and full contrast, because reading it is useful work; what does not exist yet is any control that would close the field. Every field carries a left rail drawn as a hollow outline while its second reading is outstanding, filling solid only when it lands, so the rail column alone shows how much of the form has arrived &mdash; and because the rail is the same element that carries state afterwards, it cannot be tuned out the way a shimmer is by the end of the first week. There is no skeleton shimmer here at all. The completion control is not disabled during this window; it is <span style="font-weight:600">not rendered</span>, and in its place sits a plain sentence with counts &mdash; &laquo;Второе прочтение: 4 из 7 полей&raquo;, then &laquo;Осталось решений: 2&raquo; with the open fields named. A greyed button is still a button and a tired hand taps it to see what happens; a sentence that answers the question the tap was going to ask does not need to be defended against.</div>
+  </div>
+
+  <!-- ================= VERIFY, PHONE ================= -->
+  <div style="display:flex;flex-direction:column;gap:24px">
+    <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap">
+      <div style="font-size:26px;font-weight:700">Verify &middot; phone</div>
+      <div style="font-size:17px">every meaningful configuration</div>
+    </div>
+
+    <div style="display:flex;gap:40px;flex-wrap:wrap;align-items:flex-start">
+      <sc-for list="{{ verifyFrames }}" as="f" hint-placeholder-count="6">
+        <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:12px">
+
+          <div style="display:flex;flex-direction:column;gap:3px">
+            <div style="font-size:19px;font-weight:700;line-height:24px">{{ f.caption }}</div>
+            <div style="font-size:16px;line-height:21px">{{ f.sub }}</div>
+          </div>
+
+          <div style="width:390px;height:844px;background:#FFFFFF;border:2px solid #111111;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 2px 0 0 #B8B2A6">
+
+            <!-- status bar -->
+            <div style="height:40px;flex:none;background:#FFFFFF;border-bottom:1px solid #E2DED6;display:flex;align-items:center;justify-content:space-between;padding:0 18px">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums">19:04</div>
+              <div style="display:flex;align-items:center;gap:7px">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">LTE</div>
+                <div style="width:26px;height:13px;border:2px solid #111111;border-radius:2px;padding:1.5px"><div style="width:72%;height:100%;background:#111111"></div></div>
+              </div>
+            </div>
+
+            <!-- header: record + who -->
+            <div style="height:58px;flex:none;background:#FFFFFF;border-bottom:2px solid #111111;display:flex;align-items:center;gap:10px;padding:0 12px">
+              <div style="width:44px;height:44px;flex:none;border:2px solid #111111;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700">&#8592;</div>
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:0px">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:600;line-height:20px;font-variant-numeric:tabular-nums">Рецепт №4471</div>
+                <div style="font-size:16px;line-height:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Филиал «Низами 42»</div>
+              </div>
+              <div style="height:44px;flex:none;border:2px solid #111111;border-radius:8px;background:#FFFFFF;display:flex;align-items:center;gap:8px;padding:0 10px 0 5px">
+                <div style="width:32px;height:32px;flex:none;background:#1F2E63;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#FFFFFF">{{ f.initials }}</div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;line-height:1">&#9662;</div>
+              </div>
+            </div>
+
+            <!-- evidence strip -->
+            <div style="flex:none;background:#EEEBE5;border-bottom:2px solid #111111;padding:12px;display:flex;flex-direction:column;gap:10px">
+              <div style="position:relative;width:100%;height:164px;overflow:hidden;background:#D9D2C2;border:2px solid #8F887E">
+                <img src="rx-photo.svg" alt="Prescription photo, placeholder" style="position:absolute;top:0;left:0;width:700px;height:900px;transform-origin:0 0;transform:{{ f.crop }};filter:{{ f.filter }}">
+                <div style="position:absolute;left:53.7px;border:2.5px solid #1F2E63;box-shadow:0 0 0 2px rgba(255,255,255,0.85);top:{{ f.outT }};width:{{ f.outW }};height:{{ f.outH }}"></div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px">
+                  <div style="font-size:16px;font-weight:600;line-height:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ f.stripLabel }}</div>
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;line-height:19px;font-variant-numeric:tabular-nums">{{ f.stripIndex }}</div>
+                </div>
+                <sc-if value="{{ f.boostOff }}" hint-placeholder-val="{{ true }}">
+                  <div style="height:44px;padding:0 13px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1">&#9680;</span>
+                    <span style="font-size:16px;font-weight:600">Ярче</span>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ f.boostOn }}" hint-placeholder-val="{{ false }}">
+                  <div style="height:44px;padding:0 13px;flex:none;border:2px solid #111111;background:#111111;color:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1">&#9685;</span>
+                    <span style="font-size:16px;font-weight:600">Ярче</span>
+                  </div>
+                </sc-if>
+                <div style="width:44px;height:44px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700;line-height:1">&#10530;</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- field column -->
+            <div style="flex:1;min-height:0;overflow:hidden;background:#FFFFFF;display:flex;flex-direction:column">
+              <sc-for list="{{ f.fields }}" as="r" hint-placeholder-count="4">
+
+                <!-- SETTLED -->
+                <sc-if value="{{ r.isSettled }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex:none;background:#FFFFFF;border-bottom:2px solid #8F887E">
+                    <div style="width:6px;flex:none;background:#111111"></div>
+                    <div style="flex:1;min-width:0;padding:11px 14px 13px;display:flex;flex-direction:column;gap:6px">
+                      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+                        <div style="font-size:16px;font-weight:600;line-height:20px">{{ r.label }}</div>
+                        <div style="width:28px;height:28px;flex:none;border:2px solid #111111;background:#111111;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;line-height:1">&#10003;</div>
+                      </div>
+                      <sc-if value="{{ r.isName }}" hint-placeholder-val="{{ false }}">
+                        <div style="font-size:26px;line-height:30px;font-weight:700;letter-spacing:-0.005em">{{ r.value }}</div>
+                      </sc-if>
+                      <sc-if value="{{ r.isNum }}" hint-placeholder-val="{{ false }}">
+                        <div style="font-family:'IBM Plex Mono',monospace;font-size:21px;line-height:26px;font-weight:600;font-variant-numeric:tabular-nums">{{ r.value }}</div>
+                      </sc-if>
+                      <sc-if value="{{ r.isText }}" hint-placeholder-val="{{ true }}">
+                        <div style="font-size:20px;line-height:25px;font-weight:600">{{ r.value }}</div>
+                      </sc-if>
+                      <div style="font-size:16px;line-height:20px">{{ r.settledNote }}</div>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <!-- AGREED, awaiting one tap -->
+                <sc-if value="{{ r.isAgreed }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex:none;background:#FFFFFF;border-bottom:2px solid #8F887E">
+                    <div style="width:6px;flex:none;background:#111111"></div>
+                    <div style="flex:1;min-width:0;padding:11px 14px 13px;display:flex;flex-direction:column;gap:9px">
+                      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+                        <div style="font-size:16px;font-weight:600;line-height:20px">{{ r.label }}</div>
+                        <div style="width:28px;height:28px;flex:none;border:2px solid #111111;color:#111111;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;line-height:1">=</div>
+                      </div>
+                      <sc-if value="{{ r.isName }}" hint-placeholder-val="{{ false }}">
+                        <div style="font-size:26px;line-height:30px;font-weight:700;letter-spacing:-0.005em">{{ r.value }}</div>
+                      </sc-if>
+                      <sc-if value="{{ r.isNum }}" hint-placeholder-val="{{ false }}">
+                        <div style="font-family:'IBM Plex Mono',monospace;font-size:21px;line-height:26px;font-weight:600;font-variant-numeric:tabular-nums">{{ r.value }}</div>
+                      </sc-if>
+                      <sc-if value="{{ r.isText }}" hint-placeholder-val="{{ true }}">
+                        <div style="font-size:20px;line-height:25px;font-weight:600">{{ r.value }}</div>
+                      </sc-if>
+                      <div style="font-size:17px;line-height:21px;font-weight:600">Оба прочтения совпали</div>
+                      <div style="height:56px;flex:none;border:2px solid #1F2E63;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;gap:9px;cursor:pointer">
+                        <span style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1">=</span>
+                        <span style="font-size:17px;font-weight:600">Подтвердить</span>
+                      </div>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <!-- PENDING second reading -->
+                <sc-if value="{{ r.isPending }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex:none;background:#FFFFFF;border-bottom:2px solid #8F887E">
+                    <div style="width:6px;flex:none;background:#FFFFFF;border-left:2px solid #8F887E;border-right:2px solid #8F887E"></div>
+                    <div style="flex:1;min-width:0;padding:11px 14px 13px;display:flex;flex-direction:column;gap:6px">
+                      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+                        <div style="font-size:16px;font-weight:600;line-height:20px">{{ r.label }}</div>
+                        <div style="width:28px;height:28px;flex:none;border:2px solid #8F887E;color:#111111;background:#FFFFFF;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700;line-height:1">&middot;</div>
+                      </div>
+                      <sc-if value="{{ r.isName }}" hint-placeholder-val="{{ false }}">
+                        <div style="font-size:26px;line-height:30px;font-weight:700;letter-spacing:-0.005em">{{ r.value }}</div>
+                      </sc-if>
+                      <sc-if value="{{ r.isNum }}" hint-placeholder-val="{{ false }}">
+                        <div style="font-family:'IBM Plex Mono',monospace;font-size:21px;line-height:26px;font-weight:600;font-variant-numeric:tabular-nums">{{ r.value }}</div>
+                      </sc-if>
+                      <sc-if value="{{ r.isText }}" hint-placeholder-val="{{ true }}">
+                        <div style="font-size:20px;line-height:25px;font-weight:600">{{ r.value }}</div>
+                      </sc-if>
+                      <div style="font-size:16px;line-height:20px;padding-top:5px;border-top:2px solid #8F887E">Ждёт второго прочтения</div>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <!-- DISAGREEMENT -->
+                <sc-if value="{{ r.isDisagree }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex:none;background:#FFFFFF;border-bottom:2px solid #8F887E">
+                    <div style="width:6px;flex:none;background:#7A4A00"></div>
+                    <div style="flex:1;min-width:0;padding:11px 14px 13px;display:flex;flex-direction:column;gap:10px">
+                      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+                        <div style="font-size:16px;font-weight:600;line-height:20px">{{ r.label }}</div>
+                        <div style="width:28px;height:28px;flex:none;border:2px solid #7A4A00;color:#7A4A00;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;line-height:1">&#8644;</div>
+                      </div>
+                      <div style="font-size:17px;line-height:21px;font-weight:600;color:#7A4A00">{{ r.stateLabel }}</div>
+                      <div style="display:flex;flex-direction:column;gap:8px">
+                        <div style="min-height:56px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;padding:10px 13px;display:flex;align-items:center;cursor:pointer">
+                          <span style="font-family:'IBM Plex Mono',monospace;font-size:20px;line-height:25px;font-weight:600;font-variant-numeric:tabular-nums">{{ r.optA }}</span>
+                        </div>
+                        <div style="min-height:56px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;padding:10px 13px;display:flex;align-items:center;cursor:pointer">
+                          <span style="font-family:'IBM Plex Mono',monospace;font-size:20px;line-height:25px;font-weight:600;font-variant-numeric:tabular-nums">{{ r.optB }}</span>
+                        </div>
+                        <div style="min-height:56px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;padding:10px 13px;display:flex;align-items:center;cursor:pointer">
+                          <span style="font-size:17px;line-height:25px;font-weight:600">{{ r.optOwn }}</span>
+                        </div>
+                      </div>
+                      <div style="font-size:16px;line-height:20px">{{ r.orderNote }}</div>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <!-- ILLEGIBLE -->
+                <sc-if value="{{ r.isIllegible }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex:none;background:#FFFFFF;border-bottom:2px solid #8F887E">
+                    <div style="width:6px;flex:none;background:#7A4A00"></div>
+                    <div style="flex:1;min-width:0;padding:11px 14px 13px;display:flex;flex-direction:column;gap:10px">
+                      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+                        <div style="font-size:16px;font-weight:600;line-height:20px">{{ r.label }}</div>
+                        <div style="width:28px;height:28px;flex:none;border:2px solid #7A4A00;color:#7A4A00;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700;line-height:1">~</div>
+                      </div>
+                      <div style="font-size:17px;line-height:21px;font-weight:600;color:#7A4A00">{{ r.stateLabel }}</div>
+                      <div style="display:flex;gap:10px">
+                        <div style="flex:1;min-width:0;min-height:56px;border:2px solid #111111;background:#FFFFFF;border-radius:3px;padding:8px 8px;display:flex;align-items:center;justify-content:center;text-align:center;cursor:pointer">
+                          <span style="font-size:17px;line-height:21px;font-weight:600">{{ r.actA }}</span>
+                        </div>
+                        <div style="flex:1;min-width:0;min-height:56px;border:2px solid #111111;background:#FFFFFF;border-radius:3px;padding:8px 8px;display:flex;align-items:center;justify-content:center;text-align:center;cursor:pointer">
+                          <span style="font-size:17px;line-height:21px;font-weight:600">{{ r.actB }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <!-- ABSENT -->
+                <sc-if value="{{ r.isAbsent }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex:none;background:#FFFFFF;border-bottom:2px solid #8F887E">
+                    <div style="width:6px;flex:none;border-left:6px dashed #7A4A00"></div>
+                    <div style="flex:1;min-width:0;padding:11px 14px 13px;display:flex;flex-direction:column;gap:10px">
+                      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+                        <div style="font-size:16px;font-weight:600;line-height:20px">{{ r.label }}</div>
+                        <div style="width:28px;height:28px;flex:none;border:2px dashed #7A4A00;color:#7A4A00;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;line-height:1">&#8709;</div>
+                      </div>
+                      <div style="height:32px;flex:none;border:2px dashed #8F887E;background:#EEEBE5;display:flex;align-items:center;padding:0 11px">
+                        <div style="height:2px;width:100%;background:#8F887E"></div>
+                      </div>
+                      <div style="font-size:17px;line-height:21px;font-weight:600;color:#7A4A00">{{ r.stateLabel }}</div>
+                      <div style="min-height:56px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;gap:9px;padding:8px 10px;cursor:pointer">
+                        <span style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;line-height:1">&#8709;</span>
+                        <span style="font-size:17px;line-height:21px;font-weight:600">{{ r.actA }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <!-- NOT IN REGISTRY -->
+                <sc-if value="{{ r.isRegistry }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex:none;background:#FFFFFF;border-bottom:2px solid #8F887E">
+                    <div style="width:6px;flex:none;background:#7A4A00"></div>
+                    <div style="flex:1;min-width:0;padding:11px 14px 13px;display:flex;flex-direction:column;gap:10px">
+                      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+                        <div style="font-size:16px;font-weight:600;line-height:20px">{{ r.label }}</div>
+                        <div style="width:28px;height:28px;flex:none;border:2px solid #7A4A00;color:#7A4A00;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;line-height:1">!</div>
+                      </div>
+                      <div style="font-size:26px;line-height:30px;font-weight:700;letter-spacing:-0.005em">{{ r.value }}</div>
+                      <div style="margin-left:16px;border-left:2px solid #8F887E;background:#EEEBE5;padding:10px 12px;display:flex;gap:9px">
+                        <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;line-height:21px;flex:none">!</div>
+                        <div style="font-size:16px;line-height:21px;min-width:0">{{ r.noteBody }}</div>
+                      </div>
+                      <div style="min-height:56px;flex:none;border:2px solid #1F2E63;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;gap:9px;padding:8px 10px;cursor:pointer">
+                        <span style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1">=</span>
+                        <span style="font-size:17px;line-height:21px;font-weight:600">{{ r.actA }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <!-- LOOK-ALIKE -->
+                <sc-if value="{{ r.isLookalike }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex:none;background:#FFFFFF;border-bottom:2px solid #8E1420;border-top:2px solid #8E1420">
+                    <div style="width:6px;flex:none;background:#8E1420"></div>
+                    <div style="flex:1;min-width:0;padding:11px 14px 13px;display:flex;flex-direction:column;gap:10px">
+                      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+                        <div style="font-size:16px;font-weight:600;line-height:20px">{{ r.label }}</div>
+                        <div style="width:28px;height:28px;flex:none;border:2px solid #8E1420;color:#8E1420;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;line-height:1">&#8800;</div>
+                      </div>
+                      <div style="font-size:26px;line-height:30px;font-weight:700;letter-spacing:-0.005em">{{ r.value }}</div>
+                      <div style="margin-left:16px;border-left:2px solid #8E1420;background:#EEEBE5;padding:11px 12px;display:flex;flex-direction:column;gap:9px">
+                        <div style="display:flex;gap:9px;align-items:baseline">
+                          <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;line-height:20px;color:#8E1420;flex:none">&#8800;</div>
+                          <div style="font-size:16px;line-height:20px;font-weight:600;color:#8E1420;min-width:0">{{ r.noteTitle }}</div>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:7px">
+                          <div style="display:flex;flex-direction:column;gap:1px;padding:7px 9px;background:#FFFFFF;border:2px solid #8F887E">
+                            <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;line-height:19px">{{ r.cmpALabel }}</div>
+                            <div style="font-size:20px;line-height:25px;font-weight:700">{{ r.cmpAValue }}</div>
+                          </div>
+                          <div style="display:flex;flex-direction:column;gap:1px;padding:7px 9px;background:#FFFFFF;border:2px solid #8E1420">
+                            <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;line-height:19px">{{ r.cmpBLabel }}</div>
+                            <div style="font-size:20px;line-height:25px;font-weight:700;color:#8E1420">{{ r.cmpBValue }}</div>
+                          </div>
+                        </div>
+                        <div style="font-size:16px;line-height:20px">{{ r.noteBody }}</div>
+                      </div>
+                      <div style="min-height:56px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;padding:8px 10px;cursor:pointer">
+                        <span style="font-size:17px;line-height:21px;font-weight:600;text-align:center">{{ r.actA }}</span>
+                      </div>
+                      <div style="min-height:56px;flex:none;border:2px solid #1F2E63;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;padding:8px 10px;cursor:pointer;margin-top:14px">
+                        <span style="font-size:17px;line-height:21px;font-weight:600;text-align:center">{{ r.actB }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <!-- DOCTOR QUERY, resolved that way -->
+                <sc-if value="{{ r.isQueried }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex:none;background:#FFFFFF;border-bottom:2px solid #8F887E">
+                    <div style="width:6px;flex:none;background:#111111"></div>
+                    <div style="flex:1;min-width:0;padding:11px 14px 13px;display:flex;flex-direction:column;gap:6px">
+                      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+                        <div style="font-size:16px;font-weight:600;line-height:20px">{{ r.label }}</div>
+                        <div style="width:28px;height:28px;flex:none;border:2px solid #111111;color:#111111;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700;line-height:1">~</div>
+                      </div>
+                      <div style="font-size:20px;line-height:25px;font-weight:600">{{ r.value }}</div>
+                      <div style="font-size:16px;line-height:20px">{{ r.settledNote }}</div>
+                    </div>
+                  </div>
+                </sc-if>
+
+              </sc-for>
+            </div>
+
+            <!-- scroll hint footer -->
+            <sc-if value="{{ f.scrollHint }}" hint-placeholder-val="{{ false }}">
+              <div style="flex:none;background:#FFFFFF;border-top:2px solid #111111;padding:8px 10px;display:flex;align-items:center;justify-content:center">
+                <div style="font-size:16px;line-height:20px">{{ f.scrollHint }}</div>
+              </div>
+            </sc-if>
+
+            <!-- completion bar -->
+            <sc-if value="{{ f.barLoading }}" hint-placeholder-val="{{ false }}">
+              <div style="flex:none;background:#EEEBE5;border-top:2px solid #111111;padding:14px;display:flex;flex-direction:column;gap:11px">
+                <div style="display:flex;gap:3px;align-items:stretch;height:10px">
+                  <sc-for list="{{ f.barCells }}" as="c" hint-placeholder-count="7">
+                    <div style="flex:1;background:{{ c.bg }};border:{{ c.border }}"></div>
+                  </sc-for>
+                </div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:19px;line-height:23px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap">{{ f.barText }}</div>
+                <div style="font-size:16px;line-height:20px">{{ f.barSub }}</div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ f.barBlocked }}" hint-placeholder-val="{{ false }}">
+              <div style="flex:none;background:#EEEBE5;border-top:2px solid #111111;padding:14px;display:flex;flex-direction:column;gap:11px">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="width:6px;align-self:stretch;min-height:23px;background:#7A4A00;flex:none"></div>
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:19px;line-height:23px;font-weight:600;color:#7A4A00;font-variant-numeric:tabular-nums;white-space:nowrap">{{ f.barText }}</div>
+                </div>
+                <div style="min-height:56px;flex:none;background:#EEEBE5;border:2px dashed #8F887E;border-radius:3px;display:flex;align-items:center;justify-content:center;padding:8px 10px">
+                  <span style="font-size:17px;font-weight:600;text-align:center;line-height:21px">{{ f.barNames }}</span>
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ f.barReady }}" hint-placeholder-val="{{ false }}">
+              <div style="flex:none;background:#EEEBE5;border-top:2px solid #111111;padding:14px;display:flex;flex-direction:column;gap:11px">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;line-height:21px;font-variant-numeric:tabular-nums;white-space:nowrap">{{ f.barText }}</div>
+                <div style="height:56px;flex:none;background:#1F2E63;border:2px solid #1F2E63;border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+                  <span style="font-size:19px;font-weight:700;color:#FFFFFF">{{ f.barNames }}</span>
+                </div>
+              </div>
+            </sc-if>
+
+          </div>
+        </div>
+      </sc-for>
+
+      <!-- FULL PHOTO OVERLAY -->
+      <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;flex-direction:column;gap:3px">
+          <div style="font-size:19px;font-weight:700;line-height:24px">Full photo</div>
+          <div style="font-size:16px;line-height:21px">Tapping the strip. Pinch&#8209;zoomable, active field outlined.</div>
+        </div>
+        <div style="width:390px;height:844px;background:#FFFFFF;border:2px solid #111111;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 2px 0 0 #B8B2A6">
+          <div style="height:40px;flex:none;background:#FFFFFF;border-bottom:1px solid #E2DED6;display:flex;align-items:center;justify-content:space-between;padding:0 18px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums">19:06</div>
+            <div style="display:flex;align-items:center;gap:7px">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">LTE</div>
+              <div style="width:26px;height:13px;border:2px solid #111111;border-radius:2px;padding:1.5px"><div style="width:72%;height:100%;background:#111111"></div></div>
+            </div>
+          </div>
+          <div style="height:58px;flex:none;border-bottom:2px solid #111111;display:flex;align-items:center;gap:10px;padding:0 12px">
+            <div style="width:44px;height:44px;flex:none;border:2px solid #111111;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700">&#10005;</div>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+              <div style="font-size:17px;font-weight:600;line-height:20px">Дозировка</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;line-height:19px;font-variant-numeric:tabular-nums">поле 3 из 7 &middot; выделено на фото</div>
+            </div>
+          </div>
+          <div style="flex:1;min-height:0;background:#DAD6CD;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center">
+            <div style="position:relative;width:386px;height:496px">
+              <img src="rx-photo.svg" alt="Prescription photo, placeholder" style="position:absolute;top:0;left:0;width:700px;height:900px;transform-origin:0 0;transform:scale(0.551)">
+              <div style="position:absolute;left:28.7px;top:212.7px;width:114.6px;height:33.1px;border:2.5px solid #1F2E63;box-shadow:0 0 0 2px rgba(255,255,255,0.9)"></div>
+              <div style="position:absolute;left:28.7px;top:255px;font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;background:#FFFFFF;border:2px solid #1F2E63;color:#111111;padding:2px 6px">Дозировка</div>
+            </div>
+          </div>
+          <div style="flex:none;background:#EEEBE5;border-top:2px solid #111111;padding:14px;display:flex;flex-direction:column;gap:11px">
+            <div style="font-size:16px;line-height:20px">Разведите пальцами, чтобы увеличить. Фото не редактируется.</div>
+            <div style="display:flex;gap:10px">
+              <div style="flex:1;height:56px;border:2px solid #111111;background:#111111;color:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1">&#9685;</span>
+                <span style="font-size:17px;font-weight:600">Ярче</span>
+              </div>
+              <div style="flex:1;height:56px;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+                <span style="font-size:17px;font-weight:600">К полям</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= AZERBAIJANI ================= -->
+  <div style="display:flex;flex-direction:column;gap:24px">
+    <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap">
+      <div style="font-size:26px;font-weight:700">Verify &middot; Azərbaycanca</div>
+      <div style="font-size:17px;padding:3px 9px;border:2px solid #8E1420;color:#8E1420;font-weight:600">Draft strings &mdash; native review required before build</div>
+    </div>
+    <div style="display:flex;gap:40px;flex-wrap:wrap;align-items:flex-start">
+      <sc-for list="{{ azFrames }}" as="f" hint-placeholder-count="1">
+        <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;flex-direction:column;gap:3px">
+            <div style="font-size:19px;font-weight:700;line-height:24px">{{ f.caption }}</div>
+            <div style="font-size:16px;line-height:21px">{{ f.sub }}</div>
+          </div>
+          <div style="width:390px;height:844px;background:#FFFFFF;border:2px solid #111111;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 2px 0 0 #B8B2A6">
+            <div style="height:40px;flex:none;background:#FFFFFF;border-bottom:1px solid #E2DED6;display:flex;align-items:center;justify-content:space-between;padding:0 18px">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums">19:04</div>
+              <div style="display:flex;align-items:center;gap:7px">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">LTE</div>
+                <div style="width:26px;height:13px;border:2px solid #111111;border-radius:2px;padding:1.5px"><div style="width:72%;height:100%;background:#111111"></div></div>
+              </div>
+            </div>
+            <div style="height:58px;flex:none;border-bottom:2px solid #111111;display:flex;align-items:center;gap:10px;padding:0 12px">
+              <div style="width:44px;height:44px;flex:none;border:2px solid #111111;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700">&#8592;</div>
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:600;line-height:20px;font-variant-numeric:tabular-nums">Resept №4471</div>
+                <div style="font-size:16px;line-height:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">«Nizami 42» filialı</div>
+              </div>
+              <div style="height:44px;flex:none;border:2px solid #111111;border-radius:8px;background:#FFFFFF;display:flex;align-items:center;gap:8px;padding:0 10px 0 5px">
+                <div style="width:32px;height:32px;flex:none;background:#1F2E63;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#FFFFFF">AQ</div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;line-height:1">&#9662;</div>
+              </div>
+            </div>
+            <div style="flex:none;background:#EEEBE5;border-bottom:2px solid #111111;padding:12px;display:flex;flex-direction:column;gap:10px">
+              <div style="position:relative;width:100%;height:164px;overflow:hidden;background:#D9D2C2;border:2px solid #8F887E">
+                <img src="rx-photo.svg" alt="Resept fotosu, placeholder" style="position:absolute;top:0;left:0;width:700px;height:900px;transform-origin:0 0;transform:{{ f.crop }}">
+                <div style="position:absolute;left:53.7px;top:{{ f.outT }};width:{{ f.outW }};height:{{ f.outH }};border:2.5px solid #1F2E63;box-shadow:0 0 0 2px rgba(255,255,255,0.85)"></div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px">
+                  <div style="font-size:16px;font-weight:600;line-height:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ f.stripLabel }}</div>
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;line-height:19px;font-variant-numeric:tabular-nums">{{ f.stripIndex }}</div>
+                </div>
+                <div style="height:44px;padding:0 13px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;gap:7px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1">&#9680;</span>
+                  <span style="font-size:16px;font-weight:600">Parlaq</span>
+                </div>
+                <div style="width:44px;height:44px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700;line-height:1">&#10530;</span>
+                </div>
+              </div>
+            </div>
+            <div style="flex:1;min-height:0;overflow:hidden;background:#FFFFFF;display:flex;flex-direction:column">
+              <sc-for list="{{ f.fields }}" as="r" hint-placeholder-count="3">
+                <sc-if value="{{ r.isLookalike }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex:none;background:#FFFFFF;border-bottom:2px solid #8E1420">
+                    <div style="width:6px;flex:none;background:#8E1420"></div>
+                    <div style="flex:1;min-width:0;padding:11px 14px 13px;display:flex;flex-direction:column;gap:10px">
+                      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+                        <div style="font-size:16px;font-weight:600;line-height:20px">{{ r.label }}</div>
+                        <div style="width:28px;height:28px;flex:none;border:2px solid #8E1420;color:#8E1420;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;line-height:1">&#8800;</div>
+                      </div>
+                      <div style="font-size:26px;line-height:30px;font-weight:700;letter-spacing:-0.005em">{{ r.value }}</div>
+                      <div style="margin-left:16px;border-left:2px solid #8E1420;background:#EEEBE5;padding:11px 12px;display:flex;flex-direction:column;gap:9px">
+                        <div style="display:flex;gap:9px;align-items:baseline">
+                          <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;line-height:20px;color:#8E1420;flex:none">&#8800;</div>
+                          <div style="font-size:16px;line-height:20px;font-weight:600;color:#8E1420;min-width:0">{{ r.noteTitle }}</div>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:7px">
+                          <div style="display:flex;flex-direction:column;gap:1px;padding:7px 9px;background:#FFFFFF;border:2px solid #8F887E">
+                            <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;line-height:19px">{{ r.cmpALabel }}</div>
+                            <div style="font-size:20px;line-height:25px;font-weight:700">{{ r.cmpAValue }}</div>
+                          </div>
+                          <div style="display:flex;flex-direction:column;gap:1px;padding:7px 9px;background:#FFFFFF;border:2px solid #8E1420">
+                            <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;line-height:19px">{{ r.cmpBLabel }}</div>
+                            <div style="font-size:20px;line-height:25px;font-weight:700;color:#8E1420">{{ r.cmpBValue }}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ r.isDisagree }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex:none;background:#FFFFFF;border-bottom:2px solid #8F887E">
+                    <div style="width:6px;flex:none;background:#7A4A00"></div>
+                    <div style="flex:1;min-width:0;padding:11px 14px 13px;display:flex;flex-direction:column;gap:10px">
+                      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+                        <div style="font-size:16px;font-weight:600;line-height:20px">{{ r.label }}</div>
+                        <div style="width:28px;height:28px;flex:none;border:2px solid #7A4A00;color:#7A4A00;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;line-height:1">&#8644;</div>
+                      </div>
+                      <div style="font-size:17px;line-height:21px;font-weight:600;color:#7A4A00">{{ r.stateLabel }}</div>
+                      <div style="display:flex;flex-direction:column;gap:8px">
+                        <div style="min-height:56px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;padding:10px 13px;display:flex;align-items:center">
+                          <span style="font-family:'IBM Plex Mono',monospace;font-size:20px;line-height:25px;font-weight:600;font-variant-numeric:tabular-nums">{{ r.optA }}</span>
+                        </div>
+                        <div style="min-height:56px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;padding:10px 13px;display:flex;align-items:center">
+                          <span style="font-family:'IBM Plex Mono',monospace;font-size:20px;line-height:25px;font-weight:600;font-variant-numeric:tabular-nums">{{ r.optB }}</span>
+                        </div>
+                        <div style="min-height:56px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;padding:10px 13px;display:flex;align-items:center">
+                          <span style="font-size:17px;line-height:25px;font-weight:600">{{ r.optOwn }}</span>
+                        </div>
+                      </div>
+                      <div style="font-size:16px;line-height:20px">{{ r.orderNote }}</div>
+                    </div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ r.isIllegible }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex:none;background:#FFFFFF;border-bottom:2px solid #8F887E">
+                    <div style="width:6px;flex:none;background:#7A4A00"></div>
+                    <div style="flex:1;min-width:0;padding:11px 14px 13px;display:flex;flex-direction:column;gap:10px">
+                      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+                        <div style="font-size:16px;font-weight:600;line-height:20px">{{ r.label }}</div>
+                        <div style="width:28px;height:28px;flex:none;border:2px solid #7A4A00;color:#7A4A00;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700;line-height:1">~</div>
+                      </div>
+                      <div style="font-size:17px;line-height:21px;font-weight:600;color:#7A4A00">{{ r.stateLabel }}</div>
+                      <div style="display:flex;gap:10px">
+                        <div style="flex:1;min-width:0;min-height:56px;border:2px solid #111111;background:#FFFFFF;border-radius:3px;padding:8px 6px;display:flex;align-items:center;justify-content:center;text-align:center">
+                          <span style="font-size:17px;line-height:21px;font-weight:600">{{ r.actA }}</span>
+                        </div>
+                        <div style="flex:1;min-width:0;min-height:56px;border:2px solid #111111;background:#FFFFFF;border-radius:3px;padding:8px 6px;display:flex;align-items:center;justify-content:center;text-align:center">
+                          <span style="font-size:17px;line-height:21px;font-weight:600">{{ r.actB }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </sc-if>
+              </sc-for>
+            </div>
+            <sc-if value="{{ f.scrollHint }}" hint-placeholder-val="{{ false }}">
+              <div style="flex:none;background:#FFFFFF;border-top:2px solid #111111;padding:8px 10px;display:flex;align-items:center;justify-content:center">
+                <div style="font-size:16px;line-height:20px">{{ f.scrollHint }}</div>
+              </div>
+            </sc-if>
+            <div style="flex:none;background:#EEEBE5;border-top:2px solid #111111;padding:14px;display:flex;flex-direction:column;gap:11px">
+              <div style="display:flex;align-items:center;gap:10px">
+                <div style="width:6px;align-self:stretch;min-height:23px;background:#7A4A00;flex:none"></div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:19px;line-height:23px;font-weight:600;color:#7A4A00;font-variant-numeric:tabular-nums">Qalan qərarlar: 3</div>
+              </div>
+              <div style="height:56px;flex:none;background:#EEEBE5;border:2px dashed #8F887E;border-radius:3px;display:flex;align-items:center;justify-content:center;padding:0 10px">
+                <span style="font-size:17px;font-weight:600;text-align:center;line-height:21px">Preparat &middot; Doza &middot; Miqdar</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+
+      <div style="width:420px;flex:none;display:flex;flex-direction:column;gap:12px;font-size:16px;line-height:1.5;background:#EEEBE5;border:2px solid #111111;padding:20px">
+        <div style="font-size:19px;font-weight:700">What the longer strings cost</div>
+        <div>Azerbaijani runs <span style="font-family:'IBM Plex Mono',monospace;font-weight:600">15&ndash;35%</span> longer than the Russian for the same string, and the pressure lands in three specific places.</div>
+        <div><span style="font-weight:600">Paired action buttons.</span> &laquo;Ввести вручную&raquo; / &laquo;Уточнить у врача&raquo; fit on one line each; &laquo;Əl ilə daxil et&raquo; / &laquo;Həkimlə dəqiqləşdir&raquo; do not. The pair is built to wrap to two lines and grow rather than shrink the type, which is why every action button is <span style="font-family:'IBM Plex Mono',monospace;font-weight:600">min-height</span> and not <span style="font-family:'IBM Plex Mono',monospace;font-weight:600">height</span>. Nothing truncates.</div>
+        <div><span style="font-weight:600">The look-alike annotation.</span> &laquo;təsiredici maddə fərqlidir&raquo; pushes the note title to two lines. The ingredient boxes below it are unaffected because they are stacked, not side by side &mdash; a two&#8209;column comparison would have broken here.</div>
+        <div><span style="font-weight:600">The strip caption.</span> &laquo;7 sahədən 3-c&uuml;&raquo; is a different grammatical shape from &laquo;поле 3 из 7&raquo;, not just longer, so the caption is one string per locale rather than a template with numbers slotted in.</div>
+        <div style="padding-top:12px;border-top:2px solid #8F887E">The three pressure points are split across two frames because the Azerbaijani look-alike card alone is taller than one screen &mdash; itself the finding, and the reason the field column scrolls rather than compresses. The Azerbaijani here is a working draft and is marked as such; it needs a native pharmacist&rsquo;s read before build, particularly the verbs on the resolution actions.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CAPTURE ================= -->
+  <div style="display:flex;flex-direction:column;gap:24px">
+    <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap">
+      <div style="font-size:26px;font-weight:700">Capture &middot; phone</div>
+      <div style="font-size:17px">warnings are live, and retake comes before processing</div>
+    </div>
+    <div style="display:flex;gap:40px;flex-wrap:wrap;align-items:flex-start">
+      <sc-for list="{{ captureFrames }}" as="f" hint-placeholder-count="3">
+        <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;flex-direction:column;gap:3px">
+            <div style="font-size:19px;font-weight:700;line-height:24px">{{ f.caption }}</div>
+            <div style="font-size:16px;line-height:21px">{{ f.sub }}</div>
+          </div>
+          <div style="width:390px;height:844px;background:#111111;border:2px solid #111111;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 2px 0 0 #B8B2A6">
+            <div style="height:40px;flex:none;background:#111111;display:flex;align-items:center;justify-content:space-between;padding:0 18px">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;color:#FFFFFF;font-variant-numeric:tabular-nums">19:03</div>
+              <div style="display:flex;align-items:center;gap:7px">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;color:#FFFFFF">LTE</div>
+                <div style="width:26px;height:13px;border:2px solid #FFFFFF;border-radius:2px;padding:1.5px"><div style="width:72%;height:100%;background:#FFFFFF"></div></div>
+              </div>
+            </div>
+            <div style="height:58px;flex:none;background:#FFFFFF;border-bottom:2px solid #111111;display:flex;align-items:center;gap:10px;padding:0 12px">
+              <div style="width:44px;height:44px;flex:none;border:2px solid #111111;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700">&#10005;</div>
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+                <div style="font-size:17px;font-weight:600;line-height:20px">Снимок рецепта</div>
+                <div style="font-size:16px;line-height:19px">Филиал «Низами 42»</div>
+              </div>
+            </div>
+
+            <!-- viewfinder -->
+            <div style="flex:1;min-height:0;position:relative;overflow:hidden;background:#2A2A28;display:flex;align-items:center;justify-content:center">
+              <img src="rx-photo.svg" alt="Camera preview, placeholder" style="position:absolute;top:50%;left:50%;width:700px;height:900px;transform-origin:50% 50%;transform:{{ f.viewTransform }};filter:{{ f.viewFilter }}">
+              <div style="position:absolute;inset:0;background:rgba(17,17,17,0.34)"></div>
+              <!-- frame guide -->
+              <div style="position:absolute;left:24px;right:24px;top:28px;bottom:28px;border:2px solid rgba(255,255,255,0.55)"></div>
+              <div style="position:absolute;left:20px;top:24px;width:44px;height:44px;border-left:5px solid #FFFFFF;border-top:5px solid #FFFFFF"></div>
+              <div style="position:absolute;right:20px;top:24px;width:44px;height:44px;border-right:5px solid #FFFFFF;border-top:5px solid #FFFFFF"></div>
+              <div style="position:absolute;left:20px;bottom:24px;width:44px;height:44px;border-left:5px solid #FFFFFF;border-bottom:5px solid #FFFFFF"></div>
+              <div style="position:absolute;right:20px;bottom:24px;width:44px;height:44px;border-right:5px solid #FFFFFF;border-bottom:5px solid #FFFFFF"></div>
+              <!-- live warnings, on solid ground -->
+              <div style="position:absolute;left:16px;right:16px;top:44px;display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ f.warnings }}" as="w" hint-placeholder-count="2">
+                  <div style="display:flex;background:#FFFFFF;border:2px solid #111111">
+                    <div style="width:6px;flex:none;background:{{ w.ink }}"></div>
+                    <div style="flex:1;min-width:0;padding:10px 12px;display:flex;gap:10px;align-items:flex-start">
+                      <div style="width:28px;height:28px;flex:none;border:2px solid {{ w.ink }};color:{{ w.ink }};display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;line-height:1">{{ w.glyph }}</div>
+                      <div style="min-width:0;display:flex;flex-direction:column;gap:2px">
+                        <div style="font-size:17px;line-height:21px;font-weight:600">{{ w.ru }}</div>
+                        <div style="font-size:16px;line-height:20px">{{ w.fix }}</div>
+                      </div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <!-- shutter zone -->
+            <sc-if value="{{ f.shutterReady }}" hint-placeholder-val="{{ true }}">
+              <div style="flex:none;background:#EEEBE5;border-top:2px solid #111111;padding:14px;display:flex;flex-direction:column;gap:11px">
+                <div style="font-size:16px;line-height:20px">{{ f.shutterNote }}</div>
+                <div style="height:64px;flex:none;background:#1F2E63;border:2px solid #1F2E63;border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+                  <span style="font-size:19px;font-weight:700;color:#FFFFFF">Снять</span>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ f.shutterBlocked }}" hint-placeholder-val="{{ false }}">
+              <div style="flex:none;background:#EEEBE5;border-top:2px solid #111111;padding:14px;display:flex;flex-direction:column;gap:11px">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="width:6px;align-self:stretch;min-height:23px;background:#8E1420;flex:none"></div>
+                  <div style="font-size:17px;line-height:22px;font-weight:600;color:#8E1420">{{ f.shutterNote }}</div>
+                </div>
+                <div style="height:64px;flex:none;background:#EEEBE5;border:2px dashed #8F887E;border-radius:3px;display:flex;align-items:center;justify-content:center;padding:0 12px">
+                  <span style="font-size:17px;font-weight:600;text-align:center;line-height:21px">Отодвиньте телефон, чтобы снять</span>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ f.marginal }}" hint-placeholder-val="{{ false }}">
+              <div style="flex:none;background:#EEEBE5;border-top:2px solid #111111;padding:14px;display:flex;flex-direction:column;gap:12px">
+                <div style="display:flex;gap:10px;align-items:flex-start">
+                  <div style="width:28px;height:28px;flex:none;border:2px solid #7A4A00;color:#7A4A00;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;line-height:1">&#9680;</div>
+                  <div style="min-width:0;display:flex;flex-direction:column;gap:2px">
+                    <div style="font-size:17px;line-height:22px;font-weight:600">Читаемо, но на границе</div>
+                    <div style="font-size:16px;line-height:20px">Блик закрывает часть строки «Количество». Можно продолжить &mdash; это поле, скорее всего, придётся решать вручную.</div>
+                  </div>
+                </div>
+                <div style="display:flex;gap:10px">
+                  <div style="flex:1;min-height:56px;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+                    <span style="font-size:17px;font-weight:600">Снять заново</span>
+                  </div>
+                  <div style="flex:1;min-height:56px;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+                    <span style="font-size:17px;font-weight:600">Продолжить</span>
+                  </div>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ================= ARCHIVE + SIGN IN ================= -->
+  <div style="display:flex;flex-direction:column;gap:24px">
+    <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap">
+      <div style="font-size:26px;font-weight:700">Archive, sign&#8209;in, branch</div>
+    </div>
+    <div style="display:flex;gap:40px;flex-wrap:wrap;align-items:flex-start">
+
+      <!-- ARCHIVE LIST -->
+      <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;flex-direction:column;gap:3px">
+          <div style="font-size:19px;font-weight:700;line-height:24px">Archive &middot; pharmacist</div>
+          <div style="font-size:16px;line-height:21px">Own branch only. Search runs on active ingredient, date, number.</div>
+        </div>
+        <div style="width:390px;height:844px;background:#FFFFFF;border:2px solid #111111;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 2px 0 0 #B8B2A6">
+          <div style="height:40px;flex:none;border-bottom:1px solid #E2DED6;display:flex;align-items:center;justify-content:space-between;padding:0 18px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums">19:12</div>
+            <div style="display:flex;align-items:center;gap:7px">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">LTE</div>
+              <div style="width:26px;height:13px;border:2px solid #111111;border-radius:2px;padding:1.5px"><div style="width:72%;height:100%;background:#111111"></div></div>
+            </div>
+          </div>
+          <div style="flex:none;border-bottom:2px solid #111111;padding:12px;display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+                <div style="font-size:21px;font-weight:700;line-height:26px">Архив</div>
+                <div style="font-size:16px;line-height:19px">Филиал «Низами 42»</div>
+              </div>
+              <div style="height:44px;flex:none;border:2px solid #111111;border-radius:8px;display:flex;align-items:center;gap:8px;padding:0 10px 0 5px">
+                <div style="width:32px;height:32px;flex:none;background:#1F2E63;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#FFFFFF">АГ</div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;line-height:1">&#9662;</div>
+              </div>
+            </div>
+            <div style="height:52px;flex:none;border:2px solid #111111;border-radius:3px;display:flex;align-items:center;gap:10px;padding:0 12px;background:#FFFFFF">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1">&#9906;</div>
+              <div style="flex:1;min-width:0;font-size:17px;font-weight:600">амоксициллин</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;line-height:1">&#10005;</div>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <div style="height:44px;padding:0 12px;border:2px solid #111111;background:#111111;color:#FFFFFF;border-radius:3px;display:flex;align-items:center;font-size:16px;font-weight:600">Действующее вещество</div>
+              <div style="height:44px;padding:0 12px;border:2px solid #111111;border-radius:3px;display:flex;align-items:center;font-size:16px;font-weight:600">Дата</div>
+              <div style="height:44px;padding:0 12px;border:2px solid #111111;border-radius:3px;display:flex;align-items:center;font-size:16px;font-weight:600">Номер</div>
+            </div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;line-height:20px;font-variant-numeric:tabular-nums">Найдено: 3 &middot; 14.09</div>
+          </div>
+          <div style="flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column">
+            <sc-for list="{{ archiveRows }}" as="a" hint-placeholder-count="3">
+              <div style="display:flex;flex:none;gap:11px;padding:13px 12px;border-bottom:2px solid #8F887E;cursor:pointer">
+                <div style="width:52px;height:66px;flex:none;overflow:hidden;background:#D9D2C2;border:2px solid #8F887E;position:relative">
+                  <img src="rx-photo.svg" alt="" style="position:absolute;top:0;left:0;width:700px;height:900px;transform-origin:0 0;transform:scale(0.074)">
+                </div>
+                <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+                  <div style="font-size:19px;line-height:23px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ a.name }}</div>
+                  <div style="font-size:16px;line-height:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ a.ingredient }}</div>
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;line-height:20px;font-variant-numeric:tabular-nums">{{ a.meta }}</div>
+                </div>
+                <sc-if value="{{ a.done }}" hint-placeholder-val="{{ true }}">
+                  <div style="width:28px;height:28px;flex:none;border:2px solid #111111;background:#111111;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;line-height:1">&#10003;</div>
+                </sc-if>
+                <sc-if value="{{ a.queried }}" hint-placeholder-val="{{ false }}">
+                  <div style="width:28px;height:28px;flex:none;border:2px solid #111111;color:#111111;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700;line-height:1">~</div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+          <div style="flex:none;border-top:2px solid #111111;background:#EEEBE5;padding:14px;display:flex;gap:10px">
+            <div style="flex:1;height:64px;background:#1F2E63;border:2px solid #1F2E63;border-radius:3px;display:flex;align-items:center;justify-content:center;gap:9px;cursor:pointer">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700;line-height:1;color:#FFFFFF">&#9633;</span>
+              <span style="font-size:19px;font-weight:700;color:#FFFFFF">Новый снимок</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARCHIVE RECORD -->
+      <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;flex-direction:column;gap:3px">
+          <div style="font-size:19px;font-weight:700;line-height:24px">Archive record</div>
+          <div style="font-size:16px;line-height:21px">Photo and transcription, never one without the other.</div>
+        </div>
+        <div style="width:390px;height:844px;background:#FFFFFF;border:2px solid #111111;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 2px 0 0 #B8B2A6">
+          <div style="height:40px;flex:none;border-bottom:1px solid #E2DED6;display:flex;align-items:center;justify-content:space-between;padding:0 18px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums">19:13</div>
+            <div style="display:flex;align-items:center;gap:7px">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">LTE</div>
+              <div style="width:26px;height:13px;border:2px solid #111111;border-radius:2px;padding:1.5px"><div style="width:72%;height:100%;background:#111111"></div></div>
+            </div>
+          </div>
+          <div style="height:58px;flex:none;border-bottom:2px solid #111111;display:flex;align-items:center;gap:10px;padding:0 12px">
+            <div style="width:44px;height:44px;flex:none;border:2px solid #111111;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700">&#8592;</div>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:600;line-height:20px;font-variant-numeric:tabular-nums">Рецепт №4468</div>
+              <div style="font-size:16px;line-height:19px">Завершено 14.09 17:52 &middot; Р. Мамедов</div>
+            </div>
+          </div>
+          <div style="flex:none;background:#EEEBE5;border-bottom:2px solid #111111;padding:12px;display:flex;flex-direction:column;gap:10px">
+            <div style="position:relative;width:100%;height:200px;overflow:hidden;background:#D9D2C2;border:2px solid #8F887E;display:flex;align-items:center;justify-content:center">
+              <img src="rx-photo.svg" alt="Prescription photo, placeholder" style="position:absolute;width:700px;height:900px;top:50%;left:50%;transform-origin:50% 50%;transform:translate(-50%,-50%) scale(0.222)">
+            </div>
+            <div style="font-size:16px;line-height:20px">Нажмите, чтобы открыть фото целиком.</div>
+          </div>
+          <div style="flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column">
+            <sc-for list="{{ recordRows }}" as="r" hint-placeholder-count="5">
+              <div style="display:flex;flex:none;background:#FFFFFF;border-bottom:2px solid #8F887E">
+                <div style="width:6px;flex:none;background:#111111"></div>
+                <div style="flex:1;min-width:0;padding:10px 14px 11px;display:flex;flex-direction:column;gap:3px">
+                  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+                    <div style="font-size:16px;font-weight:600;line-height:20px">{{ r.label }}</div>
+                    <div style="width:26px;height:26px;flex:none;border:2px solid #111111;color:#111111;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;line-height:1">{{ r.glyph }}</div>
+                  </div>
+                  <div style="font-size:19px;line-height:24px;font-weight:600">{{ r.value }}</div>
+                  <div style="font-size:16px;line-height:20px">{{ r.note }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="flex:none;background:#FFFFFF;border-top:2px solid #111111;padding:8px 10px;display:flex;align-items:center;justify-content:center">
+            <div style="font-size:16px;line-height:20px">&#8595; ещё 2 поля</div>
+          </div>
+          <div style="flex:none;border-top:2px solid #111111;background:#EEEBE5;padding:14px;display:flex;flex-direction:column;gap:10px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;line-height:20px;font-variant-numeric:tabular-nums">7 из 7 решено &middot; 1 уточнение у врача</div>
+            <div style="font-size:16px;line-height:20px">Запись закрыта. Изменения вносит только менеджер.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIGN IN -->
+      <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;flex-direction:column;gap:3px">
+          <div style="font-size:19px;font-weight:700;line-height:24px">Sign&#8209;in &amp; branch</div>
+          <div style="font-size:16px;line-height:21px">The device belongs to the branch; the person does not.</div>
+        </div>
+        <div style="width:390px;height:844px;background:#FFFFFF;border:2px solid #111111;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 2px 0 0 #B8B2A6">
+          <div style="height:40px;flex:none;border-bottom:1px solid #E2DED6;display:flex;align-items:center;justify-content:space-between;padding:0 18px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums">08:58</div>
+            <div style="display:flex;align-items:center;gap:7px">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">LTE</div>
+              <div style="width:26px;height:13px;border:2px solid #111111;border-radius:2px;padding:1.5px"><div style="width:72%;height:100%;background:#111111"></div></div>
+            </div>
+          </div>
+          <div style="flex:none;padding:24px 16px 16px;display:flex;flex-direction:column;gap:6px;border-bottom:2px solid #111111">
+            <div style="font-size:30px;font-weight:700;letter-spacing:-0.01em;line-height:34px">Siruply</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;line-height:22px">Филиал «Низами 42» &middot; устройство 02</div>
+            <div style="font-size:16px;line-height:21px">Филиал закреплён за устройством. Сменить может только менеджер.</div>
+          </div>
+          <div style="flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column">
+            <div style="padding:14px 16px 10px;font-size:17px;font-weight:600">Кто на смене</div>
+            <sc-for list="{{ staff }}" as="s" hint-placeholder-count="3">
+              <div style="display:flex;flex:none;align-items:center;gap:12px;min-height:72px;padding:12px 16px;border-top:2px solid #8F887E;cursor:pointer">
+                <sc-if value="{{ s.current }}" hint-placeholder-val="{{ false }}">
+                  <div style="width:44px;height:44px;flex:none;background:#1F2E63;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#FFFFFF">{{ s.initials }}</div>
+                </sc-if>
+                <sc-if value="{{ s.other }}" hint-placeholder-val="{{ true }}">
+                  <div style="width:44px;height:44px;flex:none;border:2px solid #111111;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700">{{ s.initials }}</div>
+                </sc-if>
+                <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px">
+                  <div style="font-size:19px;line-height:24px;font-weight:600">{{ s.name }}</div>
+                  <div style="font-size:16px;line-height:20px">{{ s.role }}</div>
+                </div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">{{ s.action }}</div>
+              </div>
+            </sc-for>
+            <div style="display:flex;flex:none;align-items:center;gap:12px;min-height:72px;padding:12px 16px;border-top:2px solid #8F887E;border-bottom:2px solid #8F887E;cursor:pointer">
+              <div style="width:44px;height:44px;flex:none;border:2px dashed #111111;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:21px;font-weight:700">+</div>
+              <div style="flex:1;min-width:0;font-size:19px;line-height:24px;font-weight:600">Другой сотрудник</div>
+            </div>
+          </div>
+          <div style="flex:none;border-top:2px solid #111111;background:#EEEBE5;padding:16px;display:flex;flex-direction:column;gap:12px">
+            <div style="font-size:17px;font-weight:600;line-height:22px">PIN &mdash; А. Гулиева</div>
+            <div style="display:flex;gap:10px">
+              <div style="flex:1;height:60px;border:2px solid #111111;background:#FFFFFF;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:700">&bull;</div>
+              <div style="flex:1;height:60px;border:2px solid #111111;background:#FFFFFF;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:700">&bull;</div>
+              <div style="flex:1;height:60px;border:2px solid #111111;background:#FFFFFF;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:700">&bull;</div>
+              <div style="flex:1;height:60px;border:2px solid #1F2E63;background:#FFFFFF;display:flex;align-items:center;justify-content:center"></div>
+            </div>
+            <div style="font-size:16px;line-height:20px">Кто проверил &mdash; записывается в каждый рецепт.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TABLET ================= -->
+  <div style="display:flex;flex-direction:column;gap:24px">
+    <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap">
+      <div style="font-size:26px;font-weight:700">Tablet &middot; 1024&times;768 landscape</div>
+      <div style="font-size:17px">the strip becomes a real pane, same linked highlighting</div>
+    </div>
+
+    <!-- TABLET VERIFY -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:19px;font-weight:700">Verify &mdash; full photo left, fields right</div>
+      <div style="width:1024px;height:768px;background:#FFFFFF;border:2px solid #111111;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 2px 0 0 #B8B2A6">
+        <div style="height:60px;flex:none;border-bottom:2px solid #111111;display:flex;align-items:center;gap:14px;padding:0 16px">
+          <div style="width:44px;height:44px;flex:none;border:2px solid #111111;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700">&#8592;</div>
+          <div style="display:flex;flex-direction:column">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600;line-height:22px;font-variant-numeric:tabular-nums">Рецепт №4471</div>
+            <div style="font-size:16px;line-height:19px">Филиал «Низами 42»</div>
+          </div>
+          <div style="flex:1"></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:600;font-variant-numeric:tabular-nums">19:04</div>
+          <div style="height:44px;flex:none;border:2px solid #111111;border-radius:8px;display:flex;align-items:center;gap:9px;padding:0 12px 0 5px">
+            <div style="width:32px;height:32px;flex:none;background:#1F2E63;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#FFFFFF">АГ</div>
+            <div style="font-size:16px;font-weight:600">А. Гулиева</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;line-height:1">&#9662;</div>
+          </div>
+        </div>
+        <div style="flex:1;min-height:0;display:flex">
+          <!-- left pane: full photo -->
+          <div style="width:472px;flex:none;background:#EEEBE5;border-right:2px solid #111111;display:flex;flex-direction:column">
+            <div style="flex:1;min-height:0;padding:14px;display:flex;align-items:flex-start;justify-content:center;overflow:hidden">
+              <div style="position:relative;width:440px;height:566px;flex:none;border:2px solid #8F887E;overflow:hidden;background:#D9D2C2">
+                <img src="rx-photo.svg" alt="Prescription photo, placeholder" style="position:absolute;top:0;left:0;width:700px;height:900px;transform-origin:0 0;transform:scale(0.629)">
+                <div style="position:absolute;left:32.7px;top:242.8px;width:130.8px;height:37.7px;border:3px solid #1F2E63;box-shadow:0 0 0 2px rgba(255,255,255,0.9)"></div>
+                <div style="position:absolute;left:32.7px;top:190px;width:251.6px;height:39px;border:2px dashed #8F887E"></div>
+                <div style="position:absolute;left:32.7px;top:299.4px;width:119.5px;height:27.7px;border:2px dashed #8F887E"></div>
+              </div>
+            </div>
+            <div style="flex:none;border-top:2px solid #111111;padding:14px;display:flex;align-items:center;gap:10px">
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px">
+                <div style="font-size:17px;font-weight:600;line-height:21px">Дозировка &mdash; выделено</div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;line-height:19px;font-variant-numeric:tabular-nums">поле 3 из 7 &middot; остальные пунктиром</div>
+              </div>
+              <div style="height:48px;padding:0 14px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;gap:8px">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1">&#9680;</span>
+                <span style="font-size:16px;font-weight:600">Ярче</span>
+              </div>
+            </div>
+          </div>
+          <!-- right pane: fields -->
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+            <div style="flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column">
+              <sc-for list="{{ tabletFields }}" as="r" hint-placeholder-count="4">
+                <sc-if value="{{ r.isSettled }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;flex:none;border-bottom:2px solid #8F887E">
+                    <div style="width:6px;flex:none;background:#111111"></div>
+                    <div style="flex:1;min-width:0;padding:11px 18px 12px;display:flex;align-items:flex-start;gap:16px">
+                      <div style="width:152px;flex:none;font-size:16px;font-weight:600;line-height:22px">{{ r.label }}</div>
+                      <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+                        <div style="font-size:21px;line-height:26px;font-weight:600">{{ r.value }}</div>
+                        <div style="font-size:16px;line-height:20px">{{ r.note }}</div>
+                      </div>
+                      <div style="width:28px;height:28px;flex:none;border:2px solid #111111;background:#111111;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;line-height:1">&#10003;</div>
+                    </div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ r.isDisagree }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex:none;border-bottom:2px solid #8F887E;background:#FFFFFF">
+                    <div style="width:6px;flex:none;background:#7A4A00"></div>
+                    <div style="flex:1;min-width:0;padding:13px 18px 14px;display:flex;align-items:flex-start;gap:16px">
+                      <div style="width:152px;flex:none;display:flex;flex-direction:column;gap:5px">
+                        <div style="font-size:16px;font-weight:600;line-height:22px">{{ r.label }}</div>
+                        <div style="font-size:17px;line-height:21px;font-weight:600;color:#7A4A00">{{ r.stateLabel }}</div>
+                      </div>
+                      <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px">
+                        <div style="display:flex;gap:10px">
+                          <div style="flex:1;min-height:56px;border:2px solid #111111;border-radius:3px;padding:10px 13px;display:flex;align-items:center;cursor:pointer">
+                            <span style="font-family:'IBM Plex Mono',monospace;font-size:20px;line-height:25px;font-weight:600;font-variant-numeric:tabular-nums">{{ r.optA }}</span>
+                          </div>
+                          <div style="flex:1;min-height:56px;border:2px solid #111111;border-radius:3px;padding:10px 13px;display:flex;align-items:center;cursor:pointer">
+                            <span style="font-family:'IBM Plex Mono',monospace;font-size:20px;line-height:25px;font-weight:600;font-variant-numeric:tabular-nums">{{ r.optB }}</span>
+                          </div>
+                          <div style="flex:1;min-height:56px;border:2px solid #111111;border-radius:3px;padding:10px 13px;display:flex;align-items:center;cursor:pointer">
+                            <span style="font-size:17px;line-height:25px;font-weight:600">{{ r.optOwn }}</span>
+                          </div>
+                        </div>
+                        <div style="font-size:16px;line-height:20px">{{ r.orderNote }}</div>
+                      </div>
+                      <div style="width:28px;height:28px;flex:none;border:2px solid #7A4A00;color:#7A4A00;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;line-height:1">&#8644;</div>
+                    </div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ r.isIllegible }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex:none;border-bottom:2px solid #8F887E;background:#FFFFFF">
+                    <div style="width:6px;flex:none;background:#7A4A00"></div>
+                    <div style="flex:1;min-width:0;padding:13px 18px 14px;display:flex;align-items:flex-start;gap:16px">
+                      <div style="width:152px;flex:none;display:flex;flex-direction:column;gap:5px">
+                        <div style="font-size:16px;font-weight:600;line-height:22px">{{ r.label }}</div>
+                        <div style="font-size:17px;line-height:21px;font-weight:600;color:#7A4A00">{{ r.stateLabel }}</div>
+                      </div>
+                      <div style="flex:1;min-width:0;display:flex;gap:10px">
+                        <div style="flex:1;min-height:56px;border:2px solid #111111;border-radius:3px;display:flex;align-items:center;justify-content:center;padding:8px;cursor:pointer">
+                          <span style="font-size:17px;line-height:21px;font-weight:600">{{ r.actA }}</span>
+                        </div>
+                        <div style="flex:1;min-height:56px;border:2px solid #111111;border-radius:3px;display:flex;align-items:center;justify-content:center;padding:8px;cursor:pointer">
+                          <span style="font-size:17px;line-height:21px;font-weight:600">{{ r.actB }}</span>
+                        </div>
+                      </div>
+                      <div style="width:28px;height:28px;flex:none;border:2px solid #7A4A00;color:#7A4A00;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700;line-height:1">~</div>
+                    </div>
+                  </div>
+                </sc-if>
+              </sc-for>
+            </div>
+            <div style="flex:none;background:#EEEBE5;border-top:2px solid #111111;padding:16px;display:flex;align-items:center;gap:16px">
+              <div style="width:6px;align-self:stretch;min-height:40px;background:#7A4A00;flex:none"></div>
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:20px;line-height:25px;font-weight:600;color:#7A4A00;font-variant-numeric:tabular-nums">Осталось решений: 2</div>
+                <div style="font-size:16px;line-height:20px">Дозировка &middot; Количество. Нажмите поле, чтобы решить.</div>
+              </div>
+              <div style="width:240px;height:60px;flex:none;background:#EEEBE5;border:2px dashed #8F887E;border-radius:3px;display:flex;align-items:center;justify-content:center">
+                <span style="font-size:17px;font-weight:600">Завершить &mdash; недоступно</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLET CAPTURE + ARCHIVE -->
+    <div style="display:flex;gap:40px;flex-wrap:wrap;align-items:flex-start">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="font-size:19px;font-weight:700">Capture</div>
+        <div style="width:1024px;height:768px;background:#111111;border:2px solid #111111;display:flex;overflow:hidden;box-shadow:0 2px 0 0 #B8B2A6">
+          <div style="flex:1;min-width:0;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#2A2A28">
+            <img src="rx-photo.svg" alt="Camera preview, placeholder" style="position:absolute;top:50%;left:50%;width:700px;height:900px;transform-origin:50% 50%;transform:translate(-50%,-50%) scale(0.82) rotate(1.4deg)">
+            <div style="position:absolute;inset:0;background:rgba(17,17,17,0.3)"></div>
+            <div style="position:absolute;left:52px;right:52px;top:36px;bottom:36px;border:2px solid rgba(255,255,255,0.55)"></div>
+            <div style="position:absolute;left:46px;top:30px;width:52px;height:52px;border-left:6px solid #FFFFFF;border-top:6px solid #FFFFFF"></div>
+            <div style="position:absolute;right:46px;top:30px;width:52px;height:52px;border-right:6px solid #FFFFFF;border-top:6px solid #FFFFFF"></div>
+            <div style="position:absolute;left:46px;bottom:30px;width:52px;height:52px;border-left:6px solid #FFFFFF;border-bottom:6px solid #FFFFFF"></div>
+            <div style="position:absolute;right:46px;bottom:30px;width:52px;height:52px;border-right:6px solid #FFFFFF;border-bottom:6px solid #FFFFFF"></div>
+            <div style="position:absolute;left:24px;top:52px;width:360px;display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;background:#FFFFFF;border:2px solid #111111">
+                <div style="width:6px;flex:none;background:#7A4A00"></div>
+                <div style="flex:1;min-width:0;padding:11px 13px;display:flex;gap:10px;align-items:flex-start">
+                  <div style="width:28px;height:28px;flex:none;border:2px solid #7A4A00;color:#7A4A00;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;line-height:1">&#9788;</div>
+                  <div style="min-width:0;display:flex;flex-direction:column;gap:2px">
+                    <div style="font-size:17px;line-height:21px;font-weight:600">Блик в правом верхнем углу</div>
+                    <div style="font-size:16px;line-height:20px">Наклоните планшет влево или отойдите от лампы.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="width:324px;flex:none;background:#EEEBE5;border-left:2px solid #111111;display:flex;flex-direction:column">
+            <div style="flex:none;padding:16px;border-bottom:2px solid #111111;display:flex;flex-direction:column;gap:4px">
+              <div style="font-size:21px;font-weight:700;line-height:26px">Снимок рецепта</div>
+              <div style="font-size:16px;line-height:20px">Филиал «Низами 42» &middot; А. Гулиева</div>
+            </div>
+            <div style="flex:1;min-height:0;padding:16px;display:flex;flex-direction:column;gap:14px">
+              <div style="font-size:17px;font-weight:600;line-height:22px">Перед съёмкой</div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;gap:10px;align-items:flex-start">
+                  <div style="width:26px;height:26px;flex:none;border:2px solid #111111;background:#111111;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;line-height:1">&#10003;</div>
+                  <div style="font-size:16px;line-height:21px;min-width:0">Весь лист в рамке, включая строку «Пациент»</div>
+                </div>
+                <div style="display:flex;gap:10px;align-items:flex-start">
+                  <div style="width:26px;height:26px;flex:none;border:2px solid #111111;background:#111111;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;line-height:1">&#10003;</div>
+                  <div style="font-size:16px;line-height:21px;min-width:0">Планшет параллельно листу</div>
+                </div>
+                <div style="display:flex;gap:10px;align-items:flex-start">
+                  <div style="width:26px;height:26px;flex:none;border:2px solid #7A4A00;color:#7A4A00;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;line-height:1">&#9788;</div>
+                  <div style="font-size:16px;line-height:21px;min-width:0;font-weight:600">Блик &mdash; сдвиньте лист от лампы</div>
+                </div>
+              </div>
+            </div>
+            <div style="flex:none;padding:16px;border-top:2px solid #111111;display:flex;flex-direction:column;gap:12px">
+              <div style="font-size:16px;line-height:20px">Можно снимать. Блик не задевает строки с текстом.</div>
+              <div style="height:68px;flex:none;background:#1F2E63;border:2px solid #1F2E63;border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+                <span style="font-size:20px;font-weight:700;color:#FFFFFF">Снять</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="font-size:19px;font-weight:700">Archive &mdash; manager, all branches</div>
+        <div style="width:1024px;height:768px;background:#FFFFFF;border:2px solid #111111;display:flex;overflow:hidden;box-shadow:0 2px 0 0 #B8B2A6">
+          <div style="width:424px;flex:none;border-right:2px solid #111111;display:flex;flex-direction:column">
+            <div style="flex:none;padding:16px;border-bottom:2px solid #111111;display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;align-items:center;gap:12px">
+                <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+                  <div style="font-size:23px;font-weight:700;line-height:28px">Архив</div>
+                  <div style="font-size:16px;line-height:20px">Все филиалы &middot; менеджер</div>
+                </div>
+                <div style="height:44px;flex:none;border:2px solid #111111;border-radius:8px;display:flex;align-items:center;gap:9px;padding:0 12px 0 5px">
+                  <div style="width:32px;height:32px;flex:none;background:#1F2E63;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#FFFFFF">ЭН</div>
+                  <div style="font-size:16px;font-weight:600">Э. Нуриев</div>
+                </div>
+              </div>
+              <div style="height:52px;flex:none;border:2px solid #111111;border-radius:3px;display:flex;align-items:center;gap:10px;padding:0 12px">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1">&#9906;</div>
+                <div style="flex:1;min-width:0;font-size:17px;font-weight:600">амоксициллин</div>
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <div style="height:40px;padding:0 12px;border:2px solid #111111;background:#111111;color:#FFFFFF;border-radius:3px;display:flex;align-items:center;font-size:16px;font-weight:600">Вещество</div>
+                <div style="height:40px;padding:0 12px;border:2px solid #111111;border-radius:3px;display:flex;align-items:center;font-size:16px;font-weight:600">Дата</div>
+                <div style="height:40px;padding:0 12px;border:2px solid #111111;border-radius:3px;display:flex;align-items:center;font-size:16px;font-weight:600">Номер</div>
+                <div style="height:40px;padding:0 12px;border:2px solid #111111;border-radius:3px;display:flex;align-items:center;font-size:16px;font-weight:600">Филиал</div>
+              </div>
+            </div>
+            <div style="flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column">
+              <sc-for list="{{ tabletArchive }}" as="a" hint-placeholder-count="5">
+                <div style="display:flex;flex:none;gap:12px;padding:13px 16px;border-bottom:2px solid #8F887E;cursor:pointer;background:{{ a.bg }}">
+                  <div style="width:48px;height:62px;flex:none;overflow:hidden;background:#D9D2C2;border:2px solid #8F887E;position:relative">
+                    <img src="rx-photo.svg" alt="" style="position:absolute;top:0;left:0;width:700px;height:900px;transform-origin:0 0;transform:scale(0.068)">
+                  </div>
+                  <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+                    <div style="font-size:18px;line-height:22px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ a.name }}</div>
+                    <div style="font-size:16px;line-height:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ a.ingredient }}</div>
+                    <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;line-height:20px;font-variant-numeric:tabular-nums">{{ a.meta }}</div>
+                  </div>
+                  <div style="width:26px;height:26px;flex:none;border:2px solid #111111;background:{{ a.badgeBg }};color:{{ a.badgeFg }};display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;line-height:1">{{ a.glyph }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;background:#FFFFFF">
+            <div style="flex:none;padding:16px;border-bottom:2px solid #111111;display:flex;align-items:center;gap:14px">
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:600;line-height:23px;font-variant-numeric:tabular-nums">Рецепт №4468</div>
+                <div style="font-size:16px;line-height:20px">Завершено 14.09 17:52 &middot; Р. Мамедов &middot; «Низами 42»</div>
+              </div>
+              <div style="height:44px;padding:0 14px;flex:none;border:2px solid #111111;border-radius:3px;display:flex;align-items:center;font-size:16px;font-weight:600">Экспорт</div>
+            </div>
+            <div style="flex:1;min-height:0;display:flex">
+              <div style="width:284px;flex:none;background:#EEEBE5;border-right:2px solid #8F887E;padding:14px;display:flex;flex-direction:column;gap:10px">
+                <div style="position:relative;flex:1;min-height:0;border:2px solid #8F887E;overflow:hidden;background:#D9D2C2">
+                  <img src="rx-photo.svg" alt="Prescription photo, placeholder" style="position:absolute;top:0;left:0;width:700px;height:900px;transform-origin:0 0;transform:scale(0.365)">
+                  <div style="position:absolute;left:19px;top:173.7px;width:43.8px;height:16.1px;border:3px solid #1F2E63;box-shadow:0 0 0 2px rgba(255,255,255,0.9)"></div>
+                </div>
+                <div style="font-size:16px;line-height:20px">Выделено поле «Количество» &mdash; уточнялось у врача.</div>
+              </div>
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden">
+                <sc-for list="{{ recordRows }}" as="r" hint-placeholder-count="5">
+                  <div style="display:flex;flex:none;border-bottom:2px solid #8F887E">
+                    <div style="width:6px;flex:none;background:#111111"></div>
+                    <div style="flex:1;min-width:0;padding:11px 16px 12px;display:flex;align-items:flex-start;gap:14px">
+                      <div style="width:136px;flex:none;font-size:16px;font-weight:600;line-height:21px">{{ r.label }}</div>
+                      <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+                        <div style="font-size:19px;line-height:24px;font-weight:600">{{ r.value }}</div>
+                        <div style="font-size:16px;line-height:20px">{{ r.note }}</div>
+                      </div>
+                      <div style="width:26px;height:26px;flex:none;border:2px solid #111111;color:#111111;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;line-height:1">{{ r.glyph }}</div>
+                    </div>
+                  </div>
+                </sc-for>
+                <div style="flex:1;min-height:20px"></div>
+                <div style="flex:none;background:#EEEBE5;border-top:2px solid #111111;padding:14px 16px;display:flex;flex-direction:column;gap:4px">
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;line-height:20px;font-variant-numeric:tabular-nums">7 из 7 решено &middot; 1 уточнение у врача</div>
+                  <div style="font-size:16px;line-height:20px">Фото и расшифровка открываются только вместе.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+const CROP = {
+  patient:  { t: "scale(0.737) translate(20.9px,-88.7px)",    top: "61.4px", w: "250.6px", h: "41.3px", label: "Пациент",      idx: "поле 1 из 7" },
+  medicine: { t: "scale(0.6265) translate(33.7px,-198.1px)",  top: "62.6px", w: "250.6px", h: "38.8px", label: "Препарат",     idx: "поле 2 из 7" },
+  dose:     { t: "scale(1.205) translate(-7.5px,-348px)",     top: "45.8px", w: "250.6px", h: "72.3px", label: "Дозировка",    idx: "поле 3 из 7" },
+  form:     { t: "scale(1.319) translate(-351.3px,-357.8px)", top: "50.4px", w: "250.6px", h: "63.3px", label: "Форма",        idx: "поле 4 из 7" },
+  qty:      { t: "scale(2.088) translate(-26.3px,-458.7px)",  top: "36.1px", w: "250.6px", h: "91.9px", label: "Количество",   idx: "поле 5 из 7" },
+  schedule: { t: "scale(0.5695) translate(42.3px,-527px)",     top: "64.4px", w: "250.6px", h: "35.3px", label: "Схема приёма", idx: "поле 6 из 7" },
+  doctor:   { t: "scale(1.002) translate(-332.4px,-702.2px)",  top: "39.9px", w: "250.5px", h: "84.2px", label: "Врач",         idx: "поле 7 из 7" }
+};
+
+const ORDER_NUM = "Порядок — по возрастанию числа. Ни один не выбран заранее.";
+const ORDER_TXT = "Порядок — по алфавиту. Ни один не выбран заранее.";
+
+function row(o) {
+  const base = {
+    isSettled: false, isAgreed: false, isPending: false, isDisagree: false,
+    isIllegible: false, isAbsent: false, isRegistry: false, isLookalike: false, isQueried: false,
+    isName: false, isNum: false, isText: false,
+    label: "", value: "", settledNote: "", stateLabel: "",
+    optA: "", optB: "", optOwn: "Ввести своё", orderNote: ORDER_NUM,
+    actA: "", actB: "", noteTitle: "", noteBody: "",
+    cmpALabel: "", cmpAValue: "", cmpBLabel: "", cmpBValue: ""
+  };
+  const r = Object.assign(base, o);
+  r["is" + r.kindCap] = true;
+  if (o.vtype === "name") r.isName = true;
+  else if (o.vtype === "num") r.isNum = true;
+  else r.isText = true;
+  return r;
+}
+function mk(kind, o) { return row(Object.assign({ kindCap: kind }, o)); }
+
+const SETTLED = (label, value, vtype, who) => mk("Settled", { label, value, vtype, settledNote: "Решено · " + who });
+const AGREED  = (label, value, vtype)      => mk("Agreed",  { label, value, vtype });
+const PENDING = (label, value, vtype)      => mk("Pending", { label, value, vtype });
+
+const cells = (filled, total) => {
+  const out = [];
+  for (let i = 0; i < total; i++) {
+    out.push(i < filled
+      ? { bg: "#111111", border: "2px solid #111111" }
+      : { bg: "#FFFFFF", border: "2px solid #8F887E" });
+  }
+  return out;
+};
+
+class Component extends DCLogic {
+  renderVals() {
+    const lookalike = mk("Lookalike", {
+      label: "Препарат", value: "AMOKSİKLAV 875/125",
+      noteTitle: "Похоже на AMOKLAVIN — другое действующее вещество",
+      cmpALabel: "в рецепте · AMOKSİKLAV", cmpAValue: "амоксициллин + клавуланат",
+      cmpBLabel: "похожее · AMOKLAVIN",    cmpBValue: "ампициллин + сульбактам",
+      noteBody: "Сверьте написание с фото. Справка не подставляет значение.",
+      actA: "Уточнить у врача", actB: "Подтвердить AMOKSİKLAV"
+    });
+    const doseDisagree = mk("Disagree", {
+      label: "Дозировка", stateLabel: "Два прочтения разошлись",
+      optA: "875 мг", optB: "375 мг", orderNote: ORDER_NUM
+    });
+    const qtyIllegible = mk("Illegible", {
+      label: "Количество", stateLabel: "Не разобрать",
+      actA: "Ввести вручную", actB: "Уточнить у врача"
+    });
+
+    return {
+      verifyFrames: [
+        {
+          caption: "Mid-loading", sub: "Fast reading in. Second reading on 4 of 7. Nothing can settle yet.",
+          initials: "АГ", crop: CROP.medicine.t, outT: CROP.medicine.top, outW: CROP.medicine.w, outH: CROP.medicine.h,
+          filter: "none", stripLabel: CROP.medicine.label, stripIndex: CROP.medicine.idx,
+          boostOff: true, boostOn: false,
+          fields: [
+            AGREED("Пациент", "Алиева Н. М.", "text"),
+            PENDING("Препарат", "AMOKSİKLAV 875/125", "name")
+          ],
+          scrollHint: "↓ ещё 5 полей",
+          barLoading: true, barBlocked: false, barReady: false,
+          barCells: cells(4, 7),
+          barText: "Второе прочтение: 4 из 7 полей",
+          barSub: "Завершение станет доступно после второго прочтения."
+        },
+        {
+          caption: "All agreed", sub: "Both readings matched on every field. Seven taps and it is done.",
+          initials: "АГ", crop: CROP.patient.t, outT: CROP.patient.top, outW: CROP.patient.w, outH: CROP.patient.h,
+          filter: "none", stripLabel: CROP.patient.label, stripIndex: CROP.patient.idx,
+          boostOff: true, boostOn: false,
+          fields: [
+            AGREED("Пациент", "Алиева Н. М.", "text")
+          ],
+          scrollHint: "↓ ещё 6 полей — все совпали",
+          barLoading: false, barBlocked: true, barReady: false,
+          barText: "Осталось решений: 7",
+          barNames: "Подтвердите поля по очереди"
+        },
+        {
+          caption: "One disagreement", sub: "Six settled, one open. Two readings, equal weight, no preselection.",
+          initials: "АГ", crop: CROP.dose.t, outT: CROP.dose.top, outW: CROP.dose.w, outH: CROP.dose.h,
+          filter: "none", stripLabel: CROP.dose.label, stripIndex: CROP.dose.idx,
+          boostOff: true, boostOn: false,
+          fields: [
+            doseDisagree,
+            SETTLED("Препарат", "AMOKSİKLAV 875/125", "name", "АГ 19:04")
+          ],
+          scrollHint: "↓ ещё 5 полей — решено",
+          barLoading: false, barBlocked: true, barReady: false,
+          barText: "Осталось решений: 1",
+          barNames: "Дозировка"
+        },
+        {
+          caption: "Multiple flags open", sub: "Disagreement, illegible and a blank line, all in one record.",
+          initials: "АГ", crop: CROP.qty.t, outT: CROP.qty.top, outW: CROP.qty.w, outH: CROP.qty.h,
+          filter: "contrast(1.52) brightness(0.88) saturate(0.35)",
+          stripLabel: CROP.qty.label, stripIndex: CROP.qty.idx,
+          boostOff: false, boostOn: true,
+          fields: [
+            qtyIllegible,
+            mk("Absent", { label: "Схема приёма", stateLabel: "В рецепте не указано", actA: "Подтвердить отсутствие" }),
+            doseDisagree
+          ],
+          scrollHint: "↓ ещё 4 поля",
+          barLoading: false, barBlocked: true, barReady: false,
+          barText: "Осталось решений: 3",
+          barNames: "Дозировка · Количество · Схема приёма"
+        },
+        {
+          caption: "Look-alike", sub: "The most dangerous state. The ingredient, not the spelling, is what the eye lands on.",
+          initials: "АГ", crop: CROP.medicine.t, outT: CROP.medicine.top, outW: CROP.medicine.w, outH: CROP.medicine.h,
+          filter: "none", stripLabel: CROP.medicine.label, stripIndex: CROP.medicine.idx,
+          boostOff: true, boostOn: false,
+          fields: [ lookalike ],
+          scrollHint: "↓ ещё 6 полей",
+          barLoading: false, barBlocked: true, barReady: false,
+          barText: "Осталось решений: 2",
+          barNames: "Препарат · Количество"
+        },
+        {
+          caption: "Resolved, ready", sub: "Nothing open. One field went to the doctor, and that is a normal finish.",
+          initials: "АГ", crop: CROP.doctor.t, outT: CROP.doctor.top, outW: CROP.doctor.w, outH: CROP.doctor.h,
+          filter: "none", stripLabel: CROP.doctor.label, stripIndex: CROP.doctor.idx,
+          boostOff: true, boostOn: false,
+          fields: [
+            SETTLED("Препарат", "AMOKSİKLAV 875/125", "name", "АГ 19:06"),
+            SETTLED("Дозировка", "875 мг", "num", "АГ 19:07 · выбрано вручную"),
+            mk("Queried", { label: "Количество", value: "Уточняется у врача", settledNote: "АГ 19:08 · запись закроется после ответа" })
+          ],
+          scrollHint: "↑ 4 поля выше — решено",
+          barLoading: false, barBlocked: false, barReady: true,
+          barText: "7 из 7 решено · 1 уточнение у врача",
+          barNames: "Завершить"
+        }
+      ],
+
+      azFrames: [
+        {
+          caption: "Verify · Azərbaycanca · look-alike",
+          sub: "The annotation title wraps to two lines. Stacked ingredient boxes absorb it.",
+          crop: CROP.medicine.t, outT: CROP.medicine.top, outW: CROP.medicine.w, outH: CROP.medicine.h,
+          stripLabel: "Preparat", stripIndex: "7 sahədən 2-ci",
+          fields: [
+            mk("Lookalike", {
+              label: "Preparat", value: "AMOKSİKLAV 875/125",
+              noteTitle: "AMOKLAVIN preparatına bənzəyir — təsiredici maddə fərqlidir",
+              cmpALabel: "reseptdə · AMOKSİKLAV", cmpAValue: "amoksisillin + klavulanat",
+              cmpBLabel: "bənzər · AMOKLAVIN",    cmpBValue: "ampisillin + sulbaktam"
+            })
+          ],
+          scrollHint: "↓ daha 6 sahə"
+        },
+        {
+          caption: "Verify · Azərbaycanca · action pairs",
+          sub: "The longest button labels in the product. They wrap and grow; the type never shrinks.",
+          crop: CROP.qty.t, outT: CROP.qty.top, outW: CROP.qty.w, outH: CROP.qty.h,
+          stripLabel: "Miqdar", stripIndex: "7 sahədən 5-ci",
+          fields: [
+            mk("Illegible", {
+              label: "Miqdar", stateLabel: "Oxunmur",
+              actA: "Əl ilə daxil et", actB: "Həkimlə dəqiqləşdir"
+            }),
+            mk("Disagree", {
+              label: "Doza", stateLabel: "İki oxunuş fərqlənir",
+              optA: "875 mq", optB: "375 mq", optOwn: "Özüm yazacağam",
+              orderNote: "Sıralama — ədədin artması ilə. Heç biri əvvəlcədən seçilməyib."
+            })
+          ],
+          scrollHint: "↓ daha 5 sahə"
+        }
+      ],
+
+      captureFrames: [
+        {
+          caption: "Capture · live warnings", sub: "Each names a place and a fix. Blur and glare do not block the shutter.",
+          viewTransform: "translate(-50%,-50%) scale(0.62) rotate(2.2deg)",
+          viewFilter: "blur(1.6px)",
+          warnings: [
+            { glyph: "≈", ink: "#7A4A00", ru: "Смазано", fix: "Держите телефон неподвижно ещё секунду." },
+            { glyph: "☀", ink: "#7A4A00", ru: "Блик на левом крае", fix: "Наклоните телефон вправо или отойдите от лампы." }
+          ],
+          shutterReady: true, shutterBlocked: false, marginal: false,
+          shutterNote: "Можно снимать. Смаз уйдёт, если задержать руку."
+        },
+        {
+          caption: "Capture · cropped edge", sub: "The only warning that blocks. Part of the sheet is not in frame.",
+          viewTransform: "translate(-50%,-42%) scale(0.92) rotate(-1.2deg)",
+          viewFilter: "none",
+          warnings: [
+            { glyph: "⊐", ink: "#8E1420", ru: "Обрезан верхний край рецепта", fix: "Отодвиньте телефон: не видно строки «Пациент»." }
+          ],
+          shutterReady: false, shutterBlocked: true, marginal: false,
+          shutterNote: "Нельзя снять: часть рецепта вне кадра."
+        },
+        {
+          caption: "Capture · marginal", sub: "Acceptable but not good. Retake offered before processing, with the consequence named.",
+          viewTransform: "translate(-50%,-50%) scale(0.62) rotate(1.1deg)",
+          viewFilter: "contrast(0.82) brightness(1.12)",
+          warnings: [],
+          shutterReady: false, shutterBlocked: false, marginal: true,
+          shutterNote: ""
+        }
+      ],
+
+      archiveRows: [
+        { name: "AMOKSİKLAV 875/125", ingredient: "амоксициллин + клавуланат", meta: "14.09 19:04 · №4471 · АГ", done: true, queried: false },
+        { name: "SEFTAZIM 1000", ingredient: "Количество — уточняется у врача", meta: "14.09 17:52 · №4468 · РМ", done: false, queried: true },
+        { name: "AMOKSİSİLLİN 500", ingredient: "амоксициллин", meta: "14.09 11:20 · №4462 · АГ", done: true, queried: false }
+      ],
+
+      recordRows: [
+        { label: "Пациент", value: "Гасанов И. Т.", glyph: "✓", note: "Оба прочтения совпали" },
+        { label: "Препарат", value: "SEFTAZIM 1000", glyph: "!", note: "Нет в реестре · подтверждено как есть" },
+        { label: "Дозировка", value: "1000 мг", glyph: "✓", note: "Оба прочтения совпали" },
+        { label: "Форма", value: "порошок для инъекций", glyph: "✓", note: "Оба прочтения совпали" },
+        { label: "Количество", value: "Уточнялось у врача", glyph: "~", note: "РМ 17:48 · ответ получен, 10 фл." }
+      ],
+
+      tabletFields: [
+        { isSettled: true, isDisagree: false, isIllegible: false, label: "Препарат", value: "AMOKSİKLAV 875/125", note: "Оба прочтения совпали · АГ 19:04" },
+        { isSettled: true, isDisagree: false, isIllegible: false, label: "Пациент", value: "Алиева Н. М.", note: "Оба прочтения совпали · АГ 19:04" },
+        { isSettled: false, isDisagree: true, isIllegible: false, label: "Дозировка", stateLabel: "Два прочтения разошлись", optA: "875 мг", optB: "375 мг", optOwn: "Ввести своё", orderNote: ORDER_NUM },
+        { isSettled: false, isDisagree: false, isIllegible: true, label: "Количество", stateLabel: "Не разобрать", actA: "Ввести вручную", actB: "Уточнить у врача" },
+        { isSettled: true, isDisagree: false, isIllegible: false, label: "Форма", value: "таблетки, покрытые оболочкой", note: "Оба прочтения совпали · АГ 19:05" },
+        { isSettled: true, isDisagree: false, isIllegible: false, label: "Схема приёма", value: "по 1 таблетке 2 раза в день, 7 дней", note: "Оба прочтения совпали · АГ 19:05" }
+      ],
+
+      tabletArchive: [
+        { name: "AMOKSİKLAV 875/125", ingredient: "амоксициллин + клавуланат", meta: "14.09 19:04 · №4471 · Низами 42", glyph: "✓", badgeBg: "#111111", badgeFg: "#FFFFFF", bg: "#FFFFFF" },
+        { name: "SEFTAZIM 1000", ingredient: "Количество — уточнялось у врача", meta: "14.09 17:52 · №4468 · Низами 42", glyph: "~", badgeBg: "#FFFFFF", badgeFg: "#111111", bg: "#EEEBE5" },
+        { name: "AMOKSİSİLLİN 500", ingredient: "амоксициллин", meta: "14.09 11:20 · №4462 · Низами 42", glyph: "✓", badgeBg: "#111111", badgeFg: "#FFFFFF", bg: "#FFFFFF" },
+        { name: "AMOKSİKLAV 625", ingredient: "амоксициллин + клавуланат", meta: "13.09 16:31 · №4455 · Гянджа 3", glyph: "✓", badgeBg: "#111111", badgeFg: "#FFFFFF", bg: "#FFFFFF" },
+        { name: "AUGMENTIN 1000", ingredient: "амоксициллин + клавуланат", meta: "13.09 10:07 · №4448 · Сумгаит 1", glyph: "✓", badgeBg: "#111111", badgeFg: "#FFFFFF", bg: "#FFFFFF" }
+      ],
+
+      staff: [
+        { initials: "АГ", name: "А. Гулиева", role: "Фармацевт · «Низами 42»", action: "PIN", current: true, other: false },
+        { initials: "РМ", name: "Р. Мамедов", role: "Фармацевт · «Низами 42»", action: "PIN", current: false, other: true },
+        { initials: "ЭН", name: "Э. Нуриев", role: "Менеджер · все филиалы", action: "PIN", current: false, other: true }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

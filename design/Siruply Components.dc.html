@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #EEEBE5; -webkit-font-smoothing: antialiased; }
+  a { color: #1F2E63; }
+  a:hover { color: #111111; }
+</style>
+</helmet>
+
+<div style="font-family:'IBM Plex Sans',sans-serif;background:#EEEBE5;color:#111111;padding:48px 32px 96px;display:flex;flex-direction:column;align-items:center">
+<div style="width:100%;max-width:1100px;display:flex;flex-direction:column;gap:56px">
+
+  <div style="display:flex;flex-direction:column;gap:8px;border-bottom:2px solid #111111;padding-bottom:24px">
+    <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap">
+      <div style="font-size:34px;font-weight:700;letter-spacing:-0.01em">Siruply</div>
+      <div style="font-size:20px">Components, every state</div>
+    </div>
+    <div style="font-size:17px;line-height:1.5;max-width:68ch;text-wrap:pretty">Rendered at phone column width. Russian strings are production register; Azerbaijani is marked for native review.</div>
+  </div>
+
+  <!-- ============ 1 · EVIDENCE STRIP ============ -->
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:2px solid #8F887E;padding-bottom:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:600">01</div>
+      <div style="font-size:21px;font-weight:700">Evidence strip</div>
+      <div style="font-size:16px">pinned above the fields &middot; follows focus</div>
+    </div>
+
+    <div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start">
+
+      <!-- strip: default -->
+      <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:10px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">default</div>
+        <div style="background:#EEEBE5;border:2px solid #111111;padding:12px;display:flex;flex-direction:column;gap:10px">
+          <div style="position:relative;width:100%;height:164px;overflow:hidden;background:#D9D2C2;border:2px solid #8F887E">
+            <img src="rx-photo.svg" alt="Prescription photo, placeholder" style="position:absolute;top:0;left:0;width:700px;height:900px;transform-origin:0 0;transform:scale(1.205) translate(-7.5px,-348px);image-rendering:auto">
+            <div style="position:absolute;left:53.6px;top:45.8px;width:250.6px;height:72.3px;border:2.5px solid #1F2E63;box-shadow:0 0 0 2px rgba(255,255,255,0.85)"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px">
+              <div style="font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Дозировка</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-variant-numeric:tabular-nums">поле 3 из 7</div>
+            </div>
+            <div style="width:auto;min-width:44px;height:44px;padding:0 14px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer" style-hover="background:#EEEBE5">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1">◐</span>
+              <span style="font-size:16px;font-weight:600">Ярче</span>
+            </div>
+            <div style="width:44px;height:44px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#EEEBE5">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700;line-height:1">⤢</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- strip: boosted -->
+      <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:10px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">boost on &middot; different field focused</div>
+        <div style="background:#EEEBE5;border:2px solid #111111;padding:12px;display:flex;flex-direction:column;gap:10px">
+          <div style="position:relative;width:100%;height:164px;overflow:hidden;background:#D9D2C2;border:2px solid #8F887E">
+            <img src="rx-photo.svg" alt="Prescription photo, placeholder" style="position:absolute;top:0;left:0;width:700px;height:900px;transform-origin:0 0;transform:scale(2.088) translate(-26.3px,-458.7px);filter:contrast(1.52) brightness(0.88) saturate(0.35)">
+            <div style="position:absolute;left:53.7px;top:36.1px;width:250.6px;height:91.9px;border:2.5px solid #1F2E63;box-shadow:0 0 0 2px rgba(255,255,255,0.85)"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px">
+              <div style="font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Количество</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-variant-numeric:tabular-nums">поле 5 из 7</div>
+            </div>
+            <div style="min-width:44px;height:44px;padding:0 14px;flex:none;border:2px solid #111111;background:#111111;color:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1">◕</span>
+              <span style="font-size:16px;font-weight:600">Ярче</span>
+            </div>
+            <div style="width:44px;height:44px;flex:none;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#EEEBE5">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700;line-height:1">⤢</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="flex:1;min-width:280px;display:flex;flex-direction:column;gap:12px;font-size:16px;line-height:1.5">
+        <div style="font-weight:600;font-size:17px">How it behaves</div>
+        <div>The crop always shows the focused field&rsquo;s region <span style="font-weight:600">plus about 30% surrounding paper</span>, with the region itself outlined in <span style="font-family:'IBM Plex Mono',monospace">focus</span>. Context and precision at once &mdash; a bare crop loses the line above, which is often what disambiguates the handwriting.</div>
+        <div>Zoom is per&#8209;field, not fixed: a two&#8209;character quantity gets <span style="font-family:'IBM Plex Mono',monospace;font-weight:600">2.1&times;</span>, a full directions line gets <span style="font-family:'IBM Plex Mono',monospace;font-weight:600">0.57&times;</span>, so handwriting lands at a readable size regardless of how much was written.</div>
+        <div>The outline carries a white halo so it stays visible over both ink and bright paper.</div>
+        <div style="padding-top:12px;border-top:2px solid #8F887E"><span style="font-weight:600">Boost</span> is one tap, no submenu, and it is a contrast lift rather than a brightness lift &mdash; counter photos are washed out by glare, not dark, so raising brightness makes them worse. Filled button means on.</div>
+        <div><span style="font-weight:600">All labels sit below the crop on solid ground.</span> No text is ever set over the photograph.</div>
+        <div style="padding-top:12px;border-top:2px solid #8F887E">The photo here is a placeholder standing in for a counter photo. Drop a real prescription scan in to pressure&#8209;test the crops.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 2 · FIELD ROW, SIX STATES ============ -->
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:2px solid #8F887E;padding-bottom:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:600">02</div>
+      <div style="font-size:21px;font-weight:700">Field row</div>
+      <div style="font-size:16px">six states &middot; each identifiable in greyscale</div>
+    </div>
+
+    <!-- STATE 1 — AGREED -->
+    <div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start">
+      <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:10px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">1 &middot; agreed by both readings</div>
+        <div style="display:flex;background:#FFFFFF;border:2px solid #8F887E">
+          <div style="width:6px;flex:none;background:#111111"></div>
+          <div style="flex:1;min-width:0;padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+              <div style="font-size:16px;font-weight:600">Форма</div>
+              <div style="width:30px;height:30px;flex:none;border:2px solid #111111;color:#111111;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1">=</div>
+            </div>
+            <div style="font-size:20px;line-height:26px;font-weight:600">таблетки, покрытые оболочкой</div>
+            <div style="font-size:17px;line-height:22px;font-weight:600">Оба прочтения совпали</div>
+            <div style="height:56px;border:2px solid #1F2E63;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;margin-top:2px" style-hover="background:#1F2E63;color:#FFFFFF">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700;line-height:1">=</span>
+              <span style="font-size:17px;font-weight:600">Подтвердить</span>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;background:#FFFFFF;border:2px solid #8F887E">
+          <div style="width:6px;flex:none;background:#111111"></div>
+          <div style="flex:1;min-width:0;padding:14px 16px;display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+              <div style="font-size:16px;font-weight:600">Форма</div>
+              <div style="width:30px;height:30px;flex:none;border:2px solid #111111;background:#111111;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1">✓</div>
+            </div>
+            <div style="font-size:20px;line-height:26px;font-weight:600">таблетки, покрытые оболочкой</div>
+            <div style="font-size:16px;line-height:20px">Решено &middot; <span style="font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums">А.&nbsp;Гулиева 19:04</span></div>
+          </div>
+        </div>
+      </div>
+      <div style="flex:1;min-width:280px;font-size:16px;line-height:1.5;display:flex;flex-direction:column;gap:10px">
+        <div style="font-weight:600;font-size:17px">The only state that may settle</div>
+        <div>Glyph <span style="font-family:'IBM Plex Mono',monospace;font-weight:700">=</span>, solid ink rail, one value line, one confirm button. Confirming collapses the row to the second form shown, stamped with who did it and when.</div>
+        <div><span style="font-weight:600">This row cannot render while the second reading is outstanding.</span> The agreed state is produced by comparing two readings; with one reading in hand there is nothing to compare, so the component is not merely disabled, it has no data to mount from.</div>
+      </div>
+    </div>
+
+    <!-- STATE 2 — DISAGREEMENT -->
+    <div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start;padding-top:24px;border-top:2px solid #8F887E">
+      <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:10px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">2 &middot; disagreement</div>
+        <div style="display:flex;background:#FFFFFF;border:2px solid #8F887E">
+          <div style="width:6px;flex:none;background:#7A4A00"></div>
+          <div style="flex:1;min-width:0;padding:14px 16px 16px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+              <div style="font-size:16px;font-weight:600">Дозировка</div>
+              <div style="width:30px;height:30px;flex:none;border:2px solid #7A4A00;color:#7A4A00;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;line-height:1">⇄</div>
+            </div>
+            <div style="font-size:17px;line-height:22px;font-weight:600;color:#7A4A00">Два прочтения разошлись</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="min-height:56px;border:2px solid #111111;background:#FFFFFF;border-radius:3px;padding:11px 14px;display:flex;align-items:center;cursor:pointer" style-hover="background:#EEEBE5">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:20px;line-height:26px;font-weight:600;font-variant-numeric:tabular-nums">875 мг</span>
+              </div>
+              <div style="min-height:56px;border:2px solid #111111;background:#FFFFFF;border-radius:3px;padding:11px 14px;display:flex;align-items:center;cursor:pointer" style-hover="background:#EEEBE5">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:20px;line-height:26px;font-weight:600;font-variant-numeric:tabular-nums">375 мг</span>
+              </div>
+              <div style="min-height:56px;border:2px solid #111111;background:#FFFFFF;border-radius:3px;padding:11px 14px;display:flex;align-items:center;cursor:pointer" style-hover="background:#EEEBE5">
+                <span style="font-size:17px;line-height:26px;font-weight:600">Ввести своё</span>
+              </div>
+            </div>
+            <div style="font-size:16px;line-height:21px;padding-top:2px">Порядок вариантов &mdash; по возрастанию числа. Ни один не выбран заранее.</div>
+          </div>
+        </div>
+      </div>
+      <div style="flex:1;min-width:280px;font-size:16px;line-height:1.5;display:flex;flex-direction:column;gap:10px">
+        <div style="font-weight:600;font-size:17px">Three options, one treatment</div>
+        <div>Identical border, identical fill, identical height, identical type. No preselection, no check pre&#8209;placed, no &ldquo;recommended&rdquo;, no model name, <span style="font-weight:600">and no percentage anywhere</span>.</div>
+        <div><span style="font-weight:600">The ordering rule is stated in the row itself</span>, in the last line: numeric values ascend, text values sort alphabetically by the interface locale. Naming the rule is what stops position from being read as rank &mdash; without it, the top option is the recommendation whether you intended one or not.</div>
+        <div>&ldquo;Ввести своё&rdquo; is the third option, not a link under them, so entering your own reading costs the same one tap as taking a machine reading.</div>
+        <div style="padding-top:12px;border-top:2px solid #8F887E">Cover both value labels and the row gives you no way to guess which came from which reader, or which is preferred. That is the test this component is built to pass.</div>
+      </div>
+    </div>
+
+    <!-- STATE 3 — ILLEGIBLE -->
+    <div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start;padding-top:24px;border-top:2px solid #8F887E">
+      <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:10px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">3 &middot; illegible &mdash; solid rail</div>
+        <div style="display:flex;background:#FFFFFF;border:2px solid #8F887E">
+          <div style="width:6px;flex:none;background:#7A4A00"></div>
+          <div style="flex:1;min-width:0;padding:14px 16px 16px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+              <div style="font-size:16px;font-weight:600">Количество</div>
+              <div style="width:30px;height:30px;flex:none;border:2px solid #7A4A00;color:#7A4A00;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700;line-height:1">~</div>
+            </div>
+            <div style="font-size:17px;line-height:22px;font-weight:600;color:#7A4A00">Не разобрать</div>
+            <div style="display:flex;gap:10px">
+              <div style="flex:1;min-width:0;min-height:56px;border:2px solid #111111;background:#FFFFFF;border-radius:3px;padding:8px 10px;display:flex;align-items:center;justify-content:center;text-align:center;cursor:pointer" style-hover="background:#EEEBE5">
+                <span style="font-size:17px;line-height:21px;font-weight:600">Ввести вручную</span>
+              </div>
+              <div style="flex:1;min-width:0;min-height:56px;border:2px solid #111111;background:#FFFFFF;border-radius:3px;padding:8px 10px;display:flex;align-items:center;justify-content:center;text-align:center;cursor:pointer" style-hover="background:#EEEBE5">
+                <span style="font-size:17px;line-height:21px;font-weight:600">Уточнить у врача</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="flex:1;min-width:280px;font-size:16px;line-height:1.5;display:flex;flex-direction:column;gap:10px">
+        <div style="font-weight:600;font-size:17px">Asking the doctor is an outcome, not a failure</div>
+        <div>Two actions, side by side, equal width, equal weight, equal one tap. Same border, same fill, same type size. <span style="font-weight:600">Neither is red and neither is behind a menu.</span></div>
+        <div>The label is a plain observation &mdash; the handwriting cannot be read &mdash; not an error message, and it carries no apology. A prescription that ends in a phone call to the prescriber is the system working.</div>
+        <div>Glyph <span style="font-family:'IBM Plex Mono',monospace;font-weight:700">~</span> and a <span style="font-weight:600">solid</span> rail. Compare the dashed rail on state 4.</div>
+      </div>
+    </div>
+
+    <!-- STATE 4 — ABSENT -->
+    <div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start;padding-top:24px;border-top:2px solid #8F887E">
+      <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:10px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">4 &middot; not written &mdash; dashed rail</div>
+        <div style="display:flex;background:#FFFFFF;border:2px solid #8F887E">
+          <div style="width:6px;flex:none;border-left:6px dashed #7A4A00"></div>
+          <div style="flex:1;min-width:0;padding:14px 16px 16px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+              <div style="font-size:16px;font-weight:600">Схема приёма</div>
+              <div style="width:30px;height:30px;flex:none;border:2px dashed #7A4A00;color:#7A4A00;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1">∅</div>
+            </div>
+            <div style="height:34px;border:2px dashed #8F887E;background:#EEEBE5;display:flex;align-items:center;padding:0 12px">
+              <div style="height:2px;width:100%;background:#8F887E"></div>
+            </div>
+            <div style="font-size:17px;line-height:22px;font-weight:600;color:#7A4A00">В рецепте не указано</div>
+            <div style="min-height:56px;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 12px;cursor:pointer" style-hover="background:#EEEBE5">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1">∅</span>
+              <span style="font-size:17px;line-height:21px;font-weight:600">Подтвердить отсутствие</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="flex:1;min-width:280px;font-size:16px;line-height:1.5;display:flex;flex-direction:column;gap:10px">
+        <div style="font-weight:600;font-size:17px">Nothing written &ne; written illegibly</div>
+        <div>These two are the pair most likely to be confused and the pair where confusion is most expensive, so they are separated on <span style="font-weight:600">three</span> axes at once: glyph <span style="font-family:'IBM Plex Mono',monospace;font-weight:700">∅</span> against <span style="font-family:'IBM Plex Mono',monospace;font-weight:700">~</span>, a dashed rail and dashed badge against solid ones, and an empty struck slot where the illegible row has none.</div>
+        <div>The struck slot is the literal claim being confirmed: this line of the prescription is blank. One tap records that, and it is a decision like any other &mdash; it closes the field and counts toward completion.</div>
+      </div>
+    </div>
+
+    <!-- STATE 5 — NOT IN REGISTRY -->
+    <div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start;padding-top:24px;border-top:2px solid #8F887E">
+      <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:10px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">5 &middot; catalogue: not in the registry</div>
+        <div style="display:flex;background:#FFFFFF;border:2px solid #8F887E">
+          <div style="width:6px;flex:none;background:#7A4A00"></div>
+          <div style="flex:1;min-width:0;padding:14px 16px 16px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+              <div style="font-size:16px;font-weight:600">Препарат</div>
+              <div style="width:30px;height:30px;flex:none;border:2px solid #7A4A00;color:#7A4A00;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1">!</div>
+            </div>
+            <div style="font-size:28px;line-height:32px;font-weight:700;letter-spacing:-0.005em">SEFTAZIM 1000</div>
+            <div style="margin-left:18px;border-left:2px solid #8F887E;background:#EEEBE5;padding:11px 13px;display:flex;gap:10px">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;line-height:22px;flex:none">!</div>
+              <div style="font-size:16px;line-height:22px;min-width:0">
+                <span style="font-weight:600">Нет в реестре.</span> Проверьте написание по упаковке. Справка не подставляет значение.
+              </div>
+            </div>
+            <div style="height:56px;border:2px solid #1F2E63;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer" style-hover="background:#1F2E63;color:#FFFFFF">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700;line-height:1">=</span>
+              <span style="font-size:17px;font-weight:600">Подтвердить как есть</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="flex:1;min-width:280px;font-size:16px;line-height:1.5;display:flex;flex-direction:column;gap:10px">
+        <div style="font-weight:600;font-size:17px">An annotation can never look like a value</div>
+        <div>Four things keep the two apart, and they are structural rather than stylistic: the annotation is <span style="font-weight:600">indented</span> past the value&rsquo;s left edge, sits on <span style="font-family:'IBM Plex Mono',monospace">shelf</span> rather than paper, is set at body size and weight where values are 20&ndash;28px and 600&ndash;700, and is <span style="font-weight:600">below</span> the value it comments on.</div>
+        <div>It also says so in words: <span style="font-style:normal;font-weight:600">&ldquo;Справка не подставляет значение&rdquo;</span> &mdash; the note does not fill in the field. The registry is a source of doubt here, never a source of answers.</div>
+      </div>
+    </div>
+
+    <!-- STATE 6 — LOOK-ALIKE -->
+    <div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start;padding-top:24px;border-top:2px solid #8F887E">
+      <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:10px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">6 &middot; catalogue: look-alike</div>
+        <div style="display:flex;background:#FFFFFF;border:2px solid #8E1420">
+          <div style="width:6px;flex:none;background:#8E1420"></div>
+          <div style="flex:1;min-width:0;padding:14px 16px 16px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+              <div style="font-size:16px;font-weight:600">Препарат</div>
+              <div style="width:30px;height:30px;flex:none;border:2px solid #8E1420;color:#8E1420;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;line-height:1">≠</div>
+            </div>
+            <div style="font-size:28px;line-height:32px;font-weight:700;letter-spacing:-0.005em">AMOKSİKLAV 875/125</div>
+            <div style="margin-left:18px;border-left:2px solid #8E1420;background:#EEEBE5;padding:12px 13px;display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;gap:10px;align-items:baseline">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;line-height:20px;color:#8E1420;flex:none">≠</div>
+                <div style="font-size:16px;line-height:20px;font-weight:600;color:#8E1420;min-width:0">Похоже на <span style="white-space:nowrap">AMOKLAVIN</span> &mdash; другое действующее вещество</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div style="display:flex;flex-direction:column;gap:1px;padding:8px 10px;background:#FFFFFF;border:2px solid #8F887E">
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;line-height:19px">в рецепте &middot; AMOKSİKLAV</div>
+                  <div style="font-size:21px;line-height:26px;font-weight:700">амоксициллин + клавуланат</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:1px;padding:8px 10px;background:#FFFFFF;border:2px solid #8E1420">
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;line-height:19px">похожее &middot; AMOKLAVIN</div>
+                  <div style="font-size:21px;line-height:26px;font-weight:700;color:#8E1420">ампициллин + сульбактам</div>
+                </div>
+              </div>
+              <div style="font-size:16px;line-height:21px">Сверьте написание с фото. Справка не подставляет значение.</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="min-height:56px;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;padding:8px 12px;cursor:pointer" style-hover="background:#EEEBE5">
+                <span style="font-size:17px;line-height:21px;font-weight:600;text-align:center">Уточнить у врача</span>
+              </div>
+              <div style="min-height:56px;border:2px solid #1F2E63;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;padding:8px 12px;cursor:pointer;margin-top:14px" style-hover="background:#1F2E63;color:#FFFFFF">
+                <span style="font-size:17px;line-height:21px;font-weight:600;text-align:center">Подтвердить AMOKSİKLAV</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="flex:1;min-width:280px;font-size:16px;line-height:1.5;display:flex;flex-direction:column;gap:10px">
+        <div style="font-weight:600;font-size:17px">The eye must land on the ingredient, not the spelling</div>
+        <div>So the two <span style="font-weight:600">active ingredients are the largest type in the annotation</span> at 21/700, and the drug names that caused the collision are demoted to 16px mono captions above them. The comparison is inverted on purpose: the confusable strings are small, the thing that actually differs is big.</div>
+        <div>Two boxes, stacked and separately bordered, never on one line &mdash; side by side invites reading them as similar. Stacked with the ingredient names left&#8209;aligned puts <span style="font-family:'IBM Plex Mono',monospace">амоксициллин</span> directly above <span style="font-family:'IBM Plex Mono',monospace">ампициллин</span>, where the divergence is impossible to miss.</div>
+        <div><span style="font-weight:600">&ldquo;Уточнить у врача&rdquo; is listed first and confirming is second</span>, separated by a 24px gap. This is the one state where the order of the actions is itself a safety decision: the more cautious action is closer to the thumb, and the confirm names the specific drug it commits to rather than saying &ldquo;OK&rdquo;.</div>
+        <div style="padding-top:12px;border-top:2px solid #8F887E">Still no percentage, and still no ranking. The row raises a doubt and hands it over; it does not resolve it.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 3 · AWAITING SECOND READING ============ -->
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:2px solid #8F887E;padding-bottom:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:600">03</div>
+      <div style="font-size:21px;font-weight:700">Awaiting the second reading</div>
+      <div style="font-size:16px">hollow rail &middot; no shimmer</div>
+    </div>
+    <div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start">
+      <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:10px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">first reading landed, second outstanding</div>
+        <div style="display:flex;background:#FFFFFF;border:2px solid #8F887E">
+          <div style="width:6px;flex:none;background:#FFFFFF;border-left:2px solid #8F887E;border-right:2px solid #8F887E"></div>
+          <div style="flex:1;min-width:0;padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+              <div style="font-size:16px;font-weight:600">Схема приёма</div>
+              <div style="width:30px;height:30px;flex:none;border:2px solid #8F887E;color:#111111;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700;line-height:1;background:#FFFFFF">·</div>
+            </div>
+            <div style="font-size:20px;line-height:26px;font-weight:600">по 1 таблетке 2 раза в день, 7 дней</div>
+            <div style="display:flex;align-items:center;gap:8px;padding-top:2px;border-top:2px solid #8F887E">
+              <div style="font-size:16px;line-height:21px">Ждёт второго прочтения</div>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:16px;line-height:1.45;padding:10px 12px;background:#EEEBE5;border-left:6px solid #111111">Note what is <span style="font-weight:600">absent</span>: no confirm button, no state label, no glyph. There is nothing to tap, so there is no way to accept it.</div>
+      </div>
+      <div style="flex:1;min-width:280px;font-size:16px;line-height:1.5;display:flex;flex-direction:column;gap:10px">
+        <div style="font-weight:600;font-size:17px">A hollow rail that fills in</div>
+        <div>The rail is drawn as an <span style="font-weight:600">empty outline</span> while one reading is missing and becomes solid the moment the second lands. An outline reads as an unfilled container, which is exactly the claim: this field is not yet complete. Scanning the rail column alone tells you how much of the form is still arriving.</div>
+        <div>The value from the fast reading <span style="font-weight:600">is</span> shown, at full size and full contrast, because reading it is useful work the pharmacist can start immediately. What is withheld is not the information but the <span style="font-weight:600">ability to act on it</span>.</div>
+        <div style="padding-top:12px;border-top:2px solid #8F887E"><span style="font-weight:600">No skeleton shimmer anywhere in this product.</span> Shimmer is decorative motion that says &ldquo;something is coming&rdquo; without saying what or how much, and it habituates instantly &mdash; within a week it is wallpaper. A rail that is either hollow or solid cannot be tuned out, because it is the same element that carries state after loading ends.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 4 · COMPLETION BAR ============ -->
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:2px solid #8F887E;padding-bottom:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:600">04</div>
+      <div style="font-size:21px;font-weight:700">Completion bar</div>
+      <div style="font-size:16px">three configurations &middot; bottom third</div>
+    </div>
+    <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start">
+
+      <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:10px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">a &middot; second reading in flight</div>
+        <div style="background:#EEEBE5;border-top:2px solid #111111;padding:16px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;gap:3px;align-items:stretch;height:10px">
+            <div style="flex:1;background:#111111"></div>
+            <div style="flex:1;background:#111111"></div>
+            <div style="flex:1;background:#111111"></div>
+            <div style="flex:1;background:#111111"></div>
+            <div style="flex:1;background:#FFFFFF;border:2px solid #8F887E"></div>
+            <div style="flex:1;background:#FFFFFF;border:2px solid #8F887E"></div>
+            <div style="flex:1;background:#FFFFFF;border:2px solid #8F887E"></div>
+          </div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:19px;line-height:24px;font-weight:600;font-variant-numeric:tabular-nums">Второе прочтение: 4 из 7 полей</div>
+          <div style="font-size:16px;line-height:21px">Завершение станет доступно после второго прочтения.</div>
+        </div>
+      </div>
+
+      <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:10px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">b &middot; decisions still open</div>
+        <div style="background:#EEEBE5;border-top:2px solid #111111;padding:16px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:6px;align-self:stretch;min-height:24px;background:#7A4A00;flex:none"></div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:19px;line-height:24px;font-weight:600;color:#7A4A00;font-variant-numeric:tabular-nums">Осталось решений: 2</div>
+          </div>
+          <div style="height:56px;background:#EEEBE5;border:2px dashed #8F887E;border-radius:3px;display:flex;align-items:center;justify-content:center">
+            <span style="font-size:17px;font-weight:600;color:#111111">Дозировка &middot; Количество</span>
+          </div>
+          <div style="font-size:16px;line-height:21px">Нажмите поле, чтобы решить.</div>
+        </div>
+      </div>
+
+      <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:10px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">c &middot; ready</div>
+        <div style="background:#EEEBE5;border-top:2px solid #111111;padding:16px;display:flex;flex-direction:column;gap:12px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;line-height:22px;font-variant-numeric:tabular-nums">7 из 7 решено &middot; 1 уточнение у врача</div>
+          <div style="height:56px;background:#1F2E63;border:2px solid #1F2E63;border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#111111;border-color:#111111">
+            <span style="font-size:19px;font-weight:700;color:#FFFFFF">Завершить</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="flex:1;min-width:300px;font-size:16px;line-height:1.5;display:flex;flex-direction:column;gap:10px">
+        <div style="font-weight:600;font-size:17px">The button is replaced, not greyed</div>
+        <div>In <span style="font-family:'IBM Plex Mono',monospace;font-weight:600">a</span> and <span style="font-family:'IBM Plex Mono',monospace;font-weight:600">b</span> there is no Завершить element on screen at all. A greyed&#8209;out button is still a button, and a tired hand taps it anyway to see what happens; a slot that reads <span style="font-weight:600">&ldquo;Осталось решений: 2 &middot; Дозировка &middot; Количество&rdquo;</span> answers the question the tap was going to ask.</div>
+        <div><span style="font-weight:600">a</span> states counts, not progress: seven cells, four filled, and the sentence that says what the cells mean. The cells are the same hollow&#8209;to&#8209;solid language as the field rails, so the bar and the rows agree.</div>
+        <div><span style="font-weight:600">b</span> names the fields that are open, so the remaining work is legible without scrolling, and the dashed slot sits exactly where the enabled button will appear.</div>
+        <div><span style="font-weight:600">c</span> is the only state with a filled button, and it reports the &ldquo;check with the doctor&rdquo; count as ordinary summary information rather than a warning. One prescription in the archive with a query on it is a normal day.</div>
+        <div style="padding-top:12px;border-top:2px solid #8F887E">No spinner and no progress ring in any of the three. Counts in words tell you whether to wait or to go and get the phone; a ring does not.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 5 · USER CHIP + ARCHIVE ROW ============ -->
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:2px solid #8F887E;padding-bottom:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:600">05</div>
+      <div style="font-size:21px;font-weight:700">User chip &amp; archive row</div>
+    </div>
+    <div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start">
+      <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:16px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">user chip &middot; always visible on verify</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <div style="height:44px;border:2px solid #111111;border-radius:8px;background:#FFFFFF;display:flex;align-items:center;gap:10px;padding:0 12px 0 6px;cursor:pointer" style-hover="background:#EEEBE5">
+            <div style="width:32px;height:32px;flex:none;background:#1F2E63;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#FFFFFF;letter-spacing:0.02em">АГ</div>
+            <div style="font-size:16px;font-weight:600">А. Гулиева</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;line-height:1">▾</div>
+          </div>
+        </div>
+        <div style="border:2px solid #111111;background:#FFFFFF;display:flex;flex-direction:column">
+          <div style="padding:12px 14px;border-bottom:2px solid #8F887E;font-size:16px;font-weight:600">Смена пользователя</div>
+          <div style="min-height:56px;padding:10px 14px;display:flex;align-items:center;gap:12px;border-bottom:2px solid #8F887E;background:#EEEBE5">
+            <div style="width:32px;height:32px;flex:none;background:#1F2E63;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#FFFFFF">АГ</div>
+            <div style="flex:1;min-width:0;font-size:17px;font-weight:600">А. Гулиева</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700">✓</div>
+          </div>
+          <div style="min-height:56px;padding:10px 14px;display:flex;align-items:center;gap:12px;border-bottom:2px solid #8F887E;cursor:pointer" style-hover="background:#EEEBE5">
+            <div style="width:32px;height:32px;flex:none;border:2px solid #111111;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700">РМ</div>
+            <div style="flex:1;min-width:0;font-size:17px;font-weight:600">Р. Мамедов</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:16px">PIN</div>
+          </div>
+          <div style="min-height:56px;padding:10px 14px;display:flex;align-items:center;gap:12px;cursor:pointer" style-hover="background:#EEEBE5">
+            <div style="width:32px;height:32px;flex:none;border:2px dashed #111111;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700">+</div>
+            <div style="flex:1;min-width:0;font-size:17px;font-weight:600">Другой сотрудник</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:16px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">archive rows</div>
+        <div style="border:2px solid #8F887E;background:#FFFFFF;display:flex;flex-direction:column">
+          <div style="display:flex;gap:12px;padding:14px;border-bottom:2px solid #8F887E;cursor:pointer" style-hover="background:#EEEBE5">
+            <div style="width:52px;height:66px;flex:none;overflow:hidden;background:#D9D2C2;border:2px solid #8F887E;position:relative">
+              <img src="rx-photo.svg" alt="" style="position:absolute;top:0;left:0;width:700px;height:900px;transform-origin:0 0;transform:scale(0.074)">
+            </div>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+              <div style="font-size:19px;line-height:23px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">AMOKSİKLAV 875/125</div>
+              <div style="font-size:16px;line-height:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">амоксициллин + клавуланат</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;line-height:20px;font-variant-numeric:tabular-nums">14.09 19:04 &middot; №4471 &middot; АГ</div>
+            </div>
+            <div style="width:30px;height:30px;flex:none;border:2px solid #111111;background:#111111;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;line-height:1">✓</div>
+          </div>
+          <div style="display:flex;gap:12px;padding:14px;cursor:pointer" style-hover="background:#EEEBE5">
+            <div style="width:52px;height:66px;flex:none;overflow:hidden;background:#D9D2C2;border:2px solid #8F887E;position:relative">
+              <img src="rx-photo.svg" alt="" style="position:absolute;top:0;left:0;width:700px;height:900px;transform-origin:0 0;transform:scale(0.074) translate(0px,-900px)">
+            </div>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+              <div style="font-size:19px;line-height:23px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">SEFTAZIM 1000</div>
+              <div style="font-size:16px;line-height:20px">Количество &mdash; уточняется у врача</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;line-height:20px;font-variant-numeric:tabular-nums">14.09 17:52 &middot; №4468 &middot; РМ</div>
+            </div>
+            <div style="width:30px;height:30px;flex:none;border:2px solid #111111;color:#111111;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700;line-height:1">~</div>
+          </div>
+        </div>
+        <div style="font-size:16px;line-height:1.45;padding:10px 12px;background:#EEEBE5;border-left:6px solid #111111">The doctor&#8209;query row uses the same type, the same thumbnail, the same ink. It is not dimmed, not badged in warning colour, not sorted to the bottom.</div>
+      </div>
+
+      <div style="flex:1;min-width:280px;font-size:16px;line-height:1.5;display:flex;flex-direction:column;gap:10px">
+        <div style="font-weight:600;font-size:17px">Identity is recorded, so it is on screen</div>
+        <div>The counter device is shared across a shift, so the chip states who is verifying at all times and switching is a PIN, not a sign&#8209;out. <span style="font-weight:600">Two taps, and no re&#8209;entry of the branch</span> &mdash; the device belongs to the branch, the person does not.</div>
+        <div>Initials sit on a filled square only for the <span style="font-weight:600">current</span> user; other staff get outlined squares. Colour alone never marks who is active.</div>
+        <div style="padding-top:12px;border-top:2px solid #8F887E">Archive rows carry the active ingredient under the brand name because that is what search runs on. Thumbnail and transcription always travel together: tapping a row opens the photo and the fields on one screen, never one without the other.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 6 · CAPTURE WARNINGS ============ -->
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:2px solid #8F887E;padding-bottom:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:600">06</div>
+      <div style="font-size:21px;font-weight:700">Capture warnings</div>
+      <div style="font-size:16px">specific &middot; before processing, not after</div>
+    </div>
+    <div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start">
+      <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ captureWarnings }}" as="w" hint-placeholder-count="4">
+          <div style="display:flex;background:#FFFFFF;border:2px solid #8F887E">
+            <div style="width:6px;flex:none;background:{{ w.ink }}"></div>
+            <div style="flex:1;min-width:0;padding:12px 14px;display:flex;gap:11px;align-items:flex-start">
+              <div style="width:30px;height:30px;flex:none;border:2px solid {{ w.ink }};color:{{ w.ink }};display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;line-height:1">{{ w.glyph }}</div>
+              <div style="min-width:0;display:flex;flex-direction:column;gap:2px">
+                <div style="font-size:17px;line-height:22px;font-weight:600">{{ w.ru }}</div>
+                <div style="font-size:16px;line-height:21px">{{ w.fix }}</div>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="width:390px;flex:none;display:flex;flex-direction:column;gap:10px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600">marginal &mdash; acceptable but not good</div>
+        <div style="background:#EEEBE5;border:2px solid #111111;padding:14px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;gap:11px;align-items:flex-start">
+            <div style="width:30px;height:30px;flex:none;border:2px solid #7A4A00;color:#7A4A00;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;line-height:1">◐</div>
+            <div style="min-width:0;display:flex;flex-direction:column;gap:2px">
+              <div style="font-size:17px;line-height:22px;font-weight:600">Читаемо, но на границе</div>
+              <div style="font-size:16px;line-height:21px">Блик закрывает часть строки «Количество». Можно продолжить &mdash; это поле, скорее всего, придётся решать вручную.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px">
+            <div style="flex:1;min-height:56px;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#EEEBE5">
+              <span style="font-size:17px;font-weight:600">Снять заново</span>
+            </div>
+            <div style="flex:1;min-height:56px;border:2px solid #111111;background:#FFFFFF;border-radius:3px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#EEEBE5">
+              <span style="font-size:17px;font-weight:600">Продолжить</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="flex:1;min-width:280px;font-size:16px;line-height:1.5;display:flex;flex-direction:column;gap:10px">
+        <div style="font-weight:600;font-size:17px">Every warning names a place and a fix</div>
+        <div>&ldquo;Плохое фото&rdquo; gives a pharmacist nothing to do. <span style="font-weight:600">&ldquo;Блик на левом крае&rdquo;</span> tells them which way to tilt the phone, and it takes two seconds.</div>
+        <div>The marginal case gets <span style="font-weight:600">equal&#8209;weight</span> retake and continue buttons, and it predicts the consequence: this field will probably come back as a manual decision. That lets someone with a customer waiting make an informed trade rather than a blind one.</div>
+        <div>Warnings appear live over the viewfinder and block nothing except the cropped&#8209;edge case, where part of the prescription is simply not in the frame and no reading is possible.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      captureWarnings: [
+        { glyph: "≈", ink: "#7A4A00", ru: "Смазано", fix: "Держите телефон неподвижно ещё секунду." },
+        { glyph: "☀", ink: "#7A4A00", ru: "Блик на левом крае", fix: "Наклоните телефон вправо или отойдите от лампы." },
+        { glyph: "⊐", ink: "#8E1420", ru: "Обрезан верхний край рецепта", fix: "Отодвиньте телефон: не видно строки «Пациент»." },
+        { glyph: "∠", ink: "#7A4A00", ru: "Рецепт под углом", fix: "Держите телефон параллельно листу." }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

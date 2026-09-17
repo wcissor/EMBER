@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 900" width="700" height="900" role="img" aria-label="Synthetic prescription photo">
+<defs>
+<radialGradient id="g1" cx="0.74" cy="0.2" r="0.46">
+<stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".42" stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+</radialGradient>
+<radialGradient id="g2" cx=".2" cy=".62" r=".3">
+<stop offset="0" stop-color="#fff" stop-opacity=".44"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+</radialGradient>
+<linearGradient id="sh" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#000" stop-opacity=".06"/><stop offset=".5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".13"/>
+</linearGradient>
+<filter id="gr"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2"/><feColorMatrix type="saturate" values="0"/></filter>
+</defs>
+<rect width="700" height="900" fill="#D9D2C2"/>
+<g transform="rotate(-1.1 350 450)">
+<rect x="14" y="8" width="676" height="886" fill="#EDE7D8"/>
+<rect x="14" y="8" width="676" height="886" fill="url(#sh)"/>
+<g fill="#6E6858" font-family="monospace">
+<text x="52" y="62" font-size="21" letter-spacing="2">POLIKLINIKA № 7</text>
+<text x="52" y="88" font-size="15" letter-spacing="1">BAKI ş. / г. БАКУ</text>
+<text x="470" y="62" font-size="15" letter-spacing="1">RESEPT / РЕЦЕПТ</text>
+<text x="470" y="88" font-size="15" letter-spacing="1">№ 4462</text>
+</g>
+<rect x="52" y="104" width="596" height="2" fill="#8C8676"/>
+<rect x="52" y="110" width="596" height="1" fill="#A8A292"/>
+<g fill="#77715F" font-family="monospace" font-size="14" letter-spacing="1"><text x="52" y="146">XƏSTƏ / ПАЦИЕНТ</text><text x="52" y="290">PREPARAT / ПРЕПАРАТ</text><text x="52" y="378">DOZA / ДОЗИРОВКА</text><text x="390" y="378">FORMA / ФОРМА</text><text x="52" y="520">MIQDAR / КОЛИЧЕСТВО</text><text x="52" y="590">SXEM / СХЕМА ПРИЁМА</text><text x="390" y="726">HƏKIM / ВРАЧ</text></g>
+<g stroke="#B4AE9C" stroke-width="1"><path d="M52 222 H648"/><path d="M52 372 H648"/><path d="M52 448 H648"/><path d="M52 512 H648"/><path d="M52 582 H648"/><path d="M52 690 H648"/></g>
+<g fill="none" stroke="#293453" stroke-linecap="round" stroke-linejoin="round"><path d="M58 202 q12-24 23-4 q10-27 17-1 t18+4 q11-27 19-1 q11-27 22-5 t21+1 M195 200 q12-25 21+0 q10-21 24+6 q11-22 17-3 t20-1 M295 198 q7-28 17+5 t16+2 q10-26 17+2 t16-5 q9-32 16+2 t17+0 M220 200 q-8-24 8-40 q6-18 4 40" stroke-width="3.6"/><path d="M62 347 q15-34 20+5 t19+4 q12-21 27-3 t23-2 M165 346 q9-31 17-2 q9-30 26-4 t21-2 M242 349 q9-31 23+2 t20-4 q8-22 23-3 q11-27 27+0 t25+5 M432 348 q-7-19 9-31 q9-14 5 31" stroke-width="4.4"/><path d="M60 433 q11-31 23-1 q12-26 21-1 q11-18 21+6 M142 436 q11-24 19+0 t18-2 q8-17 24-5 q11-25 23-2 t19+0 M228 434 q-5-20 7-33 q5-15 5 33" stroke-width="4.2"/><path d="M400 436 q9-26 18-4 t21+3 q11-32 17-4 t15-3 M485 434 q11-28 23+1 t20-2 q11-28 18-2 q10-27 19-4 q9-29 22+6 t14+0 M414 434 q-8-17 7-29 q8-13 5 29" stroke-width="3.6"/><path d="M58 500 q9-23 21+0 q12-23 22+5 t21+2 M134 500 q12-17 20+2 t20-2 q9-33 16+4 M84 502 q-4-19 7-31 q9-14 6 31" stroke-width="4.6"/><path d="M56 663 q7-24 20+3 t13+3 q7-30 17-2 M117 666 q12-25 21-1 q10-28 22-1 q12-26 16+0 M189 666 q12-27 18-4 t15+0 q9-19 15-1 t13+4 q10-33 16-5 t21+0 q13-30 19-3 t16+4 q13-32 20-5 t13-2 M373 662 q8-17 18+3 t17+0 q10-31 21+3 M447 663 q9-25 16-4 q11-25 23+1 M61 689 q12-20 22-4 t21-4 q8-23 19+5 t19-3 q11-30 16+1 t20-1 q11-27 18+6" stroke-width="3.6"/><path d="M396 800 q10-43 23+4 t18+3 q10-52 20-3 t20-1 q10-33 21+5 t17+5 q16-51 19-4 q11-33 23-5 t22+0" stroke-width="3.8"/><path d="M392 786 q60 26 130 6" stroke-width="3.8"/></g>
+<g transform="rotate(-9 540 786)" stroke="#6A5A88" fill="none" opacity=".52">
+<rect x="464" y="716" width="150" height="150" stroke-width="4"/>
+<rect x="476" y="728" width="126" height="126" stroke-width="2"/>
+<g stroke-width="2.4"><path d="M492 770 h106"/><path d="M492 790 h106"/><path d="M492 810 h84"/></g>
+<text x="492" y="756" font-family="monospace" font-size="14" fill="#6A5A88" stroke="none" letter-spacing="1">MÖHÜR</text>
+</g>
+<rect x="14" y="8" width="676" height="886" fill="url(#g1)"/>
+<rect x="14" y="8" width="676" height="886" fill="url(#g2)"/>
+<rect x="14" y="8" width="676" height="886" filter="url(#gr)" opacity=".07"/>
+</g>
+</svg>

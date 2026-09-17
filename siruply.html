@@ -1,0 +1,3614 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Siruply</title>
+<style>
+/* ===========================================================================
+   TOKENS
+   Single source of colour and type. Values taken from /design/Siruply Tokens.
+   Seven named colours, three radii, a 4px spacing base, a 16px type floor.
+
+   CONTRAST, computed (WCAG 2.1 relative luminance), matching the design's
+   stated table. Body text is at 7:1 or better everywhere:
+
+     ink   #111111 on paper #FFFFFF  — body, values, labels ........ 18.88:1
+     ink   #111111 on shelf #EEEBE5  — annotation text ............. 15.94:1
+     focus #1F2E63 on paper #FFFFFF  — active field, actions ....... 12.86:1
+     paper #FFFFFF on focus #1F2E63  — completion button label ..... 12.86:1
+     alert #8E1420 on paper #FFFFFF  — look-alike ingredient ....... 9.31:1
+     alert #8E1420 on shelf #EEEBE5  — look-alike annotation ....... 7.86:1
+     open  #7A4A00 on paper #FFFFFF  — open-decision label ......... 7.52:1
+     open  #7A4A00 on shelf #EEEBE5  — NON-TEXT only ................ 6.29:1  (*)
+     line  #8F887E on paper #FFFFFF  — structural rules, NON-TEXT ... 3.53:1
+
+   (*) `open` on `shelf` is the one pair under 7:1, so no text is ever set in
+   it. It appears only as the 6px rail and the glyph-badge border, both
+   non-text, where 3:1 is the applicable threshold. Open-decision TEXT always
+   sits on paper (7.52:1) inside a field row, or in ink on the shelf-coloured
+   completion bar. Every ratio above is asserted by the contrast gate, which
+   walks the rendered DOM rather than trusting this table.
+
+   No white text is ever set over a photograph. The evidence strip keeps its
+   labels on solid ground beside the crop, never on it.
+   =========================================================================== */
+:root{
+  --ink:#111111;
+  --paper:#FFFFFF;
+  --shelf:#EEEBE5;
+  --line:#8F887E;
+  --focus:#1F2E63;
+  --open:#7A4A00;
+  --alert:#8E1420;
+  --photo-ground:#D9D2C2;
+
+  --s4:4px;  --s8:8px;  --s12:12px; --s16:16px;
+  --s24:24px; --s32:32px; --s48:48px;
+
+  /* Three radii, all small. This sits next to a cash register. */
+  --r-rail:0;
+  --r-control:3px;
+  --r-chip:8px;
+
+  /* Targets: 56px resolves a field or completes a record, 44px everything else. */
+  --t-resolve:56px;
+  --t-nav:44px;
+
+  /* Typeface stack.
+     The design specifies IBM Plex Sans/Mono, which are webfonts. This file
+     makes no external request of any kind, so the stack below is a system
+     stack chosen for full Azerbaijani Latin (ə ğ ı İ ö ş ü ç) AND Cyrillic
+     coverage in a SINGLE face on every target platform — so a field value
+     mixing Latin, Cyrillic and a Latin drug name never jumps mid-line.
+       Windows  : Segoe UI / Consolas      — both cover AZ Latin + Cyrillic
+       macOS/iOS: SF / Menlo               — both cover AZ Latin + Cyrillic
+       Android  : Roboto / Roboto Mono     — both cover AZ Latin + Cyrillic
+       Linux    : DejaVu Sans / DejaVu Sans Mono — both cover
+     Every mono face listed disambiguates 1/7, 0/O and 5/S; `slashed-zero`
+     is requested on top wherever the face supports it. Dosage errors start
+     in typography, so every digit in the product is set in the mono face
+     with tabular figures. */
+  --sans: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto,
+          "Helvetica Neue", "DejaVu Sans", "Noto Sans", Arial, sans-serif;
+  --mono: Consolas, Menlo, "Roboto Mono", "DejaVu Sans Mono",
+          "Liberation Mono", "Courier New", monospace;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html,body{ margin:0; padding:0; }
+body{
+  background:var(--shelf);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;              /* 16px floor. There is no caption tier below it. */
+  line-height:1.4;
+  -webkit-font-smoothing:antialiased;
+  -webkit-text-size-adjust:100%;
+  touch-action:manipulation;   /* no 300ms delay */
+  -webkit-tap-highlight-color:transparent;
+  overscroll-behavior-y:none;
+}
+
+/* Every digit in the product: mono, tabular, slashed zero where available. */
+.num,.mono{
+  font-family:var(--mono);
+  font-variant-numeric:tabular-nums slashed-zero;
+  font-feature-settings:"tnum" 1,"zero" 1;
+}
+
+button{
+  font:inherit; color:inherit; margin:0;
+  background:var(--paper);
+  border:2px solid var(--ink);
+  border-radius:var(--r-control);
+  cursor:pointer;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
+button:focus-visible,a:focus-visible,[tabindex]:focus-visible,input:focus-visible{
+  outline:3px solid var(--focus);
+  outline-offset:2px;
+}
+input{ font:inherit; color:inherit; }
+
+[hidden]{ display:none!important; }
+.vh{
+  position:absolute!important; width:1px; height:1px; overflow:hidden;
+  clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap; border:0; padding:0; margin:-1px;
+}
+
+/* ---------------------------------------------------------------- shell --
+   The app owns the viewport height exactly once, at the root. Everything
+   below is a flex child with `min-height:0`, so the column that scrolls is
+   the field list — never the page. If the page itself scrolled, the pinned
+   evidence strip and the completion bar in the bottom third would scroll
+   away with it, which is the whole layout. */
+#app{
+  height:100vh;
+  height:100dvh;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+.screen{
+  flex:1;
+  min-height:0;
+  display:flex;
+  flex-direction:column;
+  background:var(--shelf);
+  max-width:760px;
+  width:100%;
+  margin:0 auto;
+}
+
+/* status bar — a prop, so the frames and the build line up in screenshots */
+.statusbar{
+  flex:none;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:6px var(--s16) 2px;
+  font-family:var(--mono); font-size:16px; font-weight:600;
+  font-variant-numeric:tabular-nums slashed-zero;
+  background:var(--shelf);
+}
+
+.topbar{
+  flex:none;
+  display:flex; align-items:center; gap:var(--s12);
+  padding:var(--s12) var(--s16);
+  background:var(--shelf);
+  border-bottom:2px solid var(--ink);
+}
+.topbar .grow{ flex:1; min-width:0; }
+.rec-no{ font-family:var(--mono); font-size:19px; font-weight:700; font-variant-numeric:tabular-nums slashed-zero; }
+.rec-branch{ font-size:16px; }
+
+.iconbtn{
+  width:var(--t-nav); height:var(--t-nav); flex:none;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--mono); font-size:19px; font-weight:700; line-height:1;
+}
+.iconbtn.wide{ width:auto; min-width:var(--t-nav); padding:0 13px; gap:7px; }
+.iconbtn.on{ background:var(--ink); color:var(--paper); }
+
+/* user chip — filled square for the current user, outlined for everyone else */
+.chip{
+  display:flex; align-items:center; gap:var(--s8);
+  min-height:var(--t-nav); padding:0 10px;
+  border:2px solid var(--ink); border-radius:var(--r-chip);
+  background:var(--paper);
+}
+.sq{
+  width:32px; height:32px; flex:none;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--mono); font-size:16px; font-weight:700; line-height:1;
+  border:2px solid var(--ink); border-radius:var(--r-chip);
+  background:var(--paper); color:var(--ink);
+}
+.sq.cur{ background:var(--ink); color:var(--paper); }
+
+/* ------------------------------------------------------- evidence strip -- */
+.strip{
+  flex:none;
+  background:var(--shelf);
+  border-bottom:2px solid var(--ink);
+  padding:var(--s12);
+  display:flex; flex-direction:column; gap:10px;
+}
+.crop{
+  position:relative; width:100%; height:164px;
+  overflow:hidden;
+  background:var(--photo-ground);
+  border:2px solid var(--line);
+  cursor:zoom-in;
+  contain:layout paint;       /* the crop can never reflow the field column */
+}
+.crop img{
+  position:absolute; top:0; left:0;
+  width:700px; height:900px;
+  transform-origin:0 0;
+  will-change:transform;
+  transition:transform 260ms cubic-bezier(.22,.61,.36,1), filter 160ms linear;
+}
+.crop .outline.dim{
+  border:2px dashed var(--line);
+  box-shadow:none;
+}
+.crop .outline{
+  position:absolute;
+  border:2.5px solid var(--focus);
+  box-shadow:0 0 0 2px rgba(255,255,255,.85);   /* halo: visible over ink and bright paper */
+  pointer-events:none;
+  transition:left 260ms cubic-bezier(.22,.61,.36,1), top 260ms cubic-bezier(.22,.61,.36,1),
+             width 260ms cubic-bezier(.22,.61,.36,1), height 260ms cubic-bezier(.22,.61,.36,1);
+}
+.striprow{ display:flex; align-items:center; gap:10px; }
+.striprow .grow{ flex:1; min-width:0; display:flex; flex-direction:column; gap:1px; }
+.strip-label{ font-size:16px; line-height:19px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.strip-index{ font-family:var(--mono); font-size:16px; line-height:19px; font-variant-numeric:tabular-nums slashed-zero; }
+
+@media (prefers-reduced-motion:reduce){
+  .crop img,.crop .outline{ transition:none; }
+}
+
+/* --------------------------------------------------------- field column -- */
+.verify-body{
+  flex:1;
+  min-height:0;
+  display:flex;
+  flex-direction:column;
+}
+.fields{
+  flex:1;
+  min-height:0;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  padding:var(--s16);
+  display:flex; flex-direction:column; gap:var(--s12);
+  background:var(--shelf);
+}
+.row{
+  display:flex;
+  background:var(--paper);
+  border:2px solid var(--line);
+  scroll-margin-top:var(--s12);
+}
+.row.is-lookalike{ border-color:var(--alert); }
+.rail{ width:6px; flex:none; background:var(--ink); }
+.rail.open{ background:var(--open); }
+.rail.alert{ background:var(--alert); }
+/* Hollow rail: one reading in hand, the second outstanding. An outline reads
+   as an unfilled container, which is exactly the claim. No shimmer anywhere. */
+.rail.hollow{ background:var(--paper); border-left:2px solid var(--line); border-right:2px solid var(--line); }
+.rail.dashed{ background:transparent; border-left:6px dashed var(--open); }
+
+.rowbody{
+  flex:1; min-width:0;
+  padding:14px var(--s16) var(--s16);
+  display:flex; flex-direction:column; gap:var(--s12);
+}
+.row[data-state="agreed"] .rowbody,
+.row[data-state="awaiting"] .rowbody{ gap:10px; }
+.row[data-state="settled"] .rowbody{ padding:14px var(--s16); gap:var(--s8); }
+.rowhead{ display:flex; align-items:flex-start; justify-content:space-between; gap:var(--s12); }
+.flabel{ font-size:16px; font-weight:600; }
+/* Focus moves to the field heading on every focus change, including taps.
+   :focus-visible keeps the ring for keyboard users and off the glass. */
+.flabel:focus{ outline:none; }
+.flabel:focus-visible{ outline:3px solid var(--focus); outline-offset:3px; }
+
+/* glyph badge — no two states share a glyph */
+.badge{
+  width:30px; height:30px; flex:none;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--mono); font-size:18px; font-weight:700; line-height:1;
+  border:2px solid var(--ink); color:var(--ink); background:var(--paper);
+}
+.badge.open{ border-color:var(--open); color:var(--open); }
+.badge.alert{ border-color:var(--alert); color:var(--alert); }
+.badge.dashed{ border-style:dashed; border-color:var(--open); color:var(--open); }
+.badge.filled{ background:var(--ink); color:var(--paper); }
+.badge.await{ border-color:var(--line); color:var(--ink); font-size:20px; }
+.badge.g-swap{ font-size:17px; }   /* the disagreement glyph sits smaller */
+.badge.g-tilde{ font-size:19px; }  /* the illegible glyph sits larger */
+
+.fvalue{ font-size:20px; line-height:26px; font-weight:600; }
+.fvalue.name{ font-size:28px; line-height:32px; font-weight:700; letter-spacing:-.005em; }
+.fvalue.num{
+  font-family:var(--mono); font-size:23px; line-height:28px; font-weight:600;
+  font-variant-numeric:tabular-nums slashed-zero;
+}
+.fstate{ font-size:17px; line-height:22px; font-weight:600; }
+.fstate.open{ color:var(--open); }
+.fstate.alert{ color:var(--alert); }
+.fnote{ font-size:16px; line-height:20px; }
+.fawait{ font-size:16px; line-height:21px; padding-top:2px; border-top:2px solid var(--line); }
+
+/* Options and actions: identical border, fill, height and type. */
+.opts{ display:flex; flex-direction:column; gap:var(--s8); }
+.opt{
+  min-height:var(--t-resolve);
+  width:100%;
+  border:2px solid var(--ink); background:var(--paper);
+  border-radius:var(--r-control);
+  padding:11px 14px;
+  display:flex; align-items:center; gap:10px;
+  text-align:left;
+}
+.opt:hover{ background:var(--shelf); }
+.opt .optv{ font-size:17px; line-height:26px; font-weight:600; }
+.opt .optv.num{
+  font-family:var(--mono); font-size:20px; line-height:26px; font-weight:600;
+  font-variant-numeric:tabular-nums slashed-zero;
+}
+.pair{ display:flex; gap:10px; }
+.pair .act{ flex:1; min-width:0; }
+.act{
+  min-height:var(--t-resolve);
+  border:2px solid var(--ink); background:var(--paper);
+  border-radius:var(--r-control);
+  padding:8px 10px;
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  text-align:center;
+}
+.act:hover{ background:var(--shelf); }
+.act .lbl{ font-size:17px; line-height:21px; font-weight:600; }
+.act .gl{ font-family:var(--mono); font-size:18px; font-weight:700; line-height:1; }
+.act.primary{ border-color:var(--focus); }
+.act.primary:hover{ background:var(--focus); color:var(--paper); }
+.stack{ display:flex; flex-direction:column; gap:10px; }
+/* 24px is the minimum gap between anything confirmable and anything that
+   discards work — the one spacing value with a safety reason behind it. */
+.stack.safety{ gap:var(--s24); }
+
+.orderrule{ font-size:16px; line-height:21px; padding-top:2px; }
+
+/* absent: struck empty slot — the literal claim being confirmed */
+.slot{
+  height:34px; border:2px dashed var(--line); background:var(--shelf);
+  display:flex; align-items:center; padding:0 var(--s12);
+}
+.slot i{ display:block; height:2px; width:100%; background:var(--line); }
+
+/* catalogue annotation: indented past the value's left edge, on shelf, body
+   size and weight, below the value. An annotation can never look like a value. */
+.note{
+  margin-left:18px;
+  border-left:2px solid var(--line);
+  background:var(--shelf);
+  padding:11px 13px;
+  display:flex; gap:10px;
+}
+.note.alert{ border-left-color:var(--alert); flex-direction:column; padding:12px 13px; }
+.note .gl{ font-family:var(--mono); font-size:17px; font-weight:700; line-height:22px; flex:none; }
+.note .body{ font-size:16px; line-height:22px; min-width:0; }
+.note .body b{ font-weight:600; }
+.note-title{ display:flex; gap:10px; align-items:baseline; }
+.note-title .t{ font-size:16px; line-height:20px; font-weight:600; color:var(--alert); min-width:0; }
+.cmp{ display:flex; flex-direction:column; gap:var(--s8); }
+.cmpbox{
+  display:flex; flex-direction:column; gap:1px;
+  padding:var(--s8) 10px; background:var(--paper); border:2px solid var(--line);
+}
+.cmpbox.alt{ border-color:var(--alert); }
+.cmpbox .k{ font-family:var(--mono); font-size:16px; line-height:19px; }
+/* The ingredients are the largest type in the annotation; the drug names that
+   caused the collision are demoted above them. The eye lands on the difference. */
+.cmpbox .v{ font-size:21px; line-height:26px; font-weight:700; }
+.cmpbox.alt .v{ color:var(--alert); }
+
+.manual{ display:flex; flex-direction:column; gap:10px; }
+.manual input{
+  min-height:var(--t-resolve);
+  border:2px solid var(--ink); border-radius:var(--r-control);
+  padding:10px 14px; background:var(--paper);
+  font-size:20px; font-weight:600;
+}
+.scrollhint{ font-size:16px; padding:var(--s4) 2px var(--s16); }
+
+/* ------------------------------------------------------- completion bar -- */
+.bar{
+  flex:none;
+  background:var(--shelf);
+  border-top:2px solid var(--ink);
+  padding:var(--s16);
+  padding-bottom:calc(var(--s16) + env(safe-area-inset-bottom,0px));
+  display:flex; flex-direction:column; gap:var(--s12);
+}
+.cells{ display:flex; gap:3px; height:10px; }
+.cells i{ flex:1; background:var(--paper); border:2px solid var(--line); }
+.cells i.on{ background:var(--ink); border-color:var(--ink); }
+.barline{
+  font-family:var(--mono); font-size:19px; line-height:24px; font-weight:600;
+  font-variant-numeric:tabular-nums slashed-zero;
+}
+/* The count sits in ink, not in `open`. The design's frame sets this line in
+   `open`, but `open` on `shelf` computes to 6.29:1 — under the 7:1 the design's
+   own tokens page promises for body text. The open-decision signal is carried
+   by the 6px `open` rail immediately left of it, which is non-text and keeps
+   the frame's structure intact. */
+.barline.open{ color:var(--ink); }
+.barsub{ font-size:16px; line-height:21px; }
+.barnames{ font-size:16px; line-height:21px; font-weight:600; }
+.barflag{ display:flex; align-items:center; gap:10px; }
+.barflag i{ width:6px; align-self:stretch; min-height:24px; background:var(--open); flex:none; }
+.barflag.alert i{ background:var(--alert); }
+.complete{
+  min-height:var(--t-resolve);
+  border:2px solid var(--focus); background:var(--focus); color:var(--paper);
+  border-radius:var(--r-control);
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  font-size:17px; font-weight:600;
+}
+.complete:hover{ background:var(--ink); border-color:var(--ink); }
+/* b · decisions still open — the dashed slot sits exactly where the enabled
+   button will appear. There is no greyed-out button anywhere in this product. */
+.ghost{
+  min-height:var(--t-resolve);
+  border:2px dashed var(--line); background:transparent;
+  display:flex; align-items:center; justify-content:center;
+  font-size:16px; padding:8px 12px; text-align:center;
+}
+
+/* ------------------------------------------------------------- overlay --- */
+.overlay{
+  position:fixed; inset:0; z-index:50;
+  background:var(--shelf);
+  display:flex; flex-direction:column;
+}
+.overlay .pane{
+  flex:1; min-height:0; position:relative; overflow:hidden;
+  background:var(--photo-ground);
+  margin:var(--s12); border:2px solid var(--line);
+  touch-action:none;
+}
+.overlay .pane img{
+  position:absolute; top:0; left:0; width:700px; height:900px;
+  transform-origin:0 0; will-change:transform;
+}
+.overlay .pane .outline{
+  position:absolute; border:2.5px solid var(--focus);
+  box-shadow:0 0 0 2px rgba(255,255,255,.85); pointer-events:none;
+}
+.overlay .pane .outline.dim{ border:2px dashed var(--line); box-shadow:none; }
+
+/* --------------------------------------------------------------- capture -- */
+.viewfinder{
+  flex:1; min-height:0; position:relative; overflow:hidden; background:#2A2622;
+  display:flex; align-items:center; justify-content:center;
+}
+.viewfinder img,.viewfinder video{
+  position:absolute; top:50%; left:50%; width:700px; height:900px;
+  transform-origin:50% 50%; object-fit:cover;
+}
+.guide{
+  position:absolute; inset:8% 6%;
+  border:3px solid rgba(255,255,255,.92);
+  box-shadow:0 0 0 2px rgba(17,17,17,.45);
+  pointer-events:none;
+}
+.guide::before,.guide::after{
+  content:""; position:absolute; background:rgba(255,255,255,.92);
+}
+.warnwrap{
+  position:absolute; left:var(--s12); right:var(--s12); bottom:var(--s12);
+  display:flex; flex-direction:column; gap:var(--s8);
+}
+.warn{
+  background:var(--paper); border:2px solid var(--ink);
+  padding:10px var(--s12); display:flex; gap:10px;
+}
+.warn .gl{ font-family:var(--mono); font-size:19px; font-weight:700; line-height:22px; flex:none; }
+.warn .t{ font-size:17px; line-height:22px; font-weight:600; }
+.warn .f{ font-size:16px; line-height:21px; }
+.warn.alert{ border-color:var(--alert); }
+.warn.alert .gl,.warn.alert .t{ color:var(--alert); }
+.warn.open .gl,.warn.open .t{ color:var(--open); }
+.shutterzone{
+  flex:none;
+  background:var(--shelf); border-top:2px solid var(--ink);
+  padding:var(--s16);
+  padding-bottom:calc(var(--s16) + env(safe-area-inset-bottom,0px));
+  display:flex; flex-direction:column; gap:var(--s12);
+}
+.shutter{
+  min-height:var(--t-resolve);
+  border:2px solid var(--focus); background:var(--focus); color:var(--paper);
+  border-radius:var(--r-control);
+  display:flex; align-items:center; justify-content:center;
+  font-size:17px; font-weight:600;
+}
+.filepick{ position:relative; display:block; }
+.filepick input{
+  position:absolute; inset:0; opacity:0; width:100%; height:100%; cursor:pointer;
+}
+
+/* --------------------------------------------------------------- archive -- */
+.arch-head{ flex:none; padding:var(--s16); display:flex; flex-direction:column; gap:var(--s12); background:var(--shelf); }
+.search{
+  display:flex; align-items:center; gap:10px;
+  border:2px solid var(--ink); background:var(--paper); padding:0 var(--s12);
+  min-height:var(--t-nav);
+}
+.search input{ flex:1; min-width:0; border:0; outline:none; background:transparent; font-size:17px; padding:10px 0; }
+.search .gl{ font-family:var(--mono); font-size:18px; font-weight:700; }
+.chips{ display:flex; gap:var(--s8); flex-wrap:wrap; }
+.fchip{
+  min-height:var(--t-nav); padding:0 var(--s12);
+  border:2px solid var(--ink); background:var(--paper);
+  border-radius:var(--r-control);
+  display:flex; align-items:center; font-size:16px; font-weight:600;
+}
+.fchip.on{ background:var(--ink); color:var(--paper); }
+.arch-list{ flex:1; min-height:0; overflow-y:auto; padding:0 var(--s16) var(--s16); display:flex; flex-direction:column; gap:var(--s8); }
+/* The doctor-query row uses the same type, thumbnail and ink. It is not
+   dimmed, not badged in warning colour, and not sorted to the bottom. */
+.arow{
+  display:flex; gap:var(--s12); align-items:stretch;
+  border:2px solid var(--line); background:var(--paper);
+  padding:var(--s12); text-align:left; width:100%;
+}
+.athumb{
+  width:52px; height:66px; flex:none; overflow:hidden;
+  border:2px solid var(--line); background:var(--photo-ground); position:relative;
+}
+.athumb img{ position:absolute; top:0; left:0; width:700px; height:900px; transform-origin:0 0; transform:scale(.0686); }
+.arow .grow{ flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
+.aname{ font-size:19px; line-height:24px; font-weight:700; }
+.aing{ font-size:16px; line-height:21px; }
+.ameta{ font-family:var(--mono); font-size:16px; line-height:21px; font-variant-numeric:tabular-nums slashed-zero; }
+.count{ font-family:var(--mono); font-size:16px; font-variant-numeric:tabular-nums slashed-zero; }
+
+/* ---------------------------------------------------------------- signin -- */
+.signin{ flex:1; min-height:0; overflow-y:auto; display:flex; flex-direction:column; padding:var(--s16); gap:var(--s24); justify-content:center; }
+.wordmark{
+  font-size:34px; font-weight:700; letter-spacing:-.01em;
+  background:none; border:0; padding:0; text-align:left;
+  -webkit-user-select:none; user-select:none;
+}
+.staff{ display:flex; flex-direction:column; gap:var(--s8); }
+.srow{
+  display:flex; align-items:center; gap:var(--s12);
+  border:2px solid var(--line); background:var(--paper);
+  padding:var(--s12); width:100%; text-align:left; min-height:var(--t-resolve);
+}
+.srow .grow{ flex:1; min-width:0; }
+.sname{ font-size:19px; font-weight:700; }
+.srole{ font-size:16px; }
+.saction{ font-family:var(--mono); font-size:16px; font-weight:700; }
+.pinwrap{ display:flex; flex-direction:column; gap:var(--s16); }
+.pindots{ display:flex; gap:var(--s12); justify-content:center; padding:var(--s8) 0; }
+.pindots i{ width:16px; height:16px; border:2px solid var(--ink); background:var(--paper); border-radius:50%; }
+.pindots i.on{ background:var(--ink); }
+.keys{ display:grid; grid-template-columns:repeat(3,1fr); gap:var(--s8); }
+.keys button{ min-height:var(--t-resolve); font-family:var(--mono); font-size:23px; font-weight:700; }
+
+/* ------------------------------------------------------------------ demo -- */
+.demo{
+  flex:none;
+  background:var(--paper); border-top:3px solid var(--ink);
+  padding:var(--s12); display:flex; flex-direction:column; gap:var(--s8);
+  max-height:42vh; overflow-y:auto;
+}
+.demo h2{ font-size:17px; margin:0; }
+.demo .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:var(--s8); }
+.demo button{ min-height:var(--t-nav); font-size:16px; font-weight:600; padding:var(--s8); }
+.demo select{ min-height:var(--t-nav); font:inherit; border:2px solid var(--ink); background:var(--paper); border-radius:var(--r-control); padding:0 var(--s8); }
+
+/* ============================ TABLET LANDSCAPE ============================
+   The strip becomes a real left pane with the whole photo and the same linked
+   outline, because there the room genuinely exists. Same DOM, same code path,
+   CSS only. */
+@media (min-width:900px) and (orientation:landscape){
+  .screen{ max-width:none; }
+  .verify-body{
+    flex:1; min-height:0;
+    display:grid; grid-template-columns:minmax(320px,44%) 1fr;
+    gap:0;
+  }
+  /* The strip stops being a strip: it is a real left pane showing the whole
+     sheet, with the same linked outline. Same DOM, same code path. */
+  .verify .strip{
+    flex:none; min-height:0;
+    border-bottom:0; border-right:2px solid var(--ink);
+    padding:var(--s16);
+    display:flex; flex-direction:column;
+  }
+  .verify .crop{ height:auto; flex:1; min-height:0; }
+  .verify .fields{ padding:var(--s16); }
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="live" class="vh" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<script>
+/* ===========================================================================
+   Siruply — prescription verification for pharmacies in Azerbaijan.
+
+   One self-contained file. No build step, no bundler, no CDN, no external
+   request of any kind. Classic script (not type=module) so it runs from
+   file:// off a USB stick as well as hosted.
+
+   Sections, in order:
+     TOKENS   — the CSS custom properties above are the single source of
+                colour and type; this section only mirrors what JS needs.
+     I18N     — { ru, az }, every visible string. No literals in code.
+     MOCK     — sample prescriptions: field values, two readings, boxes.
+     STATE    — session model + reducer-style transitions. The invariants.
+     RENDER   — small pure render functions. textContent only.
+     EVENTS   — delegated listeners.
+     DEMO     — hidden demo controls.
+   =========================================================================== */
+(function () {
+"use strict";
+
+/* ===========================================================================
+   TOKENS
+   The CSS `:root` block above is the source. JS reads from it rather than
+   restating values, so there is exactly one place a colour is defined.
+   =========================================================================== */
+var TOKENS = {
+  read: function (name) {
+    try {
+      return getComputedStyle(document.documentElement)
+        .getPropertyValue("--" + name).trim();
+    } catch (e) { return ""; }
+  },
+  // The one geometric constant the evidence strip needs. The focused region
+  // is always scaled to this fraction of the crop's width, so every field
+  // arrives with the same proportion of surrounding paper around it: about a
+  // third again of the region. Zoom is therefore per-field and automatic —
+  // a two-character quantity lands near 2.1x, a full directions line near
+  // 0.57x, and the handwriting is readable either way.
+  REGION_FRACTION: 0.692,
+  // Boost is a contrast lift, not a brightness lift: counter photos are
+  // washed out by glare, not dark, so raising brightness makes them worse.
+  BOOST_FILTER: "contrast(1.52) brightness(0.88) saturate(0.35)"
+};
+
+/* ===========================================================================
+   I18N
+   Every visible string lives here. Nothing is written inline in code.
+
+   RUSSIAN is production register, taken from /design/.
+
+   AZERBAIJANI: the strings marked [D] below are taken verbatim from
+   /design/Siruply Frames.dc.html and /design/Siruply Tokens.dc.html, where
+   they are themselves marked "Draft strings — native review required before
+   build". The strings marked [X] are NOT from /design/ — /design/ only
+   covers the Verify screen, so sign-in, capture, archive and the blocked
+   state had no Azerbaijani source to take. They are drafts written to keep
+   the language toggle whole and are flagged in the UI by the demo panel.
+
+   >>> ALL AZERBAIJANI IN THIS FILE IS PENDING NATIVE PHARMACIST REVIEW. <<<
+   >>> The verbs on the resolution actions especially. Do not ship the AZ  <<<
+   >>> locale to a counter before that review.                             <<<
+   =========================================================================== */
+var I18N = {
+  ru: {
+    _name: "Русский",
+    appName: "Siruply",
+
+    // -- sign in
+    deviceLine: "Филиал «Низами 42» · устройство 02",
+    deviceLocked: "Филиал закреплён за устройством. Сменить может только менеджер.",
+    whoOnShift: "Кто на смене",
+    otherStaff: "Другой сотрудник",
+    pinFor: "PIN — ",
+    pinRecorded: "Кто проверил — записывается в каждый рецепт.",
+    pinBack: "Назад",
+    pinClear: "Стереть",
+    userSwitch: "Смена пользователя",
+
+    // -- capture
+    captureTitle: "Снимок рецепта",
+    shoot: "Снять",
+    retake: "Снять заново",
+    proceed: "Продолжить",
+    marginalTitle: "Читаемо, но на границе",
+    marginalBody: "Блик закрывает часть строки «Количество». Можно продолжить — это поле, скорее всего, придётся решать вручную.",
+    shutterReady: "Можно снимать. Смаз уйдёт, если задержать руку.",
+    shutterBlocked: "Нельзя снять: часть рецепта вне кадра.",
+    pickFile: "Выбрать снимок",
+    cameraFallback: "Камера недоступна на этом устройстве. Снимок можно выбрать из галереи.",
+    // [X] new copy: the demo substitutes a bundled reference prescription so
+    // the field regions line up with the mock transcription.
+    demoPhotoNote: "Демонстрация: расшифровка выполняется по вложенному образцу рецепта.",
+    w_blur_t: "Смазано",
+    w_blur_f: "Держите телефон неподвижно ещё секунду.",
+    w_glare_t: "Блик на левом крае",
+    w_glare_f: "Наклоните телефон вправо или отойдите от лампы.",
+    w_crop_t: "Обрезан верхний край рецепта",
+    w_crop_f: "Отодвиньте телефон: не видно строки «Пациент».",
+    w_angle_t: "Рецепт под углом",
+    w_angle_f: "Держите телефон параллельно листу.",
+
+    // -- verify shell
+    recordNo: "Рецепт №",
+    branchNizami: "Филиал «Низами 42»",
+    branchGanja: "Филиал «Гянджа 3»",
+    branchSumqayit: "Филиал «Сумгаит 1»",
+    allBranches: "Все филиалы · менеджер",
+    back: "Назад",
+    boost: "Ярче",
+    openFull: "Открыть фото целиком",
+    closeFull: "К полям",
+    pinchHint: "Разведите пальцами, чтобы увеличить. Фото не редактируется.",
+    highlighted: "выделено на фото",
+    othersDashed: "остальные пунктиром",
+
+    // -- field labels
+    f_patient: "Пациент",
+    f_medicine: "Препарат",
+    f_dose: "Дозировка",
+    f_form: "Форма",
+    f_qty: "Количество",
+    f_schedule: "Схема приёма",
+    f_doctor: "Врач",
+
+    // -- field states
+    s_agreed: "Оба прочтения совпали",
+    s_disagreement: "Два прочтения разошлись",
+    s_illegible: "Не разобрать",
+    s_absent: "В рецепте не указано",
+    s_registry: "Нет в реестре.",
+    s_lookalikeA: "Похоже на ",
+    s_lookalikeB: " — другое действующее вещество",
+    s_awaiting: "Ждёт второго прочтения",
+
+    // -- actions
+    confirm: "Подтвердить",
+    confirmAsIs: "Подтвердить как есть",
+    confirmAbsent: "Подтвердить отсутствие",
+    confirmNamed: "Подтвердить ",
+    enterOwn: "Ввести своё",
+    enterManual: "Ввести вручную",
+    askDoctor: "Уточнить у врача",
+    save: "Сохранить",
+    cancel: "Отменить",
+    reopen: "Изменить решение",
+    typeHere: "Ваше прочтение",
+
+    // -- ordering rule. Named in the row itself: naming the rule is what
+    //    stops position from being read as rank.
+    orderNum: "Порядок вариантов — по возрастанию числа. Ни один не выбран заранее.",
+    orderTxt: "Порядок вариантов — по алфавиту. Ни один не выбран заранее.",
+
+    // -- catalogue annotations. The registry is a source of doubt, never a
+    //    source of answers.
+    registryBody: "Проверьте написание по упаковке. Справка не подставляет значение.",
+    lookalikeBody: "Сверьте написание с фото. Справка не подставляет значение.",
+    inRx: "в рецепте · ",
+    similar: "похожее · ",
+
+    // -- resolutions
+    settled: "Решено · ",
+    settledBoth: " · оба прочтения совпали",
+    settledPicked: " · выбрано из двух прочтений",
+    settledManual: " · выбрано вручную",
+    settledAbsent: " · подтверждено отсутствие",
+    settledAsIs: " · подтверждено как есть",
+    queriedValue: "Уточняется у врача",
+    queriedNote: " · запись закроется после ответа",
+
+    // -- completion bar
+    barSecondA: "Второе прочтение: ",
+    barSecondB: " из ",
+    barSecondC: " полей",
+    barSecondSub: "Завершение станет доступно после второго прочтения.",
+    barOpen: "Осталось решений: ",
+    barOpenSub: "Нажмите поле, чтобы решить.",
+    barReadyA: " из ",
+    barReadyB: " решено",
+    barQueries: " · уточнений у врача: ",
+    complete: "Завершить",
+    completeUnavailable: "Завершить — недоступно",
+
+    // -- [X] second reading never arrived. /design/ has no frame for this
+    //    state; the copy below is new and follows the design's rule that a
+    //    withheld capability is explained in a sentence with counts.
+    stalledTitle: "Второе прочтение не пришло",
+    stalledBodyA: "Полей без второго прочтения: ",
+    stalledBody: "Их нельзя решить и нельзя завершить запись. Повторите попытку или отправьте рецепт врачу.",
+    stalledRetry: "Повторить второе прочтение",
+    stalledRoute: "Все оставшиеся — уточнить у врача",
+    stalledField: "Второе прочтение не пришло",
+
+    // -- archive
+    archive: "Архив",
+    searchPlaceholder: "Вещество, дата или номер",
+    fIngredient: "Действующее вещество",
+    fDate: "Дата",
+    fNumber: "Номер",
+    found: "Найдено: ",
+    newShot: "Новый снимок",
+    resumeTitle: "Открытый рецепт №",
+    resumeSub: "Осталось решений: ",
+    resume: "Вернуться к рецепту",
+    emptyArchive: "Записей нет.",
+    branchCol: "Филиал",
+    completedAt: "Завершено ",
+    recordClosed: "Запись закрыта. Изменения вносит только менеджер.",
+    photoTogether: "Фото и расшифровка открываются только вместе.",
+    tapForPhoto: "Нажмите, чтобы открыть фото целиком.",
+    resolvedCount: " из ",
+    resolvedCountB: " решено",
+    queriedCount: " уточнение у врача",
+    toArchive: "Архив",
+
+    // -- scroll hint
+    moreFieldsA: "↓ ещё ",
+    moreFieldsB: " полей",
+
+    // -- misc
+    fieldOfA: "поле ",
+    fieldOfB: " из ",
+    langName: "AZ",
+    demoTitle: "Демо-панель",
+    announceFocus: "Поле: ",
+    announceResolved: "Решено: ",
+    announceLanded: "Второе прочтение получено: "
+  },
+
+  az: {
+    _name: "Azərbaycanca",
+    appName: "Siruply",
+
+    deviceLine: "«Nizami 42» filialı · cihaz 02",                       // [X]
+    deviceLocked: "Filial cihaza təhkim olunub. Yalnız menecer dəyişə bilər.", // [X]
+    whoOnShift: "Növbədə kim var",                                      // [X]
+    otherStaff: "Başqa əməkdaş",                                        // [X]
+    pinFor: "PIN — ",                                                   // [X]
+    pinRecorded: "Kim yoxlayıb — hər reseptdə qeyd olunur.",            // [X]
+    pinBack: "Geri",                                                    // [X]
+    pinClear: "Sil",                                                    // [X]
+    userSwitch: "İstifadəçi dəyişikliyi",                               // [X]
+
+    captureTitle: "Resept şəkli",                                       // [X]
+    shoot: "Çək",                                                       // [X]
+    retake: "Yenidən çək",                                              // [X]
+    proceed: "Davam et",                                                // [X]
+    marginalTitle: "Oxunur, amma sərhəddə",                             // [X]
+    marginalBody: "Parıltı «Miqdar» sətrinin bir hissəsini örtür. Davam etmək olar — bu sahə çox güman əl ilə həll olunacaq.", // [X]
+    shutterReady: "Çəkmək olar. Əl bir saniyə saxlansa, bulanıqlıq gedəcək.", // [X]
+    shutterBlocked: "Çəkmək olmaz: reseptin bir hissəsi kadrdan kənardadır.", // [X]
+    pickFile: "Şəkil seç",                                              // [X]
+    cameraFallback: "Bu cihazda kamera əlçatan deyil. Şəkli qalereyadan seçmək olar.", // [X]
+    demoPhotoNote: "Nümayiş: transkripsiya daxili nümunə resept üzrə aparılır.", // [X]
+    w_blur_t: "Bulanıq",                                                // [X]
+    w_blur_f: "Telefonu bir saniyə də tərpətmədən saxlayın.",           // [X]
+    w_glare_t: "Sol kənarda parıltı",                                   // [X]
+    w_glare_f: "Telefonu sağa əyin və ya lampadan uzaqlaşın.",          // [X]
+    w_crop_t: "Reseptin yuxarı kənarı kəsilib",                         // [X]
+    w_crop_f: "Telefonu uzaqlaşdırın: «Xəstə» sətri görünmür.",         // [X]
+    w_angle_t: "Resept bucaq altındadır",                               // [X]
+    w_angle_f: "Telefonu vərəqə paralel saxlayın.",                     // [X]
+
+    recordNo: "Resept №",                                               // [D]
+    branchNizami: "«Nizami 42» filialı",                                // [D]
+    branchGanja: "«Gəncə 3» filialı",                                   // [X]
+    branchSumqayit: "«Sumqayıt 1» filialı",                             // [X]
+    allBranches: "Bütün filiallar · menecer",                           // [X]
+    back: "Geri",                                                       // [X]
+    boost: "Parlaq",                                                    // [D]
+    openFull: "Şəkli tam aç",                                           // [X]
+    closeFull: "Sahələrə",                                              // [X]
+    pinchHint: "Böyütmək üçün barmaqlarınızı aralayın. Şəkil redaktə olunmur.", // [X]
+    highlighted: "şəkildə seçilib",                                     // [X]
+    othersDashed: "qalanları punktirlə",                                // [X]
+
+    f_patient: "Xəstə",                                                 // [X]
+    f_medicine: "Preparat",                                             // [D]
+    f_dose: "Doza",                                                     // [D]
+    f_form: "Forma",                                                    // [X]
+    f_qty: "Miqdar",                                                    // [D]
+    f_schedule: "Qəbul sxemi",                                          // [D]
+    f_doctor: "Həkim",                                                  // [X]
+
+    s_agreed: "Hər iki oxunuş üst-üstə düşdü",                          // [X]
+    s_disagreement: "İki oxunuş fərqlənir",                             // [D]
+    s_illegible: "Oxunmur",                                             // [D]
+    s_absent: "Reseptdə göstərilməyib",                                 // [X]
+    s_registry: "Reyestrdə yoxdur.",                                    // [X]
+    s_lookalikeA: "",                                                   // [D] shape differs:
+    s_lookalikeB: " preparatına bənzəyir — təsiredici maddə fərqlidir", // [D]
+    s_awaiting: "İkinci oxunuşu gözləyir",                              // [X]
+
+    confirm: "Təsdiqlə",                                                // [X]
+    confirmAsIs: "Olduğu kimi təsdiqlə",                                // [X]
+    confirmAbsent: "Olmadığını təsdiqlə",                               // [X]
+    confirmNamed: "Təsdiqlə ",                                          // [D] "Подтвердить AMOKSİKLAV"
+    enterOwn: "Özüm yazacağam",                                         // [D]
+    enterManual: "Əl ilə daxil et",                                     // [D]
+    askDoctor: "Həkimlə dəqiqləşdir",                                   // [D]
+    save: "Yadda saxla",                                                // [X]
+    cancel: "İmtina",                                                   // [X]
+    reopen: "Qərarı dəyiş",                                             // [X]
+    typeHere: "Sizin oxunuşunuz",                                       // [X]
+
+    orderNum: "Sıralama — ədədin artması ilə. Heç biri əvvəlcədən seçilməyib.",  // [D]
+    orderTxt: "Sıralama — əlifba üzrə. Heç biri əvvəlcədən seçilməyib.",         // [X]
+
+    registryBody: "Yazılışı qutu ilə tutuşdurun. Arayış dəyəri yerinə yazmır.",  // [X]
+    lookalikeBody: "Yazılışı şəkil ilə tutuşdurun. Arayış dəyəri yerinə yazmır.",// [X]
+    inRx: "reseptdə · ",                                                // [D]
+    similar: "bənzər · ",                                               // [D]
+
+    settled: "Həll olundu · ",                                          // [X]
+    settledBoth: " · hər iki oxunuş üst-üstə düşdü",                    // [X]
+    settledPicked: " · iki oxunuşdan seçildi",                          // [X]
+    settledManual: " · əl ilə seçildi",                                 // [X]
+    settledAbsent: " · olmadığı təsdiqləndi",                           // [X]
+    settledAsIs: " · olduğu kimi təsdiqləndi",                          // [X]
+    queriedValue: "Həkimlə dəqiqləşdirilir",                            // [X]
+    queriedNote: " · cavabdan sonra qeyd bağlanacaq",                   // [X]
+
+    barSecondA: "İkinci oxunuş: ",                                      // [X]
+    barSecondB: " / ",                                                  // [X]
+    barSecondC: " sahə",                                                // [X]
+    barSecondSub: "Tamamlama ikinci oxunuşdan sonra mümkün olacaq.",     // [X]
+    barOpen: "Qalan qərarlar: ",                                        // [D]
+    barOpenSub: "Həll etmək üçün sahəyə toxunun.",                      // [X]
+    barReadyA: " / ",                                                   // [X]
+    barReadyB: " həll olundu",                                          // [X]
+    barQueries: " · həkimlə dəqiqləşdirmə: ",                           // [X]
+    complete: "Tamamla",                                                // [X]
+    completeUnavailable: "Tamamla — əlçatmaz",                          // [X]
+
+    stalledTitle: "İkinci oxunuş gəlmədi",                              // [X]
+    stalledBodyA: "İkinci oxunuşu olmayan sahələr: ",                   // [X]
+    stalledBody: "Onları həll etmək və qeydi tamamlamaq olmaz. Yenidən cəhd edin və ya resepti həkimə göndərin.", // [X]
+    stalledRetry: "İkinci oxunuşu təkrarla",                            // [X]
+    stalledRoute: "Qalanların hamısını həkimlə dəqiqləşdir",            // [X]
+    stalledField: "İkinci oxunuş gəlmədi",                              // [X]
+
+    archive: "Arxiv",                                                   // [X]
+    searchPlaceholder: "Maddə, tarix və ya nömrə",                      // [X]
+    fIngredient: "Təsiredici maddə",                                    // [X]
+    fDate: "Tarix",                                                     // [X]
+    fNumber: "Nömrə",                                                   // [X]
+    found: "Tapıldı: ",                                                 // [X]
+    newShot: "Yeni şəkil",                                              // [X]
+    resumeTitle: "Açıq resept №",                                       // [X]
+    resumeSub: "Qalan qərarlar: ",                                      // [X]
+    resume: "Reseptə qayıt",                                            // [X]
+    emptyArchive: "Qeyd yoxdur.",                                       // [X]
+    branchCol: "Filial",                                                // [X]
+    completedAt: "Tamamlandı ",                                         // [X]
+    recordClosed: "Qeyd bağlanıb. Dəyişikliyi yalnız menecer edir.",    // [X]
+    photoTogether: "Şəkil və transkripsiya yalnız birlikdə açılır.",    // [X]
+    tapForPhoto: "Şəkli tam açmaq üçün toxunun.",                       // [X]
+    resolvedCount: " / ",                                               // [X]
+    resolvedCountB: " həll olundu",                                     // [X]
+    queriedCount: " həkimlə dəqiqləşdirmə",                             // [X]
+    toArchive: "Arxiv",                                                 // [X]
+
+    moreFieldsA: "↓ daha ",                                             // [D]
+    moreFieldsB: " sahə",                                               // [D]
+
+    // The strip caption is a different grammatical shape in Azerbaijani, not
+    // just a longer one — "7 sahədən 3-cü", not "поле 3 из 7" — so it is one
+    // string per locale rather than a template with numbers slotted in, and
+    // the ordinal suffix follows vowel harmony.
+    fieldOfA: "",
+    fieldOfB: "",
+    langName: "RU",
+    demoTitle: "Demo panel",                                            // [X]
+    announceFocus: "Sahə: ",                                            // [X]
+    announceResolved: "Həll olundu: ",                                  // [X]
+    announceLanded: "İkinci oxunuş alındı: "                            // [X]
+  }
+};
+
+// Azerbaijani ordinals carry vowel harmony, so the suffix is per-number.
+// 1-ci 2-ci 3-cü 4-cü 5-ci 6-cı 7-ci — matching /design/'s "7 sahədən 2-ci".
+var AZ_ORDINAL = { 1: "-ci", 2: "-ci", 3: "-cü", 4: "-cü", 5: "-ci", 6: "-cı", 7: "-ci" };
+
+function t(key) {
+  var d = I18N[State.lang] || I18N.ru;
+  var v = d[key];
+  return (v === undefined || v === null) ? (I18N.ru[key] || "") : v;
+}
+
+// "поле 3 из 7" / "7 sahədən 3-cü" — one string per locale, not a template.
+function fieldCaption(index, total) {
+  if (State.lang === "az") {
+    return total + " sahədən " + index + (AZ_ORDINAL[index] || "-ci");
+  }
+  return t("fieldOfA") + index + t("fieldOfB") + total;
+}
+
+function moreFields(n) {
+  if (State.lang === "az") return t("moreFieldsA") + n + t("moreFieldsB");
+  return t("moreFieldsA") + n + t("moreFieldsB");
+}
+
+/* ===========================================================================
+   MOCK
+   Three prescriptions. Each carries a synthetic photo, per-field bounding
+   boxes normalised to the photo, and TWO independent readings per field.
+
+   The photos are entirely synthetic: procedural pen strokes drawn over a
+   drawn form, so the "handwriting" is plausible at a glance and illegible
+   on purpose. No real patient prescription is used, traced or reproduced
+   anywhere in this project. The same three SVGs are in /design/samples/.
+
+   Readings are named `first` and `second` by ARRIVAL ORDER ONLY. There is no
+   model name, no rank and no confidence anywhere in this data model — see
+   the note on ordering in STATE.
+   =========================================================================== */
+
+// Field regions in the 700x900 photo space, normalised [x, y, w, h].
+// Measured from the ink actually drawn in the three sample photos — the
+// stroke bounding box of each field's pen marks, unioned across the samples
+// and padded by half the stroke width. Boxes taken from the design's own
+// placeholder photo sat a little high against this handwriting, which showed
+// up as the strip outline cutting through the strokes rather than framing
+// them. The crop adds its context around whatever is given here.
+var REGIONS = {
+  patient:  [0.07743, 0.16994, 0.52229, 0.08483],
+  medicine: [0.07257, 0.33540, 0.59914, 0.08204],
+  dose:     [0.07557, 0.43815, 0.30171, 0.07363],
+  form:     [0.56314, 0.43494, 0.30371, 0.06928],
+  qty:      [0.06657, 0.50838, 0.20957, 0.08068],
+  schedule: [0.07600, 0.71208, 0.65943, 0.06798],
+  doctor:   [0.55586, 0.85761, 0.27543, 0.06644]
+};
+
+var PHOTO = { w: 700, h: 900 };
+
+/* __PHOTOS__ begin */
+// The three sample photos, inlined so the file stays self-contained. Each is
+// the same SVG as its counterpart in /design/samples/, whitespace-collapsed.
+// They are converted to data: URIs at runtime by photoURI().
+var SVG_4462 = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 900" width="700" height="900" role="img" aria-label="Synthetic prescription photo"><defs><radialGradient id="g1" cx="0.74" cy="0.2" r="0.46"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".42" stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><radialGradient id="g2" cx=".2" cy=".62" r=".3"><stop offset="0" stop-color="#fff" stop-opacity=".44"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><linearGradient id="sh" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".06"/><stop offset=".5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".13"/></linearGradient><filter id="gr"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2"/><feColorMatrix type="saturate" values="0"/></filter></defs><rect width="700" height="900" fill="#D9D2C2"/><g transform="rotate(-1.1 350 450)"><rect x="14" y="8" width="676" height="886" fill="#EDE7D8"/><rect x="14" y="8" width="676" height="886" fill="url(#sh)"/><g fill="#6E6858" font-family="monospace"><text x="52" y="62" font-size="21" letter-spacing="2">POLIKLINIKA № 7</text><text x="52" y="88" font-size="15" letter-spacing="1">BAKI ş. / г. БАКУ</text><text x="470" y="62" font-size="15" letter-spacing="1">RESEPT / РЕЦЕПТ</text><text x="470" y="88" font-size="15" letter-spacing="1">№ 4462</text></g><rect x="52" y="104" width="596" height="2" fill="#8C8676"/><rect x="52" y="110" width="596" height="1" fill="#A8A292"/><g fill="#77715F" font-family="monospace" font-size="14" letter-spacing="1"><text x="52" y="146">XƏSTƏ / ПАЦИЕНТ</text><text x="52" y="290">PREPARAT / ПРЕПАРАТ</text><text x="52" y="378">DOZA / ДОЗИРОВКА</text><text x="390" y="378">FORMA / ФОРМА</text><text x="52" y="520">MIQDAR / КОЛИЧЕСТВО</text><text x="52" y="590">SXEM / СХЕМА ПРИЁМА</text><text x="390" y="726">HƏKIM / ВРАЧ</text></g><g stroke="#B4AE9C" stroke-width="1"><path d="M52 222 H648"/><path d="M52 372 H648"/><path d="M52 448 H648"/><path d="M52 512 H648"/><path d="M52 582 H648"/><path d="M52 690 H648"/></g><g fill="none" stroke="#293453" stroke-linecap="round" stroke-linejoin="round"><path d="M58 202 q12-24 23-4 q10-27 17-1 t18+4 q11-27 19-1 q11-27 22-5 t21+1 M195 200 q12-25 21+0 q10-21 24+6 q11-22 17-3 t20-1 M295 198 q7-28 17+5 t16+2 q10-26 17+2 t16-5 q9-32 16+2 t17+0 M220 200 q-8-24 8-40 q6-18 4 40" stroke-width="3.6"/><path d="M62 347 q15-34 20+5 t19+4 q12-21 27-3 t23-2 M165 346 q9-31 17-2 q9-30 26-4 t21-2 M242 349 q9-31 23+2 t20-4 q8-22 23-3 q11-27 27+0 t25+5 M432 348 q-7-19 9-31 q9-14 5 31" stroke-width="4.4"/><path d="M60 433 q11-31 23-1 q12-26 21-1 q11-18 21+6 M142 436 q11-24 19+0 t18-2 q8-17 24-5 q11-25 23-2 t19+0 M228 434 q-5-20 7-33 q5-15 5 33" stroke-width="4.2"/><path d="M400 436 q9-26 18-4 t21+3 q11-32 17-4 t15-3 M485 434 q11-28 23+1 t20-2 q11-28 18-2 q10-27 19-4 q9-29 22+6 t14+0 M414 434 q-8-17 7-29 q8-13 5 29" stroke-width="3.6"/><path d="M58 500 q9-23 21+0 q12-23 22+5 t21+2 M134 500 q12-17 20+2 t20-2 q9-33 16+4 M84 502 q-4-19 7-31 q9-14 6 31" stroke-width="4.6"/><path d="M56 663 q7-24 20+3 t13+3 q7-30 17-2 M117 666 q12-25 21-1 q10-28 22-1 q12-26 16+0 M189 666 q12-27 18-4 t15+0 q9-19 15-1 t13+4 q10-33 16-5 t21+0 q13-30 19-3 t16+4 q13-32 20-5 t13-2 M373 662 q8-17 18+3 t17+0 q10-31 21+3 M447 663 q9-25 16-4 q11-25 23+1 M61 689 q12-20 22-4 t21-4 q8-23 19+5 t19-3 q11-30 16+1 t20-1 q11-27 18+6" stroke-width="3.6"/><path d="M396 800 q10-43 23+4 t18+3 q10-52 20-3 t20-1 q10-33 21+5 t17+5 q16-51 19-4 q11-33 23-5 t22+0" stroke-width="3.8"/><path d="M392 786 q60 26 130 6" stroke-width="3.8"/></g><g transform="rotate(-9 540 786)" stroke="#6A5A88" fill="none" opacity=".52"><rect x="464" y="716" width="150" height="150" stroke-width="4"/><rect x="476" y="728" width="126" height="126" stroke-width="2"/><g stroke-width="2.4"><path d="M492 770 h106"/><path d="M492 790 h106"/><path d="M492 810 h84"/></g><text x="492" y="756" font-family="monospace" font-size="14" fill="#6A5A88" stroke="none" letter-spacing="1">MÖHÜR</text></g><rect x="14" y="8" width="676" height="886" fill="url(#g1)"/><rect x="14" y="8" width="676" height="886" fill="url(#g2)"/><rect x="14" y="8" width="676" height="886" filter="url(#gr)" opacity=".07"/></g></svg>';
+var SVG_4468 = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 900" width="700" height="900" role="img" aria-label="Synthetic prescription photo"><defs><radialGradient id="g1" cx="0.3" cy="0.16" r="0.5"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".42" stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><radialGradient id="g2" cx=".2" cy=".62" r=".3"><stop offset="0" stop-color="#fff" stop-opacity=".44"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><linearGradient id="sh" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".06"/><stop offset=".5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".13"/></linearGradient><filter id="gr"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2"/><feColorMatrix type="saturate" values="0"/></filter></defs><rect width="700" height="900" fill="#D9D2C2"/><g transform="rotate(0.9 350 450)"><rect x="14" y="8" width="676" height="886" fill="#EDE7D8"/><rect x="14" y="8" width="676" height="886" fill="url(#sh)"/><g fill="#6E6858" font-family="monospace"><text x="52" y="62" font-size="21" letter-spacing="2">POLIKLINIKA № 7</text><text x="52" y="88" font-size="15" letter-spacing="1">BAKI ş. / г. БАКУ</text><text x="470" y="62" font-size="15" letter-spacing="1">RESEPT / РЕЦЕПТ</text><text x="470" y="88" font-size="15" letter-spacing="1">№ 4468</text></g><rect x="52" y="104" width="596" height="2" fill="#8C8676"/><rect x="52" y="110" width="596" height="1" fill="#A8A292"/><g fill="#77715F" font-family="monospace" font-size="14" letter-spacing="1"><text x="52" y="146">XƏSTƏ / ПАЦИЕНТ</text><text x="52" y="290">PREPARAT / ПРЕПАРАТ</text><text x="52" y="378">DOZA / ДОЗИРОВКА</text><text x="390" y="378">FORMA / ФОРМА</text><text x="52" y="520">MIQDAR / КОЛИЧЕСТВО</text><text x="52" y="590">SXEM / СХЕМА ПРИЁМА</text><text x="390" y="726">HƏKIM / ВРАЧ</text></g><g stroke="#B4AE9C" stroke-width="1"><path d="M52 222 H648"/><path d="M52 372 H648"/><path d="M52 448 H648"/><path d="M52 512 H648"/><path d="M52 582 H648"/><path d="M52 690 H648"/></g><g fill="none" stroke="#2B3550" stroke-linecap="round" stroke-linejoin="round"><path d="M58 200 q11-18 23-1 t13+3 q11-30 16+0 q10-30 17+6 t20+2 M164 198 q11-22 20-3 t20+0 q12-29 20+2 t19+3 q8-32 18-4 t16-4 q9-24 21+0 M314 201 q12-33 21+3 q11-17 22-1 t18-1 q9-17 23-5 t19-4" stroke-width="3.6"/><path d="M54 348 q8-23 22-3 t17+0 q9-22 19-6 M130 347 q14-29 27-3 q8-22 25-3 t19+5 M220 347 q14-25 24-1 t20+4 q13-27 19-2 t22+5 q10-37 27-1 t17+4 M361 348 q10-23 27-1 q14-33 24-5 q10-24 19+4 t17+3 q10-26 19-4" stroke-width="4.4"/><path d="M56 433 q10-20 16-4 q10-27 16+4 t21-3 q7-33 22+3 M144 433 q8-30 21+4 q9-27 18+5 t19-2 M222 434 q10-22 17-1 q12-23 18+0" stroke-width="4.2"/><path d="M398 433 q9-31 17+0 q12-28 17+2 t16+3 q11-31 19-4 t20+2 q11-23 20-5 t20-4 M522 434 q-7-21 8-36 q7-16 5 36" stroke-width="3.6"/><path d="M60 503 q8-34 18+5 t16-3 q8-31 18-6 t14+1 q11-31 19+2 M147 502 q-5-22 6-37 q7-17 3 37 M54 505 q12-47 24-8 q10-61 17-1 q8-56 24-6 t23-6 M50 496 q60 14 102 -4" stroke-width="4.8"/><path d="M59 663 q9-17 16+1 q12-22 18+2 t20-3 M127 663 q11-24 19+4 q10-33 17-2 t16+5 M191 665 q10-31 15+5 t15-5 q12-17 22-3 q11-33 15-2 M270 665 q10-27 17+5 t18-5 q7-29 16+4 q10-32 22+3 t13-1 q8-30 17-6 t16+0 M409 664 q8-23 20+3 t22-3 q11-20 23+2 q11-18 23-4 t15-3 M56 688 q9-18 21-2 t13+3 q8-20 19-4 t21+0 M141 689 q12-28 24+3 q12-32 23-4 q10-29 21-4 t13+0 q8-18 20+0 t19+5 q10-22 19-2 t20+3" stroke-width="3.6"/><path d="M396 800 q12-36 19+3 q12-35 26-7 t19-4" stroke-width="3.8"/><path d="M392 786 q60 26 130 6" stroke-width="3.8"/></g><g transform="rotate(-9 540 786)" stroke="#6A5A88" fill="none" opacity=".52"><rect x="464" y="716" width="150" height="150" stroke-width="4"/><rect x="476" y="728" width="126" height="126" stroke-width="2"/><g stroke-width="2.4"><path d="M492 770 h106"/><path d="M492 790 h106"/><path d="M492 810 h84"/></g><text x="492" y="756" font-family="monospace" font-size="14" fill="#6A5A88" stroke="none" letter-spacing="1">MÖHÜR</text></g><rect x="14" y="8" width="676" height="886" fill="url(#g1)"/><rect x="14" y="8" width="676" height="886" fill="url(#g2)"/><rect x="14" y="8" width="676" height="886" filter="url(#gr)" opacity=".07"/></g></svg>';
+var SVG_4471 = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 900" width="700" height="900" role="img" aria-label="Synthetic prescription photo"><defs><radialGradient id="g1" cx="0.68" cy="0.72" r="0.42"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".42" stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><radialGradient id="g2" cx=".2" cy=".62" r=".3"><stop offset="0" stop-color="#fff" stop-opacity=".44"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><linearGradient id="sh" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".06"/><stop offset=".5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".13"/></linearGradient><filter id="gr"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2"/><feColorMatrix type="saturate" values="0"/></filter></defs><rect width="700" height="900" fill="#D9D2C2"/><g transform="rotate(-1.4 350 450)"><rect x="14" y="8" width="676" height="886" fill="#EDE7D8"/><rect x="14" y="8" width="676" height="886" fill="url(#sh)"/><g fill="#6E6858" font-family="monospace"><text x="52" y="62" font-size="21" letter-spacing="2">POLIKLINIKA № 7</text><text x="52" y="88" font-size="15" letter-spacing="1">BAKI ş. / г. БАКУ</text><text x="470" y="62" font-size="15" letter-spacing="1">RESEPT / РЕЦЕПТ</text><text x="470" y="88" font-size="15" letter-spacing="1">№ 4471</text></g><rect x="52" y="104" width="596" height="2" fill="#8C8676"/><rect x="52" y="110" width="596" height="1" fill="#A8A292"/><g fill="#77715F" font-family="monospace" font-size="14" letter-spacing="1"><text x="52" y="146">XƏSTƏ / ПАЦИЕНТ</text><text x="52" y="290">PREPARAT / ПРЕПАРАТ</text><text x="52" y="378">DOZA / ДОЗИРОВКА</text><text x="390" y="378">FORMA / ФОРМА</text><text x="52" y="520">MIQDAR / КОЛИЧЕСТВО</text><text x="52" y="590">SXEM / СХЕМА ПРИЁМА</text><text x="390" y="726">HƏKIM / ВРАЧ</text></g><g stroke="#B4AE9C" stroke-width="1"><path d="M52 222 H648"/><path d="M52 372 H648"/><path d="M52 448 H648"/><path d="M52 512 H648"/><path d="M52 582 H648"/><path d="M52 690 H648"/></g><g fill="none" stroke="#273150" stroke-linecap="round" stroke-linejoin="round"><path d="M57 200 q10-21 18+1 q11-32 15+5 q11-17 22-2 t15+0 M142 198 q9-28 20+1 q8-30 23-6 t16-1 M217 198 q12-21 21-2 t14-1 q9-31 23+4 q13-23 20+0 M309 200 q8-19 23-1 t18+4 q8-17 17+2 q7-25 21+0 q9-29 20+5" stroke-width="3.6"/><path d="M61 350 q12-23 22+6 q9-28 19-5 q12-29 18-1 q11-26 20-4 M159 349 q14-29 23-6 t24+4 q10-36 26-3 t16-4 q8-30 20+5 t21+3 M305 348 q10-21 18-1 q12-34 23-5 t24+2 M386 348 q12-34 18+3 q11-22 20+4 t15-4 M164 348 q-7-23 11-39 q9-17 3 39" stroke-width="4.4"/><path d="M59 435 q10-23 22-5 t18+0 q11-23 18+3 M129 436 q8-30 19-2 q12-30 16+1 t13+1 M188 435 q9-20 17+4 q13-24 22-2 q8-25 15+4 t19+4 M228 434 q-6-19 11-32 q7-14 4 32" stroke-width="4.2"/><path d="M397 436 q11-23 24+1 q11-32 21-4 M459 435 q8-18 19-3 t18-5 q8-18 19-1 q11-29 20-5 M548 436 q8-28 19+1 t18-2 q11-20 19-5 M506 434 q-8-18 6-30 q9-13 4 30" stroke-width="3.6"/><path d="M62 502 q8-21 23+6 t14+1 q9-20 21-1 t18-1" stroke-width="4.6"/><path d="M396 800 q10-51 27+2 t19+1 q16-52 20-3 q16-51 24+1 q16-48 25+2 t21+0" stroke-width="3.8"/><path d="M392 786 q60 26 130 6" stroke-width="3.8"/></g><g transform="rotate(-9 540 786)" stroke="#6A5A88" fill="none" opacity=".52"><rect x="464" y="716" width="150" height="150" stroke-width="4"/><rect x="476" y="728" width="126" height="126" stroke-width="2"/><g stroke-width="2.4"><path d="M492 770 h106"/><path d="M492 790 h106"/><path d="M492 810 h84"/></g><text x="492" y="756" font-family="monospace" font-size="14" fill="#6A5A88" stroke="none" letter-spacing="1">MÖHÜR</text></g><rect x="14" y="8" width="676" height="886" fill="url(#g1)"/><rect x="14" y="8" width="676" height="886" fill="url(#g2)"/><rect x="14" y="8" width="676" height="886" filter="url(#gr)" opacity=".07"/></g></svg>';
+/* __PHOTOS__ end */
+
+var PHOTO_SVG = {
+  "rx-4462": SVG_4462,
+  "rx-4468": SVG_4468,
+  "rx-4471": SVG_4471
+};
+
+var photoCache = {};
+function photoURI(id) {
+  if (!photoCache[id]) {
+    photoCache[id] = "data:image/svg+xml;charset=utf-8," +
+      encodeURIComponent(PHOTO_SVG[id] || "");
+  }
+  return photoCache[id];
+}
+
+// The order the second reading lands in is NOT the display order. A reading
+// service returns per-field results as they finish, not top to bottom.
+var LAND_ORDER = ["patient", "dose", "form", "medicine", "schedule", "qty", "doctor"];
+
+var BRANCHES = {
+  nizami42:  "branchNizami",
+  ganja3:    "branchGanja",
+  sumqayit1: "branchSumqayit"
+};
+
+var SAMPLES = [
+  {
+    // 1 — every field agreed. The fast path.
+    id: "rx-4462", number: "4462", branchId: "nizami42", date: "12.09",
+    fields: [
+      { id: "patient",  first: "Мамедова Л. А.",                      second: "Мамедова Л. А." },
+      { id: "medicine", first: "AMOKSİSİLLİN 500",                    second: "AMOKSİSİLLİN 500", vtype: "name",
+        ingredient: "амоксициллин" },
+      { id: "dose",     first: "500 мг",                              second: "500 мг", vtype: "num" },
+      { id: "form",     first: "капсулы",                             second: "капсулы" },
+      { id: "qty",      first: "20 шт.",                              second: "20 шт.", vtype: "num" },
+      { id: "schedule", first: "по 1 капсуле 3 раза в день, 5 дней",  second: "по 1 капсуле 3 раза в день, 5 дней" },
+      { id: "doctor",   first: "Р. Гусейнов",                         second: "Р. Гусейнов" }
+    ]
+  },
+  {
+    // 2 — one disagreement, one illegible, and a drug the registry does not
+    //     carry. Matches the archive record №4468 in /design/.
+    id: "rx-4468", number: "4468", branchId: "nizami42", date: "12.09",
+    fields: [
+      { id: "patient",  first: "Гасанов И. Т.", second: "Гасанов И. Т." },
+      { id: "medicine", first: "SEFTAZIM 1000", second: "SEFTAZIM 1000", vtype: "name",
+        ingredient: "цефтазидим",
+        // Catalogue hints ANNOTATE. They are never written into a value.
+        catalogue: { kind: "not_in_registry" } },
+      { id: "dose",     first: "1000 мг", second: "500 мг", vtype: "num" },
+      { id: "form",     first: "порошок для инъекций", second: "порошок для инъекций" },
+      { id: "qty",      first: "10 фл.", second: null, illegible: true, vtype: "num" },
+      { id: "schedule", first: "по 1 флакону 2 раза в день, 7 дней", second: "по 1 флакону 2 раза в день, 7 дней" },
+      { id: "doctor",   first: "Э. Ахмедов", second: "Э. Ахмедов" }
+    ]
+  },
+  {
+    // 3 — a look-alike catalogue flag and a line the doctor left blank.
+    id: "rx-4471", number: "4471", branchId: "nizami42", date: "14.09",
+    fields: [
+      { id: "patient",  first: "Алиева Н. М.", second: "Алиева Н. М." },
+      { id: "medicine", first: "AMOKSİKLAV 875/125", second: "AMOKSİKLAV 875/125", vtype: "name",
+        ingredient: "амоксициллин + клавуланат",
+        catalogue: {
+          kind: "lookalike",
+          similarName: "AMOKLAVIN",
+          mineName: "AMOKSİKLAV",
+          mineIngredient: "амоксициллин + клавуланат",
+          similarIngredient: "ампициллин + сульбактам",
+          mineIngredientAz: "amoksisillin + klavulanat",
+          similarIngredientAz: "ampisillin + sulbaktam"
+        } },
+      { id: "dose",     first: "875 мг", second: "875 мг", vtype: "num" },
+      { id: "form",     first: "таблетки, покрытые оболочкой", second: "таблетки, покрытые оболочкой" },
+      { id: "qty",      first: "14 шт.", second: "14 шт.", vtype: "num" },
+      // Nothing is written on this line of the prescription at all.
+      { id: "schedule", first: "", second: "", absent: true },
+      { id: "doctor",   first: "Р. Гусейнов", second: "Р. Гусейнов" }
+    ]
+  }
+];
+
+var STAFF = [
+  { id: "ag", initials: "АГ", name: "А. Гулиева",  role: "pharmacist", branchId: "nizami42" },
+  { id: "rm", initials: "РМ", name: "Р. Мамедов",  role: "pharmacist", branchId: "nizami42" },
+  { id: "en", initials: "ЭН", name: "Э. Нуриев",   role: "manager",    branchId: null }
+];
+
+// Archive seeded so role scoping is observable from the first screen:
+// the Nizami pharmacist sees two of these, the manager sees all four.
+function seedArchive() {
+  return [
+    { number: "4455", sampleId: "rx-4471", branchId: "ganja3", at: "13.09 16:31",
+      by: "ЭН", name: "AMOKSİKLAV 625", ingredient: "амоксициллин + клавуланат",
+      queries: 0, total: 7,
+      rows: [
+        { id: "patient",  value: "Рагимов С. А.", glyph: "✓", note: "settledBoth" },
+        { id: "medicine", value: "AMOKSİKLAV 625", glyph: "✓", note: "settledBoth" },
+        { id: "dose",     value: "625 мг", glyph: "✓", note: "settledBoth" },
+        { id: "form",     value: "таблетки, покрытые оболочкой", glyph: "✓", note: "settledBoth" },
+        { id: "qty",      value: "14 шт.", glyph: "✓", note: "settledBoth" },
+        { id: "schedule", value: "по 1 таблетке 2 раза в день, 7 дней", glyph: "✓", note: "settledBoth" },
+        { id: "doctor",   value: "Р. Гусейнов", glyph: "✓", note: "settledBoth" }
+      ] },
+    { number: "4448", sampleId: "rx-4462", branchId: "sumqayit1", at: "13.09 10:07",
+      by: "ЭН", name: "AUGMENTIN 1000", ingredient: "амоксициллин + клавуланат",
+      queries: 0, total: 7,
+      rows: [
+        { id: "patient",  value: "Керимли А. В.", glyph: "✓", note: "settledBoth" },
+        { id: "medicine", value: "AUGMENTIN 1000", glyph: "✓", note: "settledBoth" },
+        { id: "dose",     value: "1000 мг", glyph: "✓", note: "settledBoth" },
+        { id: "form",     value: "таблетки, покрытые оболочкой", glyph: "✓", note: "settledBoth" },
+        { id: "qty",      value: "14 шт.", glyph: "✓", note: "settledBoth" },
+        { id: "schedule", value: "по 1 таблетке 2 раза в день, 7 дней", glyph: "✓", note: "settledBoth" },
+        { id: "doctor",   value: "Э. Ахмедов", glyph: "✓", note: "settledBoth" }
+      ] },
+    // A doctor query is an ordinary result, listed like any other.
+    { number: "4431", sampleId: "rx-4468", branchId: "nizami42", at: "12.09 17:52",
+      by: "РМ", name: "SEFTAZIM 1000", ingredient: "цефтазидим",
+      queries: 1, total: 7,
+      rows: [
+        { id: "patient",  value: "Гасанов И. Т.", glyph: "✓", note: "settledBoth" },
+        { id: "medicine", value: "SEFTAZIM 1000", glyph: "!", note: "settledAsIs" },
+        { id: "dose",     value: "1000 мг", glyph: "✓", note: "settledBoth" },
+        { id: "form",     value: "порошок для инъекций", glyph: "✓", note: "settledBoth" },
+        { id: "qty",      value: "queriedValue", glyph: "~", note: "settledQueried", i18nValue: true },
+        { id: "schedule", value: "по 1 флакону 2 раза в день, 7 дней", glyph: "✓", note: "settledBoth" },
+        { id: "doctor",   value: "Э. Ахмедов", glyph: "✓", note: "settledBoth" }
+      ] },
+    { number: "4427", sampleId: "rx-4462", branchId: "nizami42", at: "12.09 11:20",
+      by: "АГ", name: "AMOKSİSİLLİN 500", ingredient: "амоксициллин",
+      queries: 0, total: 7,
+      rows: [
+        { id: "patient",  value: "Мамедова Л. А.", glyph: "✓", note: "settledBoth" },
+        { id: "medicine", value: "AMOKSİSİLLİN 500", glyph: "✓", note: "settledBoth" },
+        { id: "dose",     value: "500 мг", glyph: "✓", note: "settledBoth" },
+        { id: "form",     value: "капсулы", glyph: "✓", note: "settledBoth" },
+        { id: "qty",      value: "20 шт.", glyph: "✓", note: "settledBoth" },
+        { id: "schedule", value: "по 1 капсуле 3 раза в день, 5 дней", glyph: "✓", note: "settledBoth" },
+        { id: "doctor",   value: "Р. Гусейнов", glyph: "✓", note: "settledBoth" }
+      ] }
+  ];
+}
+
+// Live capture warnings, cycled on the viewfinder. Each names a place and a
+// fix: "плохое фото" gives a pharmacist nothing to do.
+var WARNINGS = [
+  { id: "blur",  glyph: "≈", tone: "open",  t: "w_blur_t",  f: "w_blur_f",  blocks: false },
+  { id: "glare", glyph: "☀", tone: "open",  t: "w_glare_t", f: "w_glare_f", blocks: false },
+  { id: "crop",  glyph: "⊐", tone: "alert", t: "w_crop_t",  f: "w_crop_f",  blocks: true  },
+  { id: "angle", glyph: "∠", tone: "open",  t: "w_angle_t", f: "w_angle_f", blocks: false }
+];
+
+/* ===========================================================================
+   STATE
+   Session model and reducer-style transitions. The five product invariants
+   are enforced HERE, in the state layer — not by disabling a control. Every
+   one of them refuses at the function that performs the change, so forcing
+   a click through the console or the keyboard cannot get past them.
+   =========================================================================== */
+
+// The six field states, plus `awaiting`, which is what a field is before its
+// second reading has landed. `awaiting` is NOT a valid completion state.
+var FIELD_STATE = {
+  AWAITING:             "awaiting",
+  AGREED:               "agreed",
+  DISAGREEMENT:         "disagreement",
+  ILLEGIBLE:            "illegible",
+  ABSENT:               "absent",
+  FLAG_NOT_IN_REGISTRY: "flag_not_in_registry",
+  FLAG_LOOKALIKE:       "flag_lookalike"
+};
+
+var RESOLVABLE = {};
+RESOLVABLE[FIELD_STATE.AGREED] = true;
+RESOLVABLE[FIELD_STATE.DISAGREEMENT] = true;
+RESOLVABLE[FIELD_STATE.ILLEGIBLE] = true;
+RESOLVABLE[FIELD_STATE.ABSENT] = true;
+RESOLVABLE[FIELD_STATE.FLAG_NOT_IN_REGISTRY] = true;
+RESOLVABLE[FIELD_STATE.FLAG_LOOKALIKE] = true;
+
+// How a resolution was arrived at. `source` records where the VALUE came
+// from, which is what invariant 5 is checked against.
+var SOURCE = {
+  READING: "reading",   // one of the two readings, or both when they agreed
+  MANUAL:  "manual",    // the pharmacist typed it
+  ABSENT:  "absent",    // confirmed that the line is blank
+  DOCTOR:  "doctor"     // routed to the prescriber; a normal terminal outcome
+};
+
+var SECOND_READING_INTERVAL_MS = 850;
+// If the second reading has not finished within this long, the session is
+// declared stalled. It does NOT become completable; it becomes explicitly
+// blocked, with a retry and a doctor-follow-up route.
+var SECOND_READING_TIMEOUT_MS = 12000;
+
+var State = {
+  lang: "ru",
+  screen: "signin",
+  user: null,
+  pinFor: null,
+  pin: "",
+  session: null,
+  archive: [],
+  openRecord: null,
+  capture: { warnIndex: 0, marginal: false, shot: null, cameraAvailable: null, frame: null },
+  overlay: false,
+  userMenu: false,
+  archiveQuery: "",
+  archiveFilter: "ingredient",
+  demo: false,
+  demoOpen: false,
+  // Incremented whenever a session starts, resets or is abandoned. Every
+  // timer carries the token it was created under and does nothing if the
+  // token has moved on — this is what stops a stale reading from landing on
+  // a session the user has already left.
+  runToken: 0
+};
+
+/* -- storage ---------------------------------------------------------------
+   file:// localStorage throws outright in some browsers, and can throw on
+   write in private modes. Every call is wrapped and falls back to memory
+   without breaking anything. Corrupt stored JSON is discarded, not trusted. */
+var memoryStore = {};
+var storageWorks = null;
+
+function storeAvailable() {
+  if (storageWorks !== null) return storageWorks;
+  try {
+    var k = "__siruply_probe__";
+    window.localStorage.setItem(k, "1");
+    window.localStorage.removeItem(k);
+    storageWorks = true;
+  } catch (e) {
+    storageWorks = false;
+  }
+  return storageWorks;
+}
+
+function storeGet(key) {
+  try {
+    if (storeAvailable()) return window.localStorage.getItem(key);
+  } catch (e) { /* fall through to memory */ }
+  return Object.prototype.hasOwnProperty.call(memoryStore, key) ? memoryStore[key] : null;
+}
+
+function storeSet(key, value) {
+  memoryStore[key] = value;
+  try {
+    if (storeAvailable()) window.localStorage.setItem(key, value);
+  } catch (e) { /* quota or disabled: memory already holds it */ }
+}
+
+function storeRemove(key) {
+  delete memoryStore[key];
+  try {
+    if (storeAvailable()) window.localStorage.removeItem(key);
+  } catch (e) { /* nothing to do */ }
+}
+
+var K_SESSION = "siruply.session.v1";
+var K_ARCHIVE = "siruply.archive.v1";
+var K_LANG    = "siruply.lang.v1";
+var K_USER    = "siruply.user.v1";
+
+function readJSON(key) {
+  var raw = storeGet(key);
+  if (!raw) return null;
+  try {
+    var v = JSON.parse(raw);
+    return (v && typeof v === "object") ? v : null;
+  } catch (e) {
+    // Corrupt or hostile: drop it and carry on with a clean slate.
+    storeRemove(key);
+    return null;
+  }
+}
+
+function writeJSON(key, value) {
+  try {
+    storeSet(key, JSON.stringify(value));
+  } catch (e) { /* circular or oversized: skip persistence, keep running */ }
+}
+
+/* -- session construction -------------------------------------------------- */
+
+function sampleById(id) {
+  for (var i = 0; i < SAMPLES.length; i++) if (SAMPLES[i].id === id) return SAMPLES[i];
+  return SAMPLES[0];
+}
+
+function newSession(sampleId, user, opts) {
+  opts = opts || {};
+  var sample = sampleById(sampleId);
+  var fields = sample.fields.map(function (f) {
+    return {
+      id: f.id,
+      region: f.id,
+      vtype: f.vtype || "text",
+      first: f.first,
+      second: f.second,
+      illegible: !!f.illegible,
+      absent: !!f.absent,
+      catalogue: f.catalogue || null,
+      ingredient: f.ingredient || null,
+      landed: false,       // has the SECOND reading landed for this field
+      resolution: null,
+      demoState: null
+    };
+  });
+  return {
+    sampleId: sample.id,
+    number: sample.number,
+    branchId: sample.branchId,
+    date: sample.date,
+    by: user ? user.initials : "",
+    byName: user ? user.name : "",
+    fields: fields,
+    focus: fields[0].id,
+    boost: false,
+    editing: null,
+    draft: "",
+    landedCount: 0,
+    stalled: false,
+    slowSecond: !!opts.slowSecond,
+    failSecond: !!opts.failSecond,
+    startedAt: Date.now()
+  };
+}
+
+/* -- derivation ------------------------------------------------------------
+   The state of a field is DERIVED, never stored. There is no code path that
+   can write "agreed" onto a field whose second reading has not landed,
+   because the state is computed from `landed` every time it is asked for. */
+function fieldState(f) {
+  if (!f) return FIELD_STATE.AWAITING;
+
+  // INVARIANT 2 — a field cannot reach a settled-capable state before the
+  // second reading has landed FOR THAT FIELD. This is the only gate, and it
+  // sits ahead of every other branch, so the settled state is unreachable in
+  // the state machine rather than merely hidden in the view.
+  if (!f.landed) return FIELD_STATE.AWAITING;
+
+  if (f.demoState) return f.demoState;      // DEMO only; see DEMO section
+  if (f.absent) return FIELD_STATE.ABSENT;
+  if (f.illegible || f.second === null) return FIELD_STATE.ILLEGIBLE;
+  if (f.first !== f.second) return FIELD_STATE.DISAGREEMENT;
+  if (f.catalogue && f.catalogue.kind === "lookalike") return FIELD_STATE.FLAG_LOOKALIKE;
+  if (f.catalogue && f.catalogue.kind === "not_in_registry") return FIELD_STATE.FLAG_NOT_IN_REGISTRY;
+  return FIELD_STATE.AGREED;
+}
+
+function fieldById(session, id) {
+  if (!session) return null;
+  for (var i = 0; i < session.fields.length; i++) {
+    if (session.fields[i].id === id) return session.fields[i];
+  }
+  return null;
+}
+
+function openFields(session) {
+  if (!session) return [];
+  return session.fields.filter(function (f) { return !f.resolution; });
+}
+
+function landedCount(session) {
+  if (!session) return 0;
+  return session.fields.filter(function (f) { return f.landed; }).length;
+}
+
+function queryCount(session) {
+  if (!session) return 0;
+  return session.fields.filter(function (f) {
+    return f.resolution && f.resolution.source === SOURCE.DOCTOR;
+  }).length;
+}
+
+/* -- the two readings, unranked -------------------------------------------
+   ORDERING RULE — the two readings are never ranked. They are ordered by
+   the VALUE, not by which reading produced it:
+       numeric values ascend;
+       everything else sorts alphabetically by the interface locale.
+   Naming the rule is what turns the top option from a recommendation into an
+   accident of arithmetic. There is no preselection, no "recommended" marker,
+   no model name and no confidence number anywhere in this data model or in
+   the DOM it produces. */
+function numericKey(v) {
+  var m = String(v).match(/-?\d+(?:[.,]\d+)?/);
+  if (!m) return null;
+  return parseFloat(m[0].replace(",", "."));
+}
+
+function optionsFor(f) {
+  var a = f.first, b = f.second;
+  var na = numericKey(a), nb = numericKey(b);
+  var numeric = (na !== null && nb !== null);
+  var opts = [a, b];
+  if (numeric) {
+    opts.sort(function (x, y) { return numericKey(x) - numericKey(y); });
+  } else {
+    opts.sort(function (x, y) {
+      return String(x).localeCompare(String(y), State.lang === "az" ? "az" : "ru");
+    });
+  }
+  return { options: opts, numeric: numeric };
+}
+
+/* -- transitions ----------------------------------------------------------- */
+
+function resolveField(fieldId, value, source, opts) {
+  opts = opts || {};
+  var s = State.session;
+  if (!s) return { ok: false, reason: "no-session" };
+
+  var f = fieldById(s, fieldId);
+  if (!f) return { ok: false, reason: "no-field" };
+
+  // INVARIANT 2, enforced again at the write. Deriving the state is not
+  // enough on its own: this is the function that mutates, so this is where
+  // a forced call has to be refused.
+  if (!f.landed) return { ok: false, reason: "awaiting-second-reading" };
+
+  var st = fieldState(f);
+  if (!RESOLVABLE[st]) return { ok: false, reason: "not-resolvable:" + st };
+
+  // INVARIANT 5 — catalogue hints annotate, never fill. A registry
+  // suggestion must never become a field value by ANY code path, so the
+  // value being written is checked against this field's catalogue entry
+  // before it is stored.
+  if (source === SOURCE.READING || source === SOURCE.MANUAL) {
+    var cat = f.catalogue;
+    if (cat) {
+      var forbidden = [cat.similarName, cat.similarIngredient, cat.similarIngredientAz,
+                       cat.mineIngredient, cat.mineIngredientAz];
+      for (var i = 0; i < forbidden.length; i++) {
+        if (forbidden[i] && String(value) === String(forbidden[i])) {
+          return { ok: false, reason: "catalogue-cannot-fill-a-value" };
+        }
+      }
+    }
+  }
+
+  // A reading-sourced value has to actually be one of the two readings.
+  if (source === SOURCE.READING) {
+    if (String(value) !== String(f.first) && String(value) !== String(f.second)) {
+      return { ok: false, reason: "value-not-from-a-reading" };
+    }
+  }
+
+  // Idempotent under a double tap: the first write wins, a second tap in the
+  // same frame on a different option is refused rather than silently
+  // overwriting a decision the pharmacist has already made.
+  if (f.resolution) return { ok: false, reason: "already-resolved" };
+
+  f.resolution = {
+    value: value,
+    source: source,
+    note: opts.note || null,
+    by: s.by,
+    byName: s.byName,
+    at: stamp()
+  };
+  s.editing = null;
+  s.draft = "";
+  s.focus = fieldId;
+  // The control that was just used is about to be removed from the row, so
+  // park focus on the field heading rather than letting it fall to <body>.
+  pendingFocus = fieldId;
+  lastResolveAt = Date.now();
+  persistSession();
+  announce(t("announceResolved") + labelFor(fieldId) + ", " + displayValue(f));
+  return { ok: true };
+}
+
+// A resolved row replaces its control with "change this decision", which
+// lands under the finger that just resolved the field. A double tap at a
+// counter would otherwise resolve and immediately un-resolve, silently. The
+// reopen control ignores taps that arrive within this window of the write.
+var REOPEN_GRACE_MS = 500;
+var lastResolveAt = 0;
+
+function reopenField(fieldId) {
+  var s = State.session;
+  if (!s) return { ok: false, reason: "no-session" };
+  if (Date.now() - lastResolveAt < REOPEN_GRACE_MS) {
+    return { ok: false, reason: "too-soon-after-resolving" };
+  }
+  var f = fieldById(s, fieldId);
+  if (!f) return { ok: false, reason: "no-field" };
+  f.resolution = null;
+  s.focus = fieldId;
+  persistSession();
+  return { ok: true };
+}
+
+/* INVARIANT 1 — a session cannot be completed while any field decision is
+   open. The refusal lives in this function, not in the rendering of a
+   button. Calling window.Siruply.complete() straight from the console with
+   fields open returns {ok:false} and changes nothing. */
+function completeSession() {
+  var s = State.session;
+  if (!s) return { ok: false, reason: "no-session" };
+
+  var open = openFields(s);
+  if (open.length > 0) {
+    return {
+      ok: false,
+      reason: "open-fields",
+      open: open.map(function (f) { return f.id; })
+    };
+  }
+
+  // Belt and braces: even with every field resolved, a field whose second
+  // reading never landed cannot have been resolved legitimately. If one is
+  // found, refuse rather than write a record that claims two readings.
+  var unlanded = s.fields.filter(function (f) { return !f.landed; });
+  if (unlanded.length > 0) {
+    return {
+      ok: false,
+      reason: "second-reading-incomplete",
+      fields: unlanded.map(function (f) { return f.id; })
+    };
+  }
+
+  var medicine = fieldById(s, "medicine");
+  var sample = sampleById(s.sampleId);
+  var record = {
+    number: s.number,
+    sampleId: s.sampleId,
+    branchId: s.branchId,
+    at: s.date + " " + stamp(),
+    by: s.by,
+    byName: s.byName,
+    name: medicine && medicine.resolution ? medicine.resolution.value : "",
+    ingredient: medicineIngredient(s, sample),
+    queries: queryCount(s),
+    total: s.fields.length,
+    rows: s.fields.map(function (f) {
+      return {
+        id: f.id,
+        value: f.resolution.value,
+        i18nValue: f.resolution.source === SOURCE.DOCTOR,
+        glyph: archiveGlyph(f),
+        note: archiveNote(f)
+      };
+    })
+  };
+
+  State.archive.unshift(record);
+  persistArchive();
+
+  State.runToken++;          // stop any timer still in flight
+  State.session = null;
+  storeRemove(K_SESSION);
+  State.openRecord = record;
+  State.screen = "record";
+  render();
+  return { ok: true, record: record };
+}
+
+function medicineIngredient(s, sample) {
+  var f = fieldById(s, "medicine");
+  if (f && f.resolution && f.resolution.source === SOURCE.DOCTOR) return t("queriedValue");
+  return (f && f.ingredient) ? f.ingredient : "";
+}
+
+function archiveGlyph(f) {
+  if (!f.resolution) return "·";
+  if (f.resolution.source === SOURCE.DOCTOR) return "~";
+  if (f.resolution.source === SOURCE.ABSENT) return "∅";
+  if (f.catalogue && f.catalogue.kind === "not_in_registry") return "!";
+  return "✓";
+}
+
+function archiveNote(f) {
+  var src = f.resolution ? f.resolution.source : null;
+  if (src === SOURCE.DOCTOR) return "settledQueried";
+  if (src === SOURCE.ABSENT) return "settledAbsent";
+  if (src === SOURCE.MANUAL) return "settledManual";
+  if (f.catalogue && f.catalogue.kind === "not_in_registry") return "settledAsIs";
+  if (f.first === f.second) return "settledBoth";
+  return "settledPicked";
+}
+
+/* -- role scoping ----------------------------------------------------------
+   Enforced in the data access function, not in the view. A pharmacist can
+   never obtain another branch's records, whatever a caller asks for. */
+function archiveFor(user) {
+  var all = State.archive.slice();
+  if (!user) return [];
+  if (user.role === "manager") return all;
+  return all.filter(function (r) { return r.branchId === user.branchId; });
+}
+
+function searchArchive(user, query, filter) {
+  var rows = archiveFor(user);          // scope FIRST, then search
+  var q = String(query || "").trim().toLowerCase();
+  if (!q) return rows;
+  return rows.filter(function (r) {
+    if (filter === "number") return String(r.number).toLowerCase().indexOf(q) >= 0;
+    if (filter === "date")   return String(r.at).toLowerCase().indexOf(q) >= 0;
+    return String(r.ingredient).toLowerCase().indexOf(q) >= 0 ||
+           String(r.name).toLowerCase().indexOf(q) >= 0;
+  });
+}
+
+/* -- the second reading ----------------------------------------------------
+   Lands per field, in LAND_ORDER, and sets flags as it goes. Progress is
+   reported in words and counts through an aria-live region: no spinner, no
+   progress ring, no skeleton shimmer anywhere in this product. */
+var readingTimer = null;
+
+function stopReading() {
+  if (readingTimer) { clearTimeout(readingTimer); readingTimer = null; }
+}
+
+function startSecondReading() {
+  stopReading();
+  var s = State.session;
+  if (!s) return;
+
+  // Every timer below carries the token it was created under. If the session
+  // is replaced, reset or abandoned, the token moves and the pending timer
+  // becomes a no-op — which is what keeps a reading from landing on a
+  // session the user has already navigated away from.
+  var token = State.runToken;
+  var interval = s.slowSecond ? 2600 : SECOND_READING_INTERVAL_MS;
+  var deadline = Date.now() + (s.slowSecond ? SECOND_READING_TIMEOUT_MS * 2 : SECOND_READING_TIMEOUT_MS);
+
+  function step() {
+    readingTimer = null;
+    // Read the session fresh rather than closing over it: the session object
+    // can be replaced between ticks.
+    var cur = State.session;
+    if (!cur || token !== State.runToken) return;
+
+    if (cur.failSecond && landedCount(cur) >= 3) {
+      cur.stalled = true;
+      persistSession();
+      announce(t("stalledTitle"));
+      render();
+      return;
+    }
+
+    if (Date.now() > deadline) {
+      cur.stalled = true;
+      persistSession();
+      announce(t("stalledTitle"));
+      render();
+      return;
+    }
+
+    var next = null;
+    for (var i = 0; i < LAND_ORDER.length; i++) {
+      var f = fieldById(cur, LAND_ORDER[i]);
+      if (f && !f.landed) { next = f; break; }
+    }
+    if (!next) {
+      cur.stalled = false;
+      persistSession();
+      render();
+      return;
+    }
+
+    next.landed = true;
+    cur.landedCount = landedCount(cur);
+    cur.stalled = false;
+    persistSession();
+    announce(t("announceLanded") + labelFor(next.id) + " — " +
+             cur.landedCount + "/" + cur.fields.length);
+    render();
+    readingTimer = setTimeout(step, interval);
+  }
+
+  readingTimer = setTimeout(step, interval);
+}
+
+function retrySecondReading() {
+  var s = State.session;
+  if (!s) return;
+  s.stalled = false;
+  s.failSecond = false;
+  State.runToken++;            // invalidate anything still pending
+  persistSession();
+  startSecondReading();
+  render();
+}
+
+// The doctor-follow-up route out of a stalled session. Fields whose second
+// reading never arrived cannot be "agreed", so they are routed to the
+// prescriber — which is a normal terminal outcome, not a failure.
+function routeStalledToDoctor() {
+  var s = State.session;
+  if (!s) return { ok: false, reason: "no-session" };
+  var n = 0;
+  s.fields.forEach(function (f) {
+    if (f.resolution) return;
+    // Landing the field here is explicit and recorded as a doctor query; it
+    // never produces an agreed value, so invariant 2 is not sidestepped.
+    f.landed = true;
+    f.resolution = {
+      value: t("queriedValue"),
+      source: SOURCE.DOCTOR,
+      note: "stalled",
+      by: s.by, byName: s.byName, at: stamp()
+    };
+    n++;
+  });
+  s.stalled = false;
+  s.landedCount = landedCount(s);
+  State.runToken++;
+  stopReading();
+  persistSession();
+  render();
+  return { ok: true, routed: n };
+}
+
+/* -- persistence ----------------------------------------------------------- */
+function persistSession() {
+  if (State.session) writeJSON(K_SESSION, State.session);
+  else storeRemove(K_SESSION);
+}
+function persistArchive() { writeJSON(K_ARCHIVE, State.archive); }
+
+function restore() {
+  var lang = storeGet(K_LANG);
+  if (lang === "ru" || lang === "az") State.lang = lang;
+
+  var arch = readJSON(K_ARCHIVE);
+  State.archive = Array.isArray(arch) ? arch.filter(isSaneRecord) : seedArchive();
+  if (!State.archive.length && !Array.isArray(arch)) State.archive = seedArchive();
+
+  var u = readJSON(K_USER);
+  if (u && u.id) {
+    for (var i = 0; i < STAFF.length; i++) if (STAFF[i].id === u.id) State.user = STAFF[i];
+  }
+
+  var sess = readJSON(K_SESSION);
+  if (sess && State.user && isSaneSession(sess)) {
+    State.session = sess;
+    State.screen = "verify";
+  } else if (sess) {
+    storeRemove(K_SESSION);
+  }
+}
+
+// Stored state is untrusted input: it may have been hand-edited, truncated
+// or corrupted. Anything that does not look like what we wrote is dropped.
+function isSaneSession(s) {
+  if (!s || typeof s !== "object") return false;
+  if (!Array.isArray(s.fields) || s.fields.length === 0) return false;
+  if (!PHOTO_SVG[s.sampleId]) return false;
+  for (var i = 0; i < s.fields.length; i++) {
+    var f = s.fields[i];
+    if (!f || typeof f !== "object" || typeof f.id !== "string") return false;
+    if (!REGIONS[f.region]) f.region = f.id;
+    if (!REGIONS[f.region]) return false;
+    if (f.resolution && typeof f.resolution !== "object") return false;
+    f.landed = !!f.landed;
+    f.demoState = null;        // never restored from storage
+  }
+  if (!fieldById(s, s.focus)) s.focus = s.fields[0].id;
+  return true;
+}
+
+function isSaneRecord(r) {
+  return !!(r && typeof r === "object" && typeof r.number === "string" &&
+            typeof r.branchId === "string" && Array.isArray(r.rows));
+}
+
+/* -- small helpers --------------------------------------------------------- */
+function stamp() {
+  var d = new Date();
+  return pad2(d.getHours()) + ":" + pad2(d.getMinutes());
+}
+function pad2(n) { return (n < 10 ? "0" : "") + n; }
+
+function labelFor(id) { return t("f_" + id); }
+
+function displayValue(f) {
+  if (f.resolution) return f.resolution.value;
+  return f.first;
+}
+
+function announce(msg) {
+  var live = document.getElementById("live");
+  if (live) live.textContent = msg;
+}
+
+/* ===========================================================================
+   RENDER
+   Small pure functions returning DOM. Text is always set with textContent —
+   innerHTML is never given data, anywhere in this file.
+   =========================================================================== */
+
+function el(tag, attrs, kids) {
+  var n = document.createElement(tag);
+  if (attrs) {
+    for (var k in attrs) {
+      if (!Object.prototype.hasOwnProperty.call(attrs, k)) continue;
+      var v = attrs[k];
+      if (v === null || v === undefined || v === false) continue;
+      if (k === "class") n.className = v;
+      else if (k === "text") n.textContent = v;
+      else if (k === "style") n.setAttribute("style", v);
+      else n.setAttribute(k, v === true ? "" : v);
+    }
+  }
+  if (kids) {
+    for (var i = 0; i < kids.length; i++) {
+      var c = kids[i];
+      if (c === null || c === undefined || c === false) continue;
+      n.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+    }
+  }
+  return n;
+}
+
+function btn(attrs, kids) {
+  var b = el("button", attrs, kids);
+  b.setAttribute("type", "button");
+  return b;
+}
+
+function statusbar(clock) {
+  return el("div", { class: "statusbar" }, [
+    el("span", { class: "num", text: clock || stamp() }),
+    el("span", { class: "num", text: "LTE" })
+  ]);
+}
+
+/* -- evidence strip --------------------------------------------------------
+   A transformed <img> inside an overflow:hidden container, driven by the
+   normalised coordinates in MOCK. The focused region is always scaled to the
+   same fraction of the container width, so every field arrives with about a
+   third again of surrounding paper around it and the zoom comes out
+   per-field for free. The container is `contain:strict` with a fixed height,
+   so changing the crop can never shift the field column below it. */
+function cropGeometry(regionId, cw, ch) {
+  var r = REGIONS[regionId] || REGIONS.patient;
+  var bx = r[0] * PHOTO.w, by = r[1] * PHOTO.h;
+  var bw = r[2] * PHOTO.w, bh = r[3] * PHOTO.h;
+
+  var scale = (TOKENS.REGION_FRACTION * cw) / bw;
+  // If the region is tall relative to the box, fit by height instead so the
+  // outline never overflows the crop.
+  var maxByHeight = (0.72 * ch) / bh;
+  if (scale > maxByHeight) scale = maxByHeight;
+
+  var outW = bw * scale, outH = bh * scale;
+  var left = (cw - outW) / 2;
+  var top = (ch - outH) / 2;
+  // transform-origin is 0 0 and the order is scale() then translate(), so a
+  // photo point p maps to scale * (p + t).
+  var tx = left / scale - bx;
+  var ty = top / scale - by;
+  return { scale: scale, tx: tx, ty: ty, left: left, top: top, w: outW, h: outH };
+}
+
+// On a tablet in landscape the strip stops cropping and shows the whole
+// sheet, with every region outlined and the focused one solid. It is the
+// same element, the same data and the same function — only the framing
+// changes, which is why the two layouts cannot drift apart.
+function isPaneMode() {
+  try { return window.matchMedia("(min-width:900px) and (orientation:landscape)").matches; }
+  catch (e) { return false; }
+}
+
+function placeOutline(o, scale, ox, oy) {
+  var r = REGIONS[o.getAttribute("data-oregion")];
+  if (!r) return;
+  o.style.left = (ox + r[0] * PHOTO.w * scale) + "px";
+  o.style.top = (oy + r[1] * PHOTO.h * scale) + "px";
+  o.style.width = (r[2] * PHOTO.w * scale) + "px";
+  o.style.height = (r[3] * PHOTO.h * scale) + "px";
+}
+
+function applyCrop(cropEl) {
+  var img = cropEl.querySelector("img");
+  if (!img) return;
+  var outlines = cropEl.querySelectorAll(".outline");
+  var regionId = cropEl.getAttribute("data-region");
+  var cw = cropEl.clientWidth || 340;
+  var ch = cropEl.clientHeight || 164;
+  var pane = isPaneMode() && cropEl.getAttribute("data-pane") === "1";
+
+  if (pane) {
+    var s = Math.min(cw / PHOTO.w, ch / PHOTO.h);
+    var ox = (cw - PHOTO.w * s) / 2;
+    var oy = (ch - PHOTO.h * s) / 2;
+    img.style.transform = "translate(" + ox + "px," + oy + "px) scale(" + s + ")";
+    Array.prototype.forEach.call(outlines, function (o) {
+      o.hidden = false;
+      var focused = o.getAttribute("data-oregion") === regionId;
+      if (focused) o.classList.remove("dim"); else o.classList.add("dim");
+      placeOutline(o, s, ox, oy);
+    });
+    return;
+  }
+
+  var g = cropGeometry(regionId, cw, ch);
+  img.style.transform = "scale(" + g.scale + ") translate(" + g.tx + "px," + g.ty + "px)";
+  Array.prototype.forEach.call(outlines, function (o) {
+    var focused = o.getAttribute("data-oregion") === regionId;
+    o.hidden = !focused;
+    o.classList.remove("dim");
+    if (!focused) return;
+    o.style.left = g.left + "px";
+    o.style.top = g.top + "px";
+    o.style.width = g.w + "px";
+    o.style.height = g.h + "px";
+  });
+}
+
+function evidenceStrip(session) {
+  var focusField = fieldById(session, session.focus) || session.fields[0];
+  var index = session.fields.indexOf(focusField) + 1;
+
+  var crop = el("div", {
+    class: "crop",
+    "data-region": focusField.region,
+    "data-pane": "1",
+    "data-act": "open-photo",
+    role: "button",
+    tabindex: "0",
+    "aria-label": t("openFull")
+  }, [
+    el("img", {
+      src: photoURI(session.sampleId),
+      alt: "",
+      style: session.boost ? "filter:" + TOKENS.BOOST_FILTER : ""
+    })
+  ]);
+  // One outline per field region. On the phone all but the focused one are
+  // hidden; in the tablet pane they all show, the others dashed.
+  session.fields.forEach(function (f) {
+    crop.appendChild(el("div", {
+      class: "outline" + (f.id === focusField.id ? "" : " dim"),
+      "data-oregion": f.region,
+      hidden: f.id === focusField.id ? null : true
+    }));
+  });
+
+  return el("div", { class: "strip" }, [
+    crop,
+    el("div", { class: "striprow" }, [
+      el("div", { class: "grow" }, [
+        el("div", { class: "strip-label", text: labelFor(focusField.id) }),
+        el("div", { class: "strip-index",
+          text: fieldCaption(index, session.fields.length) +
+                (isPaneMode() ? " \u00B7 " + t("othersDashed") : "") })
+      ]),
+      btn({
+        class: "iconbtn wide" + (session.boost ? " on" : ""),
+        "data-act": "boost",
+        "aria-pressed": session.boost ? "true" : "false"
+      }, [
+        el("span", { class: "mono", text: session.boost ? "◕" : "◐" }),
+        el("span", { style: "font-size:16px;font-weight:600", text: t("boost") })
+      ]),
+      btn({ class: "iconbtn", "data-act": "open-photo", "aria-label": t("openFull") },
+          [el("span", { class: "mono", text: "⤢" })])
+    ])
+  ]);
+}
+
+/* -- field rows ------------------------------------------------------------
+   Six states, each identifiable in greyscale by glyph, label and row
+   structure. Colour only reinforces; it never carries the state. */
+
+function rowShell(f, state, kids) {
+  var railClass = "rail";
+  if (state === FIELD_STATE.AWAITING) railClass += " hollow";
+  else if (state === FIELD_STATE.ABSENT) railClass += " dashed";
+  else if (state === FIELD_STATE.FLAG_LOOKALIKE) railClass += " alert";
+  else if (state === FIELD_STATE.AGREED) railClass += "";
+  else railClass += " open";
+  if (f.resolution) railClass = "rail";
+
+  var row = el("div", {
+    class: "row" + (state === FIELD_STATE.FLAG_LOOKALIKE && !f.resolution ? " is-lookalike" : ""),
+    "data-field": f.id,
+    "data-state": f.resolution ? "settled" : state
+  }, [
+    el("div", { class: railClass }),
+    el("div", { class: "rowbody" }, kids)
+  ]);
+  return row;
+}
+
+function head(f, glyph, badgeClass) {
+  return el("div", { class: "rowhead" }, [
+    el("div", {
+      class: "flabel", text: labelFor(f.id),
+      id: "flabel-" + f.id, tabindex: "-1"
+    }),
+    el("div", {
+      class: "badge" + (badgeClass ? " " + badgeClass : ""),
+      "aria-hidden": "true", text: glyph
+    })
+  ]);
+}
+
+function valueEl(f, value) {
+  var cls = "fvalue";
+  if (f.vtype === "name") cls += " name";
+  else if (f.vtype === "num") cls += " num";
+  return el("div", { class: cls, text: value });
+}
+
+function settledRow(f) {
+  var r = f.resolution;
+  var glyph = r.source === SOURCE.DOCTOR ? "~"
+            : r.source === SOURCE.ABSENT ? "∅" : "✓";
+  var noteKey = r.source === SOURCE.DOCTOR ? "queriedNote"
+              : r.source === SOURCE.ABSENT ? "settledAbsent"
+              : r.source === SOURCE.MANUAL ? "settledManual"
+              : (f.catalogue && f.catalogue.kind === "not_in_registry") ? "settledAsIs"
+              : (f.first === f.second) ? "settledBoth" : "settledPicked";
+
+  return rowShell(f, "settled", [
+    head(f, glyph, r.source === SOURCE.DOCTOR ? null : "filled"),
+    valueEl(f, r.value),
+    el("div", { class: "fnote" }, [
+      document.createTextNode(r.source === SOURCE.DOCTOR ? "" : t("settled")),
+      el("span", { class: "num", text: r.by + " " + r.at }),
+      document.createTextNode(t(noteKey))
+    ]),
+    btn({ class: "act", "data-act": "reopen", "data-field": f.id },
+        [el("span", { class: "lbl", text: t("reopen") })])
+  ]);
+}
+
+/* Awaiting: the fast reading's value is shown at full size and full
+   contrast, because reading it is useful work. What is withheld is not the
+   information but the ability to act on it — note what is absent here: no
+   confirm button, no state label, no glyph badge with meaning. There is
+   nothing to tap, so there is no way to accept it. */
+function awaitingRow(f, stalled) {
+  return rowShell(f, FIELD_STATE.AWAITING, [
+    head(f, "·", "await"),
+    valueEl(f, f.first),
+    el("div", { class: "fawait", text: stalled ? t("stalledField") : t("s_awaiting") })
+  ]);
+}
+
+function agreedRow(f) {
+  return rowShell(f, FIELD_STATE.AGREED, [
+    head(f, "=", null),
+    valueEl(f, f.first),
+    el("div", { class: "fstate", text: t("s_agreed") }),
+    btn({ class: "act primary", "data-act": "confirm", "data-field": f.id,
+          style: "margin-top:2px" }, [
+      el("span", { class: "gl", text: "=" }),
+      el("span", { class: "lbl", text: t("confirm") })
+    ])
+  ]);
+}
+
+/* Disagreement: three options of identical border, fill, height and type.
+   "Enter my own" is the third option in the same stack, not a link
+   underneath, so disagreeing with both machines costs the same single tap as
+   agreeing with one. The sort rule is stated in the row's last line. */
+function disagreementRow(f, session) {
+  var o = optionsFor(f);
+  var kids = [
+    head(f, "⇄", "open g-swap"),
+    el("div", { class: "fstate open", text: t("s_disagreement") })
+  ];
+
+  if (session.editing === f.id) {
+    kids.push(manualEntry(f, session));
+  } else {
+    var opts = el("div", { class: "opts" });
+    o.options.forEach(function (v) {
+      opts.appendChild(btn({ class: "opt", "data-act": "pick", "data-field": f.id, "data-value": v },
+        [el("span", { class: "optv" + (o.numeric ? " num" : ""), text: v })]));
+    });
+    opts.appendChild(btn({ class: "opt", "data-act": "edit", "data-field": f.id },
+      [el("span", { class: "optv", text: t("enterOwn") })]));
+    kids.push(opts);
+    kids.push(el("div", { class: "orderrule", text: o.numeric ? t("orderNum") : t("orderTxt") }));
+  }
+  return rowShell(f, FIELD_STATE.DISAGREEMENT, kids);
+}
+
+/* Illegible: two actions, side by side, equal width, equal weight, one tap
+   each. Neither is red and neither is behind a menu — asking the doctor is
+   an outcome, not a failure. */
+function illegibleRow(f, session) {
+  var kids = [
+    head(f, "~", "open g-tilde"),
+    el("div", { class: "fstate open", text: t("s_illegible") })
+  ];
+  if (session.editing === f.id) {
+    kids.push(manualEntry(f, session));
+  } else {
+    kids.push(el("div", { class: "pair" }, [
+      btn({ class: "act", "data-act": "edit", "data-field": f.id },
+          [el("span", { class: "lbl", text: t("enterManual") })]),
+      btn({ class: "act", "data-act": "doctor", "data-field": f.id },
+          [el("span", { class: "lbl", text: t("askDoctor") })])
+    ]));
+  }
+  return rowShell(f, FIELD_STATE.ILLEGIBLE, kids);
+}
+
+/* Absent: dashed rail, dashed badge, and a struck empty slot — the literal
+   claim being confirmed is that this line of the prescription is blank.
+   Three axes of difference from illegible, the pair most expensive to
+   confuse. */
+function absentRow(f) {
+  return rowShell(f, FIELD_STATE.ABSENT, [
+    head(f, "∅", "dashed"),
+    el("div", { class: "slot" }, [el("i")]),
+    el("div", { class: "fstate open", text: t("s_absent") }),
+    btn({ class: "act", "data-act": "confirm-absent", "data-field": f.id }, [
+      el("span", { class: "gl", text: "∅" }),
+      el("span", { class: "lbl", text: t("confirmAbsent") })
+    ])
+  ]);
+}
+
+/* Not in the registry: the annotation is indented past the value's left
+   edge, sits on shelf rather than paper, is set at body size and weight, and
+   is below the value it comments on. It also says in words that it does not
+   fill anything in. */
+function registryRow(f, session) {
+  var kids = [
+    head(f, "!", "open"),
+    valueEl(f, f.first),
+    el("div", { class: "note" }, [
+      el("div", { class: "gl", "aria-hidden": "true", text: "!" }),
+      el("div", { class: "body" }, [
+        el("b", { text: t("s_registry") }),
+        document.createTextNode(" " + t("registryBody"))
+      ])
+    ])
+  ];
+  if (session.editing === f.id) {
+    kids.push(manualEntry(f, session));
+  } else {
+    kids.push(btn({ class: "act primary", "data-act": "confirm-as-is", "data-field": f.id }, [
+      el("span", { class: "gl", text: "=" }),
+      el("span", { class: "lbl", text: t("confirmAsIs") })
+    ]));
+  }
+  return rowShell(f, FIELD_STATE.FLAG_NOT_IN_REGISTRY, kids);
+}
+
+/* Look-alike: the two active ingredients are the largest type in the
+   annotation and the drug names that caused the collision are demoted to
+   mono captions above them. The comparison is inverted on purpose — the
+   confusable strings are small, the thing that actually differs is big. The
+   boxes are stacked, never side by side, so the ingredients sit directly
+   above one another where the divergence cannot be missed.
+
+   "Ask the doctor" is listed first and confirming second, separated by a
+   24px gap: the more cautious action is closer to the thumb, and the confirm
+   names the specific drug it commits to rather than saying OK. */
+function lookalikeRow(f, session) {
+  var c = f.catalogue;
+  var az = State.lang === "az";
+  var mineIng = az && c.mineIngredientAz ? c.mineIngredientAz : c.mineIngredient;
+  var simIng = az && c.similarIngredientAz ? c.similarIngredientAz : c.similarIngredient;
+
+  var title = az
+    ? c.similarName + t("s_lookalikeB")
+    : t("s_lookalikeA") + c.similarName + t("s_lookalikeB");
+
+  var kids = [
+    head(f, "≠", "alert"),
+    valueEl(f, f.first),
+    el("div", { class: "note alert" }, [
+      el("div", { class: "note-title" }, [
+        el("div", { class: "gl", "aria-hidden": "true", style: "color:var(--alert)", text: "≠" }),
+        el("div", { class: "t", text: title })
+      ]),
+      el("div", { class: "cmp" }, [
+        el("div", { class: "cmpbox" }, [
+          el("div", { class: "k", text: t("inRx") + c.mineName }),
+          el("div", { class: "v", text: mineIng })
+        ]),
+        el("div", { class: "cmpbox alt" }, [
+          el("div", { class: "k", text: t("similar") + c.similarName }),
+          el("div", { class: "v", text: simIng })
+        ])
+      ]),
+      el("div", { class: "body", text: t("lookalikeBody") })
+    ])
+  ];
+
+  if (session.editing === f.id) {
+    kids.push(manualEntry(f, session));
+  } else {
+    kids.push(el("div", { class: "stack safety" }, [
+      btn({ class: "act", "data-act": "doctor", "data-field": f.id },
+          [el("span", { class: "lbl", text: t("askDoctor") })]),
+      btn({ class: "act primary", "data-act": "confirm", "data-field": f.id },
+          [el("span", { class: "lbl", text: t("confirmNamed") + c.mineName })])
+    ]));
+  }
+  return rowShell(f, FIELD_STATE.FLAG_LOOKALIKE, kids);
+}
+
+function manualEntry(f, session) {
+  return el("div", { class: "manual" }, [
+    el("input", {
+      type: "text", "data-act": "draft", "data-field": f.id,
+      value: session.draft || "",
+      placeholder: t("typeHere"),
+      "aria-label": t("typeHere") + " — " + labelFor(f.id)
+    }),
+    el("div", { class: "pair" }, [
+      btn({ class: "act", "data-act": "cancel-edit", "data-field": f.id },
+          [el("span", { class: "lbl", text: t("cancel") })]),
+      btn({ class: "act primary", "data-act": "save-manual", "data-field": f.id },
+          [el("span", { class: "lbl", text: t("save") })])
+    ])
+  ]);
+}
+
+function fieldRow(f, session) {
+  if (f.resolution) return settledRow(f);
+  var st = fieldState(f);
+  switch (st) {
+    case FIELD_STATE.AWAITING:             return awaitingRow(f, session.stalled);
+    case FIELD_STATE.AGREED:               return agreedRow(f);
+    case FIELD_STATE.DISAGREEMENT:         return disagreementRow(f, session);
+    case FIELD_STATE.ILLEGIBLE:            return illegibleRow(f, session);
+    case FIELD_STATE.ABSENT:               return absentRow(f);
+    case FIELD_STATE.FLAG_NOT_IN_REGISTRY: return registryRow(f, session);
+    case FIELD_STATE.FLAG_LOOKALIKE:       return lookalikeRow(f, session);
+    default:                               return awaitingRow(f, session.stalled);
+  }
+}
+
+/* -- completion bar --------------------------------------------------------
+   Three configurations. The button is REPLACED, not greyed: in a and b there
+   is no completion element on screen at all, because a greyed-out button is
+   still a button and a tired hand taps it anyway to see what happens. */
+function completionBar(session) {
+  var total = session.fields.length;
+  var landed = landedCount(session);
+  var open = openFields(session);
+  var queries = queryCount(session);
+
+  // d · the second reading never arrived. Not in /design/; built to the same
+  // rule — withhold the capability, and put a sentence with counts in its
+  // place. The session does NOT become completable.
+  if (session.stalled) {
+    var missing = session.fields.filter(function (f) { return !f.landed; });
+    return el("div", { class: "bar" }, [
+      el("div", { class: "barflag alert" }, [
+        el("i"),
+        el("div", { class: "barline open", text: t("stalledTitle") })
+      ]),
+      el("div", { class: "barnames", text: t("stalledBodyA") + missing.length }),
+      el("div", { class: "barsub", text: t("stalledBody") }),
+      el("div", { class: "stack" }, [
+        btn({ class: "act primary", "data-act": "retry-reading" },
+            [el("span", { class: "lbl", text: t("stalledRetry") })]),
+        btn({ class: "act", "data-act": "route-doctor" },
+            [el("span", { class: "lbl", text: t("stalledRoute") })])
+      ])
+    ]);
+  }
+
+  // a · second reading in flight. Counts, not progress. Seven cells, the
+  // same hollow-to-solid language as the field rails.
+  if (landed < total) {
+    var cells = el("div", { class: "cells", "aria-hidden": "true" });
+    for (var i = 0; i < total; i++) cells.appendChild(el("i", { class: i < landed ? "on" : "" }));
+    return el("div", { class: "bar" }, [
+      cells,
+      el("div", { class: "barline", text: t("barSecondA") + landed + t("barSecondB") + total + t("barSecondC") }),
+      el("div", { class: "barsub", text: t("barSecondSub") })
+    ]);
+  }
+
+  // b · decisions still open. The open fields are named, so the remaining
+  // work is legible without scrolling, and the dashed slot sits exactly
+  // where the enabled button will appear.
+  if (open.length > 0) {
+    return el("div", { class: "bar" }, [
+      el("div", { class: "barflag" }, [
+        el("i"),
+        el("div", { class: "barline open", text: t("barOpen") + open.length })
+      ]),
+      el("div", { class: "barnames", text: open.map(function (f) { return labelFor(f.id); }).join(" · ") }),
+      el("div", { class: "barsub", text: t("barOpenSub") }),
+      el("div", { class: "ghost", text: t("completeUnavailable") })
+    ]);
+  }
+
+  // c · ready. The only configuration with a filled button, and it reports
+  // the doctor-query count as ordinary summary information.
+  var summary = total + t("barReadyA") + total + t("barReadyB");
+  if (queries > 0) summary += t("barQueries") + queries;
+  return el("div", { class: "bar" }, [
+    el("div", { class: "barline", text: summary }),
+    btn({ class: "complete", "data-act": "complete" },
+        [el("span", { text: t("complete") })])
+  ]);
+}
+
+/* -- screens --------------------------------------------------------------- */
+
+function userChip(user, open) {
+  return btn({ class: "chip", "data-act": "user-menu", "aria-expanded": open ? "true" : "false" }, [
+    el("span", { class: "sq cur", text: user.initials }),
+    el("span", { class: "mono", style: "font-size:16px", text: "▾" })
+  ]);
+}
+
+function userMenu() {
+  var items = [el("div", { style: "font-size:16px;font-weight:600;padding:0 0 4px", text: t("userSwitch") })];
+  STAFF.forEach(function (s) {
+    var isCur = State.user && s.id === State.user.id;
+    items.push(btn({ class: "srow", "data-act": isCur ? "close-menu" : "switch-user", "data-user": s.id }, [
+      el("span", { class: "sq" + (isCur ? " cur" : ""), text: s.initials }),
+      el("span", { class: "grow" }, [
+        el("span", { class: "sname", style: "display:block", text: s.name }),
+        el("span", { class: "srole", style: "display:block",
+          text: t(s.role === "manager" ? "allBranches" : BRANCHES[s.branchId]) })
+      ]),
+      el("span", { class: "saction", text: isCur ? "✓" : "PIN" })
+    ]));
+  });
+  return el("div", { class: "arch-head", style: "border-bottom:2px solid var(--ink)" }, items);
+}
+
+function langToggle() {
+  return btn({ class: "iconbtn", "data-act": "lang", "aria-label": "RU / AZ" },
+             [el("span", { class: "mono", style: "font-size:16px", text: t("langName") })]);
+}
+
+function signinScreen() {
+  var kids = [statusbar("08:58")];
+  var body = el("div", { class: "signin" });
+
+  body.appendChild(el("div", {}, [
+    btn({ class: "wordmark", "data-act": "wordmark", text: t("appName") }),
+    el("div", { style: "font-size:16px;padding-top:4px", text: t("deviceLine") }),
+    el("div", { style: "font-size:16px;padding-top:8px", text: t("deviceLocked") })
+  ]));
+
+  if (State.pinFor) {
+    var who = null;
+    for (var i = 0; i < STAFF.length; i++) if (STAFF[i].id === State.pinFor) who = STAFF[i];
+    var dots = el("div", { class: "pindots" });
+    for (var d = 0; d < 4; d++) dots.appendChild(el("i", { class: d < State.pin.length ? "on" : "" }));
+
+    var keys = el("div", { class: "keys" });
+    ["1","2","3","4","5","6","7","8","9"].forEach(function (n) {
+      keys.appendChild(btn({ "data-act": "pin-key", "data-key": n, text: n }));
+    });
+    keys.appendChild(btn({ "data-act": "pin-back", text: "←" }));
+    keys.appendChild(btn({ "data-act": "pin-key", "data-key": "0", text: "0" }));
+    keys.appendChild(btn({ "data-act": "pin-cancel", text: "✕" }));
+
+    body.appendChild(el("div", { class: "pinwrap" }, [
+      el("div", { style: "font-size:19px;font-weight:700", text: t("pinFor") + (who ? who.name : "") }),
+      dots,
+      keys,
+      el("div", { style: "font-size:16px", text: t("pinRecorded") })
+    ]));
+  } else {
+    var staff = el("div", { class: "staff" });
+    STAFF.forEach(function (s) {
+      staff.appendChild(btn({ class: "srow", "data-act": "pick-user", "data-user": s.id }, [
+        el("span", { class: "sq", text: s.initials }),
+        el("span", { class: "grow" }, [
+          el("span", { class: "sname", style: "display:block", text: s.name }),
+          el("span", { class: "srole", style: "display:block",
+            text: t(s.role === "manager" ? "allBranches" : BRANCHES[s.branchId]) })
+        ]),
+        el("span", { class: "saction", text: "PIN" })
+      ]));
+    });
+    body.appendChild(el("div", {}, [
+      el("div", { style: "font-size:17px;font-weight:600;padding-bottom:8px", text: t("whoOnShift") }),
+      staff
+    ]));
+    body.appendChild(el("div", { style: "font-size:16px", text: t("pinRecorded") }));
+  }
+
+  body.appendChild(el("div", { style: "display:flex;gap:8px" }, [langToggle()]));
+  kids.push(body);
+  return el("div", { class: "screen signin-screen" }, kids);
+}
+
+function captureScreen() {
+  var c = State.capture;
+  var sample = sampleById(currentSampleId());
+
+  if (c.shot) {
+    // Retake is offered BEFORE processing, with the consequence named.
+    return el("div", { class: "screen" }, [
+      statusbar("19:03"),
+      el("div", { class: "topbar" }, [
+        btn({ class: "iconbtn", "data-act": "capture-cancel", "aria-label": t("back") },
+            [el("span", { class: "mono", text: "✕" })]),
+        el("div", { class: "grow" }, [
+          el("div", { class: "rec-no", text: t("captureTitle") }),
+          el("div", { class: "rec-branch", text: t(BRANCHES[sample.branchId]) })
+        ])
+      ]),
+      el("div", { class: "viewfinder", style: "background:var(--photo-ground)" }, [
+        el("img", { src: c.frame || photoURI(sample.id), alt: "",
+                    style: "transform:translate(-50%,-50%) scale(.58)" })
+      ]),
+      el("div", { class: "shutterzone" }, [
+        el("div", { class: "warn open" }, [
+          el("div", { class: "gl", text: "◐" }),
+          el("div", {}, [
+            el("div", { class: "t", text: t("marginalTitle") }),
+            el("div", { class: "f", text: t("marginalBody") })
+          ])
+        ]),
+        c.frame ? el("div", { class: "barsub", text: t("demoPhotoNote") }) : null,
+        el("div", { class: "pair" }, [
+          btn({ class: "act", "data-act": "retake" }, [el("span", { class: "lbl", text: t("retake") })]),
+          btn({ class: "act primary", "data-act": "process" }, [el("span", { class: "lbl", text: t("proceed") })])
+        ])
+      ])
+    ]);
+  }
+
+  var warn = WARNINGS[c.warnIndex % WARNINGS.length];
+  var blocked = !!warn.blocks;
+  var warnwrap = el("div", { class: "warnwrap" }, [
+    el("div", { class: "warn " + warn.tone }, [
+      el("div", { class: "gl", "aria-hidden": "true", text: warn.glyph }),
+      el("div", {}, [
+        el("div", { class: "t", text: t(warn.t) }),
+        el("div", { class: "f", text: t(warn.f) })
+      ])
+    ])
+  ]);
+
+  var viewfinder = el("div", { class: "viewfinder" }, [
+    el("img", { id: "vf-still", src: photoURI(sample.id), alt: "",
+                style: "transform:translate(-50%,-50%) scale(.62) rotate(2.2deg);filter:blur(1.2px)" }),
+    el("div", { class: "guide" }),
+    warnwrap
+  ]);
+
+  var shutterKids = [
+    el("div", { class: "barsub", text: blocked ? t("shutterBlocked") : t("shutterReady") })
+  ];
+  if (c.cameraAvailable === false) {
+    // Insecure context (file://) or no camera: the file input works
+    // everywhere, and reaches exactly the same result as the live path.
+    shutterKids.push(el("div", { class: "barsub", text: t("cameraFallback") }));
+    shutterKids.push(el("label", { class: "filepick" }, [
+      el("span", { class: "shutter", style: "display:flex", text: t("pickFile") }),
+      el("input", { type: "file", accept: "image/*", capture: "environment", "data-act": "file" })
+    ]));
+    shutterKids.push(btn({ class: "act", "data-act": "shoot" },
+      [el("span", { class: "lbl", text: t("shoot") })]));
+  } else {
+    shutterKids.push(blocked
+      ? el("div", { class: "ghost", text: t("shutterBlocked") })
+      : btn({ class: "shutter", "data-act": "shoot" }, [el("span", { text: t("shoot") })]));
+  }
+
+  return el("div", { class: "screen" }, [
+    statusbar("19:03"),
+    el("div", { class: "topbar" }, [
+      btn({ class: "iconbtn", "data-act": "capture-cancel", "aria-label": t("back") },
+          [el("span", { class: "mono", text: "✕" })]),
+      el("div", { class: "grow" }, [
+        el("div", { class: "rec-no", text: t("captureTitle") }),
+        el("div", { class: "rec-branch", text: t(BRANCHES[sample.branchId]) })
+      ]),
+      langToggle()
+    ]),
+    viewfinder,
+    el("div", { class: "shutterzone" }, shutterKids)
+  ]);
+}
+
+function verifyScreen() {
+  var s = State.session;
+  if (!s) { State.screen = "archive"; return archiveScreen(); }
+
+  var fields = el("div", { class: "fields", id: "fieldcol" });
+  s.fields.forEach(function (f) { fields.appendChild(fieldRow(f, s)); });
+
+  var remaining = openFields(s).length;
+  if (remaining > 0) {
+    fields.appendChild(el("div", { class: "scrollhint", text: moreFields(remaining) }));
+  }
+
+  var kids = [
+    statusbar("19:04"),
+    el("div", { class: "topbar" }, [
+      btn({ class: "iconbtn", "data-act": "to-archive", "aria-label": t("back") },
+          [el("span", { class: "mono", text: "←" })]),
+      el("div", { class: "grow" }, [
+        el("div", { class: "rec-no", text: t("recordNo") + s.number }),
+        el("div", { class: "rec-branch", text: t(BRANCHES[s.branchId]) })
+      ]),
+      langToggle(),
+      // Current user always visible on verify, because who verified is recorded.
+      userChip(State.user, State.userMenu)
+    ])
+  ];
+  if (State.userMenu) kids.push(userMenu());
+
+  kids.push(el("div", { class: "verify-body" }, [evidenceStrip(s), fields]));
+  kids.push(completionBar(s));
+
+  return el("div", { class: "screen verify" }, kids);
+}
+
+function photoOverlay() {
+  var s = State.session;
+  if (!s) return null;
+  var focusField = fieldById(s, s.focus) || s.fields[0];
+  var index = s.fields.indexOf(focusField) + 1;
+
+  var pane = el("div", { class: "pane", id: "fullpane", "data-region": focusField.region }, [
+    el("img", { src: photoURI(s.sampleId), alt: "",
+                style: s.boost ? "filter:" + TOKENS.BOOST_FILTER : "" })
+  ]);
+  s.fields.forEach(function (f) {
+    pane.appendChild(el("div", {
+      class: "outline" + (f.id === focusField.id ? "" : " dim"),
+      "data-oregion": f.region
+    }));
+  });
+
+  return el("div", { class: "overlay", role: "dialog", "aria-modal": "true",
+                     "aria-label": t("openFull") }, [
+    statusbar("19:06"),
+    el("div", { class: "topbar" }, [
+      btn({ class: "iconbtn", "data-act": "close-photo", "aria-label": t("closeFull") },
+          [el("span", { class: "mono", text: "✕" })]),
+      el("div", { class: "grow" }, [
+        el("div", { class: "rec-no", text: labelFor(focusField.id) }),
+        el("div", { class: "rec-branch",
+                    text: fieldCaption(index, s.fields.length) + " · " + t("highlighted") })
+      ]),
+      btn({ class: "iconbtn wide" + (s.boost ? " on" : ""), "data-act": "boost" }, [
+        el("span", { class: "mono", text: s.boost ? "◕" : "◐" }),
+        el("span", { style: "font-size:16px;font-weight:600", text: t("boost") })
+      ])
+    ]),
+    pane,
+    el("div", { class: "shutterzone" }, [
+      el("div", { class: "barsub", text: t("pinchHint") }),
+      btn({ class: "shutter", "data-act": "close-photo" }, [el("span", { text: t("closeFull") })])
+    ])
+  ]);
+}
+
+function archiveScreen() {
+  var user = State.user;
+  var rows = searchArchive(user, State.archiveQuery, State.archiveFilter);
+
+  var list = el("div", { class: "arch-list" });
+  if (!rows.length) {
+    list.appendChild(el("div", { style: "font-size:17px;padding:16px 0", text: t("emptyArchive") }));
+  }
+  rows.forEach(function (r) {
+    var meta = r.at + " · №" + r.number + " · " + r.by;
+    if (user.role === "manager") meta += " · " + t(BRANCHES[r.branchId]);
+    list.appendChild(btn({ class: "arow", "data-act": "open-record", "data-number": r.number }, [
+      el("span", { class: "athumb" }, [el("img", { src: photoURI(r.sampleId), alt: "" })]),
+      el("span", { class: "grow" }, [
+        el("span", { class: "aname", style: "display:block", text: r.name }),
+        el("span", { class: "aing", style: "display:block",
+          text: r.queries > 0 ? labelFor("qty") + " — " + t("queriedValue") : r.ingredient }),
+        el("span", { class: "ameta", style: "display:block", text: meta })
+      ]),
+      el("span", { class: "sq" + (r.queries > 0 ? "" : " cur"), text: r.queries > 0 ? "~" : "✓" })
+    ]));
+  });
+
+  var filters = el("div", { class: "chips" });
+  [["ingredient", "fIngredient"], ["date", "fDate"], ["number", "fNumber"]].forEach(function (p) {
+    filters.appendChild(btn({
+      class: "fchip" + (State.archiveFilter === p[0] ? " on" : ""),
+      "data-act": "filter", "data-filter": p[0],
+      "aria-pressed": State.archiveFilter === p[0] ? "true" : "false",
+      text: t(p[1])
+    }));
+  });
+
+  var kids = [
+    statusbar("19:12"),
+    el("div", { class: "topbar" }, [
+      el("div", { class: "grow" }, [
+        el("div", { class: "rec-no", text: t("archive") }),
+        el("div", { class: "rec-branch",
+          text: user.role === "manager" ? t("allBranches") : t(BRANCHES[user.branchId]) })
+      ]),
+      langToggle(),
+      userChip(user, State.userMenu)
+    ])
+  ];
+  if (State.userMenu) kids.push(userMenu());
+
+  if (State.session) {
+    kids.push(el("div", { class: "arch-head", style: "padding-bottom:0" }, [
+      btn({ class: "arow", "data-act": "resume", style: "border-color:var(--ink)" }, [
+        el("span", { class: "athumb" }, [el("img", { src: photoURI(State.session.sampleId), alt: "" })]),
+        el("span", { class: "grow" }, [
+          el("span", { class: "aname", style: "display:block",
+            text: t("resumeTitle") + State.session.number }),
+          el("span", { class: "aing", style: "display:block",
+            text: t("resumeSub") + openFields(State.session).length }),
+          el("span", { class: "ameta", style: "display:block", text: t("resume") })
+        ]),
+        el("span", { class: "sq cur", text: "\u2192" })
+      ])
+    ]));
+  }
+
+  kids.push(el("div", { class: "arch-head" }, [
+    el("div", { class: "search" }, [
+      el("span", { class: "gl mono", "aria-hidden": "true", text: "⚲" }),
+      el("input", { type: "search", "data-act": "search", value: State.archiveQuery,
+                    placeholder: t("searchPlaceholder"), "aria-label": t("searchPlaceholder") }),
+      State.archiveQuery
+        ? btn({ class: "iconbtn", "data-act": "clear-search", "aria-label": t("cancel"),
+                style: "border:0" }, [el("span", { class: "mono", text: "✕" })])
+        : null
+    ]),
+    filters,
+    el("div", { class: "count", text: t("found") + rows.length })
+  ]));
+  kids.push(list);
+  kids.push(el("div", { class: "bar" }, [
+    btn({ class: "complete", "data-act": "new-shot" },
+        [el("span", { class: "mono", text: "□" }), el("span", { text: t("newShot") })])
+  ]));
+
+  return el("div", { class: "screen" }, kids);
+}
+
+/* Photo and transcription always open together: never one without the other. */
+function recordScreen() {
+  var r = State.openRecord;
+  if (!r) { State.screen = "archive"; return archiveScreen(); }
+
+  var rows = el("div", { class: "fields" });
+  rows.appendChild(el("div", { class: "strip", style: "border:2px solid var(--ink);padding:12px" }, [
+    el("div", { class: "crop", "data-region": "medicine", "data-act": "noop",
+                style: "cursor:default" }, [
+      el("img", { src: photoURI(r.sampleId), alt: "" }),
+      el("div", { class: "outline", "data-oregion": "medicine" })
+    ]),
+    el("div", { class: "barsub", text: t("tapForPhoto") })
+  ]));
+
+  r.rows.forEach(function (row) {
+    var value = row.i18nValue ? t(row.value) : row.value;
+    rows.appendChild(el("div", { class: "row", "data-field": row.id, "data-state": "settled" }, [
+      el("div", { class: "rail" }),
+      el("div", { class: "rowbody" }, [
+        el("div", { class: "rowhead" }, [
+          el("div", { class: "flabel", text: labelFor(row.id) }),
+          el("div", { class: "badge" + (row.glyph === "✓" ? " filled" : ""),
+                      "aria-hidden": "true", text: row.glyph })
+        ]),
+        el("div", { class: "fvalue" + (row.id === "medicine" ? " name" : ""), text: value }),
+        el("div", { class: "fnote", text: noteText(row.note) })
+      ])
+    ]));
+  });
+
+  var summary = r.total + t("resolvedCount") + r.total + t("resolvedCountB");
+  if (r.queries > 0) summary += " · " + r.queries + t("queriedCount");
+
+  return el("div", { class: "screen" }, [
+    statusbar("19:13"),
+    el("div", { class: "topbar" }, [
+      btn({ class: "iconbtn", "data-act": "to-archive", "aria-label": t("back") },
+          [el("span", { class: "mono", text: "←" })]),
+      el("div", { class: "grow" }, [
+        el("div", { class: "rec-no", text: t("recordNo") + r.number }),
+        el("div", { class: "rec-branch", text: t("completedAt") + r.at + " · " + r.byName })
+      ]),
+      langToggle()
+    ]),
+    rows,
+    el("div", { class: "bar" }, [
+      el("div", { class: "barline", text: summary }),
+      el("div", { class: "barsub", text: t("recordClosed") }),
+      el("div", { class: "barsub", text: t("photoTogether") }),
+      btn({ class: "act", "data-act": "to-archive" },
+          [el("span", { class: "lbl", text: t("toArchive") })])
+    ])
+  ]);
+}
+
+function noteText(key) {
+  if (key === "settledQueried") return t("queriedValue") + t("queriedNote");
+  if (key === "settledAsIs") return t("s_registry") + t("settledAsIs");
+  if (key === "settledBoth") return t("s_agreed");
+  if (key === "settledAbsent") return t("s_absent");
+  if (key === "settledManual") return t("settled") + t("settledManual");
+  if (key === "settledPicked") return t("settled") + t("settledPicked");
+  return t(key);
+}
+
+/* -- root render ----------------------------------------------------------- */
+var pendingFocus = null;
+
+function render() {
+  var app = document.getElementById("app");
+  if (!app) return;
+
+  var scrollTop = 0;
+  var oldCol = document.getElementById("fieldcol");
+  if (oldCol) scrollTop = oldCol.scrollTop;
+
+  var screen;
+  if (State.screen === "signin") screen = signinScreen();
+  else if (State.screen === "capture") screen = captureScreen();
+  else if (State.screen === "verify") screen = verifyScreen();
+  else if (State.screen === "record") screen = recordScreen();
+  else screen = archiveScreen();
+
+  app.textContent = "";
+  app.appendChild(screen);
+
+  if (State.overlay && State.screen === "verify") {
+    var ov = photoOverlay();
+    if (ov) app.appendChild(ov);
+  }
+
+  if (State.demo && State.demoOpen) app.appendChild(demoPanel());
+
+  // Lay the crops out after the nodes are in the document, so clientWidth is real.
+  Array.prototype.forEach.call(document.querySelectorAll(".crop"), applyCrop);
+  layoutFullPane();
+
+  var col = document.getElementById("fieldcol");
+  if (col && scrollTop) col.scrollTop = scrollTop;
+
+  document.documentElement.lang = State.lang === "az" ? "az" : "ru";
+
+  if (pendingFocus) {
+    var target = document.getElementById("flabel-" + pendingFocus);
+    pendingFocus = null;
+    if (target) {
+      try { target.focus({ preventScroll: true }); } catch (e) { target.focus(); }
+      var row = target.closest ? target.closest(".row") : null;
+      if (row && row.scrollIntoView) {
+        row.scrollIntoView({ block: "nearest",
+          behavior: prefersReducedMotion() ? "auto" : "smooth" });
+      }
+    }
+  }
+}
+
+function prefersReducedMotion() {
+  try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; }
+  catch (e) { return false; }
+}
+
+function layoutFullPane() {
+  var pane = document.getElementById("fullpane");
+  if (!pane) return;
+  var img = pane.querySelector("img");
+  if (!img) return;
+  var cw = pane.clientWidth, ch = pane.clientHeight;
+  var base = Math.min(cw / PHOTO.w, ch / PHOTO.h);
+  var scale = base * zoom.level;
+  var ox = (cw - PHOTO.w * scale) / 2 + zoom.x;
+  var oy = (ch - PHOTO.h * scale) / 2 + zoom.y;
+  img.style.transform = "translate(" + ox + "px," + oy + "px) scale(" + scale + ")";
+
+  Array.prototype.forEach.call(pane.querySelectorAll(".outline"), function (o) {
+    var r = REGIONS[o.getAttribute("data-oregion")];
+    if (!r) return;
+    o.style.left = (ox + r[0] * PHOTO.w * scale) + "px";
+    o.style.top = (oy + r[1] * PHOTO.h * scale) + "px";
+    o.style.width = (r[2] * PHOTO.w * scale) + "px";
+    o.style.height = (r[3] * PHOTO.h * scale) + "px";
+  });
+}
+
+/* ===========================================================================
+   EVENTS
+   One delegated click listener, one delegated input listener, plus the
+   pointer handlers the full-photo overlay needs.
+   =========================================================================== */
+
+var zoom = { level: 1, x: 0, y: 0 };
+
+function currentSampleId() {
+  return State.capture.sampleId || SAMPLES[0].id;
+}
+
+function actOn(node) {
+  while (node && node !== document.body) {
+    if (node.getAttribute && node.getAttribute("data-act")) return node;
+    node = node.parentNode;
+  }
+  return null;
+}
+
+function focusField(id) {
+  var s = State.session;
+  if (!s) return;
+  if (s.focus === id) return;
+  s.focus = id;
+  persistSession();
+  pendingFocus = id;
+  announce(t("announceFocus") + labelFor(id));
+  render();
+}
+
+function handleClick(e) {
+  var node = actOn(e.target);
+
+  // Tapping anywhere in a row focuses that field and moves the evidence strip.
+  if (!node || !node.getAttribute("data-act")) {
+    var row = e.target.closest ? e.target.closest(".row[data-field]") : null;
+    if (row && State.screen === "verify") focusField(row.getAttribute("data-field"));
+    return;
+  }
+
+  var act = node.getAttribute("data-act");
+  var fieldId = node.getAttribute("data-field");
+  var s = State.session;
+
+  // Focus follows the row a control lives in, before the control acts.
+  if (fieldId && s && act !== "draft") {
+    var rowNode = node.closest ? node.closest(".row[data-field]") : null;
+    if (rowNode) {
+      var rid = rowNode.getAttribute("data-field");
+      if (s.focus !== rid) { s.focus = rid; }
+    }
+  }
+
+  switch (act) {
+    case "lang":
+      State.lang = State.lang === "ru" ? "az" : "ru";
+      storeSet(K_LANG, State.lang);
+      render();
+      return;
+
+    case "wordmark":
+      return;   // long-press is handled separately; a plain tap does nothing
+
+    case "pick-user":
+      State.pinFor = node.getAttribute("data-user");
+      State.pin = "";
+      render();
+      return;
+
+    case "pin-key": {
+      if (State.pin.length >= 4) return;
+      State.pin += node.getAttribute("data-key");
+      if (State.pin.length === 4) {
+        // Mock auth: any four digits are accepted. Real PIN verification is
+        // a server concern and is out of scope for a single-file demo.
+        var picked = null;
+        for (var i = 0; i < STAFF.length; i++) if (STAFF[i].id === State.pinFor) picked = STAFF[i];
+        if (picked) signIn(picked);
+        return;
+      }
+      render();
+      return;
+    }
+    case "pin-back":
+      State.pin = State.pin.slice(0, -1);
+      render();
+      return;
+    case "pin-cancel":
+      State.pinFor = null; State.pin = "";
+      render();
+      return;
+
+    case "user-menu":
+      State.userMenu = !State.userMenu;
+      render();
+      return;
+    case "close-menu":
+      State.userMenu = false;
+      render();
+      return;
+    case "switch-user": {
+      // Fast user switch without a full sign-out: the counter device is
+      // shared across a shift, and the branch belongs to the device.
+      var id = node.getAttribute("data-user");
+      var next = null;
+      for (var j = 0; j < STAFF.length; j++) if (STAFF[j].id === id) next = STAFF[j];
+      if (!next) return;
+      State.userMenu = false;
+      State.pinFor = id;
+      State.pin = "";
+      State.screen = "signin";
+      render();
+      return;
+    }
+
+    case "new-shot":
+      State.capture = { warnIndex: 0, marginal: false, shot: null,
+                        cameraAvailable: State.capture.cameraAvailable,
+                        frame: null, sampleId: State.capture.sampleId || SAMPLES[0].id };
+      State.screen = "capture";
+      render();
+      startCapture();
+      return;
+
+    case "capture-cancel":
+      stopCamera();
+      State.screen = "archive";
+      render();
+      return;
+
+    case "shoot":
+      stopCamera();
+      State.capture.shot = true;
+      render();
+      return;
+
+    case "retake":
+      State.capture.shot = null;
+      State.capture.frame = null;
+      render();
+      startCapture();
+      return;
+
+    case "process":
+      beginSession(currentSampleId());
+      return;
+
+    case "resume":
+      if (!State.session) return;
+      State.screen = "verify";
+      State.overlay = false;
+      State.userMenu = false;
+      render();
+      // The reading was stopped on the way out; pick it up where it stopped.
+      if (!State.session.stalled && landedCount(State.session) < State.session.fields.length) {
+        State.runToken++;
+        startSecondReading();
+      }
+      return;
+
+    case "to-archive":
+      // Leaving mid-session keeps the session (it is resumable) but stops the
+      // reading timers by moving the run token.
+      State.overlay = false;
+      State.userMenu = false;
+      State.screen = "archive";
+      State.runToken++;
+      stopReading();
+      render();
+      return;
+
+    case "open-photo":
+      if (!State.session) return;
+      zoom = { level: 1, x: 0, y: 0 };
+      State.overlay = true;
+      render();
+      return;
+    case "close-photo":
+      State.overlay = false;
+      render();
+      return;
+
+    case "boost":
+      if (!s) return;
+      s.boost = !s.boost;
+      persistSession();
+      render();
+      return;
+
+    case "confirm": {
+      var f = fieldById(s, fieldId);
+      if (!f) return;
+      var r = resolveField(fieldId, f.first, SOURCE.READING);
+      if (r.ok) render();
+      return;
+    }
+    case "confirm-as-is": {
+      var f2 = fieldById(s, fieldId);
+      if (!f2) return;
+      // The value confirmed is the READING, never the catalogue's suggestion.
+      var r2 = resolveField(fieldId, f2.first, SOURCE.READING);
+      if (r2.ok) render();
+      return;
+    }
+    case "pick": {
+      var r3 = resolveField(fieldId, node.getAttribute("data-value"), SOURCE.READING);
+      if (r3.ok) render();
+      return;
+    }
+    case "confirm-absent": {
+      var r4 = resolveField(fieldId, t("s_absent"), SOURCE.ABSENT);
+      if (r4.ok) render();
+      return;
+    }
+    case "doctor": {
+      var r5 = resolveField(fieldId, t("queriedValue"), SOURCE.DOCTOR);
+      if (r5.ok) render();
+      return;
+    }
+    case "edit":
+      if (!s) return;
+      s.editing = fieldId;
+      s.draft = "";
+      render();
+      return;
+    case "cancel-edit":
+      if (!s) return;
+      s.editing = null;
+      s.draft = "";
+      render();
+      return;
+    case "save-manual": {
+      if (!s) return;
+      var text = String(s.draft || "").trim();
+      if (!text) return;
+      var r6 = resolveField(fieldId, text, SOURCE.MANUAL);
+      if (r6.ok) render();
+      return;
+    }
+    case "reopen":
+      if (reopenField(fieldId).ok) render();
+      return;
+
+    case "retry-reading":
+      retrySecondReading();
+      return;
+    case "route-doctor":
+      routeStalledToDoctor();
+      return;
+
+    case "complete": {
+      var res = completeSession();
+      if (!res.ok) {
+        // Refused in the state layer. Say what is still open rather than
+        // failing silently.
+        announce(t("barOpen") + (res.open ? res.open.length : 0));
+        render();
+      }
+      return;
+    }
+
+    case "filter":
+      State.archiveFilter = node.getAttribute("data-filter");
+      render();
+      return;
+    case "clear-search":
+      State.archiveQuery = "";
+      render();
+      return;
+
+    case "open-record": {
+      var num = node.getAttribute("data-number");
+      // Go back through the scoped accessor: a record the current user may
+      // not see cannot be opened by number either.
+      var visible = archiveFor(State.user);
+      var found = null;
+      for (var k = 0; k < visible.length; k++) if (visible[k].number === num) found = visible[k];
+      if (!found) return;
+      State.openRecord = found;
+      State.screen = "record";
+      render();
+      return;
+    }
+
+    default:
+      return;
+  }
+}
+
+function handleInput(e) {
+  var node = e.target;
+  var act = node.getAttribute && node.getAttribute("data-act");
+  if (act === "draft") {
+    if (State.session) State.session.draft = node.value;
+    return;
+  }
+  if (act === "search") {
+    State.archiveQuery = node.value;
+    var live = document.querySelector(".count");
+    var rows = searchArchive(State.user, State.archiveQuery, State.archiveFilter);
+    if (live) live.textContent = t("found") + rows.length;
+    var list = document.querySelector(".arch-list");
+    if (list) {
+      // Re-render only the list, so the input keeps focus and the caret.
+      var fresh = archiveScreen().querySelector(".arch-list");
+      list.parentNode.replaceChild(fresh, list);
+    }
+    return;
+  }
+  if (act === "file") {
+    var file = node.files && node.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      State.capture.frame = String(reader.result || "");
+      State.capture.shot = true;
+      render();
+    };
+    reader.onerror = function () {
+      // Unreadable file: fall back to the bundled sample rather than a dead end.
+      State.capture.frame = null;
+      State.capture.shot = true;
+      render();
+    };
+    try { reader.readAsDataURL(file); }
+    catch (err) { State.capture.shot = true; render(); }
+  }
+}
+
+function handleKeydown(e) {
+  if (e.key === "Escape") {
+    if (State.overlay) { State.overlay = false; render(); return; }
+    if (State.userMenu) { State.userMenu = false; render(); return; }
+    if (State.demoOpen) { State.demoOpen = false; render(); return; }
+  }
+  // Enter/Space on the crop (it is a role=button div)
+  if ((e.key === "Enter" || e.key === " ") && e.target && e.target.classList &&
+      e.target.classList.contains("crop")) {
+    e.preventDefault();
+    State.overlay = true;
+    zoom = { level: 1, x: 0, y: 0 };
+    render();
+  }
+  if (e.key === "Enter" && e.target && e.target.getAttribute &&
+      e.target.getAttribute("data-act") === "draft") {
+    e.preventDefault();
+    var id = e.target.getAttribute("data-field");
+    if (State.session) State.session.draft = e.target.value;
+    var r = resolveField(id, String(State.session.draft || "").trim(), SOURCE.MANUAL);
+    if (r.ok) render();
+  }
+}
+
+function signIn(user) {
+  State.user = user;
+  State.pinFor = null;
+  State.pin = "";
+  writeJSON(K_USER, { id: user.id });
+  State.userMenu = false;
+  // A user switch mid-session returns to the session, which is the point of
+  // switching without a sign-out.
+  if (State.session) {
+    State.session.by = user.initials;
+    State.session.byName = user.name;
+    State.screen = "verify";
+    persistSession();
+    render();
+    startSecondReading();
+    return;
+  }
+  State.screen = "archive";
+  render();
+}
+
+function beginSession(sampleId) {
+  stopCamera();
+  State.runToken++;
+  stopReading();
+  var opts = {
+    slowSecond: !!State.capture.slowSecond,
+    failSecond: !!State.capture.failSecond
+  };
+  State.session = newSession(sampleId, State.user, opts);
+  State.screen = "verify";
+  State.overlay = false;
+  persistSession();
+  render();
+  startSecondReading();
+}
+
+/* -- capture: live camera with a graceful fallback -------------------------
+   getUserMedia is tried first. On file:// the context is insecure and the
+   API is either absent or rejects; the <input type=file capture=environment>
+   path below works everywhere, including file://, and reaches exactly the
+   same result. */
+var mediaStream = null;
+
+function stopCamera() {
+  if (mediaStream) {
+    try { mediaStream.getTracks().forEach(function (tr) { tr.stop(); }); } catch (e) {}
+    mediaStream = null;
+  }
+}
+
+function startCapture() {
+  var secure = false;
+  try { secure = !!window.isSecureContext; } catch (e) { secure = false; }
+  var has = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+
+  if (!secure || !has) {
+    State.capture.cameraAvailable = false;
+    render();
+    return;
+  }
+
+  var token = ++cameraToken;
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false })
+    .then(function (stream) {
+      if (token !== cameraToken || State.screen !== "capture") {
+        try { stream.getTracks().forEach(function (tr) { tr.stop(); }); } catch (e) {}
+        return;
+      }
+      mediaStream = stream;
+      State.capture.cameraAvailable = true;
+      var vf = document.querySelector(".viewfinder");
+      if (!vf) return;
+      var still = document.getElementById("vf-still");
+      if (still && still.parentNode) still.parentNode.removeChild(still);
+      var video = document.createElement("video");
+      video.setAttribute("playsinline", "");
+      video.setAttribute("muted", "");
+      video.muted = true;
+      video.autoplay = true;
+      video.style.transform = "translate(-50%,-50%)";
+      video.srcObject = stream;
+      vf.insertBefore(video, vf.firstChild);
+      var p = video.play();
+      if (p && typeof p.catch === "function") p.catch(function () { /* autoplay refused */ });
+    })
+    .catch(function () {
+      // Permission denied, no device, or an insecure context that still
+      // exposed the API. Either way: the file path, not a dead end.
+      if (token !== cameraToken) return;
+      State.capture.cameraAvailable = false;
+      render();
+    });
+}
+var cameraToken = 0;
+
+// Live warnings cycle on the viewfinder so the warning component is visible
+// in the demo without a real camera to misbehave.
+var warnTimer = null;
+function cycleWarnings() {
+  if (warnTimer) clearInterval(warnTimer);
+  warnTimer = setInterval(function () {
+    if (State.screen !== "capture" || State.capture.shot) return;
+    State.capture.warnIndex = (State.capture.warnIndex + 1) % WARNINGS.length;
+    render();
+  }, 3200);
+}
+
+/* -- full-photo overlay: pinch and double-tap zoom -------------------------- */
+var pointers = {};
+var pinchStart = null;
+var lastTap = 0;
+
+function onPointerDown(e) {
+  var pane = document.getElementById("fullpane");
+  if (!pane || !pane.contains(e.target)) return;
+  pointers[e.pointerId] = { x: e.clientX, y: e.clientY };
+  var ids = Object.keys(pointers);
+  if (ids.length === 2) {
+    pinchStart = {
+      dist: pointerDistance(),
+      level: zoom.level
+    };
+  } else if (ids.length === 1) {
+    var now = Date.now();
+    if (now - lastTap < 300) {
+      zoom.level = zoom.level > 1.4 ? 1 : 2.2;
+      zoom.x = 0; zoom.y = 0;
+      layoutFullPane();
+      lastTap = 0;
+    } else {
+      lastTap = now;
+    }
+  }
+}
+
+function onPointerMove(e) {
+  if (!pointers[e.pointerId]) return;
+  pointers[e.pointerId] = { x: e.clientX, y: e.clientY };
+  if (pinchStart && Object.keys(pointers).length === 2) {
+    var d = pointerDistance();
+    if (pinchStart.dist > 0) {
+      zoom.level = Math.max(1, Math.min(5, pinchStart.level * (d / pinchStart.dist)));
+      layoutFullPane();
+    }
+  }
+}
+
+function onPointerUp(e) {
+  delete pointers[e.pointerId];
+  if (Object.keys(pointers).length < 2) pinchStart = null;
+}
+
+function pointerDistance() {
+  var ids = Object.keys(pointers);
+  if (ids.length < 2) return 0;
+  var a = pointers[ids[0]], b = pointers[ids[1]];
+  return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
+}
+
+/* ===========================================================================
+   DEMO
+   Hidden controls for demoing at a pharmacy counter: invisible by default,
+   opened by a long-press on the wordmark or by ?demo=1 (also #demo). It has
+   to be reliable and fast to reach, so it is a plain panel, not a gesture
+   chord.
+   =========================================================================== */
+
+function demoPanel() {
+  var s = State.session;
+  var sampleSelect = el("select", { "data-act": "demo-sample", "aria-label": "sample" });
+  SAMPLES.forEach(function (sm) {
+    var o = el("option", { value: sm.id, text: "№" + sm.number });
+    if (s && s.sampleId === sm.id) o.setAttribute("selected", "");
+    sampleSelect.appendChild(o);
+  });
+
+  var stateSelect = el("select", { "data-act": "demo-state", "aria-label": "field state" });
+  stateSelect.appendChild(el("option", { value: "", text: "— state —" }));
+  [FIELD_STATE.AGREED, FIELD_STATE.DISAGREEMENT, FIELD_STATE.ILLEGIBLE, FIELD_STATE.ABSENT,
+   FIELD_STATE.FLAG_NOT_IN_REGISTRY, FIELD_STATE.FLAG_LOOKALIKE].forEach(function (st) {
+    stateSelect.appendChild(el("option", { value: st, text: st }));
+  });
+
+  var fieldSelect = el("select", { "data-act": "demo-field", "aria-label": "field" });
+  if (s) s.fields.forEach(function (f) {
+    var o = el("option", { value: f.id, text: labelFor(f.id) });
+    if (s.focus === f.id) o.setAttribute("selected", "");
+    fieldSelect.appendChild(o);
+  });
+
+  return el("div", { class: "demo", id: "demo" }, [
+    el("div", { style: "display:flex;align-items:center;gap:8px" }, [
+      el("h2", { text: t("demoTitle") }),
+      el("div", { style: "flex:1" }),
+      btn({ class: "iconbtn", "data-act": "demo-close", "aria-label": "close" },
+          [el("span", { class: "mono", text: "✕" })])
+    ]),
+    el("div", { class: "grid" }, [
+      el("label", { style: "display:flex;flex-direction:column;gap:4px" }, [
+        el("span", { style: "font-size:16px", text: "Sample" }), sampleSelect
+      ]),
+      el("label", { style: "display:flex;flex-direction:column;gap:4px" }, [
+        el("span", { style: "font-size:16px", text: "Field" }), fieldSelect
+      ]),
+      el("label", { style: "display:flex;flex-direction:column;gap:4px" }, [
+        el("span", { style: "font-size:16px", text: "Force state" }), stateSelect
+      ])
+    ]),
+    el("div", { class: "grid" }, [
+      btn({ "data-act": "demo-replay-slow", text: "Replay · slow second reading" }),
+      btn({ "data-act": "demo-fail", text: "Force second-reading failure" }),
+      btn({ "data-act": "demo-land-all", text: "Land all readings now" }),
+      btn({ "data-act": "demo-reset-archive", text: "Reset archive" }),
+      btn({ "data-act": "demo-signout", text: "Sign out" })
+    ]),
+    el("div", { style: "font-size:16px", text:
+      "AZ strings marked [X] in I18N are drafts, not from /design/. All AZ is pending native review." })
+  ]);
+}
+
+function handleDemo(act, node) {
+  switch (act) {
+    case "demo-close":
+      State.demoOpen = false; render(); return true;
+
+    case "demo-sample": {
+      State.capture.sampleId = node.value;
+      beginSession(node.value);
+      State.demoOpen = true;
+      render();
+      return true;
+    }
+    case "demo-field":
+      if (State.session) focusField(node.value);
+      State.demoOpen = true;
+      render();
+      return true;
+
+    case "demo-state": {
+      var s = State.session;
+      if (!s || !node.value) return true;
+      var f = fieldById(s, s.focus);
+      if (!f) return true;
+      // Landing the field is explicit here: the demo control cannot be used
+      // to render a settled-capable state on an unlanded field, because
+      // fieldState() would still return `awaiting`.
+      f.landed = true;
+      f.resolution = null;
+      f.demoState = node.value;
+      if (node.value === FIELD_STATE.FLAG_LOOKALIKE && !f.catalogue) {
+        f.catalogue = SAMPLES[2].fields[1].catalogue;
+      }
+      if (node.value === FIELD_STATE.DISAGREEMENT && f.first === f.second) {
+        f.second = f.first + " · 2";
+      }
+      s.landedCount = landedCount(s);
+      persistSession();
+      render();
+      return true;
+    }
+
+    case "demo-replay-slow":
+      State.capture.slowSecond = true;
+      State.capture.failSecond = false;
+      beginSession(State.session ? State.session.sampleId : SAMPLES[0].id);
+      State.demoOpen = true;
+      render();
+      return true;
+
+    case "demo-fail":
+      State.capture.failSecond = true;
+      State.capture.slowSecond = false;
+      beginSession(State.session ? State.session.sampleId : SAMPLES[0].id);
+      State.demoOpen = true;
+      render();
+      return true;
+
+    case "demo-land-all": {
+      var ss = State.session;
+      if (!ss) return true;
+      ss.fields.forEach(function (f) { f.landed = true; });
+      ss.landedCount = landedCount(ss);
+      ss.stalled = false;
+      persistSession();
+      render();
+      return true;
+    }
+
+    case "demo-reset-archive":
+      State.archive = seedArchive();
+      persistArchive();
+      render();
+      return true;
+
+    case "demo-signout":
+      State.runToken++;
+      stopReading();
+      State.session = null;
+      State.user = null;
+      storeRemove(K_SESSION);
+      storeRemove(K_USER);
+      State.screen = "signin";
+      render();
+      return true;
+  }
+  return false;
+}
+
+function wireDemoLongPress() {
+  var timer = null;
+  function down(e) {
+    var n = actOn(e.target);
+    if (!n || n.getAttribute("data-act") !== "wordmark") return;
+    timer = setTimeout(function () {
+      State.demo = true;
+      State.demoOpen = true;
+      render();
+    }, 600);
+  }
+  function up() { if (timer) { clearTimeout(timer); timer = null; } }
+  document.addEventListener("pointerdown", down);
+  document.addEventListener("pointerup", up);
+  document.addEventListener("pointercancel", up);
+  document.addEventListener("pointerleave", up);
+}
+
+/* ===========================================================================
+   BOOT
+   =========================================================================== */
+
+function boot() {
+  restore();
+
+  var q = "";
+  try { q = String(window.location.search || "") + String(window.location.hash || ""); }
+  catch (e) { q = ""; }
+  if (q.indexOf("demo=1") >= 0 || q.indexOf("#demo") >= 0) {
+    State.demo = true;
+    State.demoOpen = true;
+  }
+
+  if (!State.user) State.screen = "signin";
+
+  document.addEventListener("click", function (e) {
+    var n = actOn(e.target);
+    if (n) {
+      var a = n.getAttribute("data-act");
+      if (a && a.indexOf("demo-") === 0) { if (handleDemo(a, n)) return; }
+    }
+    handleClick(e);
+  });
+
+  document.addEventListener("change", function (e) {
+    var n = e.target;
+    var a = n.getAttribute && n.getAttribute("data-act");
+    if (a && a.indexOf("demo-") === 0) { handleDemo(a, n); return; }
+    if (a === "file") handleInput(e);
+  });
+
+  document.addEventListener("input", handleInput);
+  document.addEventListener("keydown", handleKeydown);
+  document.addEventListener("pointerdown", onPointerDown);
+  document.addEventListener("pointermove", onPointerMove);
+  document.addEventListener("pointerup", onPointerUp);
+  document.addEventListener("pointercancel", onPointerUp);
+
+  window.addEventListener("resize", function () {
+    Array.prototype.forEach.call(document.querySelectorAll(".crop"), applyCrop);
+    layoutFullPane();
+  });
+
+  window.addEventListener("orientationchange", function () {
+    setTimeout(function () {
+      Array.prototype.forEach.call(document.querySelectorAll(".crop"), applyCrop);
+      layoutFullPane();
+    }, 80);
+  });
+
+  wireDemoLongPress();
+  cycleWarnings();
+  render();
+
+  if (State.session && State.screen === "verify") startSecondReading();
+
+  // Test and demo surface. The invariants are enforced inside these
+  // functions, so calling them from the console is a legitimate way to prove
+  // that they hold — which is exactly what tests/adversarial.spec.js does.
+  window.Siruply = {
+    state: State,
+    FIELD_STATE: FIELD_STATE,
+    SOURCE: SOURCE,
+    complete: completeSession,
+    resolve: resolveField,
+    reopen: reopenField,
+    fieldState: function (id) { return fieldState(fieldById(State.session, id)); },
+    openFields: function () { return openFields(State.session).map(function (f) { return f.id; }); },
+    archiveFor: archiveFor,
+    optionsFor: function (id) { return optionsFor(fieldById(State.session, id)); },
+    begin: beginSession,
+    landAll: function () {
+      if (!State.session) return;
+      State.session.fields.forEach(function (f) { f.landed = true; });
+      State.session.landedCount = landedCount(State.session);
+      render();
+    },
+    render: render
+  };
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", boot);
+} else {
+  boot();
+}
+
+})();
+</script>
+</body>
+</html>
