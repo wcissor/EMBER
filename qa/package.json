@@ -1,0 +1,16 @@
+{
+  "name": "aglink-console-qa",
+  "private": true,
+  "type": "module",
+  "description": "QA harness for aglink-console.html: route matrix (az/ru/en x light/dark x 1440/390) + behaviour flows, axe-core included.",
+  "scripts": {
+    "matrix": "node run.mjs",
+    "flows": "node flows.mjs",
+    "perf": "node perf.mjs",
+    "test": "node run.mjs && node flows.mjs"
+  },
+  "devDependencies": {
+    "axe-core": "^4.10.0",
+    "playwright": "^1.56.0"
+  }
+}

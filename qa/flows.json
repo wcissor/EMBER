@@ -1,0 +1,442 @@
+[
+ {
+  "name": "consent · invited user lands on consent",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "consent · continue disabled initially",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "consent · required boxes unticked",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "consent · optional only keeps continue disabled",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "consent · one required still disabled",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "consent · both required enables continue",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "consent · drawer shows version/effective/language",
+  "pass": true,
+  "info": "Terms of ServiceDraft — for counsel reviewVersion 2.4Effective 12 May 2026Language: English1. What Aglink isAglink is an"
+ },
+ {
+  "name": "consent · escape closes drawer, focus returns",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "consent · acceptance record fields",
+  "pass": true,
+  "info": "{\"id\":\"acc_9ygtcz3wsm\",\"user_id\":\"us_ym985aa3nt\",\"user_name\":\"Aysel Kərimova\",\"org_id\":\"org_547pmkreff\",\"document_id\":\"doc_tos\",\"doc_key\":\"tos\",\"version\":\"2.4\",\"sha256\":\"f9e10b37a2fbaff84f488246871e9d"
+ },
+ {
+  "name": "consent · record is immutable",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "consent · optional consent recorded",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "consent · sha256 matches rendered text",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "consent · contractor sees no coordinates",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "consent · contractor gets 403 on activity",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "consent · contractor members → 403",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "consent · no console errors",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "errors · forced 500 state",
+  "pass": true,
+  "info": "GatewaysWe could not load the latest dataThis is usually a short problem with the connection to Aglink. Your gateways keep all data, so nothing is los"
+ },
+ {
+  "name": "errors · forced 404 state",
+  "pass": true,
+  "info": "GatewaysWe can’t find thisIt doesn’t exist, or it isn’t part of your organisation.Go to overview"
+ },
+ {
+  "name": "errors · forced 403 state",
+  "pass": true,
+  "info": "GatewaysYou don’t have access to thisYour role (Admin) can’t open this page. Ask an admin of Günəşli Bağlar MMC if you need access.Go to overview"
+ },
+ {
+  "name": "errors · forced 429 state",
+  "pass": true,
+  "info": "GatewaysToo many requestsAglink is limiting requests from this account for a moment. Trying again in 12 s.Try now"
+ },
+ {
+  "name": "errors · 429 auto-retries after Retry-After",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "errors · 401 opens re-auth modal",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "errors · page kept behind modal",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "errors · re-auth resumes",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "errors · maintenance state",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "errors · maintenance banner",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "errors · empty state",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "errors · foreign and unknown IDs give the same 404",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "errors · API 404 bodies identical",
+  "pass": true,
+  "info": "[[404,\"{\\\"detail\\\":\\\"Not found\\\"}\"],[404,\"{\\\"detail\\\":\\\"Not found\\\"}\"]]"
+ },
+ {
+  "name": "errors · raw packets capped at 24 h",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "errors · series capped at 2,000 points",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "errors · ids are opaque",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "errors · keyset cursor paging",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "errors · no console errors",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "offline+realtime · SSE batches arrive every 5 s",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "offline+realtime · offline banner with snapshot time",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "offline+realtime · status shows paused",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "offline+realtime · queued action marked pending",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "offline+realtime · queued change sent on reconnect",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "offline+realtime · stream resumed from last sequence",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "offline+realtime · reconnecting state shown",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "offline+realtime · reconnects with backoff",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "offline+realtime · no console errors",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "legal-change · terms banner 30 days before",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "legal-change · review page",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "legal-change · blocking screen after effective date",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "legal-change · blocking has Accept · Download · Decline",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "legal-change · accept unblocks",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "legal-change · 3.0 acceptance recorded (method block)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "legal-change · history in Privacy & data",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "legal-change · toggle consent recorded with version",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "legal-change · acceptances in Activity",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "legal-change · no console errors",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "admin-flows · secret shown once",
+  "pass": true,
+  "info": "agl_read_8UamW6bXJoCiRzzEyQDqsW8zWUQrdgP5A8"
+ },
+ {
+  "name": "admin-flows · after Done only masked prefix",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "admin-flows · server stores only a hash",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "admin-flows · support: validation",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "admin-flows · support: countdown banner",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "admin-flows · support: revoke",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "admin-flows · rule validation messages",
+  "pass": true,
+  "info": "Edit rule: Packet lossFix 2 fields to save.Alert after this many minutesEnter a number from 1 to 120.Alert level, % lossClose the alert when it falls below, %Hysteresis stops an alert from flapping op"
+ },
+ {
+  "name": "admin-flows · send test toast",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "admin-flows · rule saved",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "admin-flows · snooze requires reason",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "admin-flows · snooze toast with undo",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "admin-flows · export appears and becomes ready",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "admin-flows · coordinates off by default",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "admin-flows · export in activity",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "admin-flows · no console errors",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "keyboard+perf · palette opens node",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "keyboard+perf · palette escape closes",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "keyboard+perf · debug panel opens",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "keyboard+perf · stress footer 10,000",
+  "pass": true,
+  "info": "1–8 of 10,000"
+ },
+ {
+  "name": "keyboard+perf · only visible rows rendered",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "keyboard+perf · no long tasks (>50 ms) while scrolling 10k rows",
+  "pass": true,
+  "info": "[]"
+ },
+ {
+  "name": "keyboard+perf · keyset paging reaches the end",
+  "pass": true,
+  "info": "9,992–10,000 of 10,000"
+ },
+ {
+  "name": "keyboard+perf · filters and sort from URL",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "keyboard+perf · grid roving tabindex",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "keyboard+perf · navigation long tasks",
+  "pass": true,
+  "info": "[]"
+ },
+ {
+  "name": "keyboard+perf · first render under 1 s",
+  "pass": true,
+  "info": "{\"dcl\":97,\"fcp\":516,\"now\":15109} wall 15112"
+ },
+ {
+  "name": "keyboard+perf · no console errors",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "storage-blocked+pseudo · works with storage blocked",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "storage-blocked+pseudo · storage notice",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "storage-blocked+pseudo · pseudo-locale renders",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "storage-blocked+pseudo · html lang set",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "storage-blocked+pseudo · no console errors",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "mobile-dark-states · az suffix harmony",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "name": "mobile-dark-states · az updated text",
+  "pass": true,
+  "info": "Canlı· Bakı vaxtı ilə 14:05-də yeniləndi"
+ },
+ {
+  "name": "mobile-dark-states · no console errors",
+  "pass": true,
+  "info": ""
+ }
+]

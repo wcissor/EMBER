@@ -21,3 +21,7 @@ rad.json
 *.flf
 #Test results file
 TestResults.xml
+### Aglink console QA ###
+qa/node_modules/
+qa/fonts/
+qa/package-lock.json
