@@ -69,11 +69,15 @@ if stem_s.exists() and stem_v.exists():
     from scipy.io import wavfile
     onset_ok = True
     st = {'S': wavfile.read(stem_s)[1].astype(np.float32), 'V': wavfile.read(stem_v)[1].astype(np.float32)}
-    prev_end = {'S': 0.0, 'V': 0.0}
+    prev_end = {'S': -1.0, 'V': -1.0}
     for L in VT:
         x = st[L['voice']]
+        joined = prev_end[L['voice']] >= 0 and L['start'] - prev_end[L['voice']] < 0.1
         i0 = int(max(prev_end[L['voice']] + 0.03, L['start'] - 0.25, 0) * 48000)
         prev_end[L['voice']] = L['end']
+        if joined:
+            onset_rows.append(f"| L{L['id']} | {L['start'] * FPS:.0f} | — | joined to the previous line without a pause (no energy onset to measure) |")
+            continue
         seg = np.abs(x[i0:int((L['start'] + 0.5) * 48000)])
         thr = max(1e-3, 0.05 * float(np.max(np.abs(x[int(L['start'] * 48000):int(L['end'] * 48000)])) or 1e-3))
         idx = np.where(seg > thr)[0]
