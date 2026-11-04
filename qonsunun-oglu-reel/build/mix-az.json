@@ -1,0 +1,84 @@
+{
+ "lines": [
+  {
+   "id": "08",
+   "voice": "men",
+   "loudness_in": -29.6,
+   "gain_db": 9.6,
+   "max_gr_db": 4.7,
+   "tempo": 1.0
+  },
+  {
+   "id": "10",
+   "voice": "men",
+   "loudness_in": -24.5,
+   "gain_db": 4.5,
+   "max_gr_db": 6.0,
+   "tempo": 1.0
+  },
+  {
+   "id": "11",
+   "voice": "men",
+   "loudness_in": -33.0,
+   "gain_db": 10.5,
+   "max_gr_db": 0.0,
+   "tempo": 1.0
+  },
+  {
+   "id": "13",
+   "voice": "men",
+   "loudness_in": -23.8,
+   "gain_db": 3.8,
+   "max_gr_db": 6.0,
+   "tempo": 1.0388
+  },
+  {
+   "id": "16",
+   "voice": "men",
+   "loudness_in": -27.3,
+   "gain_db": 7.3,
+   "max_gr_db": 6.0,
+   "tempo": 1.0
+  },
+  {
+   "id": "17",
+   "voice": "men",
+   "loudness_in": -28.8,
+   "gain_db": 8.8,
+   "max_gr_db": 6.0,
+   "tempo": 1.0
+  },
+  {
+   "id": "18",
+   "voice": "men",
+   "loudness_in": -26.5,
+   "gain_db": 6.5,
+   "max_gr_db": 6.0,
+   "tempo": 1.0
+  },
+  {
+   "id": "21",
+   "voice": "men",
+   "loudness_in": -26.8,
+   "gain_db": 6.8,
+   "max_gr_db": 5.1,
+   "tempo": 1.0
+  }
+ ],
+ "missing": [
+  "01",
+  "02",
+  "03",
+  "04",
+  "05",
+  "06",
+  "07",
+  "09",
+  "12",
+  "14",
+  "15",
+  "19",
+  "20"
+ ],
+ "callback": "skipped: L06 (Ana) take not supplied yet"
+}

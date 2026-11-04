@@ -1,0 +1,1061 @@
+{
+ "lang": "az",
+ "textRows": [
+  {
+   "id": "title",
+   "x": 144.35000000000002,
+   "y": 380,
+   "w": 791.3,
+   "h": 130,
+   "ok": true
+  },
+  {
+   "id": "titleSub",
+   "x": 431.15,
+   "y": 528,
+   "w": 217.7,
+   "h": 40,
+   "ok": true
+  },
+  {
+   "id": "endLine",
+   "x": 214.85000000000002,
+   "y": 980,
+   "w": 650.3,
+   "h": 100,
+   "ok": true
+  },
+  {
+   "id": "url",
+   "x": 351.95,
+   "y": 1095,
+   "w": 376.1,
+   "h": 55,
+   "ok": true
+  },
+  {
+   "id": "cta (+ arrow)",
+   "x": 233.95,
+   "y": 1170,
+   "w": 612.1,
+   "h": 70,
+   "ok": true
+  },
+  {
+   "id": "L01 tag",
+   "x": 503.1,
+   "y": 1072,
+   "w": 73.8,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L01 row 1",
+   "x": 224.2,
+   "y": 1104,
+   "w": 631.6,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L01 row 2",
+   "x": 350.55,
+   "y": 1173,
+   "w": 378.9,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L02 tag",
+   "x": 503.1,
+   "y": 1072,
+   "w": 73.8,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L02 row 1",
+   "x": 390.85,
+   "y": 1104,
+   "w": 298.3,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L03 tag",
+   "x": 503.1,
+   "y": 1072,
+   "w": 73.8,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L03 row 1",
+   "x": 246.45,
+   "y": 1104,
+   "w": 587.1,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L04 tag",
+   "x": 503.1,
+   "y": 1072,
+   "w": 73.8,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L04 row 1",
+   "x": 201.60000000000002,
+   "y": 1104,
+   "w": 676.8,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L05 tag",
+   "x": 503.1,
+   "y": 1072,
+   "w": 73.8,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L05 row 1",
+   "x": 213.10000000000002,
+   "y": 1104,
+   "w": 653.8,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L06 tag",
+   "x": 503.1,
+   "y": 1072,
+   "w": 73.8,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L06 row 1",
+   "x": 236.10000000000002,
+   "y": 1104,
+   "w": 607.8,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L07 tag",
+   "x": 503.1,
+   "y": 1072,
+   "w": 73.8,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L07 row 1",
+   "x": 408.25,
+   "y": 1104,
+   "w": 263.5,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L08 tag",
+   "x": 500.1,
+   "y": 1072,
+   "w": 79.8,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L08 row 1",
+   "x": 438.7,
+   "y": 1104,
+   "w": 202.6,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L08 row 2",
+   "x": 291.7,
+   "y": 1173,
+   "w": 496.6,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L09 tag",
+   "x": 503.1,
+   "y": 1072,
+   "w": 73.8,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L09 row 1",
+   "x": 391.3,
+   "y": 1104,
+   "w": 297.4,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L09 row 2",
+   "x": 350.15,
+   "y": 1173,
+   "w": 379.7,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L10 tag",
+   "x": 500.1,
+   "y": 1072,
+   "w": 79.8,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L10 row 1",
+   "x": 322.15,
+   "y": 1104,
+   "w": 435.7,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L10 row 2",
+   "x": 384.3,
+   "y": 1173,
+   "w": 311.4,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L11 tag",
+   "x": 500.1,
+   "y": 1072,
+   "w": 79.8,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L11 row 1",
+   "x": 296.55,
+   "y": 1104,
+   "w": 486.9,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L12 tag",
+   "x": 388.35,
+   "y": 1072,
+   "w": 303.3,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L12 row 1",
+   "x": 439.9,
+   "y": 1104,
+   "w": 200.2,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L12 row 2",
+   "x": 296,
+   "y": 1173,
+   "w": 488,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L13 tag",
+   "x": 500.1,
+   "y": 1072,
+   "w": 79.8,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L13 row 1",
+   "x": 351.15,
+   "y": 1104,
+   "w": 377.7,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L14 tag",
+   "x": 388.35,
+   "y": 1072,
+   "w": 303.3,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L14 row 1",
+   "x": 367,
+   "y": 1104,
+   "w": 346,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L15 tag",
+   "x": 388.35,
+   "y": 1072,
+   "w": 303.3,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L15 row 1",
+   "x": 359,
+   "y": 1104,
+   "w": 362,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L16 tag",
+   "x": 500.1,
+   "y": 1072,
+   "w": 79.8,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L16 row 1",
+   "x": 356.75,
+   "y": 1104,
+   "w": 366.5,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L17 tag",
+   "x": 500.1,
+   "y": 1072,
+   "w": 79.8,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L17 row 1",
+   "x": 347,
+   "y": 1104,
+   "w": 386,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L18 tag",
+   "x": 500.1,
+   "y": 1072,
+   "w": 79.8,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L18 row 1",
+   "x": 350.2,
+   "y": 1104,
+   "w": 379.6,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L19 tag",
+   "x": 478.6,
+   "y": 1072,
+   "w": 122.8,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L19 row 1",
+   "x": 209.8,
+   "y": 1104,
+   "w": 660.4,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L20 tag",
+   "x": 503.1,
+   "y": 1072,
+   "w": 73.8,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L20 row 1",
+   "x": 241.5,
+   "y": 1104,
+   "w": 597,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L21 tag",
+   "x": 500.1,
+   "y": 1072,
+   "w": 79.8,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L21 row 1",
+   "x": 331.25,
+   "y": 1104,
+   "w": 417.5,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L21 row 2",
+   "x": 349.55,
+   "y": 1173,
+   "w": 380.9,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "UI age field",
+   "x": 80,
+   "y": 330,
+   "w": 920,
+   "h": 200,
+   "ok": true
+  },
+  {
+   "id": "UI card 1 (Eko-könüllü: 232 px title)",
+   "x": 80,
+   "y": 560,
+   "w": 920,
+   "h": 176,
+   "ok": true
+  },
+  {
+   "id": "UI card 2 (Tərcümə könüllüsü: 372 px title)",
+   "x": 80,
+   "y": 760,
+   "w": 920,
+   "h": 176,
+   "ok": true
+  },
+  {
+   "id": "UI card 3 (Elmi layihə könüllüsü: 405 px title)",
+   "x": 80,
+   "y": 960,
+   "w": 920,
+   "h": 176,
+   "ok": true
+  },
+  {
+   "id": "window D subtitle \"Hello → Salam\" @f264",
+   "x": 360.7642898550721,
+   "y": 850.2592463768115,
+   "w": 358.4714202898558,
+   "h": 60.42803942029013,
+   "ok": true
+  }
+ ],
+ "zoneRows": [
+  {
+   "what": "the son turns to camera",
+   "place": "son",
+   "frame": 50,
+   "y0": 578,
+   "y1": 1014,
+   "ok": true
+  },
+  {
+   "what": "window A: the sapling",
+   "place": "winA",
+   "frame": 109,
+   "y0": 448,
+   "y1": 881,
+   "ok": true
+  },
+  {
+   "what": "window B: hands up",
+   "place": "winB",
+   "frame": 147,
+   "y0": 465,
+   "y1": 902,
+   "ok": true
+  },
+  {
+   "what": "window C: the cup",
+   "place": "winC",
+   "frame": 201,
+   "y0": 478,
+   "y1": 918,
+   "ok": true
+  },
+  {
+   "what": "window D: Hello → Salam",
+   "place": "winD",
+   "frame": 236,
+   "y0": 485,
+   "y1": 929,
+   "ok": true
+  },
+  {
+   "what": "the kid upside down + Ana",
+   "place": "kidRoom",
+   "frame": 316,
+   "y0": 340,
+   "y1": 1017,
+   "ok": true
+  },
+  {
+   "what": "eyes slide (L08)",
+   "place": "kidRoom",
+   "frame": 339,
+   "y0": 337,
+   "y1": 1017,
+   "ok": true
+  },
+  {
+   "what": "the silence: Ana eyes the modem",
+   "place": "kidRoom",
+   "frame": 405,
+   "y0": 329,
+   "y1": 1017,
+   "ok": true
+  },
+  {
+   "what": "hand to the plug",
+   "place": "kidRoom",
+   "frame": 438,
+   "y0": 325,
+   "y1": 1017,
+   "ok": true
+  },
+  {
+   "what": "the flip",
+   "place": "kidRoom",
+   "frame": 468,
+   "y0": 321,
+   "y1": 1016,
+   "ok": true
+  },
+  {
+   "what": "the door slam",
+   "place": "kidRoom",
+   "frame": 507,
+   "y0": 316,
+   "y1": 1016,
+   "ok": true
+  },
+  {
+   "what": "deed 1",
+   "place": "deed1",
+   "frame": 849,
+   "y0": 451,
+   "y1": 884,
+   "ok": true
+  },
+  {
+   "what": "deed 2",
+   "place": "deed2",
+   "frame": 879,
+   "y0": 443,
+   "y1": 881,
+   "ok": true
+  },
+  {
+   "what": "deed 3",
+   "place": "deed3",
+   "frame": 906,
+   "y0": 435,
+   "y1": 877,
+   "ok": true
+  },
+  {
+   "what": "bedroom turns blue",
+   "place": "kidRoom",
+   "frame": 933,
+   "y0": 429,
+   "y1": 808,
+   "ok": true
+  },
+  {
+   "what": "Qonşu points (L19)",
+   "place": "qonsuBalcony",
+   "frame": 981,
+   "y0": 407,
+   "y1": 961,
+   "ok": true
+  },
+  {
+   "what": "Ana bursts out (L20)",
+   "place": "anaBalcony",
+   "frame": 1008,
+   "y0": 532,
+   "y1": 961,
+   "ok": true
+  },
+  {
+   "what": "the smug squint (L21)",
+   "place": "kidRoom",
+   "frame": 1063,
+   "y0": 557,
+   "y1": 878,
+   "ok": true
+  }
+ ],
+ "syncRows": [
+  {
+   "beat": "whipStart",
+   "line": "01",
+   "word": "Qonşunun (start)",
+   "target": 18,
+   "anchor": 18,
+   "actual": 18,
+   "delta": 0
+  },
+  {
+   "beat": "whipLand",
+   "line": "—",
+   "word": "after whipStart",
+   "target": 33,
+   "anchor": null,
+   "actual": 33,
+   "delta": null
+  },
+  {
+   "beat": "sonTurn",
+   "line": "—",
+   "word": "after whipLand",
+   "target": 50,
+   "anchor": null,
+   "actual": 50,
+   "delta": null
+  },
+  {
+   "beat": "title",
+   "line": "—",
+   "word": "max/min",
+   "target": 70,
+   "anchor": null,
+   "actual": 70,
+   "delta": null
+  },
+  {
+   "beat": "winA",
+   "line": "02",
+   "word": "Ağac (start)",
+   "target": 99,
+   "anchor": 99,
+   "actual": 99,
+   "delta": 0
+  },
+  {
+   "beat": "winB",
+   "line": "03",
+   "word": "Uşaqlara (start)",
+   "target": 129,
+   "anchor": 129,
+   "actual": 129,
+   "delta": 0
+  },
+  {
+   "beat": "winC",
+   "line": "04",
+   "word": "Marafonda (start)",
+   "target": 171,
+   "anchor": 171,
+   "actual": 171,
+   "delta": 0
+  },
+  {
+   "beat": "winD",
+   "line": "05",
+   "word": "İngiliscə (start)",
+   "target": 216,
+   "anchor": 216,
+   "actual": 216,
+   "delta": 0
+  },
+  {
+   "beat": "allFour",
+   "line": "06",
+   "word": "Cəmi (start)",
+   "target": 266,
+   "anchor": 266,
+   "actual": 266,
+   "delta": 0
+  },
+  {
+   "beat": "rays2",
+   "line": "—",
+   "word": "after allFour",
+   "target": 270,
+   "anchor": null,
+   "actual": 270,
+   "delta": null
+  },
+  {
+   "beat": "whipBack",
+   "line": "06",
+   "word": "var! (end)",
+   "target": 300,
+   "anchor": 303,
+   "actual": 303,
+   "delta": 0
+  },
+  {
+   "beat": "anaDoor",
+   "line": "—",
+   "word": "after whipBack",
+   "target": 305,
+   "anchor": null,
+   "actual": 308,
+   "delta": null
+  },
+  {
+   "beat": "eyesSlide",
+   "line": "08",
+   "word": "Mən?..",
+   "target": 339,
+   "anchor": 339,
+   "actual": 339,
+   "delta": 0
+  },
+  {
+   "beat": "silence",
+   "line": "08",
+   "word": "baxıram. (end)",
+   "target": 390,
+   "anchor": 397,
+   "actual": 397,
+   "delta": 0
+  },
+  {
+   "beat": "plugReach",
+   "line": "09",
+   "word": "Modemi… (start)",
+   "target": 411,
+   "anchor": 418,
+   "actual": 418,
+   "delta": 0
+  },
+  {
+   "beat": "flip",
+   "line": "10",
+   "word": "Yox- (start)",
+   "target": 452,
+   "anchor": 460,
+   "actual": 460,
+   "delta": 0
+  },
+  {
+   "beat": "bolt",
+   "line": "10",
+   "word": "Axtarıram! (end)",
+   "target": 486,
+   "anchor": 499,
+   "actual": 499,
+   "delta": 0
+  },
+  {
+   "beat": "push",
+   "line": "—",
+   "word": "max/min",
+   "target": 504,
+   "anchor": null,
+   "actual": 511,
+   "delta": null
+  },
+  {
+   "beat": "doorSlam",
+   "line": "—",
+   "word": "after push",
+   "target": 500,
+   "anchor": null,
+   "actual": 507,
+   "delta": null
+  },
+  {
+   "beat": "tiptoe",
+   "line": "11",
+   "word": "Onun (start)",
+   "target": 510,
+   "anchor": 517,
+   "actual": 517,
+   "delta": 0
+  },
+  {
+   "beat": "catStep",
+   "line": "11",
+   "word": "nədir? (end)",
+   "target": 552,
+   "anchor": 549,
+   "actual": 549,
+   "delta": 0
+  },
+  {
+   "beat": "tumbleLand",
+   "line": "—",
+   "word": "after catStep",
+   "target": 572,
+   "anchor": null,
+   "actual": 569,
+   "delta": null
+  },
+  {
+   "beat": "offerHand",
+   "line": "12",
+   "word": "Salam! (start)",
+   "target": 582,
+   "anchor": 582,
+   "actual": 582,
+   "delta": 0
+  },
+  {
+   "beat": "grab",
+   "line": "13",
+   "word": "Sirrin (start)",
+   "target": 630,
+   "anchor": 630,
+   "actual": 630,
+   "delta": 0
+  },
+  {
+   "beat": "smile",
+   "line": "14",
+   "word": "Sirr (start)",
+   "target": 663,
+   "anchor": 663,
+   "actual": 663,
+   "delta": 0
+  },
+  {
+   "beat": "phoneTurn",
+   "line": "14",
+   "word": "yoxdur. (end)",
+   "target": 690,
+   "anchor": 690,
+   "actual": 690,
+   "delta": 0
+  },
+  {
+   "beat": "vtLit",
+   "line": "15",
+   "word": "VolunTrack. (start)",
+   "target": 699,
+   "anchor": 699,
+   "actual": 699,
+   "delta": 0
+  },
+  {
+   "beat": "flood",
+   "line": "15",
+   "word": "VolunTrack. (end)",
+   "target": 726,
+   "anchor": 726,
+   "actual": 726,
+   "delta": 0
+  },
+  {
+   "beat": "uiIn",
+   "line": "—",
+   "word": "after flood",
+   "target": 738,
+   "anchor": null,
+   "actual": 737,
+   "delta": null
+  },
+  {
+   "beat": "type1",
+   "line": "—",
+   "word": "after uiIn",
+   "target": 765,
+   "anchor": null,
+   "actual": 764,
+   "delta": null
+  },
+  {
+   "beat": "type6",
+   "line": "—",
+   "word": "after type1",
+   "target": 777,
+   "anchor": null,
+   "actual": 776,
+   "delta": null
+  },
+  {
+   "beat": "cards",
+   "line": "—",
+   "word": "after uiIn",
+   "target": 792,
+   "anchor": null,
+   "actual": 791,
+   "delta": null
+  },
+  {
+   "beat": "tap",
+   "line": "—",
+   "word": "after uiIn",
+   "target": 819,
+   "anchor": null,
+   "actual": 818,
+   "delta": null
+  },
+  {
+   "beat": "cardLand",
+   "line": "—",
+   "word": "after tap",
+   "target": 840,
+   "anchor": null,
+   "actual": 839,
+   "delta": null
+  },
+  {
+   "beat": "deed1",
+   "line": "16",
+   "word": "Ağac (start)",
+   "target": 843,
+   "anchor": 843,
+   "actual": 843,
+   "delta": 0
+  },
+  {
+   "beat": "deed2",
+   "line": "17",
+   "word": "Dərs (start)",
+   "target": 873,
+   "anchor": 873,
+   "actual": 873,
+   "delta": 0
+  },
+  {
+   "beat": "deed3",
+   "line": "18",
+   "word": "Su (start)",
+   "target": 900,
+   "anchor": 900,
+   "actual": 900,
+   "delta": 0
+  },
+  {
+   "beat": "bedroomBlue",
+   "line": "18",
+   "word": "payladım. (end)",
+   "target": 930,
+   "anchor": 929,
+   "actual": 929,
+   "delta": 0
+  },
+  {
+   "beat": "wide",
+   "line": "19",
+   "word": "Qonşunun (start)",
+   "target": 960,
+   "anchor": 960,
+   "actual": 960,
+   "delta": 0
+  },
+  {
+   "beat": "qqPoint",
+   "line": "19",
+   "word": "Qonşunun (start)",
+   "target": 963,
+   "anchor": 963,
+   "actual": 963,
+   "delta": 0
+  },
+  {
+   "beat": "anaBurst",
+   "line": "20",
+   "word": "O (start)",
+   "target": 999,
+   "anchor": 1000,
+   "actual": 1000,
+   "delta": 0
+  },
+  {
+   "beat": "kidStep",
+   "line": "21",
+   "word": "İndi (start)",
+   "target": 1032,
+   "anchor": 1033,
+   "actual": 1033,
+   "delta": 0
+  },
+  {
+   "beat": "kidRays",
+   "line": "21",
+   "word": "mənəm. (end)",
+   "target": 1062,
+   "anchor": 1062,
+   "actual": 1062,
+   "delta": 0
+  },
+  {
+   "beat": "crane",
+   "line": "—",
+   "word": "max/min",
+   "target": 1080,
+   "anchor": null,
+   "actual": 1080,
+   "delta": null
+  },
+  {
+   "beat": "ripple",
+   "line": "—",
+   "word": "after crane",
+   "target": 1086,
+   "anchor": null,
+   "actual": 1086,
+   "delta": null
+  },
+  {
+   "beat": "logo",
+   "line": "—",
+   "word": "after crane",
+   "target": 1110,
+   "anchor": null,
+   "actual": 1110,
+   "delta": null
+  },
+  {
+   "beat": "endLine",
+   "line": "—",
+   "word": "after crane",
+   "target": 1110,
+   "anchor": null,
+   "actual": 1110,
+   "delta": null
+  },
+  {
+   "beat": "cta",
+   "line": "—",
+   "word": "after crane",
+   "target": 1125,
+   "anchor": null,
+   "actual": 1125,
+   "delta": null
+  },
+  {
+   "beat": "resolve",
+   "line": "—",
+   "word": "fixed",
+   "target": 1170,
+   "anchor": null,
+   "actual": 1170,
+   "delta": null
+  }
+ ],
+ "ok3": true,
+ "ok4": true,
+ "minCaption": 60
+}

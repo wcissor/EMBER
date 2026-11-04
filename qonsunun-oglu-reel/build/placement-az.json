@@ -1,0 +1,606 @@
+{
+ "lang": "az",
+ "lines": [
+  {
+   "id": "01",
+   "voice": "ana",
+   "text": "Qonşunun oğlu YENƏ könüllü olub!",
+   "start": 0.1,
+   "end": 2.3,
+   "words": [
+    {
+     "word": "Qonşunun",
+     "start": 0.1,
+     "end": 0.6
+    },
+    {
+     "word": "oğlu",
+     "start": 0.65,
+     "end": 0.983
+    },
+    {
+     "word": "YENƏ",
+     "start": 1.033,
+     "end": 1.367
+    },
+    {
+     "word": "könüllü",
+     "start": 1.417,
+     "end": 1.917
+    },
+    {
+     "word": "olub!",
+     "start": 1.967,
+     "end": 2.3
+    }
+   ],
+   "source": "placeholder",
+   "src": null,
+   "tempo": 1.0,
+   "shiftFrames": 0
+  },
+  {
+   "id": "02",
+   "voice": "ana",
+   "text": "Ağac əkir.",
+   "start": 3.3,
+   "end": 4.1,
+   "words": [
+    {
+     "word": "Ağac",
+     "start": 3.3,
+     "end": 3.675
+    },
+    {
+     "word": "əkir.",
+     "start": 3.725,
+     "end": 4.1
+    }
+   ],
+   "source": "placeholder",
+   "src": null,
+   "tempo": 1.0,
+   "shiftFrames": 0
+  },
+  {
+   "id": "03",
+   "voice": "ana",
+   "text": "Uşaqlara dərs keçir.",
+   "start": 4.3,
+   "end": 5.5,
+   "words": [
+    {
+     "word": "Uşaqlara",
+     "start": 4.3,
+     "end": 4.929
+    },
+    {
+     "word": "dərs",
+     "start": 4.979,
+     "end": 5.136
+    },
+    {
+     "word": "keçir.",
+     "start": 5.186,
+     "end": 5.5
+    }
+   ],
+   "source": "placeholder",
+   "src": null,
+   "tempo": 1.0,
+   "shiftFrames": 0
+  },
+  {
+   "id": "04",
+   "voice": "ana",
+   "text": "Marafonda su paylayır.",
+   "start": 5.7,
+   "end": 7.0,
+   "words": [
+    {
+     "word": "Marafonda",
+     "start": 5.7,
+     "end": 6.386
+    },
+    {
+     "word": "su",
+     "start": 6.436,
+     "end": 6.607
+    },
+    {
+     "word": "paylayır.",
+     "start": 6.657,
+     "end": 7.0
+    }
+   ],
+   "source": "placeholder",
+   "src": null,
+   "tempo": 1.0,
+   "shiftFrames": 0
+  },
+  {
+   "id": "05",
+   "voice": "ana",
+   "text": "İngiliscə tərcümə edir!",
+   "start": 7.2,
+   "end": 8.7,
+   "words": [
+    {
+     "word": "İngiliscə",
+     "start": 7.2,
+     "end": 7.822
+    },
+    {
+     "word": "tərcümə",
+     "start": 7.872,
+     "end": 8.339
+    },
+    {
+     "word": "edir!",
+     "start": 8.389,
+     "end": 8.7
+    }
+   ],
+   "source": "placeholder",
+   "src": null,
+   "tempo": 1.0,
+   "shiftFrames": 0
+  },
+  {
+   "id": "06",
+   "voice": "ana",
+   "text": "Cəmi on altı yaşı var!",
+   "start": 8.85,
+   "end": 9.9,
+   "words": [
+    {
+     "word": "Cəmi",
+     "start": 8.85,
+     "end": 9.062
+    },
+    {
+     "word": "on",
+     "start": 9.113,
+     "end": 9.219
+    },
+    {
+     "word": "altı",
+     "start": 9.269,
+     "end": 9.481
+    },
+    {
+     "word": "yaşı",
+     "start": 9.531,
+     "end": 9.744
+    },
+    {
+     "word": "var!",
+     "start": 9.794,
+     "end": 9.9
+    }
+   ],
+   "source": "placeholder",
+   "src": null,
+   "tempo": 1.0,
+   "shiftFrames": 0
+  },
+  {
+   "id": "07",
+   "voice": "ana",
+   "text": "Bəs sən?",
+   "start": 10.3,
+   "end": 10.9,
+   "words": [
+    {
+     "word": "Bəs",
+     "start": 10.3,
+     "end": 10.575
+    },
+    {
+     "word": "sən?",
+     "start": 10.625,
+     "end": 10.9
+    }
+   ],
+   "source": "placeholder",
+   "src": null,
+   "tempo": 1.0,
+   "shiftFrames": 0
+  },
+  {
+   "id": "08",
+   "voice": "men",
+   "text": "Mən?.. Reels-ə baxıram.",
+   "start": 11.3,
+   "end": 13.132,
+   "words": [
+    {
+     "word": "Mən?..",
+     "start": 11.3,
+     "end": 11.87
+    },
+    {
+     "word": "Reels-ə",
+     "start": 12.41,
+     "end": 12.72
+    },
+    {
+     "word": "baxıram.",
+     "start": 12.72,
+     "end": 13.132
+    }
+   ],
+   "source": "take",
+   "src": {
+    "file": "public/audio/takes/az/men.mp3",
+    "start": 0.05,
+    "end": 1.882
+   },
+   "tempo": 1.0,
+   "shiftFrames": 0
+  },
+  {
+   "id": "09",
+   "voice": "ana",
+   "text": "Modemi… söndürürəm.",
+   "start": 13.932,
+   "end": 15.132,
+   "words": [
+    {
+     "word": "Modemi…",
+     "start": 13.932,
+     "end": 14.425
+    },
+    {
+     "word": "söndürürəm.",
+     "start": 14.475,
+     "end": 15.132
+    }
+   ],
+   "source": "placeholder",
+   "src": null,
+   "tempo": 1.0,
+   "shiftFrames": 7
+  },
+  {
+   "id": "10",
+   "voice": "men",
+   "text": "Yox-yox-yox! Axtarıram!",
+   "start": 15.252,
+   "end": 16.642,
+   "words": [
+    {
+     "word": "Yox-",
+     "start": 15.252,
+     "end": 15.472
+    },
+    {
+     "word": "yox-",
+     "start": 15.472,
+     "end": 15.602
+    },
+    {
+     "word": "yox!",
+     "start": 15.602,
+     "end": 15.962
+    },
+    {
+     "word": "Axtarıram!",
+     "start": 15.962,
+     "end": 16.642
+    }
+   ],
+   "source": "take",
+   "src": {
+    "file": "public/audio/takes/az/men.mp3",
+    "start": 2.16,
+    "end": 3.55
+   },
+   "tempo": 1.0,
+   "shiftFrames": 8
+  },
+  {
+   "id": "11",
+   "voice": "men",
+   "text": "Onun sirri nədir?",
+   "start": 17.242,
+   "end": 18.087,
+   "words": [
+    {
+     "word": "Onun",
+     "start": 17.242,
+     "end": 17.418
+    },
+    {
+     "word": "sirri",
+     "start": 17.418,
+     "end": 17.808
+    },
+    {
+     "word": "nədir?",
+     "start": 17.808,
+     "end": 18.087
+    }
+   ],
+   "source": "take",
+   "src": {
+    "file": "public/audio/takes/az/men.mp3",
+    "start": 4.064,
+    "end": 4.909
+   },
+   "tempo": 1.0,
+   "shiftFrames": 7
+  },
+  {
+   "id": "12",
+   "voice": "qo",
+   "text": "Salam! Kömək lazımdır?",
+   "start": 19.4,
+   "end": 20.8,
+   "words": [
+    {
+     "word": "Salam!",
+     "start": 19.4,
+     "end": 19.771
+    },
+    {
+     "word": "Kömək",
+     "start": 19.821,
+     "end": 20.193
+    },
+    {
+     "word": "lazımdır?",
+     "start": 20.243,
+     "end": 20.8
+    }
+   ],
+   "source": "placeholder",
+   "src": null,
+   "tempo": 1.0,
+   "shiftFrames": 0
+  },
+  {
+   "id": "13",
+   "voice": "men",
+   "text": "Sirrin nədir?!",
+   "start": 21,
+   "end": 21.98,
+   "words": [
+    {
+     "word": "Sirrin",
+     "start": 21.0,
+     "end": 21.496
+    },
+    {
+     "word": "nədir?!",
+     "start": 21.496,
+     "end": 21.98
+    }
+   ],
+   "source": "take",
+   "src": {
+    "file": "public/audio/takes/az/men.mp3",
+    "start": 5.285,
+    "end": 6.303
+   },
+   "tempo": 1.0388,
+   "shiftFrames": 0
+  },
+  {
+   "id": "14",
+   "voice": "qo",
+   "text": "Sirr yoxdur.",
+   "start": 22.1,
+   "end": 22.9,
+   "words": [
+    {
+     "word": "Sirr",
+     "start": 22.1,
+     "end": 22.35
+    },
+    {
+     "word": "yoxdur.",
+     "start": 22.4,
+     "end": 22.9
+    }
+   ],
+   "source": "placeholder",
+   "src": null,
+   "tempo": 1.0,
+   "shiftFrames": 0
+  },
+  {
+   "id": "15",
+   "voice": "qo",
+   "text": "VolunTrack.",
+   "start": 23.3,
+   "end": 24.2,
+   "words": [
+    {
+     "word": "VolunTrack.",
+     "start": 23.3,
+     "end": 24.2
+    }
+   ],
+   "source": "placeholder",
+   "src": null,
+   "tempo": 1.0,
+   "shiftFrames": 0
+  },
+  {
+   "id": "16",
+   "voice": "men",
+   "text": "Ağac əkdim.",
+   "start": 28.1,
+   "end": 28.78,
+   "words": [
+    {
+     "word": "Ağac",
+     "start": 28.1,
+     "end": 28.402
+    },
+    {
+     "word": "əkdim.",
+     "start": 28.402,
+     "end": 28.78
+    }
+   ],
+   "source": "take",
+   "src": {
+    "file": "public/audio/takes/az/men.mp3",
+    "start": 6.768,
+    "end": 7.448
+   },
+   "tempo": 1.0,
+   "shiftFrames": 0
+  },
+  {
+   "id": "17",
+   "voice": "men",
+   "text": "Dərs keçdim.",
+   "start": 29.1,
+   "end": 29.829,
+   "words": [
+    {
+     "word": "Dərs",
+     "start": 29.1,
+     "end": 29.393
+    },
+    {
+     "word": "keçdim.",
+     "start": 29.393,
+     "end": 29.829
+    }
+   ],
+   "source": "take",
+   "src": {
+    "file": "public/audio/takes/az/men.mp3",
+    "start": 7.707,
+    "end": 8.436
+   },
+   "tempo": 1.0,
+   "shiftFrames": 0
+  },
+  {
+   "id": "18",
+   "voice": "men",
+   "text": "Su payladım.",
+   "start": 30,
+   "end": 30.775,
+   "words": [
+    {
+     "word": "Su",
+     "start": 30.0,
+     "end": 30.192
+    },
+    {
+     "word": "payladım.",
+     "start": 30.192,
+     "end": 30.775
+    }
+   ],
+   "source": "take",
+   "src": {
+    "file": "public/audio/takes/az/men.mp3",
+    "start": 8.658,
+    "end": 9.433
+   },
+   "tempo": 1.0,
+   "shiftFrames": 0
+  },
+  {
+   "id": "19",
+   "voice": "qq",
+   "text": "Qonşunun oğluna bax!",
+   "start": 32.1,
+   "end": 33.2,
+   "words": [
+    {
+     "word": "Qonşunun",
+     "start": 32.1,
+     "end": 32.529
+    },
+    {
+     "word": "oğluna",
+     "start": 32.579,
+     "end": 33.007
+    },
+    {
+     "word": "bax!",
+     "start": 33.057,
+     "end": 33.2
+    }
+   ],
+   "source": "placeholder",
+   "src": null,
+   "tempo": 1.0,
+   "shiftFrames": 0
+  },
+  {
+   "id": "20",
+   "voice": "ana",
+   "text": "O MƏNİM oğlumdur!",
+   "start": 33.32,
+   "end": 34.32,
+   "words": [
+    {
+     "word": "O",
+     "start": 33.32,
+     "end": 33.47
+    },
+    {
+     "word": "MƏNİM",
+     "start": 33.52,
+     "end": 33.82
+    },
+    {
+     "word": "oğlumdur!",
+     "start": 33.87,
+     "end": 34.32
+    }
+   ],
+   "source": "placeholder",
+   "src": null,
+   "tempo": 1.0,
+   "shiftFrames": 1
+  },
+  {
+   "id": "21",
+   "voice": "men",
+   "text": "İndi qonşunun oğlu mənəm.",
+   "start": 34.44,
+   "end": 35.887,
+   "words": [
+    {
+     "word": "İndi",
+     "start": 34.44,
+     "end": 34.753
+    },
+    {
+     "word": "qonşunun",
+     "start": 34.753,
+     "end": 35.273
+    },
+    {
+     "word": "oğlu",
+     "start": 35.273,
+     "end": 35.533
+    },
+    {
+     "word": "mənəm.",
+     "start": 35.533,
+     "end": 35.887
+    }
+   ],
+   "source": "take",
+   "src": {
+    "file": "public/audio/takes/az/men.mp3",
+    "start": 9.667,
+    "end": 11.114
+   },
+   "tempo": 1.0,
+   "shiftFrames": 1
+  }
+ ],
+ "violations": []
+}

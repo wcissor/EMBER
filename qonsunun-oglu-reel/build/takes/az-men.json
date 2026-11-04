@@ -1,0 +1,175 @@
+{
+ "file": "public/audio/takes/az/men.mp3",
+ "lang": "az",
+ "voice": "men",
+ "duration": 11.311,
+ "aligner": "pocketsphinx-local",
+ "lines": [
+  {
+   "id": "08",
+   "start": 0.05,
+   "end": 1.882,
+   "words": [
+    {
+     "word": "Mən?..",
+     "start": 0.05,
+     "end": 0.62
+    },
+    {
+     "word": "Reels-ə",
+     "start": 1.16,
+     "end": 1.47
+    },
+    {
+     "word": "baxıram.",
+     "start": 1.47,
+     "end": 1.882
+    }
+   ]
+  },
+  {
+   "id": "10",
+   "start": 2.16,
+   "end": 3.55,
+   "words": [
+    {
+     "word": "Yox-",
+     "start": 2.16,
+     "end": 2.38
+    },
+    {
+     "word": "yox-",
+     "start": 2.38,
+     "end": 2.51
+    },
+    {
+     "word": "yox!",
+     "start": 2.51,
+     "end": 2.87
+    },
+    {
+     "word": "Axtarıram!",
+     "start": 2.87,
+     "end": 3.55
+    }
+   ]
+  },
+  {
+   "id": "11",
+   "start": 4.064,
+   "end": 4.909,
+   "words": [
+    {
+     "word": "Onun",
+     "start": 4.064,
+     "end": 4.24
+    },
+    {
+     "word": "sirri",
+     "start": 4.24,
+     "end": 4.63
+    },
+    {
+     "word": "nədir?",
+     "start": 4.63,
+     "end": 4.909
+    }
+   ]
+  },
+  {
+   "id": "13",
+   "start": 5.285,
+   "end": 6.303,
+   "words": [
+    {
+     "word": "Sirrin",
+     "start": 5.285,
+     "end": 5.8
+    },
+    {
+     "word": "nədir?!",
+     "start": 5.8,
+     "end": 6.303
+    }
+   ]
+  },
+  {
+   "id": "16",
+   "start": 6.768,
+   "end": 7.448,
+   "words": [
+    {
+     "word": "Ağac",
+     "start": 6.768,
+     "end": 7.07
+    },
+    {
+     "word": "əkdim.",
+     "start": 7.07,
+     "end": 7.448
+    }
+   ]
+  },
+  {
+   "id": "17",
+   "start": 7.707,
+   "end": 8.436,
+   "words": [
+    {
+     "word": "Dərs",
+     "start": 7.707,
+     "end": 8.0
+    },
+    {
+     "word": "keçdim.",
+     "start": 8.0,
+     "end": 8.436
+    }
+   ]
+  },
+  {
+   "id": "18",
+   "start": 8.658,
+   "end": 9.433,
+   "words": [
+    {
+     "word": "Su",
+     "start": 8.658,
+     "end": 8.85
+    },
+    {
+     "word": "payladım.",
+     "start": 8.85,
+     "end": 9.433
+    }
+   ]
+  },
+  {
+   "id": "21",
+   "start": 9.667,
+   "end": 11.114,
+   "words": [
+    {
+     "word": "İndi",
+     "start": 9.667,
+     "end": 9.98
+    },
+    {
+     "word": "qonşunun",
+     "start": 9.98,
+     "end": 10.5
+    },
+    {
+     "word": "oğlu",
+     "start": 10.5,
+     "end": 10.76
+    },
+    {
+     "word": "mənəm.",
+     "start": 10.76,
+     "end": 11.114
+    }
+   ]
+  }
+ ]
+}

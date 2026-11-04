@@ -1,0 +1,22 @@
+{
+ "grain": true,
+ "concrete": true,
+ "mix": {
+  "az": true,
+  "en": true
+ },
+ "stems": {
+  "az": {
+   "ana": true,
+   "men": true,
+   "qo": true,
+   "qq": true
+  },
+  "en": {
+   "ana": true,
+   "men": true,
+   "qo": true,
+   "qq": true
+  }
+ }
+}

@@ -1,0 +1,1069 @@
+{
+ "lang": "en",
+ "textRows": [
+  {
+   "id": "title",
+   "x": 73.75,
+   "y": 380,
+   "w": 932.5,
+   "h": 130,
+   "ok": true
+  },
+  {
+   "id": "titleSub",
+   "x": 371.7,
+   "y": 528,
+   "w": 336.6,
+   "h": 40,
+   "ok": true
+  },
+  {
+   "id": "endLine",
+   "x": 130.05,
+   "y": 980,
+   "w": 819.9,
+   "h": 100,
+   "ok": true
+  },
+  {
+   "id": "url",
+   "x": 351.95,
+   "y": 1095,
+   "w": 376.1,
+   "h": 55,
+   "ok": true
+  },
+  {
+   "id": "cta (+ arrow)",
+   "x": 244.39999999999998,
+   "y": 1170,
+   "w": 591.2,
+   "h": 70,
+   "ok": true
+  },
+  {
+   "id": "L01 tag",
+   "x": 497.55,
+   "y": 1072,
+   "w": 84.9,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L01 row 1",
+   "x": 257.4,
+   "y": 1104,
+   "w": 565.2,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L01 row 2",
+   "x": 246.55,
+   "y": 1173,
+   "w": 586.9,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L02 tag",
+   "x": 497.55,
+   "y": 1072,
+   "w": 84.9,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L02 row 1",
+   "x": 308.8,
+   "y": 1104,
+   "w": 462.4,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L03 tag",
+   "x": 497.55,
+   "y": 1072,
+   "w": 84.9,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L03 row 1",
+   "x": 296.95,
+   "y": 1104,
+   "w": 486.1,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L04 tag",
+   "x": 497.55,
+   "y": 1072,
+   "w": 84.9,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L04 row 1",
+   "x": 255.85000000000002,
+   "y": 1104,
+   "w": 568.3,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L04 row 2",
+   "x": 298.65,
+   "y": 1173,
+   "w": 482.7,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L05 tag",
+   "x": 497.55,
+   "y": 1072,
+   "w": 84.9,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L05 row 1",
+   "x": 220.45,
+   "y": 1104,
+   "w": 639.1,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L06 tag",
+   "x": 497.55,
+   "y": 1072,
+   "w": 84.9,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L06 row 1",
+   "x": 214.89999999999998,
+   "y": 1104,
+   "w": 650.2,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L07 tag",
+   "x": 497.55,
+   "y": 1072,
+   "w": 84.9,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L07 row 1",
+   "x": 401,
+   "y": 1104,
+   "w": 278,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L08 tag",
+   "x": 514.7,
+   "y": 1072,
+   "w": 50.6,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L08 row 1",
+   "x": 477.4,
+   "y": 1104,
+   "w": 125.2,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L08 row 2",
+   "x": 314.15,
+   "y": 1173,
+   "w": 451.7,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L09 tag",
+   "x": 497.55,
+   "y": 1072,
+   "w": 84.9,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L09 row 1",
+   "x": 464.8,
+   "y": 1104,
+   "w": 150.4,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L09 row 2",
+   "x": 165.39999999999998,
+   "y": 1173,
+   "w": 749.2,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L10 tag",
+   "x": 514.7,
+   "y": 1072,
+   "w": 50.6,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L10 row 1",
+   "x": 372.15,
+   "y": 1104,
+   "w": 335.7,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L10 row 2",
+   "x": 369.55,
+   "y": 1173,
+   "w": 340.9,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L11 tag",
+   "x": 514.7,
+   "y": 1072,
+   "w": 50.6,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L11 row 1",
+   "x": 267.65,
+   "y": 1104,
+   "w": 544.7,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L12 tag",
+   "x": 352.75,
+   "y": 1072,
+   "w": 374.5,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L12 row 1",
+   "x": 327.2,
+   "y": 1104,
+   "w": 425.6,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L13 tag",
+   "x": 514.7,
+   "y": 1072,
+   "w": 50.6,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L13 row 1",
+   "x": 233.8,
+   "y": 1104,
+   "w": 612.4,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L14 tag",
+   "x": 352.75,
+   "y": 1072,
+   "w": 374.5,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L14 row 1",
+   "x": 272.5,
+   "y": 1104,
+   "w": 535,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L15 tag",
+   "x": 352.75,
+   "y": 1072,
+   "w": 374.5,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L15 row 1",
+   "x": 359,
+   "y": 1104,
+   "w": 362,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L16 tag",
+   "x": 514.7,
+   "y": 1072,
+   "w": 50.6,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L16 row 1",
+   "x": 328,
+   "y": 1104,
+   "w": 424,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L17 tag",
+   "x": 514.7,
+   "y": 1072,
+   "w": 50.6,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L17 row 1",
+   "x": 316.8,
+   "y": 1104,
+   "w": 446.4,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L18 tag",
+   "x": 514.7,
+   "y": 1072,
+   "w": 50.6,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L18 row 1",
+   "x": 269.5,
+   "y": 1104,
+   "w": 541,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L19 tag",
+   "x": 451.3,
+   "y": 1072,
+   "w": 177.4,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L19 row 1",
+   "x": 378.7,
+   "y": 1104,
+   "w": 322.6,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L19 row 2",
+   "x": 310.95,
+   "y": 1173,
+   "w": 458.1,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L20 tag",
+   "x": 497.55,
+   "y": 1072,
+   "w": 84.9,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L20 row 1",
+   "x": 318.7,
+   "y": 1104,
+   "w": 442.6,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L21 tag",
+   "x": 514.7,
+   "y": 1072,
+   "w": 50.6,
+   "h": 28,
+   "ok": true
+  },
+  {
+   "id": "L21 row 1",
+   "x": 366.35,
+   "y": 1104,
+   "w": 347.3,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "L21 row 2",
+   "x": 311.05,
+   "y": 1173,
+   "w": 457.9,
+   "h": 69,
+   "ok": true
+  },
+  {
+   "id": "UI age field",
+   "x": 80,
+   "y": 330,
+   "w": 920,
+   "h": 200,
+   "ok": true
+  },
+  {
+   "id": "UI card 1 (Eco-volunteer: 275 px title)",
+   "x": 80,
+   "y": 560,
+   "w": 920,
+   "h": 176,
+   "ok": true
+  },
+  {
+   "id": "UI card 2 (Translation volunteer: 413 px title)",
+   "x": 80,
+   "y": 760,
+   "w": 920,
+   "h": 176,
+   "ok": true
+  },
+  {
+   "id": "UI card 3 (Science project volunteer: 496 px title)",
+   "x": 80,
+   "y": 960,
+   "w": 920,
+   "h": 176,
+   "ok": true
+  },
+  {
+   "id": "window D subtitle \"Hello → Salam\" @f264",
+   "x": 360.7642898550721,
+   "y": 850.2592463768115,
+   "w": 358.4714202898558,
+   "h": 60.42803942029013,
+   "ok": true
+  }
+ ],
+ "zoneRows": [
+  {
+   "what": "the son turns to camera",
+   "place": "son",
+   "frame": 50,
+   "y0": 578,
+   "y1": 1014,
+   "ok": true
+  },
+  {
+   "what": "window A: the sapling",
+   "place": "winA",
+   "frame": 109,
+   "y0": 448,
+   "y1": 881,
+   "ok": true
+  },
+  {
+   "what": "window B: hands up",
+   "place": "winB",
+   "frame": 147,
+   "y0": 465,
+   "y1": 902,
+   "ok": true
+  },
+  {
+   "what": "window C: the cup",
+   "place": "winC",
+   "frame": 201,
+   "y0": 478,
+   "y1": 918,
+   "ok": true
+  },
+  {
+   "what": "window D: Hello → Salam",
+   "place": "winD",
+   "frame": 236,
+   "y0": 485,
+   "y1": 929,
+   "ok": true
+  },
+  {
+   "what": "the kid upside down + Ana",
+   "place": "kidRoom",
+   "frame": 316,
+   "y0": 340,
+   "y1": 1017,
+   "ok": true
+  },
+  {
+   "what": "eyes slide (L08)",
+   "place": "kidRoom",
+   "frame": 339,
+   "y0": 337,
+   "y1": 1017,
+   "ok": true
+  },
+  {
+   "what": "the silence: Ana eyes the modem",
+   "place": "kidRoom",
+   "frame": 398,
+   "y0": 330,
+   "y1": 1017,
+   "ok": true
+  },
+  {
+   "what": "hand to the plug",
+   "place": "kidRoom",
+   "frame": 431,
+   "y0": 325,
+   "y1": 1017,
+   "ok": true
+  },
+  {
+   "what": "the flip",
+   "place": "kidRoom",
+   "frame": 461,
+   "y0": 321,
+   "y1": 1017,
+   "ok": true
+  },
+  {
+   "what": "the door slam",
+   "place": "kidRoom",
+   "frame": 500,
+   "y0": 316,
+   "y1": 1017,
+   "ok": true
+  },
+  {
+   "what": "deed 1",
+   "place": "deed1",
+   "frame": 849,
+   "y0": 451,
+   "y1": 884,
+   "ok": true
+  },
+  {
+   "what": "deed 2",
+   "place": "deed2",
+   "frame": 879,
+   "y0": 443,
+   "y1": 881,
+   "ok": true
+  },
+  {
+   "what": "deed 3",
+   "place": "deed3",
+   "frame": 906,
+   "y0": 435,
+   "y1": 877,
+   "ok": true
+  },
+  {
+   "what": "bedroom turns blue",
+   "place": "kidRoom",
+   "frame": 934,
+   "y0": 429,
+   "y1": 808,
+   "ok": true
+  },
+  {
+   "what": "Qonşu points (L19)",
+   "place": "qonsuBalcony",
+   "frame": 981,
+   "y0": 407,
+   "y1": 961,
+   "ok": true
+  },
+  {
+   "what": "Ana bursts out (L20)",
+   "place": "anaBalcony",
+   "frame": 1008,
+   "y0": 532,
+   "y1": 961,
+   "ok": true
+  },
+  {
+   "what": "the smug squint (L21)",
+   "place": "kidRoom",
+   "frame": 1063,
+   "y0": 557,
+   "y1": 877,
+   "ok": true
+  }
+ ],
+ "syncRows": [
+  {
+   "beat": "whipStart",
+   "line": "01",
+   "word": "The (start)",
+   "target": 18,
+   "anchor": 18,
+   "actual": 18,
+   "delta": 0
+  },
+  {
+   "beat": "whipLand",
+   "line": "—",
+   "word": "after whipStart",
+   "target": 33,
+   "anchor": null,
+   "actual": 33,
+   "delta": null
+  },
+  {
+   "beat": "sonTurn",
+   "line": "—",
+   "word": "after whipLand",
+   "target": 50,
+   "anchor": null,
+   "actual": 50,
+   "delta": null
+  },
+  {
+   "beat": "title",
+   "line": "—",
+   "word": "max/min",
+   "target": 70,
+   "anchor": null,
+   "actual": 70,
+   "delta": null
+  },
+  {
+   "beat": "winA",
+   "line": "02",
+   "word": "He (start)",
+   "target": 99,
+   "anchor": 99,
+   "actual": 99,
+   "delta": 0
+  },
+  {
+   "beat": "winB",
+   "line": "03",
+   "word": "He (start)",
+   "target": 129,
+   "anchor": 129,
+   "actual": 129,
+   "delta": 0
+  },
+  {
+   "beat": "winC",
+   "line": "04",
+   "word": "He (start)",
+   "target": 171,
+   "anchor": 171,
+   "actual": 171,
+   "delta": 0
+  },
+  {
+   "beat": "winD",
+   "line": "05",
+   "word": "He (start)",
+   "target": 216,
+   "anchor": 216,
+   "actual": 216,
+   "delta": 0
+  },
+  {
+   "beat": "allFour",
+   "line": "06",
+   "word": "And (start)",
+   "target": 266,
+   "anchor": 266,
+   "actual": 266,
+   "delta": 0
+  },
+  {
+   "beat": "rays2",
+   "line": "—",
+   "word": "after allFour",
+   "target": 270,
+   "anchor": null,
+   "actual": 270,
+   "delta": null
+  },
+  {
+   "beat": "whipBack",
+   "line": "06",
+   "word": "sixteen! (end)",
+   "target": 300,
+   "anchor": 303,
+   "actual": 303,
+   "delta": 0
+  },
+  {
+   "beat": "anaDoor",
+   "line": "—",
+   "word": "after whipBack",
+   "target": 305,
+   "anchor": null,
+   "actual": 308,
+   "delta": null
+  },
+  {
+   "beat": "eyesSlide",
+   "line": "08",
+   "word": "Me?",
+   "target": 339,
+   "anchor": 339,
+   "actual": 339,
+   "delta": 0
+  },
+  {
+   "beat": "silence",
+   "line": "08",
+   "word": "reels. (end)",
+   "target": 390,
+   "anchor": 390,
+   "actual": 390,
+   "delta": 0
+  },
+  {
+   "beat": "plugReach",
+   "line": "09",
+   "word": "I’m… (start)",
+   "target": 411,
+   "anchor": 411,
+   "actual": 411,
+   "delta": 0
+  },
+  {
+   "beat": "flip",
+   "line": "10",
+   "word": "No- (start)",
+   "target": 452,
+   "anchor": 453,
+   "actual": 453,
+   "delta": 0
+  },
+  {
+   "beat": "bolt",
+   "line": "10",
+   "word": "looking! (end)",
+   "target": 486,
+   "anchor": 487,
+   "actual": 487,
+   "delta": 0
+  },
+  {
+   "beat": "push",
+   "line": "—",
+   "word": "max/min",
+   "target": 504,
+   "anchor": null,
+   "actual": 504,
+   "delta": null
+  },
+  {
+   "beat": "doorSlam",
+   "line": "—",
+   "word": "after push",
+   "target": 500,
+   "anchor": null,
+   "actual": 500,
+   "delta": null
+  },
+  {
+   "beat": "tiptoe",
+   "line": "11",
+   "word": "What’s (start)",
+   "target": 510,
+   "anchor": 510,
+   "actual": 510,
+   "delta": 0
+  },
+  {
+   "beat": "catStep",
+   "line": "11",
+   "word": "secret? (end)",
+   "target": 552,
+   "anchor": 552,
+   "actual": 552,
+   "delta": 0
+  },
+  {
+   "beat": "tumbleLand",
+   "line": "—",
+   "word": "after catStep",
+   "target": 572,
+   "anchor": null,
+   "actual": 572,
+   "delta": null
+  },
+  {
+   "beat": "offerHand",
+   "line": "12",
+   "word": "Hi! (start)",
+   "target": 582,
+   "anchor": 582,
+   "actual": 582,
+   "delta": 0
+  },
+  {
+   "beat": "grab",
+   "line": "13",
+   "word": "What’s (start)",
+   "target": 630,
+   "anchor": 630,
+   "actual": 630,
+   "delta": 0
+  },
+  {
+   "beat": "smile",
+   "line": "14",
+   "word": "There’s (start)",
+   "target": 663,
+   "anchor": 663,
+   "actual": 663,
+   "delta": 0
+  },
+  {
+   "beat": "phoneTurn",
+   "line": "14",
+   "word": "secret. (end)",
+   "target": 690,
+   "anchor": 690,
+   "actual": 690,
+   "delta": 0
+  },
+  {
+   "beat": "vtLit",
+   "line": "15",
+   "word": "VolunTrack. (start)",
+   "target": 699,
+   "anchor": 699,
+   "actual": 699,
+   "delta": 0
+  },
+  {
+   "beat": "flood",
+   "line": "15",
+   "word": "VolunTrack. (end)",
+   "target": 726,
+   "anchor": 726,
+   "actual": 726,
+   "delta": 0
+  },
+  {
+   "beat": "uiIn",
+   "line": "—",
+   "word": "after flood",
+   "target": 738,
+   "anchor": null,
+   "actual": 737,
+   "delta": null
+  },
+  {
+   "beat": "type1",
+   "line": "—",
+   "word": "after uiIn",
+   "target": 765,
+   "anchor": null,
+   "actual": 764,
+   "delta": null
+  },
+  {
+   "beat": "type6",
+   "line": "—",
+   "word": "after type1",
+   "target": 777,
+   "anchor": null,
+   "actual": 776,
+   "delta": null
+  },
+  {
+   "beat": "cards",
+   "line": "—",
+   "word": "after uiIn",
+   "target": 792,
+   "anchor": null,
+   "actual": 791,
+   "delta": null
+  },
+  {
+   "beat": "tap",
+   "line": "—",
+   "word": "after uiIn",
+   "target": 819,
+   "anchor": null,
+   "actual": 818,
+   "delta": null
+  },
+  {
+   "beat": "cardLand",
+   "line": "—",
+   "word": "after tap",
+   "target": 840,
+   "anchor": null,
+   "actual": 839,
+   "delta": null
+  },
+  {
+   "beat": "deed1",
+   "line": "16",
+   "word": "Planted (start)",
+   "target": 843,
+   "anchor": 843,
+   "actual": 843,
+   "delta": 0
+  },
+  {
+   "beat": "deed2",
+   "line": "17",
+   "word": "Taught (start)",
+   "target": 873,
+   "anchor": 873,
+   "actual": 873,
+   "delta": 0
+  },
+  {
+   "beat": "deed3",
+   "line": "18",
+   "word": "Handed (start)",
+   "target": 900,
+   "anchor": 900,
+   "actual": 900,
+   "delta": 0
+  },
+  {
+   "beat": "bedroomBlue",
+   "line": "18",
+   "word": "water. (end)",
+   "target": 930,
+   "anchor": 930,
+   "actual": 930,
+   "delta": 0
+  },
+  {
+   "beat": "wide",
+   "line": "19",
+   "word": "Look (start)",
+   "target": 960,
+   "anchor": 960,
+   "actual": 960,
+   "delta": 0
+  },
+  {
+   "beat": "qqPoint",
+   "line": "19",
+   "word": "Look (start)",
+   "target": 963,
+   "anchor": 963,
+   "actual": 963,
+   "delta": 0
+  },
+  {
+   "beat": "anaBurst",
+   "line": "20",
+   "word": "That’s (start)",
+   "target": 999,
+   "anchor": 1000,
+   "actual": 1000,
+   "delta": 0
+  },
+  {
+   "beat": "kidStep",
+   "line": "21",
+   "word": "Now (start)",
+   "target": 1032,
+   "anchor": 1033,
+   "actual": 1033,
+   "delta": 0
+  },
+  {
+   "beat": "kidRays",
+   "line": "21",
+   "word": "son. (end)",
+   "target": 1062,
+   "anchor": 1063,
+   "actual": 1063,
+   "delta": 0
+  },
+  {
+   "beat": "crane",
+   "line": "—",
+   "word": "max/min",
+   "target": 1080,
+   "anchor": null,
+   "actual": 1081,
+   "delta": null
+  },
+  {
+   "beat": "ripple",
+   "line": "—",
+   "word": "after crane",
+   "target": 1086,
+   "anchor": null,
+   "actual": 1087,
+   "delta": null
+  },
+  {
+   "beat": "logo",
+   "line": "—",
+   "word": "after crane",
+   "target": 1110,
+   "anchor": null,
+   "actual": 1111,
+   "delta": null
+  },
+  {
+   "beat": "endLine",
+   "line": "—",
+   "word": "after crane",
+   "target": 1110,
+   "anchor": null,
+   "actual": 1111,
+   "delta": null
+  },
+  {
+   "beat": "cta",
+   "line": "—",
+   "word": "after crane",
+   "target": 1125,
+   "anchor": null,
+   "actual": 1126,
+   "delta": null
+  },
+  {
+   "beat": "resolve",
+   "line": "—",
+   "word": "fixed",
+   "target": 1170,
+   "anchor": null,
+   "actual": 1170,
+   "delta": null
+  }
+ ],
+ "ok3": true,
+ "ok4": true,
+ "minCaption": 60
+}

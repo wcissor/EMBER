@@ -1,0 +1,83 @@
+1
+00:00:00,000 --> 00:00:02,500
+MOM: The neighbor’s son volunteered AGAIN!
+
+2
+00:00:03,167 --> 00:00:04,166
+MOM: He plants trees.
+
+3
+00:00:04,167 --> 00:00:05,566
+MOM: He teaches kids.
+
+4
+00:00:05,567 --> 00:00:07,066
+MOM: He hands out water at the marathon.
+
+5
+00:00:07,067 --> 00:00:08,716
+MOM: He translates English!
+
+6
+00:00:08,717 --> 00:00:10,100
+MOM: And he’s only sixteen!
+
+7
+00:00:10,167 --> 00:00:11,100
+MOM: And you?
+
+8
+00:00:11,167 --> 00:00:13,100
+ME: Me? …I watch reels.
+
+9
+00:00:13,567 --> 00:00:14,886
+MOM: I’m… switching off the modem.
+
+10
+00:00:14,887 --> 00:00:16,420
+ME: No-no-no! I’m looking!
+
+11
+00:00:16,867 --> 00:00:18,400
+ME: What’s his secret?
+
+12
+00:00:19,267 --> 00:00:20,866
+THE NEIGHBOR’S SON: Hi! Need help?
+
+13
+00:00:20,867 --> 00:00:21,966
+ME: What’s your secret?!
+
+14
+00:00:21,967 --> 00:00:23,100
+THE NEIGHBOR’S SON: There’s no secret.
+
+15
+00:00:23,167 --> 00:00:24,400
+THE NEIGHBOR’S SON: VolunTrack.
+
+16
+00:00:27,967 --> 00:00:28,966
+ME: Planted a tree.
+
+17
+00:00:28,967 --> 00:00:29,866
+ME: Taught a class.
+
+18
+00:00:29,867 --> 00:00:31,000
+ME: Handed out water.
+
+19
+00:00:31,967 --> 00:00:33,186
+NEIGHBOR: Look at the neighbor’s son!
+
+20
+00:00:33,187 --> 00:00:34,306
+MOM: That’s MY son!
+
+21
+00:00:34,307 --> 00:00:36,140
+ME: Now I’m the neighbor’s son.
