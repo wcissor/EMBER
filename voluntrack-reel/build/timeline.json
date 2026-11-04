@@ -194,81 +194,81 @@
  },
  "beats": {
   "hookLand": 12,
-  "stampDeadline": 58,
+  "stampDeadline": 49,
   "youthStart": 156,
-  "stamp18": 197,
-  "applyCardStart": 265,
-  "tapRing": 289,
-  "stampLink": 306,
-  "dmStart": 330,
-  "bubbleSend": 346,
-  "seenLabel": 404,
-  "seenStamp": 443,
-  "barrageStart": 446,
-  "freeze": 556,
-  "lightPoint": 572,
-  "yes": 587,
-  "rays": 625,
-  "split": 633,
-  "gridFade": 649,
-  "columnDraw": 670,
-  "checkBadge": 752,
-  "stackIn": 783,
-  "fieldRise": 786,
-  "digit1": 850,
-  "digit6": 874,
-  "fieldPulse": 910,
-  "rippleHit": 918,
-  "hero": 920,
-  "openLights": 1022,
-  "applyFill": 1099,
-  "categoryGlide": 1145,
-  "toggleFlip": 1167,
+  "stamp18": 196,
+  "applyCardStart": 263,
+  "tapRing": 286,
+  "stampLink": 303,
+  "dmStart": 328,
+  "bubbleSend": 344,
+  "seenLabel": 401,
+  "seenStamp": 440,
+  "barrageStart": 443,
+  "freeze": 553,
+  "lightPoint": 569,
+  "yes": 584,
+  "rays": 618,
+  "split": 626,
+  "gridFade": 642,
+  "columnDraw": 660,
+  "checkBadge": 742,
+  "stackIn": 773,
+  "fieldRise": 776,
+  "digit1": 840,
+  "digit6": 863,
+  "fieldPulse": 898,
+  "rippleHit": 906,
+  "hero": 908,
+  "openLights": 1007,
+  "applyFill": 1084,
+  "categoryGlide": 1131,
+  "toggleFlip": 1153,
   "applyTap": 1176,
   "sheetExpand": 1190,
   "diagram": 1240,
-  "middlemanPop": 1329,
-  "wink": 1454,
-  "flip": 1476,
-  "plusPulse": 1517,
-  "formFill": 1502,
-  "submitPress": 1553,
-  "freeChip": 1574,
-  "checked": 1618,
-  "collapse": 1653,
-  "blowout": 1661,
-  "drift": 1710,
-  "logoRise": 1722,
+  "middlemanPop": 1328,
+  "wink": 1453,
+  "flip": 1475,
+  "plusPulse": 1515,
+  "formFill": 1501,
+  "submitPress": 1552,
+  "freeChip": 1570,
+  "checked": 1613,
+  "collapse": 1648,
+  "blowout": 1657,
+  "drift": 1708,
+  "logoRise": 1720,
   "vtWord": 1725,
   "logoResolve": 1777,
   "urlQr": 1840,
-  "cta": 1939,
+  "cta": 1927,
   "loopStart": 2026,
   "musicEntry": 637,
   "musicResolve": 2016
  },
  "barrage": [
-  446,
-  452,
-  458,
-  463,
-  468,
-  473,
-  478
+  443,
+  449,
+  455,
+  460,
+  465,
+  470,
+  475
  ],
  "wall": [
-  488,
-  498,
-  508,
-  518,
-  528,
-  538,
-  548
+  485,
+  495,
+  505,
+  515,
+  525,
+  535,
+  545
  ],
  "music": {
   "gridOrigin": 577,
   "entryFrame": 637,
-  "raysFrame": 625,
+  "raysFrame": 618,
   "applyFrame": 1176,
   "applyBarFrame": 1177,
   "logoFrame": 1777,
@@ -277,48 +277,48 @@
  },
  "lines": {
   "10": {
-   "start": 786,
-   "end": 837
+   "start": 776,
+   "end": 826
   },
   "11": {
-   "start": 850,
-   "end": 905
+   "start": 840,
+   "end": 893
   },
   "12": {
-   "start": 941,
-   "end": 1042
+   "start": 929,
+   "end": 1026
   },
   "13": {
-   "start": 1048,
-   "end": 1137
+   "start": 1032,
+   "end": 1123
   },
   "14": {
    "start": 1176,
-   "end": 1311
+   "end": 1310
   },
   "15": {
-   "start": 1317,
-   "end": 1363
+   "start": 1316,
+   "end": 1362
   },
   "16": {
-   "start": 1369,
+   "start": 1368,
    "end": 1431
   },
   "17": {
-   "start": 1436,
-   "end": 1474
+   "start": 1435,
+   "end": 1473
   },
   "18": {
-   "start": 1480,
-   "end": 1547
+   "start": 1479,
+   "end": 1546
   },
   "19": {
-   "start": 1553,
-   "end": 1650
+   "start": 1552,
+   "end": 1645
   },
   "20": {
-   "start": 1653,
-   "end": 1710
+   "start": 1648,
+   "end": 1708
   },
   "21": {
    "start": 1725,
@@ -326,51 +326,51 @@
   },
   "22": {
    "start": 1777,
-   "end": 1855
+   "end": 1845
   },
   "23": {
-   "start": 1861,
-   "end": 1932
+   "start": 1851,
+   "end": 1920
   },
   "24": {
-   "start": 1939,
-   "end": 1998
+   "start": 1927,
+   "end": 1984
   },
   "01": {
    "start": 6,
-   "end": 52
+   "end": 43
   },
   "02": {
-   "start": 70,
-   "end": 148
+   "start": 69,
+   "end": 146
   },
   "03": {
    "start": 159,
-   "end": 193
+   "end": 192
   },
   "04": {
-   "start": 211,
-   "end": 263
+   "start": 210,
+   "end": 261
   },
   "05": {
-   "start": 276,
-   "end": 328
+   "start": 274,
+   "end": 326
   },
   "06": {
-   "start": 344,
-   "end": 436
+   "start": 341,
+   "end": 433
   },
   "07": {
-   "start": 448,
-   "end": 557
+   "start": 445,
+   "end": 554
   },
   "08": {
-   "start": 587,
-   "end": 621
+   "start": 584,
+   "end": 615
   },
   "09": {
-   "start": 651,
-   "end": 780
+   "start": 645,
+   "end": 770
   }
  }
 }

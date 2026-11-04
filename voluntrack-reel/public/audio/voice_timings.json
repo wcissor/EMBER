@@ -4,17 +4,17 @@
   "voice": "S",
   "text": "Found one!",
   "start": 0.1,
-  "end": 0.87,
+  "end": 0.715,
   "words": [
    {
     "word": "Found",
     "start": 0.1,
-    "end": 0.48
+    "end": 0.325
    },
    {
     "word": "one!",
-    "start": 0.48,
-    "end": 0.85
+    "start": 0.325,
+    "end": 0.695
    }
   ]
  },
@@ -22,28 +22,28 @@
   "id": "02",
   "voice": "S",
   "text": "…It closed in April.",
-  "start": 1.17,
-  "end": 2.46,
+  "start": 1.15,
+  "end": 2.44,
   "words": [
    {
     "word": "…It",
-    "start": 1.17,
-    "end": 1.27
+    "start": 1.15,
+    "end": 1.25
    },
    {
     "word": "closed",
-    "start": 1.27,
-    "end": 1.7
+    "start": 1.25,
+    "end": 1.68
    },
    {
     "word": "in",
-    "start": 1.7,
-    "end": 1.89
+    "start": 1.68,
+    "end": 1.87
    },
    {
     "word": "April.",
-    "start": 1.89,
-    "end": 2.44
+    "start": 1.87,
+    "end": 2.42
    }
   ]
  },
@@ -52,12 +52,12 @@
   "voice": "S",
   "text": "Next.",
   "start": 2.65,
-  "end": 3.216,
+  "end": 3.197,
   "words": [
    {
     "word": "Next.",
     "start": 2.65,
-    "end": 3.197
+    "end": 3.178
    }
   ]
  },
@@ -65,18 +65,18 @@
   "id": "04",
   "voice": "S",
   "text": "I’m sixteen.",
-  "start": 3.516,
-  "end": 4.384,
+  "start": 3.497,
+  "end": 4.351,
   "words": [
    {
     "word": "I’m",
-    "start": 3.516,
-    "end": 3.629
+    "start": 3.497,
+    "end": 3.596
    },
    {
     "word": "sixteen.",
-    "start": 3.629,
-    "end": 4.365
+    "start": 3.596,
+    "end": 4.332
    }
   ]
  },
@@ -84,23 +84,23 @@
   "id": "05",
   "voice": "S",
   "text": "This one’s open—",
-  "start": 4.604,
-  "end": 5.472,
+  "start": 4.571,
+  "end": 5.425,
   "words": [
    {
     "word": "This",
-    "start": 4.604,
-    "end": 4.821
+    "start": 4.571,
+    "end": 4.774
    },
    {
     "word": "one’s",
-    "start": 4.821,
-    "end": 5.038
+    "start": 4.774,
+    "end": 4.991
    },
    {
     "word": "open—",
-    "start": 5.038,
-    "end": 5.453
+    "start": 4.991,
+    "end": 5.406
    }
   ]
  },
@@ -108,28 +108,28 @@
   "id": "06",
   "voice": "S",
   "text": "DM’d them in June.",
-  "start": 5.732,
-  "end": 7.27,
+  "start": 5.685,
+  "end": 7.222,
   "words": [
    {
     "word": "DM’d",
-    "start": 5.987,
-    "end": 6.421
+    "start": 5.939,
+    "end": 6.373
    },
    {
     "word": "them",
-    "start": 6.421,
-    "end": 6.572
+    "start": 6.373,
+    "end": 6.524
    },
    {
     "word": "in",
-    "start": 6.572,
-    "end": 6.732
+    "start": 6.524,
+    "end": 6.685
    },
    {
     "word": "June.",
-    "start": 6.732,
-    "end": 7.251
+    "start": 6.685,
+    "end": 7.204
    }
   ]
  },
@@ -137,28 +137,28 @@
   "id": "07",
   "voice": "S",
   "text": "Is ANYTHING actually open?!",
-  "start": 7.47,
-  "end": 9.29,
+  "start": 7.422,
+  "end": 9.229,
   "words": [
    {
     "word": "Is",
-    "start": 7.47,
-    "end": 7.621
+    "start": 7.422,
+    "end": 7.559
    },
    {
     "word": "ANYTHING",
-    "start": 7.621,
-    "end": 8.347
+    "start": 7.559,
+    "end": 8.286
    },
    {
     "word": "actually",
-    "start": 8.347,
-    "end": 8.838
+    "start": 8.286,
+    "end": 8.776
    },
    {
     "word": "open?!",
-    "start": 8.838,
-    "end": 9.272
+    "start": 8.776,
+    "end": 9.21
    }
   ]
  },
@@ -166,13 +166,13 @@
   "id": "08",
   "voice": "V",
   "text": "Yes.",
-  "start": 9.79,
-  "end": 10.356,
+  "start": 9.729,
+  "end": 10.243,
   "words": [
    {
     "word": "Yes.",
-    "start": 9.79,
-    "end": 10.338
+    "start": 9.729,
+    "end": 10.224
    }
   ]
  },
@@ -180,33 +180,33 @@
   "id": "09",
   "voice": "V",
   "text": "One feed. Every listing checked.",
-  "start": 10.856,
-  "end": 13.007,
+  "start": 10.743,
+  "end": 12.838,
   "words": [
    {
     "word": "One",
-    "start": 10.856,
-    "end": 11.168
+    "start": 10.743,
+    "end": 11.007
    },
    {
     "word": "feed.",
-    "start": 11.168,
-    "end": 11.63
+    "start": 11.007,
+    "end": 11.47
    },
    {
     "word": "Every",
-    "start": 11.8,
-    "end": 12.139
+    "start": 11.639,
+    "end": 11.97
    },
    {
     "word": "listing",
-    "start": 12.139,
-    "end": 12.536
+    "start": 11.97,
+    "end": 12.366
    },
    {
     "word": "checked.",
-    "start": 12.536,
-    "end": 12.988
+    "start": 12.366,
+    "end": 12.819
    }
   ]
  },
@@ -214,23 +214,23 @@
   "id": "10",
   "voice": "V",
   "text": "Enter your age.",
-  "start": 13.107,
-  "end": 13.947,
+  "start": 12.938,
+  "end": 13.772,
   "words": [
    {
     "word": "Enter",
-    "start": 13.107,
-    "end": 13.315
+    "start": 12.938,
+    "end": 13.14
    },
    {
     "word": "your",
-    "start": 13.315,
-    "end": 13.475
+    "start": 13.14,
+    "end": 13.301
    },
    {
     "word": "age.",
-    "start": 13.475,
-    "end": 13.928
+    "start": 13.301,
+    "end": 13.754
    }
   ]
  },
@@ -238,13 +238,13 @@
   "id": "11",
   "voice": "S",
   "text": "…Sixteen?",
-  "start": 14.167,
-  "end": 15.082,
+  "start": 13.992,
+  "end": 14.889,
   "words": [
    {
     "word": "…Sixteen?",
-    "start": 14.167,
-    "end": 15.063
+    "start": 13.992,
+    "end": 14.87
    }
   ]
  },
@@ -252,28 +252,28 @@
   "id": "12",
   "voice": "S",
   "text": "Wait — they’re all open?",
-  "start": 15.682,
-  "end": 17.361,
+  "start": 15.489,
+  "end": 17.097,
   "words": [
    {
     "word": "Wait",
-    "start": 15.937,
-    "end": 16.229
+    "start": 15.743,
+    "end": 16.036
    },
    {
     "word": "they’re",
-    "start": 16.399,
-    "end": 16.692
+    "start": 16.206,
+    "end": 16.427
    },
    {
     "word": "all",
-    "start": 16.692,
-    "end": 17.041
+    "start": 16.427,
+    "end": 16.776
    },
    {
     "word": "open?",
-    "start": 17.041,
-    "end": 17.342
+    "start": 16.776,
+    "end": 17.078
    }
   ]
  },
@@ -281,38 +281,38 @@
   "id": "13",
   "voice": "V",
   "text": "Only roles you can apply to.",
-  "start": 17.461,
-  "end": 18.949,
+  "start": 17.197,
+  "end": 18.722,
   "words": [
    {
     "word": "Only",
-    "start": 17.461,
-    "end": 17.722
+    "start": 17.197,
+    "end": 17.452
    },
    {
     "word": "roles",
-    "start": 17.722,
-    "end": 18.099
+    "start": 17.452,
+    "end": 17.842
    },
    {
     "word": "you",
-    "start": 18.099,
-    "end": 18.186
+    "start": 17.842,
+    "end": 17.932
    },
    {
     "word": "can",
-    "start": 18.186,
-    "end": 18.312
+    "start": 17.932,
+    "end": 18.062
    },
    {
     "word": "apply",
-    "start": 18.312,
-    "end": 18.621
+    "start": 18.062,
+    "end": 18.382
    },
    {
     "word": "to.",
-    "start": 18.621,
-    "end": 18.93
+    "start": 18.382,
+    "end": 18.702
    }
   ]
  },
@@ -321,37 +321,37 @@
   "voice": "V",
   "text": "Apply — straight to the organizer’s form.",
   "start": 19.6,
-  "end": 21.855,
+  "end": 21.841,
   "words": [
    {
     "word": "Apply",
     "start": 19.6,
-    "end": 20.091
+    "end": 20.086
    },
    {
     "word": "straight",
-    "start": 20.26,
-    "end": 20.628
+    "start": 20.256,
+    "end": 20.614
    },
    {
     "word": "to",
-    "start": 20.628,
-    "end": 20.723
+    "start": 20.614,
+    "end": 20.708
    },
    {
     "word": "the",
-    "start": 20.723,
-    "end": 20.836
+    "start": 20.708,
+    "end": 20.822
    },
    {
     "word": "organizer’s",
-    "start": 20.836,
-    "end": 21.44
+    "start": 20.822,
+    "end": 21.425
    },
    {
     "word": "form.",
-    "start": 21.44,
-    "end": 21.836
+    "start": 21.425,
+    "end": 21.822
    }
   ]
  },
@@ -359,18 +359,18 @@
   "id": "15",
   "voice": "V",
   "text": "No middleman.",
-  "start": 21.955,
-  "end": 22.709,
+  "start": 21.941,
+  "end": 22.695,
   "words": [
    {
     "word": "No",
-    "start": 21.955,
-    "end": 22.143
+    "start": 21.941,
+    "end": 22.129
    },
    {
     "word": "middleman.",
-    "start": 22.143,
-    "end": 22.691
+    "start": 22.129,
+    "end": 22.676
    }
   ]
  },
@@ -378,18 +378,18 @@
   "id": "16",
   "voice": "S",
   "text": "That’s it?",
-  "start": 22.809,
-  "end": 23.857,
+  "start": 22.795,
+  "end": 23.842,
   "words": [
    {
     "word": "That’s",
-    "start": 23.064,
-    "end": 23.526
+    "start": 23.05,
+    "end": 23.512
    },
    {
     "word": "it?",
-    "start": 23.526,
-    "end": 23.838
+    "start": 23.512,
+    "end": 23.824
    }
   ]
  },
@@ -397,18 +397,18 @@
   "id": "17",
   "voice": "V",
   "text": "That’s it.",
-  "start": 23.937,
-  "end": 24.569,
+  "start": 23.922,
+  "end": 24.555,
   "words": [
    {
     "word": "That’s",
-    "start": 23.937,
-    "end": 24.229
+    "start": 23.922,
+    "end": 24.215
    },
    {
     "word": "it.",
-    "start": 24.229,
-    "end": 24.55
+    "start": 24.215,
+    "end": 24.536
    }
   ]
  },
@@ -416,28 +416,28 @@
   "id": "18",
   "voice": "V",
   "text": "Run a volunteer program?",
-  "start": 24.669,
-  "end": 25.791,
+  "start": 24.655,
+  "end": 25.763,
   "words": [
    {
     "word": "Run",
-    "start": 24.669,
-    "end": 24.81
+    "start": 24.655,
+    "end": 24.782
    },
    {
     "word": "a",
-    "start": 24.81,
-    "end": 24.857
+    "start": 24.782,
+    "end": 24.829
    },
    {
     "word": "volunteer",
-    "start": 24.857,
-    "end": 25.282
+    "start": 24.829,
+    "end": 25.254
    },
    {
     "word": "program?",
-    "start": 25.282,
-    "end": 25.772
+    "start": 25.254,
+    "end": 25.744
    }
   ]
  },
@@ -445,38 +445,38 @@
   "id": "19",
   "voice": "V",
   "text": "Post it free — we check it,",
-  "start": 25.891,
-  "end": 27.505,
+  "start": 25.863,
+  "end": 27.424,
   "words": [
    {
     "word": "Post",
-    "start": 25.891,
-    "end": 26.165
+    "start": 25.863,
+    "end": 26.085
    },
    {
     "word": "it",
-    "start": 26.165,
-    "end": 26.24
+    "start": 26.085,
+    "end": 26.16
    },
    {
     "word": "free",
-    "start": 26.24,
-    "end": 26.665
+    "start": 26.16,
+    "end": 26.585
    },
    {
     "word": "we",
-    "start": 26.835,
-    "end": 26.967
+    "start": 26.755,
+    "end": 26.887
    },
    {
     "word": "check",
-    "start": 26.967,
-    "end": 27.231
+    "start": 26.887,
+    "end": 27.151
    },
    {
     "word": "it,",
-    "start": 27.231,
-    "end": 27.486
+    "start": 27.151,
+    "end": 27.405
    }
   ]
  },
@@ -484,28 +484,28 @@
   "id": "20",
   "voice": "V",
   "text": "and students find it.",
-  "start": 27.545,
-  "end": 28.499,
+  "start": 27.464,
+  "end": 28.464,
   "words": [
    {
     "word": "and",
-    "start": 27.545,
-    "end": 27.688
+    "start": 27.464,
+    "end": 27.614
    },
    {
     "word": "students",
-    "start": 27.688,
-    "end": 28.127
+    "start": 27.614,
+    "end": 28.074
    },
    {
     "word": "find",
-    "start": 28.127,
-    "end": 28.404
+    "start": 28.074,
+    "end": 28.364
    },
    {
     "word": "it.",
-    "start": 28.404,
-    "end": 28.48
+    "start": 28.364,
+    "end": 28.444
    }
   ]
  },
@@ -528,17 +528,17 @@
   "voice": "S",
   "text": "Find volunteering.",
   "start": 29.614,
-  "end": 30.916,
+  "end": 30.756,
   "words": [
    {
     "word": "Find",
     "start": 29.614,
-    "end": 30.048
+    "end": 29.888
    },
    {
     "word": "volunteering.",
-    "start": 30.048,
-    "end": 30.897
+    "start": 29.888,
+    "end": 30.737
    }
   ]
  },
@@ -546,18 +546,18 @@
   "id": "23",
   "voice": "V",
   "text": "Find volunteers.",
-  "start": 31.016,
-  "end": 32.195,
+  "start": 30.856,
+  "end": 31.997,
   "words": [
    {
     "word": "Find",
-    "start": 31.016,
-    "end": 31.384
+    "start": 30.856,
+    "end": 31.186
    },
    {
     "word": "volunteers.",
-    "start": 31.384,
-    "end": 32.176
+    "start": 31.186,
+    "end": 31.978
    }
   ]
  },
@@ -565,23 +565,23 @@
   "id": "24",
   "voice": "V",
   "text": "Comment your age.",
-  "start": 32.315,
-  "end": 33.305,
+  "start": 32.117,
+  "end": 33.062,
   "words": [
    {
     "word": "Comment",
-    "start": 32.315,
-    "end": 32.665
+    "start": 32.117,
+    "end": 32.422
    },
    {
     "word": "your",
-    "start": 32.665,
-    "end": 32.815
+    "start": 32.422,
+    "end": 32.572
    },
    {
     "word": "age.",
-    "start": 32.815,
-    "end": 33.285
+    "start": 32.572,
+    "end": 33.042
    }
   ]
  }

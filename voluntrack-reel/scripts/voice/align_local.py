@@ -80,6 +80,30 @@ def energy_onset(path, t0, t1):
     return None
 
 
+def refine_onsets(path, toks):
+    """Forced alignment can hand the leading silence to the first word after a pause; move such word starts to the
+    energy onset (first 10 ms frame within 300 ms above the phrase peak -32 dB)."""
+    x = np.frombuffer(decode(path, SR), dtype=np.int16).astype(np.float32) / 32768
+    w = int(0.01 * SR)
+    prev_end = -1.0
+    for t in toks:
+        if t['text'].startswith('[') or not re.search(r'\w', t['text']):
+            prev_end = max(prev_end, t['end'])
+            continue
+        if t['start'] - prev_end >= 0.08 or prev_end < 0:
+            a = int(t['start'] * SR)
+            span = x[a:int(min(t['end'], t['start'] + 0.3) * SR)]
+            look = x[a:int((t['start'] + 0.6) * SR)]
+            if len(span) > w and len(look) > w:
+                peak = 20 * np.log10(np.max(np.abs(look)) + 1e-9)
+                fr = 20 * np.log10(np.array([np.sqrt(np.mean(span[i:i + w] ** 2)) for i in range(0, len(span) - w, w // 2)]) + 1e-9)
+                idx = np.where(fr > peak - 32)[0]
+                if len(idx):
+                    t['start'] = round(t['start'] + idx[0] * 0.005, 3)
+        prev_end = t['end']
+    return toks
+
+
 def main():
     out = {'accurate_ends': True, 'source': 'Takes supplied by the user (ElevenLabs downloads). Word timings: local forced alignment (pocketsphinx en-us) against the script text.', 'takes': {}}
     files = {'student': ROOT / 'voice_src/takes/student.mp3', 'vt': ROOT / 'voice_src/takes/vt.mp3'}
@@ -105,6 +129,7 @@ def main():
                 toks.append({'text': w, 'start': round(a, 3), 'end': round(b, 3)})
                 prev_end = b
                 k += 1
+        toks = refine_onsets(files[take], toks)
         out['takes'][take] = {'file': f'voice_src/takes/{take}.mp3', 'duration': round(dur, 3), 'aligned_generation': files[take].name, 'words': toks}
         perf = [t for t in toks if t['text'].startswith('[')]
         print(f"{take}: {len(toks)} tokens, {dur:.2f}s, performed sounds: {[(t['text'], t['start'], t['end']) for t in perf]}")

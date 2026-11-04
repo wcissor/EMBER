@@ -18,6 +18,7 @@ export const AfterBackground: React.FC = () => {
   const up = EASE.vtOut(clamp01((frame - B.gridFade) / 40));
   const star = starPose(frame);
   const drift = (frame / 60) * 4;
+  const breathe = 1 + 0.32 * Math.sin(2 * Math.PI * 0.25 * (frame / 60));
   return (
     <AbsoluteFill style={{backgroundColor: C.navy}}>
       <AbsoluteFill
@@ -31,7 +32,7 @@ export const AfterBackground: React.FC = () => {
       <AbsoluteFill
         style={{
           opacity: up,
-          background: `radial-gradient(900px 900px at ${star.x}px ${star.y}px, rgba(47,107,255,0.18), rgba(47,107,255,0) 100%)`,
+          background: `radial-gradient(${900 * (0.96 + 0.04 * breathe)}px ${900 * (0.96 + 0.04 * breathe)}px at ${star.x}px ${star.y}px, rgba(47,107,255,${(0.18 * breathe).toFixed(4)}), rgba(47,107,255,0) 100%)`,
         }}
       />
     </AbsoluteFill>

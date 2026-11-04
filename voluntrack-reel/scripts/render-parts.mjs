@@ -35,7 +35,7 @@ for (const [name, a, b] of shots) {
   await renderMedia({
     composition, serveUrl, codec: 'h264', crf: 18, pixelFormat: 'yuv420p', muted: true, frameRange: [a, b],
     outputLocation: tmp, puppeteerInstance: browser, browserExecutable: executable, concurrency,
-    imageFormat: 'jpeg', jpegQuality: 95, x264Preset: 'medium', timeoutInMilliseconds: 240000,
+    imageFormat: 'jpeg', jpegQuality: 95, colorSpace: 'bt709', x264Preset: 'medium', timeoutInMilliseconds: 240000,
     onProgress: ({progress}) => { if (Math.round(progress * 100) % 25 === 0) process.stdout.write(`\r${name} ${Math.round(progress * 100)}%   `); },
   });
   const frames = parseInt(execFileSync('ffprobe', ['-v', 'error', '-count_frames', '-select_streams', 'v:0', '-show_entries', 'stream=nb_read_frames', '-of', 'csv=p=0', tmp]).toString().trim());

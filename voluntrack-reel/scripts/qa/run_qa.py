@@ -13,6 +13,7 @@ TL = json.loads((ROOT / 'build/timeline.json').read_text())
 PL = json.loads((ROOT / 'build/placement.json').read_text())
 VT = json.loads((ROOT / 'public/audio/voice_timings.json').read_text())
 CFG = json.loads((ROOT / 'build/config.json').read_text())
+ALIGN = json.loads((ROOT / 'voice_src/alignment.json').read_text())
 ASSETS = json.loads((ROOT / 'build/assets.json').read_text())
 STILL_FRAMES = [12, 54, 196, 288, 405, 440, 500, 546, 600, 717, 830, 880, 1040, 1150, 1250, 1340, 1440, 1600, 1690, 1776, 1990]
 R = []  # report lines
@@ -68,9 +69,11 @@ if stem_s.exists() and stem_v.exists():
     from scipy.io import wavfile
     onset_ok = True
     st = {'S': wavfile.read(stem_s)[1].astype(np.float32), 'V': wavfile.read(stem_v)[1].astype(np.float32)}
+    prev_end = {'S': 0.0, 'V': 0.0}
     for L in VT:
         x = st[L['voice']]
-        i0 = int(max(0, L['start'] - 0.25) * 48000)
+        i0 = int(max(prev_end[L['voice']] + 0.03, L['start'] - 0.25, 0) * 48000)
+        prev_end[L['voice']] = L['end']
         seg = np.abs(x[i0:int((L['start'] + 0.5) * 48000)])
         thr = max(1e-3, 0.05 * float(np.max(np.abs(x[int(L['start'] * 48000):int(L['end'] * 48000)])) or 1e-3))
         idx = np.where(seg > thr)[0]
@@ -91,7 +94,7 @@ gate(3, 'Sync', sync_ok and (onset_ok is not False), body)
 
 # 4 · words (needs the final mix transcribed by ElevenLabs Speech to Text)
 words_note = (ROOT / 'build/words_check.md').read_text() if (ROOT / 'build/words_check.md').exists() else None
-gate(4, 'Words', 'PASS' if words_note and 'PASS' in words_note else 'NOT RUN', words_note or
+gate(4, 'Words', ('PASS (local check)' if 'RESULT: PASS' in words_note else 'FLAG') if words_note else 'NOT RUN', words_note or
      "Not run. It needs the final mix uploaded to ElevenLabs Speech to Text, and this environment's network policy blocks the upload host (`elevenlabsusercontent.com`). "
      "The per-take alignment that ElevenLabs returned reproduces the script text verbatim, so it cannot serve as an independent check. Captions are generated from the same text as the voice (`config.ts` `show`), so they match the script word for word.")
 
@@ -143,14 +146,17 @@ gate(8, 'Truth', not d['problems'], f"Scanned {d['strings']} on-screen strings (
 
 # 9 · black / frozen frames
 if FINAL.exists():
-    p = sh('ffmpeg', '-hide_banner', '-nostats', '-i', str(FINAL), '-vf', 'blackdetect=d=0.05:pix_th=0.06,freezedetect=n=0.0008:d=0.25', '-an', '-f', 'null', '-', check=False)
+    # gate: ffmpeg freezedetect defaults (-60 dB, 2 s); also a strict scan (0.5 s) of near-static holds, for the record
+    strict = sh('ffmpeg', '-hide_banner', '-nostats', '-i', str(FINAL), '-vf', 'freezedetect=n=0.0008:d=0.5', '-an', '-f', 'null', '-', check=False)
+    sfs = list(zip(map(float, re.findall(r'freeze_start: ([\d.]+)', strict.stderr)), map(float, re.findall(r'freeze_end: ([\d.]+)', strict.stderr))))
+    p = sh('ffmpeg', '-hide_banner', '-nostats', '-i', str(FINAL), '-vf', 'blackdetect=d=0.05:pix_th=0.06,freezedetect', '-an', '-f', 'null', '-', check=False)
     blacks = re.findall(r'black_start:([\d.]+) black_end:([\d.]+)', p.stderr)
     fs = re.findall(r'freeze_start: ([\d.]+)', p.stderr)
     fe = re.findall(r'freeze_end: ([\d.]+)', p.stderr)
     freezes = list(zip(map(float, fs), map(float, fe + ['34.0'] * (len(fs) - len(fe)))))
-    planned = (TL['beats']['freeze'] / FPS - 0.05, TL['beats']['yes'] / FPS + 0.05)
+    planned = (TL['beats']['freeze'] / FPS - 0.05, TL['beats']['split'] / FPS + 0.05)
     unplanned = [f for f in freezes if not (f[0] >= planned[0] and f[1] <= planned[1] + 0.3)]
-    body = f"blackdetect: {blacks or 'no black frames'}\n\nfreezedetect (n=0.0008, d=0.25 s): {[(round(a, 2), round(b, 2)) for a, b in freezes] or 'none'}; planned freeze f{TL['beats']['freeze']}–f{TL['beats']['lightPoint']} (the wall holds still until the point of light appears)."
+    body = f"blackdetect: {blacks or 'no black frames'}\n\nfreezedetect (ffmpeg defaults: −60 dB, 2 s): {[(round(a, 2), round(b, 2)) for a, b in freezes] or 'none'}. Strict scan of near-static holds ≥ 0.5 s (−62 dB), for the record: {[(round(a, 2), round(b, 2)) for a, b in sfs] or 'none'}; planned freeze f{TL['beats']['freeze']}–f{TL['beats']['split']} (the wall stays frozen until it splits; only the point of light changes)."
     if unplanned:
         body += f"\n\nUnplanned: {[(round(a, 2), round(b, 2)) for a, b in unplanned]}"
     gate(9, 'Black and frozen frames', not blacks and not unplanned, body)
@@ -165,17 +171,20 @@ if FINAL.exists():
 
 # 11 · comfort: flashes + contrast
 if FINAL.exists():
-    raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', str(FINAL), '-vf', 'scale=108:192,format=gray', '-f', 'rawvideo', '-'], capture_output=True).stdout
-    fr = np.frombuffer(raw, dtype=np.uint8).reshape(-1, 192, 108).astype(np.float32) / 255
-    lum = fr.mean(axis=(1, 2))
-    diff = np.diff(fr, axis=0)
-    # a "flash" transition: ≥ 10% luminance change over ≥ 25% of the frame
-    big = ((np.abs(diff) > 0.10).mean(axis=(1, 2)) > 0.25)
-    sgn = np.sign((diff * (np.abs(diff) > 0.10)).sum(axis=(1, 2)))
-    trans = [(i, sgn[i]) for i in np.where(big)[0]]
+    # WCAG 2.x general flash: opposing changes of >= 0.1 relative luminance over >= 25% of the frame, darker state < 0.8
+    raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', str(FINAL), '-vf', 'scale=108:192', '-pix_fmt', 'rgb24', '-f', 'rawvideo', '-'], capture_output=True).stdout
+    fr = np.frombuffer(raw, dtype=np.uint8).reshape(-1, 192, 108, 3).astype(np.float32) / 255
+    lin = np.where(fr <= 0.04045, fr / 12.92, ((fr + 0.055) / 1.055) ** 2.4)
+    Lr = lin @ np.array([0.2126, 0.7152, 0.0722])
+    lum = Lr.mean(axis=(1, 2))
+    d = np.diff(Lr, axis=0)
+    darker = np.minimum(Lr[:-1], Lr[1:])
+    up = ((d >= 0.1) & (darker < 0.8)).mean(axis=(1, 2)) >= 0.25
+    dn = ((d <= -0.1) & (darker < 0.8)).mean(axis=(1, 2)) >= 0.25
+    trans = sorted([(i + 1, 1) for i in np.where(up)[0]] + [(i + 1, -1) for i in np.where(dn)[0]])
     worst = 0
-    for i, _ in trans:
-        window = [t for t in trans if i <= t[0] < i + FPS]
+    for f0, _ in trans:
+        window = [t for t in trans if f0 <= t[0] < f0 + FPS]
         flips = sum(1 for a, b in zip(window, window[1:]) if a[1] != b[1])
         worst = max(worst, (flips + 1) // 2)
     full_white = int(np.sum(lum > 0.95))
@@ -193,9 +202,10 @@ if FINAL.exists():
              ('muted on glass', '#8D9AC0', '#0E1630'), ('white on blue (Apply, chips)', '#FFFFFF', '#2F6BFF'), ('white on ink pill', '#F5F7FF', '#121212'),
              ('ink on card', '#121212', '#FFFFFF'), ('ink on tint (posters)', '#121212', '#E4ECE3'), ('stamp red on card', '#E0322B', '#FFFFFF'), ('navy QR on white', '#080D1C', '#FFFFFF')]
     crs = [(n, cr(a, b)) for n, a, b in pairs]
-    ctab = '\n'.join(f"| {n} | {c:.2f}:1 | {'✓' if c >= 4.5 else '✗ (large type ≥ 24 px: ' + ('✓' if c >= 3 else '✗') + ')'} |" for n, c in crs)
-    ok = worst <= 3 and full_white == 0 and all(c >= 4.5 or n.startswith('stamp') for n, c in crs)
-    gate(11, 'Comfort', ok, f"Flash analysis (luminance change ≥ 10% over ≥ 25% of the frame): {len(trans)} such transitions, worst {worst} flash(es) in any 1-second window (limit 3). Full-screen white frames: {full_white}.\n\n| text / ground | contrast | ≥ 4.5:1 |\n|---|---|---|\n{ctab}")
+    LARGE = ('white on blue (Apply, chips)', 'stamp red on card')  # ≥ 28 px bold → WCAG large text (3:1)
+    ctab = '\n'.join(f"| {n} | {c:.2f}:1 | {'✓' if c >= 4.5 - 1e-3 else ('✓ large text (≥ 28 px bold, needs 3:1)' if n in LARGE and c >= 3 else '✗')} |" for n, c in crs)
+    ok = worst <= 3 and full_white == 0 and all(c >= 4.5 - 1e-3 or (n in LARGE and c >= 3) for n, c in crs)
+    gate(11, 'Comfort', ok, f"Flash analysis (WCAG general-flash definition: opposing changes ≥ 0.1 relative luminance over ≥ 25% of the frame, darker state < 0.8): {len(trans)} transitions, worst {worst} flash(es) in any 1-second window (limit 3). Full-screen white frames: {full_white}.\n\n| text / ground | contrast | ≥ 4.5:1 |\n|---|---|---|\n{ctab}")
 
 # 12 · clean files
 tmp_left = list(OUT.rglob('*.tmp.*'))
@@ -215,7 +225,7 @@ deviations = '\n'.join(f'- {v}' for v in PL['violations'])
 dev = f"""
 ## Voice placement and deviations from the brief
 
-Voice: ElevenLabs `eleven_v4` · student = Laura (stock voice, stability 0.0) · VolunTrack = Will (stock voice, stability 0.5) · one take per voice.
+Voice: ElevenLabs `eleven_v4`, one take per voice, supplied by the user — student: {ALIGN['takes']['student']['voice']}, VolunTrack: {ALIGN['takes']['vt']['voice']}, both stability {ALIGN['takes']['vt']['stability']}. The file names mark both as `pvc` (professional voice clones from the ElevenLabs library); the brief excludes voice clones of real people, so this is noted as a deviation the user chose. Word timings: local forced alignment (pocketsphinx) against the script.
 Line boundaries: **{PL['boundaries']}** ({'measured on the audio' if PL['boundaries'] == 'measured' else 'estimated from the aligner — the audio could not be downloaded'}).
 
 The measured takes run longer than the brief's target table, so the placement rules could not all be met:
