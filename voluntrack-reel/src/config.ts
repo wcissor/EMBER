@@ -66,40 +66,40 @@ export const PLACEMENT = {
   maxShiftFrames: 12,
   maxSpeedup: 0.06,
   /** Performed sounds ([sighs], [gasps], [laughs]) are kept but capped, never words. */
-  nonverbalMaxSec: 0.3,
+  nonverbalMaxSec: 0.25,
   /** Pauses inside a line (at a dash or between sentences) are capped. */
-  internalPauseMaxSec: 0.22,
+  internalPauseMaxSec: 0.18,
   /** LINK EXPIRED cuts L05 off: its last 120 ms are ducked by 15 dB. */
   cutoffLine: '05',
   cutoffDuckMs: 120,
   cutoffDuckDb: 15,
   minGapBeforeSec: {
-    '02': 0.38, // DEADLINE PASSED lands between "one!" and "…It"
-    '03': 0.2,
-    '04': 0.36, // YOUTH card lands on "Next.", 18+ ONLY hits after it
-    '05': 0.28, // APPLY HERE post lands on the pile
-    '06': 0.32, // DM card slides in, bubble sends
-    '07': 0.26, // SEEN swells and hits, the barrage starts under L07
-    '08': 0.53, // freeze + half a second of nothing
-    '09': 0.62, // rays + quadrant split
-    '10': 0.12,
-    '11': 0.3,
-    '12': 0.78, // ripple, particles, feed snap (the hero moment)
-    '13': 0.15,
-    '14': 0.9, // categories glide, toggle flips, star arcs to Apply
-    '15': 0.12,
-    '16': 0.15,
-    '17': 0.1,
-    '18': 0.12, // the flip starts as L17 ends
-    '19': 0.15,
+    '02': 0.3, // DEADLINE PASSED lands between "one!" and "…It"
+    '03': 0.15,
+    '04': 0.3, // YOUTH card lands on "Next.", 18+ ONLY hits after it
+    '05': 0.22, // APPLY HERE post lands on the pile
+    '06': 0.26, // DM card slides in, bubble sends
+    '07': 0.2, // SEEN swells and hits, the barrage starts under L07
+    '08': 0.5, // freeze + half a second of nothing
+    '09': 0.5, // rays + quadrant split
+    '10': 0.1,
+    '11': 0.22,
+    '12': 0.6, // ripple, particles, feed snap (the hero moment)
+    '13': 0.1,
+    '14': 0.65, // categories glide, toggle flips, star arcs to Apply
+    '15': 0.1,
+    '16': 0.1,
+    '17': 0.08,
+    '18': 0.1, // the flip starts as L17 ends
+    '19': 0.1,
     '20': 0.04,
-    '21': 0.36, // dots drift, logo starts forming
-    '22': 0.15, // logo resolves on the downbeat at L22
-    '23': 0.12,
-    '24': 0.2,
+    '21': 0.25, // dots drift, logo starts forming
+    '22': 0.1, // logo resolves on the downbeat at L22
+    '23': 0.1,
+    '24': 0.12,
   } as Record<string, number>,
   /** The film must leave this much after L24 (hold + 14-frame loop). */
-  tailSec: 0.8,
+  tailSec: 0.62,
 };
 
 /** Music grid (section 7): bars every 120 frames from the music entry. */

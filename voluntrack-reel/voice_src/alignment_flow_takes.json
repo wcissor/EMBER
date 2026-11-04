@@ -1,0 +1,481 @@
+{
+ "source": "ElevenLabs flow AxLvmaZgM06xZNVxMiAy (eleven_v4, mp3_44100_128). Alignment from the flow's Speech-to-Text node wired to each take; it reproduces the prompt text verbatim, so treat it as forced alignment, not an independent transcript.",
+ "flow_id": "AxLvmaZgM06xZNVxMiAy",
+ "takes": {
+  "student": {
+   "voice": "Laura (premade FGY2WhTYpPnrIDTdsKH5)",
+   "stability": 0.0,
+   "aligned_generation": "XQNQps65Jb1TqhVvG4kq",
+   "aligned_session": "P0ZlMCgrR1T5hj16M9Os",
+   "duration": 18.08,
+   "alt_generation": "QbgDFxTVrmXWeuGl6qo2",
+   "alt_session": "XdqhVMAEJZmkozj8uG8n",
+   "alt_duration": 17.76,
+   "words": [
+    {
+     "text": "[excited]",
+     "start": 0,
+     "end": 0.067
+    },
+    {
+     "text": "Found",
+     "start": 0.08,
+     "end": 0.32
+    },
+    {
+     "text": "one!",
+     "start": 0.4,
+     "end": 0.96
+    },
+    {
+     "text": "[deadpan]",
+     "start": 1.2,
+     "end": 1.253
+    },
+    {
+     "text": "…It",
+     "start": 1.267,
+     "end": 1.44
+    },
+    {
+     "text": "closed",
+     "start": 1.6,
+     "end": 1.76
+    },
+    {
+     "text": "in",
+     "start": 1.84,
+     "end": 1.92
+    },
+    {
+     "text": "April.",
+     "start": 2.08,
+     "end": 2.76
+    },
+    {
+     "text": "Next.",
+     "start": 3.04,
+     "end": 3.72
+    },
+    {
+     "text": "[flatly]",
+     "start": 3.92,
+     "end": 3.984
+    },
+    {
+     "text": "I’m",
+     "start": 4,
+     "end": 4.24
+    },
+    {
+     "text": "sixteen.",
+     "start": 4.4,
+     "end": 5.2
+    },
+    {
+     "text": "[hopeful]",
+     "start": 5.44,
+     "end": 5.504
+    },
+    {
+     "text": "This",
+     "start": 5.52,
+     "end": 5.6
+    },
+    {
+     "text": "one’s",
+     "start": 5.68,
+     "end": 5.84
+    },
+    {
+     "text": "open—",
+     "start": 5.92,
+     "end": 6.44
+    },
+    {
+     "text": "[sighs]",
+     "start": 6.72,
+     "end": 7.24
+    },
+    {
+     "text": "DM’d",
+     "start": 7.28,
+     "end": 7.68
+    },
+    {
+     "text": "them",
+     "start": 7.76,
+     "end": 7.84
+    },
+    {
+     "text": "in",
+     "start": 7.92,
+     "end": 8.08
+    },
+    {
+     "text": "June.",
+     "start": 8.16,
+     "end": 8.8
+    },
+    {
+     "text": "[exasperated]",
+     "start": 8.96,
+     "end": 9.027
+    },
+    {
+     "text": "Is",
+     "start": 9.04,
+     "end": 9.28
+    },
+    {
+     "text": "ANYTHING",
+     "start": 9.36,
+     "end": 9.92
+    },
+    {
+     "text": "actually",
+     "start": 10.08,
+     "end": 10.48
+    },
+    {
+     "text": "open?!",
+     "start": 10.64,
+     "end": 11.24
+    },
+    {
+     "text": "[hesitant]",
+     "start": 11.52,
+     "end": 11.584
+    },
+    {
+     "text": "…Sixteen?",
+     "start": 11.6,
+     "end": 12.48
+    },
+    {
+     "text": "[gasps]",
+     "start": 12.64,
+     "end": 13.147
+    },
+    {
+     "text": "Wait",
+     "start": 13.253,
+     "end": 13.36
+    },
+    {
+     "text": "—",
+     "start": 13.6,
+     "end": 13.64
+    },
+    {
+     "text": "they’re",
+     "start": 13.68,
+     "end": 13.92
+    },
+    {
+     "text": "all",
+     "start": 14,
+     "end": 14.24
+    },
+    {
+     "text": "open?",
+     "start": 14.32,
+     "end": 14.84
+    },
+    {
+     "text": "[laughs]",
+     "start": 15.04,
+     "end": 15.52
+    },
+    {
+     "text": "That’s",
+     "start": 15.64,
+     "end": 15.84
+    },
+    {
+     "text": "it?",
+     "start": 15.92,
+     "end": 16.36
+    },
+    {
+     "text": "Find",
+     "start": 16.64,
+     "end": 16.96
+    },
+    {
+     "text": "volunteering.",
+     "start": 17.04,
+     "end": 18.08
+    }
+   ]
+  },
+  "vt": {
+   "voice": "Will (premade bIHbv24MWmeRgasZH58o)",
+   "stability": 0.5,
+   "aligned_generation": "V09bFCGc6hiPn2bkYb1B",
+   "aligned_session": "Gx1iz5v2t90ZCG168V07",
+   "duration": 20.08,
+   "alt_generation": "GiwDzg4YSAmoxZ2ndFfQ",
+   "alt_session": "LbrtwvKbeV4rkpyxjvDz",
+   "alt_duration": 20.4,
+   "words": [
+    {
+     "text": "Yes.",
+     "start": 0,
+     "end": 0.48
+    },
+    {
+     "text": "One",
+     "start": 0.68,
+     "end": 0.987
+    },
+    {
+     "text": "feed.",
+     "start": 1.04,
+     "end": 1.52
+    },
+    {
+     "text": "Every",
+     "start": 1.72,
+     "end": 2.16
+    },
+    {
+     "text": "listing",
+     "start": 2.24,
+     "end": 2.64
+    },
+    {
+     "text": "checked.",
+     "start": 2.72,
+     "end": 3.32
+    },
+    {
+     "text": "Enter",
+     "start": 3.52,
+     "end": 3.76
+    },
+    {
+     "text": "your",
+     "start": 3.84,
+     "end": 3.92
+    },
+    {
+     "text": "age.",
+     "start": 4,
+     "end": 4.4
+    },
+    {
+     "text": "Only",
+     "start": 4.8,
+     "end": 5.04
+    },
+    {
+     "text": "roles",
+     "start": 5.12,
+     "end": 5.44
+    },
+    {
+     "text": "you",
+     "start": 5.52,
+     "end": 5.6
+    },
+    {
+     "text": "can",
+     "start": 5.64,
+     "end": 5.68
+    },
+    {
+     "text": "apply",
+     "start": 5.88,
+     "end": 6.08
+    },
+    {
+     "text": "to.",
+     "start": 6.16,
+     "end": 6.6
+    },
+    {
+     "text": "Apply",
+     "start": 6.8,
+     "end": 7.28
+    },
+    {
+     "text": "—",
+     "start": 7.6,
+     "end": 7.64
+    },
+    {
+     "text": "straight",
+     "start": 7.68,
+     "end": 8
+    },
+    {
+     "text": "to",
+     "start": 8.04,
+     "end": 8.08
+    },
+    {
+     "text": "the",
+     "start": 8.12,
+     "end": 8.16
+    },
+    {
+     "text": "organizer’s",
+     "start": 8.24,
+     "end": 8.8
+    },
+    {
+     "text": "form.",
+     "start": 8.88,
+     "end": 9.28
+    },
+    {
+     "text": "No",
+     "start": 9.6,
+     "end": 9.76
+    },
+    {
+     "text": "middleman.",
+     "start": 9.84,
+     "end": 10.4
+    },
+    {
+     "text": "[warmly]",
+     "start": 10.72,
+     "end": 10.784
+    },
+    {
+     "text": "That’s",
+     "start": 10.8,
+     "end": 11.04
+    },
+    {
+     "text": "it.",
+     "start": 11.12,
+     "end": 11.56
+    },
+    {
+     "text": "Run",
+     "start": 11.76,
+     "end": 11.84
+    },
+    {
+     "text": "a",
+     "start": 11.92,
+     "end": 11.96
+    },
+    {
+     "text": "volunteer",
+     "start": 12,
+     "end": 12.4
+    },
+    {
+     "text": "program?",
+     "start": 12.64,
+     "end": 13.04
+    },
+    {
+     "text": "Post",
+     "start": 13.2,
+     "end": 13.36
+    },
+    {
+     "text": "it",
+     "start": 13.44,
+     "end": 13.52
+    },
+    {
+     "text": "free",
+     "start": 13.6,
+     "end": 13.84
+    },
+    {
+     "text": "—",
+     "start": 14.24,
+     "end": 14.32
+    },
+    {
+     "text": "we",
+     "start": 14.4,
+     "end": 14.48
+    },
+    {
+     "text": "check",
+     "start": 14.6,
+     "end": 14.72
+    },
+    {
+     "text": "it,",
+     "start": 14.84,
+     "end": 15.013
+    },
+    {
+     "text": "and",
+     "start": 15.067,
+     "end": 15.12
+    },
+    {
+     "text": "students",
+     "start": 15.2,
+     "end": 15.6
+    },
+    {
+     "text": "find",
+     "start": 15.68,
+     "end": 15.92
+    },
+    {
+     "text": "it.",
+     "start": 16,
+     "end": 16.32
+    },
+    {
+     "text": "VolunTrack.",
+     "start": 16.56,
+     "end": 17.44
+    },
+    {
+     "text": "Find",
+     "start": 17.6,
+     "end": 17.84
+    },
+    {
+     "text": "volunteers.",
+     "start": 17.92,
+     "end": 18.84
+    },
+    {
+     "text": "Comment",
+     "start": 19.04,
+     "end": 19.28
+    },
+    {
+     "text": "your",
+     "start": 19.36,
+     "end": 19.44
+    },
+    {
+     "text": "age.",
+     "start": 19.52,
+     "end": 20.16
+    }
+   ]
+  }
+ },
+ "charges_reported_by_run": {
+  "tts_direct": [
+   278,
+   292
+  ],
+  "tts_rerun_by_stt_nodes": [
+   278,
+   292
+  ],
+  "stt": [
+   165,
+   165
+  ],
+  "total": 1470,
+  "estimate_was": 588.33
+ }
+}

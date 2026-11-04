@@ -4,574 +4,568 @@
    "id": "01",
    "voice": "S",
    "take": "student",
-   "generation": "XQNQps65Jb1TqhVvG4kq",
+   "generation": "student.mp3",
    "segment": [
-    0.08,
-    0.71
+    0.0,
+    0.77
    ],
    "cuts": [],
-   "tempo": 1.06,
+   "tempo": 1.0,
    "start": 0.1,
-   "end": 0.6943,
+   "end": 0.87,
    "target": [
     0.1,
     0.65
    ],
    "shift_frames": 0.0,
-   "boundaries": "estimated",
-   "speedup_pct": 6.0
+   "boundaries": "measured",
+   "speedup_pct": 0.0
   },
   {
    "id": "02",
    "voice": "S",
    "take": "student",
-   "generation": "XQNQps65Jb1TqhVvG4kq",
+   "generation": "student.mp3",
    "segment": [
-    1.267,
-    2.56
+    1.35,
+    2.64
    ],
    "cuts": [],
-   "tempo": 1.06,
-   "start": 1.15,
-   "end": 2.3698,
+   "tempo": 1.0,
+   "start": 1.17,
+   "end": 2.46,
    "target": [
     1.15,
     2.3
    ],
-   "shift_frames": 0.0,
-   "boundaries": "estimated",
-   "speedup_pct": 6.0
+   "shift_frames": 1.2,
+   "boundaries": "measured",
+   "speedup_pct": 0.0
   },
   {
    "id": "03",
    "voice": "S",
    "take": "student",
-   "generation": "XQNQps65Jb1TqhVvG4kq",
+   "generation": "student.mp3",
    "segment": [
-    3.04,
-    3.35
+    3.0,
+    3.6
    ],
    "cuts": [],
    "tempo": 1.06,
    "start": 2.65,
-   "end": 2.9425,
+   "end": 3.216,
    "target": [
     2.65,
     2.95
    ],
    "shift_frames": 0.0,
-   "boundaries": "estimated",
+   "boundaries": "measured",
    "speedup_pct": 6.0
   },
   {
    "id": "04",
    "voice": "S",
    "take": "student",
-   "generation": "XQNQps65Jb1TqhVvG4kq",
+   "generation": "student.mp3",
    "segment": [
-    4,
-    4.88
+    4.1,
+    5.02
    ],
    "cuts": [],
    "tempo": 1.06,
-   "start": 3.45,
-   "end": 4.2802,
+   "start": 3.516,
+   "end": 4.384,
    "target": [
     3.45,
     4.05
    ],
-   "shift_frames": 0.0,
-   "boundaries": "estimated",
+   "shift_frames": 4.0,
+   "boundaries": "measured",
    "speedup_pct": 6.0
   },
   {
    "id": "05",
    "voice": "S",
    "take": "student",
-   "generation": "XQNQps65Jb1TqhVvG4kq",
+   "generation": "student.mp3",
    "segment": [
-    5.52,
-    6.4
+    5.42,
+    6.34
    ],
    "cuts": [],
    "tempo": 1.06,
-   "start": 4.5602,
-   "end": 5.3904,
+   "start": 4.604,
+   "end": 5.4719,
    "target": [
     4.2,
     4.85
    ],
-   "shift_frames": 21.6,
-   "boundaries": "estimated",
+   "shift_frames": 24.2,
+   "boundaries": "measured",
    "speedup_pct": 6.0
   },
   {
    "id": "06",
    "voice": "S",
    "take": "student",
-   "generation": "XQNQps65Jb1TqhVvG4kq",
+   "generation": "student.mp3",
    "segment": [
-    6.72,
-    8.47
+    6.76,
+    8.58
    ],
    "cuts": [
     [
-     7.02,
-     7.24
+     7.01,
+     7.2
     ]
    ],
    "tempo": 1.06,
-   "start": 5.7104,
-   "end": 7.1538,
+   "start": 5.7319,
+   "end": 7.2696,
    "target": [
     5.4,
     6.6
    ],
-   "shift_frames": 18.6,
-   "boundaries": "estimated",
+   "shift_frames": 19.9,
+   "boundaries": "measured",
    "speedup_pct": 6.0
   },
   {
    "id": "07",
    "voice": "S",
    "take": "student",
-   "generation": "XQNQps65Jb1TqhVvG4kq",
+   "generation": "student.mp3",
    "segment": [
-    9.04,
-    11.12
+    8.89,
+    10.82
    ],
    "cuts": [],
    "tempo": 1.06,
-   "start": 7.4138,
-   "end": 9.376,
+   "start": 7.4696,
+   "end": 9.2904,
    "target": [
     7.05,
     8.55
    ],
-   "shift_frames": 21.8,
-   "boundaries": "estimated",
+   "shift_frames": 25.2,
+   "boundaries": "measured",
    "speedup_pct": 6.0
   },
   {
    "id": "08",
    "voice": "V",
    "take": "vt",
-   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "generation": "vt.mp3",
    "segment": [
-    0,
-    0.31
+    0.0,
+    0.6
    ],
    "cuts": [],
    "tempo": 1.06,
-   "start": 9.906,
-   "end": 10.1985,
+   "start": 9.7904,
+   "end": 10.3564,
    "target": [
     9.1,
     9.55
    ],
-   "shift_frames": 48.4,
-   "boundaries": "estimated",
+   "shift_frames": 41.4,
+   "boundaries": "measured",
    "speedup_pct": 6.0
   },
   {
    "id": "09",
    "voice": "V",
    "take": "vt",
-   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "generation": "vt.mp3",
    "segment": [
-    0.68,
-    3.2
+    0.8,
+    3.23
    ],
-   "cuts": [],
+   "cuts": [
+    [
+     1.71,
+     1.86
+    ]
+   ],
    "tempo": 1.06,
-   "start": 10.8185,
-   "end": 13.1958,
+   "start": 10.8564,
+   "end": 13.0074,
    "target": [
     10.3,
     11.95
    ],
-   "shift_frames": 31.1,
-   "boundaries": "estimated",
+   "shift_frames": 33.4,
+   "boundaries": "measured",
    "speedup_pct": 6.0
   },
   {
    "id": "10",
    "voice": "V",
    "take": "vt",
-   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "generation": "vt.mp3",
    "segment": [
-    3.52,
-    4.31
+    3.61,
+    4.5
    ],
    "cuts": [],
    "tempo": 1.06,
-   "start": 13.3158,
-   "end": 14.0611,
+   "start": 13.1074,
+   "end": 13.947,
    "target": [
     12.05,
     12.95
    ],
-   "shift_frames": 76.0,
-   "boundaries": "estimated",
+   "shift_frames": 63.4,
+   "boundaries": "measured",
    "speedup_pct": 6.0
   },
   {
    "id": "11",
    "voice": "S",
    "take": "student",
-   "generation": "XQNQps65Jb1TqhVvG4kq",
+   "generation": "student.mp3",
    "segment": [
-    11.6,
-    12.08
+    11.33,
+    12.3
    ],
    "cuts": [],
    "tempo": 1.06,
-   "start": 14.3611,
-   "end": 14.814,
+   "start": 14.167,
+   "end": 15.0821,
    "target": [
     13.25,
     13.95
    ],
-   "shift_frames": 66.7,
-   "boundaries": "estimated",
+   "shift_frames": 55.0,
+   "boundaries": "measured",
    "speedup_pct": 6.0
   },
   {
    "id": "12",
    "voice": "S",
    "take": "student",
-   "generation": "XQNQps65Jb1TqhVvG4kq",
+   "generation": "student.mp3",
    "segment": [
-    12.64,
-    14.8
+    12.63,
+    14.6
    ],
    "cuts": [
     [
-     12.94,
-     13.147
+     12.88,
+     13.03
     ],
     [
-     13.47,
+     13.45,
      13.49
     ]
    ],
    "tempo": 1.06,
-   "start": 15.594,
-   "end": 17.4175,
+   "start": 15.6821,
+   "end": 17.3613,
    "target": [
     14.9,
     16
    ],
-   "shift_frames": 41.6,
-   "boundaries": "estimated",
+   "shift_frames": 46.9,
+   "boundaries": "measured",
    "speedup_pct": 6.0
   },
   {
    "id": "13",
    "voice": "V",
    "take": "vt",
-   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "generation": "vt.mp3",
    "segment": [
-    4.8,
-    6.47
+    4.81,
+    6.35
    ],
    "cuts": [],
-   "tempo": 1.06,
-   "start": 17.5675,
-   "end": 19.143,
+   "tempo": 1.035,
+   "start": 17.4613,
+   "end": 18.9492,
    "target": [
     16.15,
     17.85
    ],
-   "shift_frames": 85.1,
-   "boundaries": "estimated",
-   "speedup_pct": 6.0
+   "shift_frames": 78.7,
+   "boundaries": "measured",
+   "speedup_pct": 3.5
   },
   {
    "id": "14",
    "voice": "V",
    "take": "vt",
-   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "generation": "vt.mp3",
    "segment": [
-    6.8,
-    9.19
+    6.77,
+    9.21
    ],
    "cuts": [
     [
-     7.39,
-     7.49
+     7.38,
+     7.43
     ]
    ],
    "tempo": 1.06,
-   "start": 20.25,
-   "end": 22.4104,
+   "start": 19.6,
+   "end": 21.8547,
    "target": [
     19.6,
     21.75
    ],
-   "shift_frames": 39.0,
-   "boundaries": "estimated",
+   "shift_frames": 0.0,
+   "boundaries": "measured",
    "speedup_pct": 6.0
   },
   {
    "id": "15",
    "voice": "V",
    "take": "vt",
-   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "generation": "vt.mp3",
    "segment": [
-    9.6,
-    10.4
+    9.52,
+    10.32
    ],
    "cuts": [],
    "tempo": 1.06,
-   "start": 22.5304,
-   "end": 23.2851,
+   "start": 21.9547,
+   "end": 22.7094,
    "target": [
     21.85,
     22.55
    ],
-   "shift_frames": 40.8,
-   "boundaries": "estimated",
+   "shift_frames": 6.3,
+   "boundaries": "measured",
    "speedup_pct": 6.0
   },
   {
    "id": "16",
    "voice": "S",
    "take": "student",
-   "generation": "XQNQps65Jb1TqhVvG4kq",
+   "generation": "student.mp3",
    "segment": [
-    15.04,
-    16.23
+    15.07,
+    16.21
    ],
    "cuts": [
     [
-     15.34,
-     15.52
+     15.32,
+     15.35
     ]
    ],
    "tempo": 1.06,
-   "start": 23.4351,
-   "end": 24.3879,
+   "start": 22.8094,
+   "end": 23.8566,
    "target": [
     22.7,
     23.2
    ],
-   "shift_frames": 44.1,
-   "boundaries": "estimated",
+   "shift_frames": 6.6,
+   "boundaries": "measured",
    "speedup_pct": 6.0
   },
   {
    "id": "17",
    "voice": "V",
    "take": "vt",
-   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "generation": "vt.mp3",
    "segment": [
-    10.8,
-    11.43
+    10.68,
+    11.35
    ],
    "cuts": [],
    "tempo": 1.06,
-   "start": 24.4879,
-   "end": 25.0823,
+   "start": 23.9366,
+   "end": 24.5687,
    "target": [
     23.3,
     23.8
    ],
-   "shift_frames": 71.3,
-   "boundaries": "estimated",
+   "shift_frames": 38.2,
+   "boundaries": "measured",
    "speedup_pct": 6.0
   },
   {
    "id": "18",
    "voice": "V",
    "take": "vt",
-   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "generation": "vt.mp3",
    "segment": [
-    11.76,
-    13.04
+    11.7,
+    12.89
    ],
-   "cuts": [
-    [
-     12.51,
-     12.53
-    ]
-   ],
+   "cuts": [],
    "tempo": 1.06,
-   "start": 25.2023,
-   "end": 26.3909,
+   "start": 24.6687,
+   "end": 25.7913,
    "target": [
     23.95,
     25.25
    ],
-   "shift_frames": 75.1,
-   "boundaries": "estimated",
+   "shift_frames": 43.1,
+   "boundaries": "measured",
    "speedup_pct": 6.0
   },
   {
    "id": "19",
    "voice": "V",
    "take": "vt",
-   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "generation": "vt.mp3",
    "segment": [
-    13.2,
-    15.013
+    13.09,
+    14.96
    ],
    "cuts": [
     [
-     13.95,
-     14.13
+     14.0,
+     14.16
     ]
    ],
    "tempo": 1.06,
-   "start": 26.5409,
-   "end": 28.0815,
+   "start": 25.8913,
+   "end": 27.5045,
    "target": [
     25.4,
     27
    ],
-   "shift_frames": 68.5,
-   "boundaries": "estimated",
+   "shift_frames": 29.5,
+   "boundaries": "measured",
    "speedup_pct": 6.0
   },
   {
    "id": "20",
    "voice": "V",
    "take": "vt",
-   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "generation": "vt.mp3",
    "segment": [
-    15.067,
-    16.31
+    14.94,
+    15.94
    ],
    "cuts": [],
-   "tempo": 1.06,
-   "start": 28.1215,
-   "end": 29.2942,
+   "tempo": 1.0475,
+   "start": 27.5445,
+   "end": 28.4992,
    "target": [
     27.1,
     28.3
    ],
-   "shift_frames": 61.3,
-   "boundaries": "estimated",
-   "speedup_pct": 6.0
+   "shift_frames": 26.7,
+   "boundaries": "measured",
+   "speedup_pct": 4.7
   },
   {
    "id": "21",
    "voice": "V",
    "take": "vt",
-   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "generation": "vt.mp3",
    "segment": [
-    16.56,
-    17.21
+    16.39,
+    17.2
    ],
    "cuts": [],
    "tempo": 1.06,
-   "start": 29.6542,
-   "end": 30.2674,
+   "start": 28.75,
+   "end": 29.5142,
    "target": [
     28.75,
     29.45
    ],
-   "shift_frames": 54.2,
-   "boundaries": "estimated",
+   "shift_frames": 0.0,
+   "boundaries": "measured",
    "speedup_pct": 6.0
   },
   {
    "id": "22",
    "voice": "S",
    "take": "student",
-   "generation": "XQNQps65Jb1TqhVvG4kq",
+   "generation": "student.mp3",
    "segment": [
-    16.64,
-    17.86
+    16.46,
+    17.84
    ],
    "cuts": [],
    "tempo": 1.06,
-   "start": 30.4174,
-   "end": 31.5683,
+   "start": 29.6142,
+   "end": 30.916,
    "target": [
     29.6,
     30.5
    ],
-   "shift_frames": 49.0,
-   "boundaries": "estimated",
+   "shift_frames": 0.8,
+   "boundaries": "measured",
    "speedup_pct": 6.0
   },
   {
    "id": "23",
    "voice": "V",
    "take": "vt",
-   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "generation": "vt.mp3",
    "segment": [
-    17.6,
-    18.57
+    17.43,
+    18.68
    ],
    "cuts": [],
    "tempo": 1.06,
-   "start": 31.6883,
-   "end": 32.6034,
+   "start": 31.016,
+   "end": 32.1953,
    "target": [
     30.6,
     31.4
    ],
-   "shift_frames": 65.3,
-   "boundaries": "estimated",
+   "shift_frames": 25.0,
+   "boundaries": "measured",
    "speedup_pct": 6.0
   },
   {
    "id": "24",
    "voice": "V",
    "take": "vt",
-   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "generation": "vt.mp3",
    "segment": [
-    19.04,
-    19.83
+    18.93,
+    19.92
    ],
    "cuts": [],
-   "tempo": 1.06,
-   "start": 32.8034,
-   "end": 33.5487,
+   "tempo": 1.0,
+   "start": 32.3153,
+   "end": 33.3053,
    "target": [
     31.65,
     32.55
    ],
-   "shift_frames": 69.2,
-   "boundaries": "estimated",
-   "speedup_pct": 6.0
+   "shift_frames": 39.9,
+   "boundaries": "measured",
+   "speedup_pct": 0.0
   }
  ],
  "music": {
-  "entryFrame": 625,
-  "raysFrame": 615,
-  "applyFrame": 1215,
-  "applyBarFrame": 1225,
-  "logoFrame": 1825,
-  "logoBarFrame": 1825,
+  "gridOrigin": 577,
+  "entryFrame": 637,
+  "raysFrame": 625,
+  "applyFrame": 1176,
+  "applyBarFrame": 1177,
+  "logoFrame": 1777,
+  "logoBarFrame": 1777,
   "resolveFrame": 2016
  },
  "violations": [
-  "L05 starts 22 frames after its target (rule: ≤ 12)",
-  "L06 starts 19 frames after its target (rule: ≤ 12)",
-  "L07 starts 22 frames after its target (rule: ≤ 12)",
-  "L08 starts 48 frames after its target (rule: ≤ 12)",
-  "L09 starts 31 frames after its target (rule: ≤ 12)",
-  "L10 starts 76 frames after its target (rule: ≤ 12)",
-  "L11 starts 67 frames after its target (rule: ≤ 12)",
-  "L12 starts 42 frames after its target (rule: ≤ 12)",
-  "L13 starts 85 frames after its target (rule: ≤ 12)",
-  "L14 starts 39 frames after its target (rule: ≤ 12)",
-  "L15 starts 41 frames after its target (rule: ≤ 12)",
-  "L16 starts 44 frames after its target (rule: ≤ 12)",
-  "L17 starts 71 frames after its target (rule: ≤ 12)",
-  "L18 starts 75 frames after its target (rule: ≤ 12)",
-  "L19 starts 68 frames after its target (rule: ≤ 12)",
-  "L20 starts 61 frames after its target (rule: ≤ 12)",
-  "L21 starts 54 frames after its target (rule: ≤ 12)",
-  "L22 starts 49 frames after its target (rule: ≤ 12)",
-  "L23 starts 65 frames after its target (rule: ≤ 12)",
-  "L24 starts 69 frames after its target (rule: ≤ 12)",
-  "L24 ends 33.55s, leaving 0.45s (< 0.8s hold + loop)",
-  "music enters 10 frames after the rays so Apply/logo stay on the bar grid",
-  "Apply lands -10 frames from its bar"
+  "L05 starts 24 frames after its target (rule: ≤ 12)",
+  "L06 starts 20 frames after its target (rule: ≤ 12)",
+  "L07 starts 25 frames after its target (rule: ≤ 12)",
+  "L08 starts 41 frames after its target (rule: ≤ 12)",
+  "L09 starts 33 frames after its target (rule: ≤ 12)",
+  "L10 starts 63 frames after its target (rule: ≤ 12)",
+  "L11 starts 55 frames after its target (rule: ≤ 12)",
+  "L12 starts 47 frames after its target (rule: ≤ 12)",
+  "L13 starts 79 frames after its target (rule: ≤ 12)",
+  "L17 starts 38 frames after its target (rule: ≤ 12)",
+  "L18 starts 43 frames after its target (rule: ≤ 12)",
+  "L19 starts 29 frames after its target (rule: ≤ 12)",
+  "L20 starts 27 frames after its target (rule: ≤ 12)",
+  "L23 starts 25 frames after its target (rule: ≤ 12)",
+  "L24 starts 40 frames after its target (rule: ≤ 12)",
+  "music enters 12 frames after the rays (first beat of the grid that lands the logo on a downbeat)"
  ],
- "boundaries": "estimated"
+ "boundaries": "measured"
 }

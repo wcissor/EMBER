@@ -18,13 +18,14 @@ N = int(DUR * SR)
 rng = np.random.default_rng(120)
 
 entry_f = TL['music']['entryFrame']
+grid0 = TL['music'].get('gridOrigin', entry_f)
 logo_f = TL['music']['logoFrame']
 # resolve on the beat nearest the target (f2016), never later than the film allows
 resolve_target = TL['music']['resolveFrame']
 beat_f = 30
-resolve_beat = round((resolve_target - entry_f) / beat_f)
-resolve_f = entry_f + resolve_beat * beat_f
-bars = (resolve_f - entry_f) / 120
+resolve_beat = round((resolve_target - grid0) / beat_f)
+resolve_f = grid0 + resolve_beat * beat_f
+bars = (resolve_f - grid0) / 120
 
 L = np.zeros(N)
 R = np.zeros(N)
@@ -119,7 +120,7 @@ def shaker(accent):
 beat_s = 0.5
 nbars = int(np.ceil(bars))
 for b in range(nbars + 1):
-    bar_f = entry_f + b * 120
+    bar_f = grid0 + b * 120
     if bar_f >= resolve_f:
         break
     name = chord_at_bar(b)
@@ -132,7 +133,8 @@ for b in range(nbars + 1):
         intensity = 0.8
     # pad: from the entry, opening its filter as it builds
     cutoff = 900 + 160 * b
-    add(pad([hz(n, 4) for n in tones] + [hz(root, 3)], 2.05, cutoff), bar_s, 0.0, 0.55 * (0.5 + 0.5 * min(1, b / 2)))
+    pad_s = max(bar_s, sec(entry_f))
+    add(pad([hz(n, 4) for n in tones] + [hz(root, 3)], 2.05 - (pad_s - bar_s), cutoff), pad_s, 0.0, 0.55 * (0.5 + 0.5 * min(1, b / 2)))
     # arpeggio (8ths) from bar 1
     if b >= 1:
         seq = [hz(root, 4), hz(tones[1], 4), hz(tones[2], 4), hz(root, 5), hz(tones[2], 4), hz(tones[1], 4), hz(tones[2], 4), hz(root, 5)]
@@ -185,4 +187,4 @@ mix /= np.max(np.abs(mix)) + 1e-9
 mix *= 0.8
 out = ROOT / 'public/audio/music.wav'
 wavfile.write(out, SR, mix.astype(np.float32))
-print(f'music: entry f{entry_f}, logo downbeat f{entry_f + 1200} (logo f{logo_f}), resolve f{resolve_f} (bar {bars:.2f}) -> {out}')
+print(f'music: grid f{grid0}, entry f{entry_f}, logo downbeat f{grid0 + 1200} (logo f{logo_f}), resolve f{resolve_f} (bar {bars:.2f}) -> {out}')

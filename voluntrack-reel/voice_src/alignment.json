@@ -1,481 +1,426 @@
 {
- "source": "ElevenLabs flow AxLvmaZgM06xZNVxMiAy (eleven_v4, mp3_44100_128). Alignment from the flow's Speech-to-Text node wired to each take; it reproduces the prompt text verbatim, so treat it as forced alignment, not an independent transcript.",
- "flow_id": "AxLvmaZgM06xZNVxMiAy",
+ "accurate_ends": true,
+ "source": "Takes supplied by the user (ElevenLabs downloads). Word timings: local forced alignment (pocketsphinx en-us) against the script text.",
  "takes": {
   "student": {
-   "voice": "Laura (premade FGY2WhTYpPnrIDTdsKH5)",
-   "stability": 0.0,
-   "aligned_generation": "XQNQps65Jb1TqhVvG4kq",
-   "aligned_session": "P0ZlMCgrR1T5hj16M9Os",
-   "duration": 18.08,
-   "alt_generation": "QbgDFxTVrmXWeuGl6qo2",
-   "alt_session": "XdqhVMAEJZmkozj8uG8n",
-   "alt_duration": 17.76,
+   "file": "voice_src/takes/student.mp3",
+   "duration": 18.051,
+   "aligned_generation": "student.mp3",
    "words": [
     {
-     "text": "[excited]",
-     "start": 0,
-     "end": 0.067
-    },
-    {
      "text": "Found",
-     "start": 0.08,
-     "end": 0.32
+     "start": 0.0,
+     "end": 0.38
     },
     {
      "text": "one!",
-     "start": 0.4,
-     "end": 0.96
-    },
-    {
-     "text": "[deadpan]",
-     "start": 1.2,
-     "end": 1.253
+     "start": 0.38,
+     "end": 0.75
     },
     {
      "text": "…It",
-     "start": 1.267,
-     "end": 1.44
+     "start": 1.35,
+     "end": 1.45
     },
     {
      "text": "closed",
-     "start": 1.6,
-     "end": 1.76
+     "start": 1.45,
+     "end": 1.88
     },
     {
      "text": "in",
-     "start": 1.84,
-     "end": 1.92
+     "start": 1.88,
+     "end": 2.07
     },
     {
      "text": "April.",
-     "start": 2.08,
-     "end": 2.76
+     "start": 2.07,
+     "end": 2.62
     },
     {
      "text": "Next.",
-     "start": 3.04,
-     "end": 3.72
-    },
-    {
-     "text": "[flatly]",
-     "start": 3.92,
-     "end": 3.984
+     "start": 3.0,
+     "end": 3.58
     },
     {
      "text": "I’m",
-     "start": 4,
-     "end": 4.24
+     "start": 4.1,
+     "end": 4.22
     },
     {
      "text": "sixteen.",
-     "start": 4.4,
-     "end": 5.2
-    },
-    {
-     "text": "[hopeful]",
-     "start": 5.44,
-     "end": 5.504
+     "start": 4.22,
+     "end": 5.0
     },
     {
      "text": "This",
-     "start": 5.52,
-     "end": 5.6
+     "start": 5.42,
+     "end": 5.65
     },
     {
      "text": "one’s",
-     "start": 5.68,
-     "end": 5.84
+     "start": 5.65,
+     "end": 5.88
     },
     {
      "text": "open—",
-     "start": 5.92,
-     "end": 6.44
+     "start": 5.88,
+     "end": 6.32
     },
     {
      "text": "[sighs]",
-     "start": 6.72,
-     "end": 7.24
+     "start": 6.76,
+     "end": 7.2
     },
     {
      "text": "DM’d",
-     "start": 7.28,
+     "start": 7.22,
      "end": 7.68
     },
     {
      "text": "them",
-     "start": 7.76,
+     "start": 7.68,
      "end": 7.84
     },
     {
      "text": "in",
-     "start": 7.92,
-     "end": 8.08
+     "start": 7.84,
+     "end": 8.01
     },
     {
      "text": "June.",
-     "start": 8.16,
-     "end": 8.8
-    },
-    {
-     "text": "[exasperated]",
-     "start": 8.96,
-     "end": 9.027
+     "start": 8.01,
+     "end": 8.56
     },
     {
      "text": "Is",
-     "start": 9.04,
-     "end": 9.28
+     "start": 8.89,
+     "end": 9.05
     },
     {
      "text": "ANYTHING",
-     "start": 9.36,
-     "end": 9.92
+     "start": 9.05,
+     "end": 9.82
     },
     {
      "text": "actually",
-     "start": 10.08,
-     "end": 10.48
+     "start": 9.82,
+     "end": 10.34
     },
     {
      "text": "open?!",
-     "start": 10.64,
-     "end": 11.24
-    },
-    {
-     "text": "[hesitant]",
-     "start": 11.52,
-     "end": 11.584
+     "start": 10.34,
+     "end": 10.8
     },
     {
      "text": "…Sixteen?",
-     "start": 11.6,
-     "end": 12.48
+     "start": 11.33,
+     "end": 12.28
     },
     {
      "text": "[gasps]",
-     "start": 12.64,
-     "end": 13.147
+     "start": 12.63,
+     "end": 13.03
     },
     {
      "text": "Wait",
-     "start": 13.253,
+     "start": 13.05,
      "end": 13.36
     },
     {
      "text": "—",
-     "start": 13.6,
-     "end": 13.64
+     "start": 13.36,
+     "end": 13.36
     },
     {
      "text": "they’re",
-     "start": 13.68,
-     "end": 13.92
+     "start": 13.58,
+     "end": 13.89
     },
     {
      "text": "all",
-     "start": 14,
-     "end": 14.24
+     "start": 13.89,
+     "end": 14.26
     },
     {
      "text": "open?",
-     "start": 14.32,
-     "end": 14.84
+     "start": 14.26,
+     "end": 14.58
     },
     {
      "text": "[laughs]",
-     "start": 15.04,
-     "end": 15.52
+     "start": 15.07,
+     "end": 15.35
     },
     {
      "text": "That’s",
-     "start": 15.64,
-     "end": 15.84
+     "start": 15.37,
+     "end": 15.86
     },
     {
      "text": "it?",
-     "start": 15.92,
-     "end": 16.36
+     "start": 15.86,
+     "end": 16.19
     },
     {
      "text": "Find",
-     "start": 16.64,
-     "end": 16.96
+     "start": 16.46,
+     "end": 16.92
     },
     {
      "text": "volunteering.",
-     "start": 17.04,
-     "end": 18.08
+     "start": 16.92,
+     "end": 17.82
     }
-   ]
+   ],
+   "voice": "Laura (library voice, per file name)",
+   "stability": 0.0,
+   "file_name": "09c53ccd-ElevenLabs_2026-11-04T10_32_50_Laura_-_a_top_narration_voice_pvc_s0_sim75_v4.mp3"
   },
   "vt": {
-   "voice": "Will (premade bIHbv24MWmeRgasZH58o)",
-   "stability": 0.5,
-   "aligned_generation": "V09bFCGc6hiPn2bkYb1B",
-   "aligned_session": "Gx1iz5v2t90ZCG168V07",
-   "duration": 20.08,
-   "alt_generation": "GiwDzg4YSAmoxZ2ndFfQ",
-   "alt_session": "LbrtwvKbeV4rkpyxjvDz",
-   "alt_duration": 20.4,
+   "file": "voice_src/takes/vt.mp3",
+   "duration": 20.036,
+   "aligned_generation": "vt.mp3",
    "words": [
     {
      "text": "Yes.",
-     "start": 0,
-     "end": 0.48
+     "start": 0.0,
+     "end": 0.58
     },
     {
      "text": "One",
-     "start": 0.68,
-     "end": 0.987
+     "start": 0.8,
+     "end": 1.13
     },
     {
      "text": "feed.",
-     "start": 1.04,
-     "end": 1.52
+     "start": 1.13,
+     "end": 1.62
     },
     {
      "text": "Every",
-     "start": 1.72,
-     "end": 2.16
+     "start": 1.95,
+     "end": 2.31
     },
     {
      "text": "listing",
-     "start": 2.24,
-     "end": 2.64
+     "start": 2.31,
+     "end": 2.73
     },
     {
      "text": "checked.",
-     "start": 2.72,
-     "end": 3.32
+     "start": 2.73,
+     "end": 3.21
     },
     {
      "text": "Enter",
-     "start": 3.52,
-     "end": 3.76
+     "start": 3.61,
+     "end": 3.83
     },
     {
      "text": "your",
-     "start": 3.84,
-     "end": 3.92
+     "start": 3.83,
+     "end": 4.0
     },
     {
      "text": "age.",
-     "start": 4,
-     "end": 4.4
+     "start": 4.0,
+     "end": 4.48
     },
     {
      "text": "Only",
-     "start": 4.8,
-     "end": 5.04
+     "start": 4.81,
+     "end": 5.08
     },
     {
      "text": "roles",
-     "start": 5.12,
-     "end": 5.44
+     "start": 5.08,
+     "end": 5.47
     },
     {
      "text": "you",
-     "start": 5.52,
-     "end": 5.6
+     "start": 5.47,
+     "end": 5.56
     },
     {
      "text": "can",
-     "start": 5.64,
-     "end": 5.68
+     "start": 5.56,
+     "end": 5.69
     },
     {
      "text": "apply",
-     "start": 5.88,
-     "end": 6.08
+     "start": 5.69,
+     "end": 6.01
     },
     {
      "text": "to.",
-     "start": 6.16,
-     "end": 6.6
+     "start": 6.01,
+     "end": 6.33
     },
     {
      "text": "Apply",
-     "start": 6.8,
-     "end": 7.28
+     "start": 6.77,
+     "end": 7.29
     },
     {
      "text": "—",
-     "start": 7.6,
-     "end": 7.64
+     "start": 7.29,
+     "end": 7.29
     },
     {
      "text": "straight",
-     "start": 7.68,
-     "end": 8
+     "start": 7.52,
+     "end": 7.91
     },
     {
      "text": "to",
-     "start": 8.04,
-     "end": 8.08
+     "start": 7.91,
+     "end": 8.01
     },
     {
      "text": "the",
-     "start": 8.12,
-     "end": 8.16
+     "start": 8.01,
+     "end": 8.13
     },
     {
      "text": "organizer’s",
-     "start": 8.24,
-     "end": 8.8
+     "start": 8.13,
+     "end": 8.77
     },
     {
      "text": "form.",
-     "start": 8.88,
-     "end": 9.28
+     "start": 8.77,
+     "end": 9.19
     },
     {
      "text": "No",
-     "start": 9.6,
-     "end": 9.76
+     "start": 9.52,
+     "end": 9.72
     },
     {
      "text": "middleman.",
-     "start": 9.84,
-     "end": 10.4
-    },
-    {
-     "text": "[warmly]",
-     "start": 10.72,
-     "end": 10.784
+     "start": 9.72,
+     "end": 10.3
     },
     {
      "text": "That’s",
-     "start": 10.8,
-     "end": 11.04
+     "start": 10.68,
+     "end": 10.99
     },
     {
      "text": "it.",
-     "start": 11.12,
-     "end": 11.56
+     "start": 10.99,
+     "end": 11.33
     },
     {
      "text": "Run",
-     "start": 11.76,
-     "end": 11.84
+     "start": 11.7,
+     "end": 11.85
     },
     {
      "text": "a",
-     "start": 11.92,
-     "end": 11.96
+     "start": 11.85,
+     "end": 11.9
     },
     {
      "text": "volunteer",
-     "start": 12,
-     "end": 12.4
+     "start": 11.9,
+     "end": 12.35
     },
     {
      "text": "program?",
-     "start": 12.64,
-     "end": 13.04
+     "start": 12.35,
+     "end": 12.87
     },
     {
      "text": "Post",
-     "start": 13.2,
-     "end": 13.36
+     "start": 13.09,
+     "end": 13.38
     },
     {
      "text": "it",
-     "start": 13.44,
-     "end": 13.52
+     "start": 13.38,
+     "end": 13.46
     },
     {
      "text": "free",
-     "start": 13.6,
-     "end": 13.84
+     "start": 13.46,
+     "end": 13.91
     },
     {
      "text": "—",
-     "start": 14.24,
-     "end": 14.32
+     "start": 13.91,
+     "end": 13.91
     },
     {
      "text": "we",
-     "start": 14.4,
-     "end": 14.48
+     "start": 14.25,
+     "end": 14.39
     },
     {
      "text": "check",
-     "start": 14.6,
-     "end": 14.72
+     "start": 14.39,
+     "end": 14.67
     },
     {
      "text": "it,",
-     "start": 14.84,
-     "end": 15.013
+     "start": 14.67,
+     "end": 14.94
     },
     {
      "text": "and",
-     "start": 15.067,
-     "end": 15.12
+     "start": 14.94,
+     "end": 15.09
     },
     {
      "text": "students",
-     "start": 15.2,
-     "end": 15.6
+     "start": 15.09,
+     "end": 15.55
     },
     {
      "text": "find",
-     "start": 15.68,
-     "end": 15.92
+     "start": 15.55,
+     "end": 15.84
     },
     {
      "text": "it.",
-     "start": 16,
-     "end": 16.32
+     "start": 15.84,
+     "end": 15.92
     },
     {
      "text": "VolunTrack.",
-     "start": 16.56,
-     "end": 17.44
+     "start": 16.39,
+     "end": 17.18
     },
     {
      "text": "Find",
-     "start": 17.6,
-     "end": 17.84
+     "start": 17.43,
+     "end": 17.82
     },
     {
      "text": "volunteers.",
-     "start": 17.92,
-     "end": 18.84
+     "start": 17.82,
+     "end": 18.66
     },
     {
      "text": "Comment",
-     "start": 19.04,
+     "start": 18.93,
      "end": 19.28
     },
     {
      "text": "your",
-     "start": 19.36,
-     "end": 19.44
+     "start": 19.28,
+     "end": 19.43
     },
     {
      "text": "age.",
-     "start": 19.52,
-     "end": 20.16
+     "start": 19.43,
+     "end": 19.9
     }
-   ]
+   ],
+   "voice": "Will - Conversational Narrator (library voice, per file name)",
+   "stability": 0.0,
+   "file_name": "8e666d63-ElevenLabs_2026-11-04T10_35_11_Will_-_Conversational_Narrator_pvc_s0_sim75_v4.mp3"
   }
- },
- "charges_reported_by_run": {
-  "tts_direct": [
-   278,
-   292
-  ],
-  "tts_rerun_by_stt_nodes": [
-   278,
-   292
-  ],
-  "stt": [
-   165,
-   165
-  ],
-  "total": 1470,
-  "estimate_was": 588.33
  }
 }

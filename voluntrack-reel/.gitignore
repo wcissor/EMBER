@@ -18,4 +18,4 @@ public/frames/
 public/grain/
 public/stamps/
 # voice takes (downloaded from ElevenLabs)
-voice_src/takes/
+# voice takes are inputs (the build re-times from them) — committed

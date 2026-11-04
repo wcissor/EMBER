@@ -89,7 +89,12 @@ def refine(lid, toks):
     for i, w in enumerate(words):
         ends[i] = w['end']
     last = words[-1]
-    if REFINED and lid in REFINED.get('lines', {}):
+    if ALIGN.get('accurate_ends'):
+        # forced alignment on the audio: word ends are real; keep a 40 ms release after the last word
+        seg_end = last['end'] + 0.02
+        ends[len(words) - 1] = last['end']
+        source = 'measured'
+    elif REFINED and lid in REFINED.get('lines', {}):
         r = REFINED['lines'][lid]
         seg_start = r['start']
         seg_end = r['end']
@@ -207,33 +212,18 @@ def solve():
         # prefer the lines nearest the end (they move the fewest beats)
         tempos[cand[-1]] = min(max_tempo, tempos[cand[-1]] + 0.0025)
 
-    # 2) lock the music grid to the voice: entry after L08, Apply on bar 5, L22/logo on bar 10.
-    bar = M['barFrames'] / FPS
-    for _ in range(8):
-        starts, ends = forward(models, order, tempos, extra)
-        entry = ends['08'] + M['entryAfterLine08Frames'] / FPS
-        entry_f = math.ceil(entry * FPS)
-        apply_t = word_start_film(models, '14', 0, starts, tempos)
-        want_apply = (entry_f + M['applyBar'] * M['barFrames']) / FPS
-        changed = False
-        if apply_t < want_apply - 1e-4:
-            extra['14'] = extra.get('14', 0.0) + (want_apply - apply_t)
-            changed = True
-        starts, ends = forward(models, order, tempos, extra)
-        logo_t = starts['22']
-        want_logo = (entry_f + M['logoBar'] * M['barFrames']) / FPS
-        if logo_t < want_logo - 1e-4:
-            extra['22'] = extra.get('22', 0.0) + (want_logo - logo_t)
-            changed = True
-        if not changed:
-            break
+    # 2) the music grid follows the voice (voice lines are never moved for the music): the cue is synthesized
+    #    with its bar grid anchored so the logo lands on a downbeat.
     starts, ends = forward(models, order, tempos, extra)
     entry = ends['08'] + M['entryAfterLine08Frames'] / FPS
     entry_f = math.ceil(entry * FPS)
     # if Apply/logo landed later than their bars, the music entry moves later (never the voice)
     apply_f = round(word_start_film(models, '14', 0, starts, tempos) * FPS)
     logo_f = round(starts['22'] * FPS)
-    music_entry_f = max(entry_f, apply_f - M['applyBar'] * M['barFrames'], logo_f - M['logoBar'] * M['barFrames'])
+    # bar grid anchored on the logo downbeat; the cue enters on the first beat after the rays (never in the silence)
+    grid0 = logo_f - M['logoBar'] * M['barFrames']
+    beat = M['barFrames'] // 4
+    music_entry_f = grid0 + max(0, -(-(entry_f - grid0) // beat)) * beat
 
     # 3) results + violations
     violations = []
@@ -267,19 +257,17 @@ def solve():
     tail = total_f / FPS - ends['24']
     if tail < P['tailSec'] - 1e-6:
         violations.append(f"L24 ends {ends['24']:.2f}s, leaving {tail:.2f}s (< {P['tailSec']}s hold + loop)")
-    resolve_f = music_entry_f + M['resolveBar'] * M['barFrames']
+    resolve_f = grid0 + M['resolveBar'] * M['barFrames']
     music = {
-        'entryFrame': music_entry_f, 'raysFrame': entry_f,
-        'applyFrame': apply_f, 'applyBarFrame': music_entry_f + M['applyBar'] * M['barFrames'],
-        'logoFrame': logo_f, 'logoBarFrame': music_entry_f + M['logoBar'] * M['barFrames'],
+        'gridOrigin': grid0, 'entryFrame': music_entry_f, 'raysFrame': entry_f,
+        'applyFrame': apply_f, 'applyBarFrame': grid0 + M['applyBar'] * M['barFrames'],
+        'logoFrame': logo_f, 'logoBarFrame': grid0 + M['logoBar'] * M['barFrames'],
         'resolveFrame': min(resolve_f, total_f - 24),
     }
     if music_entry_f != entry_f:
-        violations.append(f"music enters {music_entry_f - entry_f} frames after the rays so Apply/logo stay on the bar grid")
-    if apply_f != music['applyBarFrame']:
+        violations.append(f"music enters {music_entry_f - entry_f} frames after the rays (first beat of the grid that lands the logo on a downbeat)")
+    if abs(apply_f - music['applyBarFrame']) > 2:
         violations.append(f"Apply lands {apply_f - music['applyBarFrame']:+d} frames from its bar")
-    if logo_f != music['logoBarFrame']:
-        violations.append(f"logo/L22 lands {logo_f - music['logoBarFrame']:+d} frames from the downbeat")
 
     out_dir = ROOT / 'public/audio'
     out_dir.mkdir(parents=True, exist_ok=True)

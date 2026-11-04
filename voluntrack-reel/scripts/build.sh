@@ -15,7 +15,7 @@ node scripts/export-config.mjs 2>/dev/null
 
 step "voice"
 if [[ -f voice_src/takes/student.mp3 && -f voice_src/takes/vt.mp3 ]]; then
-  python3 scripts/voice/analyze_takes.py
+  python3 scripts/voice/align_local.py
 else
   echo "takes not downloaded yet: placement uses estimated boundaries; the mix has no voice"
 fi

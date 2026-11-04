@@ -131,13 +131,13 @@ def main():
         seg = seg[: max(0, n - i0)]
         stems[L['voice']][i0:i0 + len(seg)] += seg
         expect = L['end'] - L['start']
-        report['lines'].append({'id': L['id'], 'gain_db': round(g, 2), 'len_s': round(len(seg) / SR, 3), 'planned_s': round(expect, 3)})
+        report['lines'].append({'id': L['id'], 'gain_db': round(float(g), 2), 'len_s': round(len(seg) / SR, 3), 'planned_s': round(expect, 3)})
     out = ROOT / 'public/audio/stems'
     out.mkdir(parents=True, exist_ok=True)
     for v, name in (('S', 'student'), ('V', 'vt')):
         y, gr = chain(stems[v])
         stems[v] = y
-        report[f'{name}_max_gr_db'] = round(gr, 2)
+        report[f'{name}_max_gr_db'] = round(float(gr), 2)
         wavfile.write(out / f'{name}.wav', SR, y.astype(np.float32))
     vo = stems['S'] + stems['V']
     wavfile.write(ROOT / 'public/audio/voiceover.wav', SR, vo.astype(np.float32))
