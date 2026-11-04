@@ -1,0 +1,26 @@
+[
+  {
+    "family": "Barlow Condensed",
+    "weight": "800",
+    "file": "fonts/barlow-condensed-800-latin.woff2",
+    "source": "https://fonts.gstatic.com/s/barlowcondensed/v13/HTxwL3I-JCGChYJ8VI-L6OO_au7B47b1z3bWuQ.woff2"
+  },
+  {
+    "family": "Inter",
+    "weight": "500",
+    "file": "fonts/inter-500-latin.woff2",
+    "source": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2"
+  },
+  {
+    "family": "Inter",
+    "weight": "600",
+    "file": "fonts/inter-600-latin.woff2",
+    "source": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2"
+  },
+  {
+    "family": "Inter",
+    "weight": "700",
+    "file": "fonts/inter-700-latin.woff2",
+    "source": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2"
+  }
+]

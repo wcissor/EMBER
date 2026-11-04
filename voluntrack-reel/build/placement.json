@@ -1,0 +1,577 @@
+{
+ "lines": [
+  {
+   "id": "01",
+   "voice": "S",
+   "take": "student",
+   "generation": "XQNQps65Jb1TqhVvG4kq",
+   "segment": [
+    0.08,
+    0.71
+   ],
+   "cuts": [],
+   "tempo": 1.06,
+   "start": 0.1,
+   "end": 0.6943,
+   "target": [
+    0.1,
+    0.65
+   ],
+   "shift_frames": 0.0,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "02",
+   "voice": "S",
+   "take": "student",
+   "generation": "XQNQps65Jb1TqhVvG4kq",
+   "segment": [
+    1.267,
+    2.56
+   ],
+   "cuts": [],
+   "tempo": 1.06,
+   "start": 1.15,
+   "end": 2.3698,
+   "target": [
+    1.15,
+    2.3
+   ],
+   "shift_frames": 0.0,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "03",
+   "voice": "S",
+   "take": "student",
+   "generation": "XQNQps65Jb1TqhVvG4kq",
+   "segment": [
+    3.04,
+    3.35
+   ],
+   "cuts": [],
+   "tempo": 1.06,
+   "start": 2.65,
+   "end": 2.9425,
+   "target": [
+    2.65,
+    2.95
+   ],
+   "shift_frames": 0.0,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "04",
+   "voice": "S",
+   "take": "student",
+   "generation": "XQNQps65Jb1TqhVvG4kq",
+   "segment": [
+    4,
+    4.88
+   ],
+   "cuts": [],
+   "tempo": 1.06,
+   "start": 3.45,
+   "end": 4.2802,
+   "target": [
+    3.45,
+    4.05
+   ],
+   "shift_frames": 0.0,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "05",
+   "voice": "S",
+   "take": "student",
+   "generation": "XQNQps65Jb1TqhVvG4kq",
+   "segment": [
+    5.52,
+    6.4
+   ],
+   "cuts": [],
+   "tempo": 1.06,
+   "start": 4.5602,
+   "end": 5.3904,
+   "target": [
+    4.2,
+    4.85
+   ],
+   "shift_frames": 21.6,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "06",
+   "voice": "S",
+   "take": "student",
+   "generation": "XQNQps65Jb1TqhVvG4kq",
+   "segment": [
+    6.72,
+    8.47
+   ],
+   "cuts": [
+    [
+     7.02,
+     7.24
+    ]
+   ],
+   "tempo": 1.06,
+   "start": 5.7104,
+   "end": 7.1538,
+   "target": [
+    5.4,
+    6.6
+   ],
+   "shift_frames": 18.6,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "07",
+   "voice": "S",
+   "take": "student",
+   "generation": "XQNQps65Jb1TqhVvG4kq",
+   "segment": [
+    9.04,
+    11.12
+   ],
+   "cuts": [],
+   "tempo": 1.06,
+   "start": 7.4138,
+   "end": 9.376,
+   "target": [
+    7.05,
+    8.55
+   ],
+   "shift_frames": 21.8,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "08",
+   "voice": "V",
+   "take": "vt",
+   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "segment": [
+    0,
+    0.31
+   ],
+   "cuts": [],
+   "tempo": 1.06,
+   "start": 9.906,
+   "end": 10.1985,
+   "target": [
+    9.1,
+    9.55
+   ],
+   "shift_frames": 48.4,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "09",
+   "voice": "V",
+   "take": "vt",
+   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "segment": [
+    0.68,
+    3.2
+   ],
+   "cuts": [],
+   "tempo": 1.06,
+   "start": 10.8185,
+   "end": 13.1958,
+   "target": [
+    10.3,
+    11.95
+   ],
+   "shift_frames": 31.1,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "10",
+   "voice": "V",
+   "take": "vt",
+   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "segment": [
+    3.52,
+    4.31
+   ],
+   "cuts": [],
+   "tempo": 1.06,
+   "start": 13.3158,
+   "end": 14.0611,
+   "target": [
+    12.05,
+    12.95
+   ],
+   "shift_frames": 76.0,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "11",
+   "voice": "S",
+   "take": "student",
+   "generation": "XQNQps65Jb1TqhVvG4kq",
+   "segment": [
+    11.6,
+    12.08
+   ],
+   "cuts": [],
+   "tempo": 1.06,
+   "start": 14.3611,
+   "end": 14.814,
+   "target": [
+    13.25,
+    13.95
+   ],
+   "shift_frames": 66.7,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "12",
+   "voice": "S",
+   "take": "student",
+   "generation": "XQNQps65Jb1TqhVvG4kq",
+   "segment": [
+    12.64,
+    14.8
+   ],
+   "cuts": [
+    [
+     12.94,
+     13.147
+    ],
+    [
+     13.47,
+     13.49
+    ]
+   ],
+   "tempo": 1.06,
+   "start": 15.594,
+   "end": 17.4175,
+   "target": [
+    14.9,
+    16
+   ],
+   "shift_frames": 41.6,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "13",
+   "voice": "V",
+   "take": "vt",
+   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "segment": [
+    4.8,
+    6.47
+   ],
+   "cuts": [],
+   "tempo": 1.06,
+   "start": 17.5675,
+   "end": 19.143,
+   "target": [
+    16.15,
+    17.85
+   ],
+   "shift_frames": 85.1,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "14",
+   "voice": "V",
+   "take": "vt",
+   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "segment": [
+    6.8,
+    9.19
+   ],
+   "cuts": [
+    [
+     7.39,
+     7.49
+    ]
+   ],
+   "tempo": 1.06,
+   "start": 20.25,
+   "end": 22.4104,
+   "target": [
+    19.6,
+    21.75
+   ],
+   "shift_frames": 39.0,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "15",
+   "voice": "V",
+   "take": "vt",
+   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "segment": [
+    9.6,
+    10.4
+   ],
+   "cuts": [],
+   "tempo": 1.06,
+   "start": 22.5304,
+   "end": 23.2851,
+   "target": [
+    21.85,
+    22.55
+   ],
+   "shift_frames": 40.8,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "16",
+   "voice": "S",
+   "take": "student",
+   "generation": "XQNQps65Jb1TqhVvG4kq",
+   "segment": [
+    15.04,
+    16.23
+   ],
+   "cuts": [
+    [
+     15.34,
+     15.52
+    ]
+   ],
+   "tempo": 1.06,
+   "start": 23.4351,
+   "end": 24.3879,
+   "target": [
+    22.7,
+    23.2
+   ],
+   "shift_frames": 44.1,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "17",
+   "voice": "V",
+   "take": "vt",
+   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "segment": [
+    10.8,
+    11.43
+   ],
+   "cuts": [],
+   "tempo": 1.06,
+   "start": 24.4879,
+   "end": 25.0823,
+   "target": [
+    23.3,
+    23.8
+   ],
+   "shift_frames": 71.3,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "18",
+   "voice": "V",
+   "take": "vt",
+   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "segment": [
+    11.76,
+    13.04
+   ],
+   "cuts": [
+    [
+     12.51,
+     12.53
+    ]
+   ],
+   "tempo": 1.06,
+   "start": 25.2023,
+   "end": 26.3909,
+   "target": [
+    23.95,
+    25.25
+   ],
+   "shift_frames": 75.1,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "19",
+   "voice": "V",
+   "take": "vt",
+   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "segment": [
+    13.2,
+    15.013
+   ],
+   "cuts": [
+    [
+     13.95,
+     14.13
+    ]
+   ],
+   "tempo": 1.06,
+   "start": 26.5409,
+   "end": 28.0815,
+   "target": [
+    25.4,
+    27
+   ],
+   "shift_frames": 68.5,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "20",
+   "voice": "V",
+   "take": "vt",
+   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "segment": [
+    15.067,
+    16.31
+   ],
+   "cuts": [],
+   "tempo": 1.06,
+   "start": 28.1215,
+   "end": 29.2942,
+   "target": [
+    27.1,
+    28.3
+   ],
+   "shift_frames": 61.3,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "21",
+   "voice": "V",
+   "take": "vt",
+   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "segment": [
+    16.56,
+    17.21
+   ],
+   "cuts": [],
+   "tempo": 1.06,
+   "start": 29.6542,
+   "end": 30.2674,
+   "target": [
+    28.75,
+    29.45
+   ],
+   "shift_frames": 54.2,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "22",
+   "voice": "S",
+   "take": "student",
+   "generation": "XQNQps65Jb1TqhVvG4kq",
+   "segment": [
+    16.64,
+    17.86
+   ],
+   "cuts": [],
+   "tempo": 1.06,
+   "start": 30.4174,
+   "end": 31.5683,
+   "target": [
+    29.6,
+    30.5
+   ],
+   "shift_frames": 49.0,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "23",
+   "voice": "V",
+   "take": "vt",
+   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "segment": [
+    17.6,
+    18.57
+   ],
+   "cuts": [],
+   "tempo": 1.06,
+   "start": 31.6883,
+   "end": 32.6034,
+   "target": [
+    30.6,
+    31.4
+   ],
+   "shift_frames": 65.3,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  },
+  {
+   "id": "24",
+   "voice": "V",
+   "take": "vt",
+   "generation": "V09bFCGc6hiPn2bkYb1B",
+   "segment": [
+    19.04,
+    19.83
+   ],
+   "cuts": [],
+   "tempo": 1.06,
+   "start": 32.8034,
+   "end": 33.5487,
+   "target": [
+    31.65,
+    32.55
+   ],
+   "shift_frames": 69.2,
+   "boundaries": "estimated",
+   "speedup_pct": 6.0
+  }
+ ],
+ "music": {
+  "entryFrame": 625,
+  "raysFrame": 615,
+  "applyFrame": 1215,
+  "applyBarFrame": 1225,
+  "logoFrame": 1825,
+  "logoBarFrame": 1825,
+  "resolveFrame": 2016
+ },
+ "violations": [
+  "L05 starts 22 frames after its target (rule: ≤ 12)",
+  "L06 starts 19 frames after its target (rule: ≤ 12)",
+  "L07 starts 22 frames after its target (rule: ≤ 12)",
+  "L08 starts 48 frames after its target (rule: ≤ 12)",
+  "L09 starts 31 frames after its target (rule: ≤ 12)",
+  "L10 starts 76 frames after its target (rule: ≤ 12)",
+  "L11 starts 67 frames after its target (rule: ≤ 12)",
+  "L12 starts 42 frames after its target (rule: ≤ 12)",
+  "L13 starts 85 frames after its target (rule: ≤ 12)",
+  "L14 starts 39 frames after its target (rule: ≤ 12)",
+  "L15 starts 41 frames after its target (rule: ≤ 12)",
+  "L16 starts 44 frames after its target (rule: ≤ 12)",
+  "L17 starts 71 frames after its target (rule: ≤ 12)",
+  "L18 starts 75 frames after its target (rule: ≤ 12)",
+  "L19 starts 68 frames after its target (rule: ≤ 12)",
+  "L20 starts 61 frames after its target (rule: ≤ 12)",
+  "L21 starts 54 frames after its target (rule: ≤ 12)",
+  "L22 starts 49 frames after its target (rule: ≤ 12)",
+  "L23 starts 65 frames after its target (rule: ≤ 12)",
+  "L24 starts 69 frames after its target (rule: ≤ 12)",
+  "L24 ends 33.55s, leaving 0.45s (< 0.8s hold + loop)",
+  "music enters 10 frames after the rays so Apply/logo stay on the bar grid",
+  "Apply lands -10 frames from its bar"
+ ],
+ "boundaries": "estimated"
+}

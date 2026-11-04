@@ -1,0 +1,21 @@
+node_modules/
+# renders and dev stills (final deliverables are whitelisted)
+out/*
+!out/voluntrack-deadline-passed.mp4
+!out/cover.png
+!out/captions.srt
+!out/qa/
+out/qa/stills/
+# generated intermediates — scripts/build.sh recreates them
+build/*
+!build/placement.json
+!build/timeline.json
+public/audio/*.wav
+public/audio/*.mp3
+public/audio/sfx/
+public/audio/stems/
+public/frames/
+public/grain/
+public/stamps/
+# voice takes (downloaded from ElevenLabs)
+voice_src/takes/

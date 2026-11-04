@@ -1,0 +1,29 @@
+{
+  "name": "voluntrack-deadline-passed",
+  "version": "1.0.0",
+  "private": true,
+  "description": "VolunTrack \u2014 \"Deadline Passed\" 34 s vertical reel, built in Remotion.",
+  "scripts": {
+    "postinstall": "node scripts/assets.mjs",
+    "studio": "remotion studio src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "build": "bash scripts/build.sh",
+    "render": "node scripts/render-parts.mjs"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.540",
+    "@remotion/google-fonts": "4.0.540",
+    "@remotion/media-utils": "4.0.540",
+    "@remotion/motion-blur": "4.0.540",
+    "@remotion/renderer": "4.0.540",
+    "qrcode": "1.5.4",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.540"
+  },
+  "devDependencies": {
+    "@types/qrcode": "1.5.5",
+    "@types/react": "18.3.12",
+    "typescript": "5.6.3"
+  }
+}
