@@ -2,13 +2,16 @@
 
   1. npx remotion render <comp>: H.264, CRF 16, yuv420p, 60 fps, no audio
   2. per cut, an ffmpeg mix: adelay per cue, amix normalize=0, afade on the
-     ends, then a two-pass loudnorm (I=-22, TP=-3, linear mode)
+     ends, then two-pass linear levelling: ebur128 measure, one volume gain
+     to I=-22 LUFS, capped by TP -3 dBTP and a +3 dB lift
   3. mux: ffmpeg -i video.mp4 -i mix.wav -c:v copy -c:a aac -b:a 256k -shortest
   4. out/XO-Main-9x16.mp4, out/XO-Main-16x9.mp4, out/XO-Sting-9x16.mp4,
      out/XO-Sting-16x9.mp4  (+ out/render-report.json)
 
 Natural sound only, from public/sfx/ (made with ElevenLabs Sound Effects).
 Missing files are skipped and listed; with none at all a silent track is muxed.
+The client asked for no sound, so public/sfx is empty and the films are silent;
+--temp-sfx mixes the synthesised stand-ins from public/sfx-temp instead.
 
 Usage
   python3 scripts/render.py                       # video + sound + mux, all four
@@ -235,25 +238,19 @@ def prepare_cue(cue: Cue, cut: str, sfx_dir: Path, tmp: Path) -> dict | None:
             "length_s": round(length, 3), "notes": note}
 
 
-def two_pass_loudnorm(mix: Path, master: Path) -> dict:
-    def measure(extra=""):
-        r = run(["ffmpeg", "-hide_banner", "-nostdin", "-i", str(mix), "-af",
-                 f"loudnorm=I={LOUD_I}:TP={LOUD_TP}:LRA=50:print_format=json{extra}", "-f", "null", "-"])
-        return json.loads(r.stderr[r.stderr.rfind("{"):])
-
-    m = measure()
-    mi, mtp = float(m["input_i"]), float(m["input_tp"])
-    # linear only: the gain may neither breach -3 dBTP nor lift the room tone more than MAX_LIFT_DB
+def normalise_linear(mix: Path, master: Path) -> dict:
+    """Two passes, strictly linear: measure the mix with ebur128 (BS.1770, the meter QA uses),
+    then apply one plain gain. Nothing compresses or limits, so the room tone is never lifted
+    to hit a number. (loudnorm's own meter reads ~1 dB low on short, sparse mixes like these,
+    so its linear mode landed ~1 LU hot.)"""
+    m = loudness(mix)
+    mi, mtp = m["lufs"], m["true_peak"]
+    # the gain may neither breach -3 dBTP nor lift the room tone more than MAX_LIFT_DB
     gain = min(LOUD_I - mi, (LOUD_TP - 0.2) - mtp, MAX_LIFT_DB)
-    target = mi + gain
-    second = (f"loudnorm=I={target:.2f}:TP={LOUD_TP}:LRA=50:measured_I={m['input_i']}:measured_TP={m['input_tp']}:"
-              f"measured_LRA={m['input_lra']}:measured_thresh={m['input_thresh']}:offset={m['target_offset']}:"
-              f"linear=true:print_format=json,aresample={SR}")
-    r = run(["ffmpeg", "-hide_banner", "-nostdin", "-y", "-i", str(mix), "-af", second, "-c:a", "pcm_s24le", str(master)])
-    out = json.loads(r.stderr[r.stderr.rfind("{"):])
-    return {"measured_lufs": mi, "measured_tp": mtp, "applied_gain_db": round(gain, 2), "target_lufs": round(target, 2),
-            "normalization_type": out.get("normalization_type"), "output_lufs": float(out["output_i"]),
-            "output_tp": float(out["output_tp"])}
+    ffmpeg("-i", str(mix), "-af", f"volume={gain:.3f}dB,aresample={SR}", "-c:a", "pcm_s24le", str(master))
+    o = loudness(master)
+    return {"measured_lufs": mi, "measured_tp": mtp, "applied_gain_db": round(gain, 2), "target_lufs": round(mi + gain, 2),
+            "output_lufs": o["lufs"], "output_tp": o["true_peak"]}
 
 
 def build_mix(cut: str, sfx_dir: Path) -> dict:
@@ -284,7 +281,7 @@ def build_mix(cut: str, sfx_dir: Path) -> dict:
                  f"afade=t=in:d=0.005,afade=t=out:st={D - fo:.3f}:d={fo:.3f}:curve=qsin[m]")
     ffmpeg(*inputs, "-filter_complex", ";".join(parts), "-map", "[m]", "-ar", str(SR), "-c:a", "pcm_f32le", str(mix))
     info["mix_stats"] = astats(mix)
-    info["loudnorm"] = two_pass_loudnorm(mix, master)
+    info["level"] = normalise_linear(mix, master)
     return info
 
 
@@ -301,6 +298,8 @@ def main():
     ap.add_argument("--only", help="comma-separated composition ids")
     ap.add_argument("--audio-only", action="store_true", help="reuse out/video/*.mp4; re-mix and re-mux")
     ap.add_argument("--sfx-dir", default=str(PUBLIC / "sfx"))
+    ap.add_argument("--temp-sfx", action="store_true",
+                    help="use the synthesised stand-ins in public/sfx-temp (off: the client asked for no sound)")
     ap.add_argument("--concurrency", type=int, default=os.cpu_count() or 4)
     args = ap.parse_args()
 
@@ -326,21 +325,19 @@ def main():
         videos[comp] = v
 
     sfx_dir = Path(args.sfx_dir)
-    temp_dir = PUBLIC / "sfx-temp"
-    has_cues = lambda d: any((d / c.file).exists() or (d / c.file).with_suffix(".wav").exists() for c in SHEET["main"])
-    if args.sfx_dir == str(PUBLIC / "sfx") and not has_cues(sfx_dir) and has_cues(temp_dir):
-        sfx_dir = temp_dir
+    if args.temp_sfx:
+        sfx_dir = PUBLIC / "sfx-temp"
         report["temporary_sfx"] = True
         print(banner("SOUND: TEMPORARY SYNTHESISED CUES (public/sfx-temp) — put the real files in public/sfx"))
     for cut in sorted({COMPS[c] for c in comps}):
         info = build_mix(cut, sfx_dir)
         report["mixes"][cut] = info
         if info.get("silent"):
-            print(f"[sound] {cut}: no sfx found in {sfx_dir} -> silent track")
+            print(f"[sound] {cut}: no cues in {sfx_dir.relative_to(ROOT)} -> silent track")
         else:
-            ln = info["loudnorm"]
-            print(f"[sound] {cut}: {len(info['cues'])} cues, loudnorm {ln['normalization_type']} "
-                  f"{ln['applied_gain_db']:+.2f} dB -> {ln['output_lufs']:.1f} LUFS, {ln['output_tp']:.1f} dBTP")
+            ln = info["level"]
+            print(f"[sound] {cut}: {len(info['cues'])} cues, linear gain {ln['applied_gain_db']:+.2f} dB "
+                  f"-> {ln['output_lufs']:.1f} LUFS, {ln['output_tp']:.1f} dBTP")
         if info["missing"]:
             print(f"[sound] {cut}: MISSING {', '.join(info['missing'])} (rendered without)")
 
@@ -358,7 +355,7 @@ def main():
 
     OUT.mkdir(exist_ok=True)
     (OUT / "render-report.json").write_text(json.dumps(report, indent=2, default=str))
-    missing = sorted({m for i in report["mixes"].values() for m in i["missing"]})
+    missing = sorted({m for i in report["mixes"].values() if not i.get("silent") for m in i["missing"]})
     if missing:
         print(f"\nMissing sound files (add to {sfx_dir}, then run `npm run render -- --audio-only`):\n  " + "\n  ".join(missing))
     if report["standin_logo"]:

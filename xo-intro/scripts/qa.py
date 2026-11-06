@@ -363,7 +363,7 @@ def media_checks():
             iv = float(I.group(1)) if I and I.group(1) != "-inf" else -math.inf
             tp = float(TP.group(1)) if TP and TP.group(1) != "-inf" else -math.inf
             if not math.isfinite(iv) or iv <= -69.0:
-                check(f"audio loudness [{comp}]", None, "silent track (no sfx in public/sfx yet)")
+                check(f"audio [{comp}]", None, "silent track (the client asked for no sound)")
             else:
                 check(f"audio ~-22 LUFS, <= -3 dBTP [{comp}]", abs(iv + 22) <= 1.5 and tp <= -3.0,
                       f"{iv:.1f} LUFS integrated, {tp:.1f} dBTP")

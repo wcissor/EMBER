@@ -6,12 +6,13 @@ painted as an ensō in one breath and left open. Then only stillness and light.
 
 | Deliverable | Size | Length |
 | --- | --- | --- |
-| `out/XO-Main-9x16.mp4` | 1080×1920 | 12.0 s (720 frames) |
-| `out/XO-Main-16x9.mp4` | 1920×1080 | 12.0 s |
-| `out/XO-Sting-9x16.mp4` | 1080×1920 | 5.33 s (320 frames, ends on the logo) |
-| `out/XO-Sting-16x9.mp4` | 1920×1080 | 5.33 s |
+| `out/XO-Main-9x16.mp4` | 1080×1920 | 10.0 s (600 frames) |
+| `out/XO-Main-16x9.mp4` | 1920×1080 | 10.0 s |
+| `out/XO-Sting-9x16.mp4` | 1080×1920 | 4.45 s (267 frames, ends on the logo) |
+| `out/XO-Sting-16x9.mp4` | 1920×1080 | 4.45 s |
 
-All are H.264 CRF 16, yuv420p, BT.709, 60 fps, with AAC 256 kb/s natural sound.
+All are H.264 CRF 16, yuv420p, BT.709, 60 fps, with a silent AAC track (the
+client asked for no sound; see Sound).
 
 ## Logo
 
@@ -35,7 +36,7 @@ python3 -m pip install pillow numpy   # prep, sound and QA scripts
 | --- | --- |
 | `npm run studio` | Remotion Studio (runs prep first if needed) |
 | `npm run prep` | `scripts/prep.py`: alpha, stroke layers, debug, washi, komorebi |
-| `npm run render` | `scripts/render.py`: 4 videos → mix → loudnorm → mux |
+| `npm run render` | `scripts/render.py`: 4 videos → mix → linear loudness → mux |
 | `npm run render -- --audio-only` | re-mix and re-mux after adding sound files |
 | `npm run render -- --only XO-Sting-16x9` | one composition |
 | `npm run qa` | `scripts/qa.py`: the section-10 checklist → `out/qa/report.md` |
@@ -43,64 +44,69 @@ python3 -m pip install pillow numpy   # prep, sound and QA scripts
 
 ## Pace
 
-The client asked for a faster film, so it runs at 1.5× the brief's pace:
-Main 12 s, Sting 5.33 s. The pace is one number, `tempo` in `src/tempo.json`.
-Every beat of the brief's timeline is divided by it: fades, strokes, the light
-pass, the drying and the sound cues. The rhythm stays the same and only the
-speed changes. `1` restores the brief (18 s / 8 s); `2` gives 9 s / 4 s. After
-changing it, run `npm run sfx:temp` (while the sound is temporary) and then
+The client asked for a faster film, twice, so it runs at 1.8× the brief's
+pace: Main 10 s, Sting 4.45 s. The pace is one number, `tempo` in
+`src/tempo.json`. Every beat of the brief's timeline is divided by it: fades,
+strokes, the light pass, the drying and the sound cues. The rhythm stays the
+same and only the speed changes. `1` restores the brief (18 s / 8 s), `1.5`
+gives 12 s / 5.33 s and `2` gives 9 s / 4 s. After changing it, run
 `npm run build`.
 
-| Main | Brief (tempo 1) | Now (tempo 1.5) |
+| Main | Brief (tempo 1) | Now (tempo 1.8) |
 | --- | --- | --- |
-| Fade in | 0–1.5 s | 0–1.0 s |
-| X1 | 3.0–3.8 s | 2.0–2.53 s |
-| X2 | 5.2–5.9 s | 3.47–3.93 s |
-| O (ensō) | 7.0–10.0 s | 4.67–6.67 s |
-| Light pass | 11.0–14.0 s | 7.33–9.33 s |
-| Fade out | 16.8–18.0 s | 11.2–12.0 s |
+| Fade in | 0–1.5 s | 0–0.83 s |
+| X1 | 3.0–3.8 s | 1.67–2.12 s |
+| X2 | 5.2–5.9 s | 2.88–3.28 s |
+| O (ensō) | 7.0–10.0 s | 3.88–5.55 s |
+| Light pass | 11.0–14.0 s | 6.12–7.78 s |
+| Fade out | 16.8–18.0 s | 9.33–10.0 s |
 
 ## Sound
 
-Natural sound only. Put the ElevenLabs Sound Effects files in `public/sfx/`
-(the table is in `public/sfx/README.md`), then `npm run render -- --audio-only`.
-Missing files are skipped and listed. With none at all, a silent track is muxed.
+**The films are silent: the client asked for no sound.** They carry a silent
+AAC track, like the earlier cut the client approved. The sound pipeline stays
+in place for later:
 
-**Current status: temporary sound.** ElevenLabs refused generation because
-the account's subscription has a failed or incomplete payment. Until real
-cues exist, `scripts/make_temp_sfx.py` (`npm run sfx:temp`) synthesises
-physically-motivated stand-ins into `public/sfx-temp/`:
+- **Real cues:** put the ElevenLabs Sound Effects files in `public/sfx/` (the
+  table is in `public/sfx/README.md`), then run `npm run render -- --audio-only`.
+  Missing files are skipped and listed.
+- **Temporary cues:** `npm run sfx:temp` synthesises physically-motivated
+  stand-ins into `public/sfx-temp/`: brush strokes whose loudness and
+  brightness follow the stroke easings, a water drop with a rising bubble
+  resonance, a rin bowl with inharmonic, gently beating partials, and a
+  seamless room tone. `npm run render -- --audio-only --temp-sfx` mixes them in.
+  Regenerate them after changing the tempo.
+- **ElevenLabs:** the canvas "XO One Breath — natural sound" holds the six
+  prompts. Generation is refused because the account's subscription has a
+  failed or incomplete payment. It was tried twice, the second time on
+  6 Nov 2026, and nothing was charged. Its brush cues are cut for tempo 1.5
+  (0.75, 0.7 and 2 s). At another tempo, set them to the brief's stroke
+  lengths (0.8, 0.7 and 3 s) divided by the tempo, plus about 0.2 s of tail.
 
-- brush strokes whose loudness and brightness follow the brief's stroke easings
-- a water drop with a rising bubble resonance
-- a rin bowl with inharmonic, gently beating partials
-- a seamless room tone
-
-The render uses them only when `public/sfx/` is empty and says so loudly. The
-ElevenLabs canvas "XO One Breath — natural sound" already holds the six
-prompts, with the brush cues already cut to the strokes at tempo 1.5 (`brush`
-0.75 s, `brush-lift` 0.7 s, `brush-long` 2 s). A second run on 6 Nov 2026 hit
-the same payment error. Once billing is fixed, run it, save the chosen takes
-into `public/sfx/` under the names above, and re-run `--audio-only`.
+How a mix is built:
 
 - Each cue is gain-staged on what will actually play: the bell peaks at −6 dBFS,
   brushes and the water drop at −13 dBFS, the room tone at −38 dBFS RMS. Every
   cue gets 5 ms fades, and `brush-long` is time-stretched to the ensō's length
-  (2 s in Main, 1.33 s in the Sting at tempo 1.5). Cue times follow the tempo. If the room tone is shorter than the cut, it loops with equal-power
-  crossfades.
+  (3 s in Main and 2 s in the Sting, divided by the tempo). Cue times follow
+  the tempo. If the room tone is shorter than the cut, it loops with
+  equal-power crossfades.
 - `adelay` per cue → `amix normalize=0` → fades on the ends (Main follows the
-  0.8 s picture fade; the Sting gets a 0.4 s tail because it ends on the logo).
-- Two-pass `loudnorm` I=−22, TP=−3, **linear only**: LRA is set to 50, the gain is
-  capped by true-peak headroom and at +3 dB, and the result must report
-  `linear`. This keeps loudnorm from compressing, i.e. from lifting the room
-  tone to hit a number. The final MP4's audio is re-measured after AAC.
+  picture's fade-out, 1.2 s ÷ tempo; the Sting gets a 0.6 s ÷ tempo tail
+  because it ends on the logo).
+- Two passes, **linear only**: the mix is measured with `ebur128` (BS.1770, the
+  meter QA uses), then gets one plain `volume` gain toward I=−22 LUFS. The gain
+  is capped by true-peak headroom (TP −3) and at +3 dB. Nothing compresses or
+  limits, so the room tone is never lifted to hit a number. (`loudnorm` was
+  dropped: its meter read about 1 dB low on these short, sparse mixes, so its
+  linear mode landed 1 LU hot.) The final MP4's audio is re-measured after AAC.
 
 ## How it is built
 
 ```
 src/geometry.json   section-4 geometry, shared by the TS and Python code
 src/timeline.ts     section-6 timelines and easings (Main, Sting), scaled by the tempo
-src/tempo.json      the pace: 1.5 = the client's faster cut
+src/tempo.json      the pace: 1.8 = the client's faster cut
 src/look.ts         the style bible as numbers
 src/geometry.ts     layout per format, bristled mask lanes
 src/layers.tsx      paper canvas, SVG reveal, wet ink, light pass, vignette, grain, fade
@@ -118,7 +124,7 @@ Layer stack, bottom to top:
    revealed through an SVG mask, composited additively. X2 also carries its
    small crossing shade.
 3. **Wet ink**: the same pixels at +8% (108%) over the trailing 12% of the
-   path; dries over 48 frames at the brief's pace (32 at 1.5).
+   path; dries over 48 frames at the brief's pace (27 at 1.8).
 4. **Light pass** on the logo: a warm band masked by the full logo alpha
    (+8% at the peak, so warm light reaches ~9%, under the 10% cap).
 5. Dithered 8% **vignette**, 1.5% monochrome **film grain** (a new seeded
@@ -170,8 +176,8 @@ Layer stack, bottom to top:
 switches, then checks every automatable item in the brief's section 10:
 
 - the last logo frame equals all three layers fully shown, within 1/255
-- no leaks one frame before X2 and before the O starts (Main 207/279, Sting 67/103 at
-  tempo 1.5; QA reads the tempo)
+- no leaks one frame before X2 and before the O starts (Main 172/232, Sting 56/86 at
+  tempo 1.8; QA reads the tempo)
 - each mask is solid at progress 1, before the settle
 - the fronts are bristled, not a wipe (measured front raggedness)
 - komorebi ≤ 3% on the logo
@@ -182,7 +188,7 @@ switches, then checks every automatable item in the brief's section 10:
 - the 9:16 logo stays within y 300–1400
 - #0D0D0D first and last frames
 - the deliverables' codec, frames and BT.709 tags
-- loudness ≈ −22 LUFS and ≤ −3 dBTP
+- loudness ≈ −22 LUFS and ≤ −3 dBTP, when there is sound
 
 It also writes `out/qa/brush-fronts.png` and a timeline contact sheet per
 composition. Two checks stay manual: watch at full speed with sound on a phone
