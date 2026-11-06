@@ -338,7 +338,7 @@ def main():
             ln = info["level"]
             print(f"[sound] {cut}: {len(info['cues'])} cues, linear gain {ln['applied_gain_db']:+.2f} dB "
                   f"-> {ln['output_lufs']:.1f} LUFS, {ln['output_tp']:.1f} dBTP")
-        if info["missing"]:
+        if info["missing"] and not info.get("silent"):
             print(f"[sound] {cut}: MISSING {', '.join(info['missing'])} (rendered without)")
 
     for comp, v in videos.items():
