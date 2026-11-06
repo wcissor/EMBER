@@ -13,3 +13,4 @@ public/grain/
 public/tex/
 build/*.log
 src/Lab2.tsx
+build/render_log-*.json
