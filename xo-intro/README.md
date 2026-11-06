@@ -6,10 +6,10 @@ painted as an ensō in one breath and left open. Then only stillness and light.
 
 | Deliverable | Size | Length |
 | --- | --- | --- |
-| `out/XO-Main-9x16.mp4` | 1080×1920 | 10.0 s (600 frames) |
-| `out/XO-Main-16x9.mp4` | 1920×1080 | 10.0 s |
-| `out/XO-Sting-9x16.mp4` | 1080×1920 | 4.45 s (267 frames, ends on the logo) |
-| `out/XO-Sting-16x9.mp4` | 1920×1080 | 4.45 s |
+| `out/XO-Main-9x16.mp4` | 1080×1920 | 6.0 s (360 frames) |
+| `out/XO-Main-16x9.mp4` | 1920×1080 | 6.0 s |
+| `out/XO-Sting-9x16.mp4` | 1080×1920 | 2.67 s (160 frames, ends on the logo) |
+| `out/XO-Sting-16x9.mp4` | 1920×1080 | 2.67 s |
 
 All are H.264 CRF 16, yuv420p, BT.709, 60 fps, with a silent AAC track (the
 client asked for no sound; see Sound).
@@ -44,22 +44,22 @@ python3 -m pip install pillow numpy   # prep, sound and QA scripts
 
 ## Pace
 
-The client asked for a faster film, twice, so it runs at 1.8× the brief's
-pace: Main 10 s, Sting 4.45 s. The pace is one number, `tempo` in
+The client asked for a faster film three times, so it runs at 3× the brief's
+pace: Main 6 s, Sting 2.67 s. The pace is one number, `tempo` in
 `src/tempo.json`. Every beat of the brief's timeline is divided by it: fades,
 strokes, the light pass, the drying and the sound cues. The rhythm stays the
-same and only the speed changes. `1` restores the brief (18 s / 8 s), `1.5`
-gives 12 s / 5.33 s and `2` gives 9 s / 4 s. After changing it, run
-`npm run build`.
+same and only the speed changes. `1` restores the brief (18 s / 8 s). The
+earlier cuts were `1.5` (12 s / 5.33 s) and `1.8` (10 s / 4.45 s); `2.5` gives
+7.2 s / 3.2 s. After changing it, run `npm run build`.
 
-| Main | Brief (tempo 1) | Now (tempo 1.8) |
+| Main | Brief (tempo 1) | Now (tempo 3) |
 | --- | --- | --- |
-| Fade in | 0–1.5 s | 0–0.83 s |
-| X1 | 3.0–3.8 s | 1.67–2.12 s |
-| X2 | 5.2–5.9 s | 2.88–3.28 s |
-| O (ensō) | 7.0–10.0 s | 3.88–5.55 s |
-| Light pass | 11.0–14.0 s | 6.12–7.78 s |
-| Fade out | 16.8–18.0 s | 9.33–10.0 s |
+| Fade in | 0–1.5 s | 0–0.5 s |
+| X1 | 3.0–3.8 s | 1.0–1.27 s |
+| X2 | 5.2–5.9 s | 1.73–1.97 s |
+| O (ensō) | 7.0–10.0 s | 2.33–3.33 s |
+| Light pass | 11.0–14.0 s | 3.67–4.67 s |
+| Fade out | 16.8–18.0 s | 5.6–6.0 s |
 
 ## Sound
 
@@ -106,7 +106,7 @@ How a mix is built:
 ```
 src/geometry.json   section-4 geometry, shared by the TS and Python code
 src/timeline.ts     section-6 timelines and easings (Main, Sting), scaled by the tempo
-src/tempo.json      the pace: 1.8 = the client's faster cut
+src/tempo.json      the pace: 3 = the client's fast cut
 src/look.ts         the style bible as numbers
 src/geometry.ts     layout per format, bristled mask lanes
 src/layers.tsx      paper canvas, SVG reveal, wet ink, light pass, vignette, grain, fade
@@ -124,7 +124,7 @@ Layer stack, bottom to top:
    revealed through an SVG mask, composited additively. X2 also carries its
    small crossing shade.
 3. **Wet ink**: the same pixels at +8% (108%) over the trailing 12% of the
-   path; dries over 48 frames at the brief's pace (27 at 1.8).
+   path; dries over 48 frames at the brief's pace (16 at 3).
 4. **Light pass** on the logo: a warm band masked by the full logo alpha
    (+8% at the peak, so warm light reaches ~9%, under the 10% cap).
 5. Dithered 8% **vignette**, 1.5% monochrome **film grain** (a new seeded
@@ -176,8 +176,8 @@ Layer stack, bottom to top:
 switches, then checks every automatable item in the brief's section 10:
 
 - the last logo frame equals all three layers fully shown, within 1/255
-- no leaks one frame before X2 and before the O starts (Main 172/232, Sting 56/86 at
-  tempo 1.8; QA reads the tempo)
+- no leaks one frame before X2 and before the O starts (Main 103/139, Sting 33/51 at
+  tempo 3; QA reads the tempo)
 - each mask is solid at progress 1, before the settle
 - the fronts are bristled, not a wipe (measured front raggedness)
 - komorebi ≤ 3% on the logo
