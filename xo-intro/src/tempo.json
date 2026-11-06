@@ -1,0 +1,4 @@
+{
+  "_comment": "Pace of the whole film. The brief's timeline (Main 18 s, Sting 8 s at 60 fps) is divided by this: 1.0 = the brief, 1.5 = the client's 'faster' cut (Main 12 s, Sting 5.33 s). Read by src/timeline.ts, scripts/render.py, scripts/make_temp_sfx.py and scripts/qa.py.",
+  "tempo": 1.5
+}

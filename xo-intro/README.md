@@ -6,10 +6,10 @@ painted as an ensō in one breath and left open. Then only stillness and light.
 
 | Deliverable | Size | Length |
 | --- | --- | --- |
-| `out/XO-Main-9x16.mp4` | 1080×1920 | 18.0 s (1080 frames) |
-| `out/XO-Main-16x9.mp4` | 1920×1080 | 18.0 s |
-| `out/XO-Sting-9x16.mp4` | 1080×1920 | 8.0 s (480 frames, ends on the logo) |
-| `out/XO-Sting-16x9.mp4` | 1920×1080 | 8.0 s |
+| `out/XO-Main-9x16.mp4` | 1080×1920 | 12.0 s (720 frames) |
+| `out/XO-Main-16x9.mp4` | 1920×1080 | 12.0 s |
+| `out/XO-Sting-9x16.mp4` | 1080×1920 | 5.33 s (320 frames, ends on the logo) |
+| `out/XO-Sting-16x9.mp4` | 1920×1080 | 5.33 s |
 
 All are H.264 CRF 16, yuv420p, BT.709, 60 fps, with AAC 256 kb/s natural sound.
 
@@ -41,17 +41,24 @@ python3 -m pip install pillow numpy   # prep, sound and QA scripts
 | `npm run qa` | `scripts/qa.py`: the section-10 checklist → `out/qa/report.md` |
 | `npm run build` | all of the above |
 
-## Client addition: one drop of ink
+## Pace
 
-Once the ensō is complete, a single drop of fresh cream ink gathers at its
-lowest solid point, just before the stroke dries into its tail. It runs a short
-way down (≈40 px on screen), slows as the ink runs out, and stops. It is
-teardrop-shaped, wet (108%) while moving, dries to the logo's cream, and
-catches the warm light pass. There are no glints.
+The client asked for a faster film, so it runs at 1.5× the brief's pace:
+Main 12 s, Sting 5.33 s. The pace is one number, `tempo` in `src/tempo.json`.
+Every beat of the brief's timeline is divided by it: fades, strokes, the light
+pass, the drying and the sound cues. The rhythm stays the same and only the
+speed changes. `1` restores the brief (18 s / 8 s); `2` gives 9 s / 4 s. After
+changing it, run `npm run sfx:temp` (while the sound is temporary) and then
+`npm run build`.
 
-- Main: forms at 10.2 s and stops by 12.3 s. Sting: 4.7 s to 6.2 s.
-- Shape: `drip` in `src/geometry.json`. Timing: `drip` in `src/timeline.ts`.
-- `drip: false` turns it off.
+| Main | Brief (tempo 1) | Now (tempo 1.5) |
+| --- | --- | --- |
+| Fade in | 0–1.5 s | 0–1.0 s |
+| X1 | 3.0–3.8 s | 2.0–2.53 s |
+| X2 | 5.2–5.9 s | 3.47–3.93 s |
+| O (ensō) | 7.0–10.0 s | 4.67–6.67 s |
+| Light pass | 11.0–14.0 s | 7.33–9.33 s |
+| Fade out | 16.8–18.0 s | 11.2–12.0 s |
 
 ## Sound
 
@@ -71,16 +78,18 @@ physically-motivated stand-ins into `public/sfx-temp/`:
 
 The render uses them only when `public/sfx/` is empty and says so loudly. The
 ElevenLabs canvas "XO One Breath — natural sound" already holds the six
-prompts. Once billing is fixed, run it, save the chosen takes into
-`public/sfx/` under the names above, and re-run `--audio-only`.
+prompts, with the brush cues already cut to the strokes at tempo 1.5 (`brush`
+0.75 s, `brush-lift` 0.7 s, `brush-long` 2 s). A second run on 6 Nov 2026 hit
+the same payment error. Once billing is fixed, run it, save the chosen takes
+into `public/sfx/` under the names above, and re-run `--audio-only`.
 
 - Each cue is gain-staged on what will actually play: the bell peaks at −6 dBFS,
   brushes and the water drop at −13 dBFS, the room tone at −38 dBFS RMS. Every
-  cue gets 5 ms fades, and `brush-long` is time-stretched to 3 s (Main) or 2 s
-  (Sting). If the room tone is shorter than the cut, it loops with equal-power
+  cue gets 5 ms fades, and `brush-long` is time-stretched to the ensō's length
+  (2 s in Main, 1.33 s in the Sting at tempo 1.5). Cue times follow the tempo. If the room tone is shorter than the cut, it loops with equal-power
   crossfades.
 - `adelay` per cue → `amix normalize=0` → fades on the ends (Main follows the
-  1.2 s picture fade; the Sting gets a 0.6 s tail because it ends on the logo).
+  0.8 s picture fade; the Sting gets a 0.4 s tail because it ends on the logo).
 - Two-pass `loudnorm` I=−22, TP=−3, **linear only**: LRA is set to 50, the gain is
   capped by true-peak headroom and at +3 dB, and the result must report
   `linear`. This keeps loudnorm from compressing, i.e. from lifting the room
@@ -90,7 +99,8 @@ prompts. Once billing is fixed, run it, save the chosen takes into
 
 ```
 src/geometry.json   section-4 geometry, shared by the TS and Python code
-src/timeline.ts     section-6 timelines and easings (Main, Sting)
+src/timeline.ts     section-6 timelines and easings (Main, Sting), scaled by the tempo
+src/tempo.json      the pace: 1.5 = the client's faster cut
 src/look.ts         the style bible as numbers
 src/geometry.ts     layout per format, bristled mask lanes
 src/layers.tsx      paper canvas, SVG reveal, wet ink, light pass, vignette, grain, fade
@@ -108,7 +118,7 @@ Layer stack, bottom to top:
    revealed through an SVG mask, composited additively. X2 also carries its
    small crossing shade.
 3. **Wet ink**: the same pixels at +8% (108%) over the trailing 12% of the
-   path; dries over 48 frames.
+   path; dries over 48 frames at the brief's pace (32 at 1.5).
 4. **Light pass** on the logo: a warm band masked by the full logo alpha
    (+8% at the peak, so warm light reaches ~9%, under the 10% cap).
 5. Dithered 8% **vignette**, 1.5% monochrome **film grain** (a new seeded
@@ -160,7 +170,8 @@ Layer stack, bottom to top:
 switches, then checks every automatable item in the brief's section 10:
 
 - the last logo frame equals all three layers fully shown, within 1/255
-- no leaks one frame before X2 and before the O starts (Main 311/419, Sting 101/155)
+- no leaks one frame before X2 and before the O starts (Main 207/279, Sting 67/103 at
+  tempo 1.5; QA reads the tempo)
 - each mask is solid at progress 1, before the settle
 - the fronts are bristled, not a wipe (measured front raggedness)
 - komorebi ≤ 3% on the logo
@@ -175,8 +186,8 @@ switches, then checks every automatable item in the brief's section 10:
 
 It also writes `out/qa/brush-fronts.png` and a timeline contact sheet per
 composition. Two checks stay manual: watch at full speed with sound on a phone
-at full brightness, and if anything feels on time, slow it by 10% in
-`src/timeline.ts`.
+at full brightness, and judge the pace. It is the client's call now: change
+`tempo` in `src/tempo.json`.
 
 ## Notes
 

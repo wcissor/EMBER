@@ -1,6 +1,7 @@
 """XO "One Breath" — QA (brief section 10). Renders stills through the real
 composition (with QA switches), measures them, and writes out/qa/report.md
-plus contact sheets. Frame numbers come straight from the brief.
+plus contact sheets. Frame numbers are the brief's, divided by the tempo in
+src/tempo.json exactly as src/timeline.ts does it.
 
   python3 scripts/qa.py            # stills + checks (+ audio/video checks if out/*.mp4 exist)
   python3 scripts/qa.py --no-render  # re-measure existing stills
@@ -31,13 +32,35 @@ COMPS = {
     "XO-Sting-9x16": ("vertical", "sting"),
     "XO-Sting-16x9": ("horizontal", "sting"),
 }
-# Section 6
-BRIEF = {
-    "main": {"x1": (180, 228), "x2": (312, 354), "o": (420, 600), "light": (660, 840), "last_logo": 1007, "frames": 1080,
-             "drip": 612},
-    "sting": {"x1": (48, 90), "x2": (102, 138), "o": (156, 276), "light": (276, 396), "last_logo": 479, "frames": 480,
-              "drip": 282},
+TEMPO = float(json.loads((ROOT / "src" / "tempo.json").read_text())["tempo"])
+
+
+def at(brief_frame: float) -> int:
+    """A brief frame at the film's tempo; Math.round, as in src/timeline.ts."""
+    return math.floor(brief_frame / TEMPO + 0.5)
+
+
+# Section 6 at tempo 1, then scaled. Main's last logo frame is the one before the fade-out.
+_BRIEF1 = {
+    "main": {"x1": (180, 228), "x2": (312, 354), "o": (420, 600), "light": (660, 840), "frames": 1080, "fade_out": 1008},
+    "sting": {"x1": (48, 90), "x2": (102, 138), "o": (156, 276), "light": (276, 396), "frames": 480, "fade_out": None},
 }
+BRIEF = {
+    cut: {
+        **{k: (at(b[k][0]), at(b[k][1])) for k in ("x1", "x2", "o", "light")},
+        "frames": at(b["frames"]),
+        "last_logo": at(b["fade_out"]) - 1 if b["fade_out"] else at(b["frames"]) - 1,
+    }
+    for cut, b in _BRIEF1.items()
+}
+MAIN = BRIEF["main"]
+# Probe frames (brief frames, scaled): fronts mid-stroke, komorebi, light-band centre, wet ink, grain, vignette.
+FRONT = {"x1": at(204), "x2": at(336), "o": at(500)}
+KOMOREBI = (("XO-Main-16x9", at(700)), ("XO-Main-16x9", at(950)), ("XO-Main-9x16", at(950)), ("XO-Sting-9x16", at(450)))
+LIGHT_F = at(750)
+WET_F = at(470)
+GRAIN_F = 2 * (at(900) // 2)  # even, so f and f+1 share a grain seed
+VIG_F = at(150)
 QUIET = {"grain": False}
 
 
@@ -117,42 +140,34 @@ def plan(j: Jobs):
         for f in sorted(set(keys)):
             j.add(comp, f, f"{k}-tl-{f:04d}")
 
-    # the drop of ink (client addition): absent until the ensō is complete, then the only addition
-    for comp in ("XO-Main-16x9", "XO-Sting-9x16"):
-        fmt, cut = COMPS[comp]
-        b = BRIEF[cut]
-        j.add(comp, b["drip"], f"{comp}-drip-before", **QUIET)
-        j.add(comp, b["drip"], f"{comp}-drip-before-off", **QUIET, drip=False)
-        j.add(comp, b["last_logo"], f"{comp}-drip-end", **QUIET)
-        j.add(comp, b["last_logo"], f"{comp}-drip-end-off", **QUIET, drip=False)
     m = "XO-Main-16x9"
     # 3. coverage at progress 1, before the settle (wet off; other layers hidden in the reference)
-    for s, f, hide in (("x1", 228, ["x2", "o"]), ("x2", 354, ["o"]), ("o", 600, [])):
+    for s, f, hide in (("x1", MAIN["x1"][1], ["x2", "o"]), ("x2", MAIN["x2"][1], ["o"]), ("o", MAIN["o"][1], [])):
         j.add(m, f, f"cov-{s}", wet=False)
         j.add(m, f, f"cov-{s}-ref", reveal="full", hide=hide)
     # 4. brush fronts mid-stroke (both formats)
     for comp in ("XO-Main-16x9", "XO-Main-9x16"):
-        for s, f in (("x1", 204), ("x2", 336), ("o", 500)):
+        for s, f in FRONT.items():
             j.add(comp, f, f"{comp}-front-{s}")
             others = [o for o in ("x1", "x2", "o") if o != s]
             j.add(comp, f, f"{comp}-front-{s}-mask", showMask=s, hide=others, grain=False, komorebi=False,
                   vignette=False, light=False)
     # 5. komorebi on the logo
-    for comp, f in (("XO-Main-16x9", 700), ("XO-Main-16x9", 950), ("XO-Main-9x16", 950), ("XO-Sting-9x16", 450)):
+    for comp, f in KOMOREBI:
         j.add(comp, f, f"kom-{comp}-{f}-on", **QUIET, light=False)
         j.add(comp, f, f"kom-{comp}-{f}-off", **QUIET, light=False, komorebi=False)
     # 6. light pass levels and banding
-    j.add(m, 750, "light-on", **QUIET)
-    j.add(m, 750, "light-off", **QUIET, light=False)
+    j.add(m, LIGHT_F, "light-on", **QUIET)
+    j.add(m, LIGHT_F, "light-off", **QUIET, light=False)
     # 7. wet ink brightness near the brush
-    j.add(m, 470, "wet-on", **QUIET)
-    j.add(m, 470, "wet-off", **QUIET, wet=False)
+    j.add(m, WET_F, "wet-on", **QUIET)
+    j.add(m, WET_F, "wet-off", **QUIET, wet=False)
     # 8. grain: same pattern for 2 frames, then a new one (camera + komorebi frozen)
-    for f in (900, 901, 902):
-        j.add(m, f, f"grain-{f}", pushIn=False, komorebi=False)
+    for n in range(3):
+        j.add(m, GRAIN_F + n, f"grain-{n}", pushIn=False, komorebi=False)
     # 9. vignette (banding check)
-    j.add(m, 150, "vig-on", grain=False, komorebi=False)
-    j.add(m, 150, "vig-off", grain=False, komorebi=False, vignette=False)
+    j.add(m, VIG_F, "vig-on", grain=False, komorebi=False)
+    j.add(m, VIG_F, "vig-off", grain=False, komorebi=False, vignette=False)
 
 
 # ---------------------------------------------------------------------------
@@ -205,8 +220,7 @@ def analyse():
     # 1. final logo frame
     for comp in COMPS:
         d = np.abs(img(f"{comp}-last") - img(f"{comp}-last-full")).max()
-        check(f"final logo exact [{comp}]", d <= ONE + 1e-6,
-              f"max diff {d * 255:.2f}/255 vs all three layers fully shown (+ the ink drop in both)")
+        check(f"final logo exact [{comp}]", d <= ONE + 1e-6, f"max diff {d * 255:.2f}/255 vs all three layers fully shown")
     # 2. leaks
     for comp, (fmt, cut) in COMPS.items():
         b = BRIEF[cut]
@@ -240,7 +254,7 @@ def analyse():
             sheet.paste(t, ((n % 3) * 550, (n // 3) * 550))
         sheet.save(QA / "brush-fronts.png")
     # 5. komorebi on the logo
-    for comp, f in (("XO-Main-16x9", 700), ("XO-Main-16x9", 950), ("XO-Main-9x16", 950), ("XO-Sting-9x16", 450)):
+    for comp, f in KOMOREBI:
         on, off = box5(lum(img(f"kom-{comp}-{f}-on"))), box5(lum(img(f"kom-{comp}-{f}-off")))
         logo = box5((lum(img(f"kom-{comp}-{f}-off")) > 0.75).astype(np.float32)) > 0.999
         paper = box5((lum(img(f"kom-{comp}-{f}-off")) < 0.3).astype(np.float32)) > 0.999
@@ -282,11 +296,12 @@ def analyse():
     ratio = float((won[ink] / woff[ink]).max())
     check("wet ink ~108% behind the brush", 1.05 <= ratio <= 1.09, f"peak wet/dry ratio {ratio:.3f}")
     # 9. grain cadence
-    g0, g1, g2 = img("grain-900"), img("grain-901"), img("grain-902")
+    g0, g1, g2 = img("grain-0"), img("grain-1"), img("grain-2")
     d01 = float(np.abs(g0 - g1).max())
     d12 = float(np.abs(g1 - g2).mean() * 255)
     check("grain: new seeded pattern every 2 frames", d01 == 0.0 and d12 > 0.3,
-          f"frames 900/901 identical ({d01 * 255:.0f}/255), 901->902 mean change {d12:.2f} levels")
+          f"frames {GRAIN_F}/{GRAIN_F + 1} identical ({d01 * 255:.0f}/255), {GRAIN_F + 1}->{GRAIN_F + 2} "
+          f"mean change {d12:.2f} levels")
     away = box5((lum(g1) < 0.3).astype(np.float32)) > 0.999
     sig = float(np.std((lum(g2) - lum(g1))[away]) / math.sqrt(2) * 255)
     check("grain amplitude ~1.5%", 1.2 <= sig <= 2.6,
@@ -297,26 +312,11 @@ def analyse():
         ys = np.nonzero(dd.any(axis=1))[0]
         check(f"9:16 logo within y 300-1400 [{comp}]", ys.min() >= 300 and ys.max() <= 1400,
               f"logo spans y {ys.min()}-{ys.max()} at full push-in")
-    # the drop of ink
-    for comp in ("XO-Main-16x9", "XO-Sting-9x16"):
-        fmt, cut = COMPS[comp]
-        d0 = np.abs(img(f"{comp}-drip-before") - img(f"{comp}-drip-before-off")).max()
-        check(f"ink drop absent until the ensō is done [{comp}]", d0 <= ONE + 1e-6,
-              f"frame {BRIEF[cut]['drip']}: max diff {d0 * 255:.2f}/255 with/without the drop")
-        dd = np.abs(lum(img(f"{comp}-drip-end")) - lum(img(f"{comp}-drip-end-off"))) > 2 * ONE
-        ys, xs = np.nonzero(dd)
-        lay = GEOMETRY["layout"][fmt]
-        k = GEOMETRY["logoWidthPx"] / (GEOMETRY["inkBBox"][2] - GEOMETRY["inkBBox"][0]) * 1.0349
-        ex = lay["pivot"][0] + k * (GEOMETRY["drip"]["x"] - OPTICAL_CENTRE[0])
-        ey = lay["pivot"][1] + k * (GEOMETRY["drip"]["y"] - OPTICAL_CENTRE[1])
-        ok = len(xs) > 0 and abs(xs.mean() - ex) < 6 and ys.min() >= ey - 6 and ys.max() <= ey + k * GEOMETRY["drip"]["length"] + 4
-        check(f"ink drop is the only addition, below the ensō [{comp}]", ok,
-              f"{len(xs)} px changed, x {xs.min() if len(xs) else 0}-{xs.max() if len(xs) else 0}, "
-              f"y {ys.min() if len(ys) else 0}-{ys.max() if len(ys) else 0} (expected near x {ex:.0f}, from y {ey:.0f})")
     # first/last frames
-    f0, f1 = img("XO-Main-16x9-tl-0000"), img("XO-Main-16x9-tl-1079")
+    last = MAIN["frames"] - 1
+    f0, f1 = img("XO-Main-16x9-tl-0000"), img(f"XO-Main-16x9-tl-{last:04d}")
     check("Main opens and closes on #0D0D0D", np.all(np.round(f0 * 255) == 13) and np.all(np.round(f1 * 255) == 13),
-          "frames 0 and 1079 are exactly #0D0D0D")
+          f"frames 0 and {last} are exactly #0D0D0D")
     # contact sheets
     for comp, (fmt, cut) in COMPS.items():
         names = sorted(p.stem for p in STILLS.glob(f"{comp}-tl-*.png"))
@@ -379,7 +379,7 @@ def write_report(meta):
         tag = {True: "PASS", False: "**FAIL**", None: "info"}[ok]
         lines.append(f"| {tag} | {name} | {detail} |")
     lines += ["", "Visual items (watch on a phone at full brightness, with sound): `brush-fronts.png`, "
-              "`*-timeline.png`. If anything feels on time, slow it by 10% (timeline.ts).", ""]
+              "`*-timeline.png`. The pace is one number: tempo in src/tempo.json.", ""]
     (QA / "report.md").write_text("\n".join(lines))
     fails = [r for r in results if r[1] is False]
     print(f"\n{len([r for r in results if r[1]])} passed, {len(fails)} failed -> {QA / 'report.md'}")

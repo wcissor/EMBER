@@ -1,5 +1,6 @@
 import {Easing} from 'remotion';
 import type {StrokeKey} from './geometry';
+import tempo from './tempo.json';
 
 export type Cut = 'main' | 'sting';
 
@@ -19,8 +20,6 @@ export type Timeline = {
 	light: [number, number];
 	/** Wet ink dries to the base over this many frames after each stroke. */
 	dry: number;
-	/** One drop of fresh ink after the ensō: forms (swell), runs, then dries. */
-	drip: {start: number; swell: number; run: number; dry: number};
 };
 
 // Brush easings from the brief (section 6). The Sting uses the same hands.
@@ -28,11 +27,12 @@ const X1_EASE: Bezier = [0.4, 0, 0.6, 0.85]; // press, glide, still moving at th
 const X2_EASE: Bezier = [0.5, 0, 0.9, 0.6]; // speeds up into the quick lift
 const O_EASE: Bezier = [0.45, 0, 0.75, 0.85]; // one breath; leaves the paper moving
 
-export const TIMELINES: Record<Cut, Timeline> = {
+// The brief's timeline (section 6), in frames at 60 fps, at the brief's pace.
+const BRIEF: Record<Cut, Timeline> = {
 	main: {
-		duration: 1080, // 18.0 s
+		duration: 1080, // 18.0 s at tempo 1
 		fadeIn: [0, 90],
-		fadeOut: [1008, 1079],
+		fadeOut: [1008, 1080],
 		strokes: {
 			x1: {start: 180, end: 228, easing: X1_EASE},
 			x2: {start: 312, end: 354, easing: X2_EASE},
@@ -40,10 +40,9 @@ export const TIMELINES: Record<Cut, Timeline> = {
 		},
 		light: [660, 840],
 		dry: 48,
-		drip: {start: 612, swell: 24, run: 100, dry: 60},
 	},
 	sting: {
-		duration: 480, // 8.0 s, no fade-out: ends on the logo
+		duration: 480, // 8.0 s at tempo 1, no fade-out: ends on the logo
 		fadeIn: [0, 48],
 		fadeOut: null,
 		strokes: {
@@ -53,9 +52,30 @@ export const TIMELINES: Record<Cut, Timeline> = {
 		},
 		light: [276, 396],
 		dry: 48,
-		drip: {start: 282, swell: 18, run: 72, dry: 48},
 	},
 };
+
+/** Pace of the whole film (src/tempo.json): every beat of the brief's timeline
+ * is divided by it, so the rhythm is kept and only the speed changes. */
+export const TEMPO = tempo.tempo;
+
+const at = (f: number) => Math.round(f / TEMPO);
+const scale = (tl: Timeline): Timeline => {
+	const duration = at(tl.duration);
+	return {
+		duration,
+		fadeIn: [at(tl.fadeIn[0]), at(tl.fadeIn[1])],
+		// the fade-out always lands fully dark on the very last frame
+		fadeOut: tl.fadeOut ? [at(tl.fadeOut[0]), duration - 1] : null,
+		strokes: Object.fromEntries(
+			Object.entries(tl.strokes).map(([k, s]) => [k, {...s, start: at(s.start), end: at(s.end)}]),
+		) as Timeline['strokes'],
+		light: [at(tl.light[0]), at(tl.light[1])],
+		dry: at(tl.dry),
+	};
+};
+
+export const TIMELINES: Record<Cut, Timeline> = {main: scale(BRIEF.main), sting: scale(BRIEF.sting)};
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 const ramp = (f: number, a: number, b: number) => clamp01((f - a) / (b - a));
@@ -110,29 +130,3 @@ export const lightProgress = (frame: number, tl: Timeline) => {
 };
 
 export const smooth = sineInOut;
-
-export type DripState = {
-	/** 0..1 bead size while it forms at the edge */
-	swell: number;
-	/** 0..1 of the full run length */
-	run: number;
-	/** speed, 0..1, for the bead's slight stretch while it moves */
-	speed: number;
-	/** 1 fresh -> 0 dry */
-	wet: number;
-};
-
-const dripRun = Easing.bezier(0.33, 0, 0.18, 1); // eases away, slows as the ink runs out
-const dripSwell = Easing.out(Easing.cubic);
-
-export const dripState = (frame: number, tl: Timeline): DripState | null => {
-	const d = tl.drip;
-	const t = frame - d.start;
-	if (t <= 0) return null;
-	const swell = dripSwell(Math.min(1, t / d.swell));
-	const r = ramp(t, d.swell, d.swell + d.run);
-	const run = dripRun(r);
-	const speed = r > 0 && r < 1 ? Math.min(1, (dripRun(Math.min(1, r + 0.02)) - run) / 0.02 / 1.6) : 0;
-	const wet = 1 - sineInOut(ramp(t, d.swell + d.run, d.swell + d.run + d.dry));
-	return {swell, run, speed, wet};
-};

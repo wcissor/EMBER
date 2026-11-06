@@ -43,8 +43,12 @@ COMPS = {
     "XO-Sting-9x16": "sting",
     "XO-Sting-16x9": "sting",
 }
-DURATION = {"main": 18.0, "sting": 8.0}          # 1080 / 480 frames at 60 fps
-FRAMES = {"main": 1080, "sting": 480}
+# Pace (src/tempo.json): the brief's times are divided by TEMPO, exactly as
+# src/timeline.ts divides its frames, so sound and picture stay locked.
+TEMPO = float(json.loads((ROOT / "src" / "tempo.json").read_text())["tempo"])
+FRAMES = {"main": int(1080 / TEMPO + 0.5), "sting": int(480 / TEMPO + 0.5)}  # Math.round, as timeline.ts
+DURATION = {k: v / 60 for k, v in FRAMES.items()}
+T = lambda brief_s: round(brief_s / TEMPO, 4)  # brief seconds -> film seconds
 
 
 @dataclass
@@ -64,24 +68,24 @@ TARGET = {"room": ("rms", -38.0), "fx": ("peak", -13.0), "bell": ("peak", -6.0)}
 
 SHEET = {
     "main": [
-        Cue("room-tone.mp3", 0.0, "room", loop=True, fade_in=1.5, fade_out=1.2),
-        Cue("water-drop.mp3", 2.4, "fx"),
-        Cue("brush.mp3", 3.0, "fx"),
-        Cue("brush-lift.mp3", 5.2, "fx"),
-        Cue("brush-long.mp3", 7.0, "fx", fit=3.0),
-        Cue("bell.mp3", 11.2, "bell"),
+        Cue("room-tone.mp3", 0.0, "room", loop=True, fade_in=T(1.5), fade_out=T(1.2)),
+        Cue("water-drop.mp3", T(2.4), "fx"),
+        Cue("brush.mp3", T(3.0), "fx"),
+        Cue("brush-lift.mp3", T(5.2), "fx"),
+        Cue("brush-long.mp3", T(7.0), "fx", fit=T(3.0)),
+        Cue("bell.mp3", T(11.2), "bell"),
     ],
     "sting": [
-        Cue("room-tone.mp3", 0.0, "room", loop=True, fade_in=0.8),
-        Cue("brush.mp3", 0.8, "fx"),
-        Cue("brush-lift.mp3", 1.7, "fx"),
-        Cue("brush-long.mp3", 2.6, "fx", fit=2.0),
-        Cue("bell.mp3", 4.7, "bell"),
+        Cue("room-tone.mp3", 0.0, "room", loop=True, fade_in=T(0.8)),
+        Cue("brush.mp3", T(0.8), "fx"),
+        Cue("brush-lift.mp3", T(1.7), "fx"),
+        Cue("brush-long.mp3", T(2.6), "fx", fit=T(2.0)),
+        Cue("bell.mp3", T(4.7), "bell"),
     ],
 }
 # Master fade at the end: Main follows the picture's 1.2 s fade to #0D0D0D;
 # the Sting ends on the logo, so only a short tail to avoid a hard cut.
-MASTER_FADE_OUT = {"main": 1.2, "sting": 0.6}
+MASTER_FADE_OUT = {"main": T(1.2), "sting": T(0.6)}
 
 LOUD_I, LOUD_TP = -22.0, -3.0
 MAX_LIFT_DB = 3.0  # never push the whole mix (room tone included) up more than this

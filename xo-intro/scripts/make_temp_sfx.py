@@ -7,9 +7,9 @@ when public/sfx/ has no cues, and says so loudly.
 
   room-tone   quiet tatami room: still air + faint garden rustle, seamless loop
   water-drop  one drop into a stone basin: impact, rising bubble resonance
-  brush       X1 stroke  (0.8 s), loudness/brightness follow the brief's easing
-  brush-lift  X2 stroke  (0.7 s), speeds up into a quick airy lift
-  brush-long  the ensō   (3.0 s), one breath, the brush leaves still moving
+  brush       X1 stroke  (0.8 s / tempo), loudness/brightness follow the brief's easing
+  brush-lift  X2 stroke  (0.7 s / tempo), speeds up into a quick airy lift
+  brush-long  the ensō   (3.0 s / tempo), one breath, the brush leaves still moving
   bell        small rin bowl: inharmonic partials with slow beating
 
 Deterministic (fixed seeds). 48 kHz stereo, 24-bit WAV.
@@ -255,12 +255,15 @@ def main():
     rng = np.random.default_rng(20261106)
     ir = room_ir(rng)
     X1, X2, O = (0.4, 0, 0.6, 0.85), (0.5, 0, 0.9, 0.6), (0.45, 0, 0.75, 0.85)
+    # stroke lengths at the film's pace (src/tempo.json): X1 0.8 s, X2 0.7 s, ensō 3 s at tempo 1
+    tempo = float(__import__("json").loads((ROOT / "src" / "tempo.json").read_text())["tempo"])
+    x1, x2, o = 0.8 / tempo, 0.7 / tempo, 3.0 / tempo
     cues = {
         "room-tone": room_tone(rng),
         "water-drop": water_drop(rng, ir),
-        "brush": brush(rng, ir, X1, 0.8, 1.0, lift=0.1, press=1.0),
-        "brush-lift": brush(rng, ir, X2, 0.7, 0.9, lift=1.0, press=0.8),
-        "brush-long": brush(rng, ir, O, 3.0, 3.0, lift=0.4, press=1.1, wet_db=-15),
+        "brush": brush(rng, ir, X1, x1, x1 + 0.2, lift=0.1, press=1.0),
+        "brush-lift": brush(rng, ir, X2, x2, x2 + 0.2, lift=1.0, press=0.8),
+        "brush-long": brush(rng, ir, O, o, o, lift=0.4, press=1.1, wet_db=-15),
         "bell": rin_bell(rng, ir),
     }
     for name, x in cues.items():
