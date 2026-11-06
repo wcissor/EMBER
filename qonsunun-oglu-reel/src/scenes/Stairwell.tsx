@@ -11,6 +11,7 @@ import {SON, makeKid, BASE, Figure, poseAt, secondary, withBlink, idle, joints, 
 import {Phone, Cat} from '../chars/props';
 import {Halo, VT_RIM, VT_CORE, VT_BLUE} from '../chars/vtbits';
 import {EASES} from '../camera';
+import {walkCycle, tiptoeCycle, stairDrop} from '../chars/gait';
 
 const KID = makeKid(() => true);
 const STEP = {w: 30, h: 25};
@@ -77,18 +78,17 @@ export const StairwellScene: React.FC<{lang: Lang}> = ({lang}) => {
   const camS0 = lerp(0.86, 1, arrive);
   const push = EASES.inOut(clamp01((f - (B.tumbleLand + 6)) / 22));
   const camS = camS0 * lerp(1, 1.55, push) * (1 + 0.04 * clamp01((f - start) / (B.uiIn - start)));
-  const focus = {x: lerp(540, 380, push), y: lerp(640 + (f - start) * 0.25, 745, push)};
+  const focus = {x: lerp(540, 430, push), y: lerp(640 + (f - start) * 0.25, 790, push)};
   const tr = `translate(540 670) scale(${camS}) translate(${-focus.x} ${-focus.y})`;
 
   // ── the son: walks down flight B slowly, stops 4 steps down, checks his phone (glowing softly blue)
-  const sonSteps = Math.min(4.8, Math.max(0, (f - start + 6) / 6.5));
-  const sonPos = onB(sonSteps);
-  const walking = f < start + 24;
-  const ph = (f - start) * 0.45;
-  const sonBase: Partial<Pose> = {profile: 1, facing: 1, armR: [60, -60], armL: [8, 10], headTilt: 10, lookY: 0.6, headTurn: 0.5};
-  const sonWalk = walking
-    ? {legL: [-18 * Math.sin(ph), 10 + 10 * Math.max(0, Math.sin(ph))] as [number, number], legR: [18 * Math.sin(ph), 10 + 10 * Math.max(0, -Math.sin(ph))] as [number, number]}
-    : {legL: [-4, 2] as [number, number], legR: [6, 4] as [number, number]};
+  const SON_FROM = 2;
+  const SON_TO = 5;
+  const sonPhi = Math.min((SON_TO - SON_FROM) * Math.PI, Math.max(0, (f - start) * 0.31));
+  const walking = sonPhi < (SON_TO - SON_FROM) * Math.PI;
+  const sonPos = {x: FL_B.x0 + (SON_FROM + sonPhi / Math.PI + 0.5) * STEP.w, y: FL_B.y0 + SON_FROM * STEP.h + stairDrop(sonPhi, STEP.h)};
+  const sonBase: Partial<Pose> = {profile: 1, facing: 1, armR: [60, 60], armL: [8, 10], headTilt: 10, lookY: 0.6, headTurn: 0.5};
+  const sonWalk = walking ? {...walkCycle(SON, sonPhi, 1), armR: [60, 60] as [number, number], headTilt: 10} : {legL: [-3, 0] as [number, number], legR: [5, -4] as [number, number]};
   const sonKeys: Key[] = [
     {at: B.catStep + 3, pose: {headTurn: -0.6, lookX: -1, lookY: -0.3, headTilt: -8, eyes: 'wide'}, kind: 'snap'},
     {at: B.catStep + 10, pose: {eyes: 'open'}, kind: 'settle'},
@@ -112,20 +112,15 @@ export const StairwellScene: React.FC<{lang: Lang}> = ({lang}) => {
   const haloPos = {x: sj.head.x + Math.sin(ha) * 16, y: sj.head.y - Math.cos(ha) * 16};
 
   // ── the kid: tiptoes down flight A, steps on the cat's tail at catStep, tumbles three steps, lands at his feet
-  const tipU = clamp01((f - start) / Math.max(1, B.catStep - start));
-  const kidSteps = 12 * tipU;
+  const KID_FROM = 7;
+  const tipPhi = Math.max(0, Math.min((12 - KID_FROM) * Math.PI, ((f - start) / Math.max(1, B.catStep - start)) * (12 - KID_FROM) * Math.PI));
   const tumbleU = clamp01((f - B.catStep - 2) / Math.max(1, B.tumbleLand - B.catStep - 2));
   const tumbling = f >= B.catStep + 2 && f < B.tumbleLand;
   const landed = f >= B.tumbleLand;
-  const kidPosA = onA(kidSteps);
-  const kidTumble = {x: lerp(onA(12).x - 10, onB(1.3).x, tumbleU), y: lerp(onA(12).y, onB(1.6).y, tumbleU) - Math.sin(tumbleU * Math.PI) * 60};
-  const kidPos = f < B.catStep + 2 ? (f < B.catStep ? kidPosA : {x: onA(12).x - 6, y: onA(12).y}) : landed ? {x: onB(1.3).x, y: onB(1.6).y} : kidTumble;
-  const tp = (f - start) * 0.5;
-  const tiptoe: Partial<Pose> = {
-    profile: 1, facing: -1, lean: -14, armL: [120 + 10 * Math.sin(tp), -70], armR: [110 - 10 * Math.sin(tp), -80],
-    legL: [-30 * Math.sin(tp) - 10, 40 + 30 * Math.max(0, Math.sin(tp))], legR: [30 * Math.sin(tp) - 10, 40 + 30 * Math.max(0, -Math.sin(tp))],
-    lookX: -0.8, lookY: 0.6, headTurn: -0.7, sy: 1 + 0.03 * Math.sin(tp * 2),
-  };
+  const kidPosA = {x: FL_A.x0 - (KID_FROM + tipPhi / Math.PI + 0.5) * STEP.w, y: FL_A.y0 + KID_FROM * STEP.h + stairDrop(tipPhi, STEP.h)};
+  const kidTumble = {x: lerp(onA(12).x + 14, onB(3.4).x, tumbleU), y: lerp(onA(12).y, onB(3.5).y, tumbleU) - Math.sin(tumbleU * Math.PI) * 60};
+  const kidPos = f < B.catStep + 2 ? (f < B.catStep ? kidPosA : {x: onA(12).x - 6, y: onA(12).y}) : landed ? {x: onB(3.4).x, y: onB(3.5).y} : kidTumble;
+  const tiptoe: Partial<Pose> = {...tiptoeCycle(KID as Build, tipPhi, -1), lookX: -0.8, lookY: 0.6, headTurn: -0.7};
   const kidBase = {...BASE, ...tiptoe} as Pose;
   const kidKeys: Key[] = [
     {at: B.catStep, pose: {eyes: 'wide', lookY: -0.5, sy: 1.1, sx: 0.94, armL: [160, -10], armR: [160, -10]}, kind: 'snap'},
@@ -134,7 +129,7 @@ export const StairwellScene: React.FC<{lang: Lang}> = ({lang}) => {
     {at: B.tumbleLand + 3, pose: {sy: 1, sx: 1}, kind: 'settle'},
     {at: B.tumbleLand + 10, pose: {eyes: 'open', lookY: -0.6, headTilt: -16}, kind: 'snap'},
     // L13: grabs his sleeve, eyes wide
-    {at: B.grab - 2, pose: {armR: [150, -40], armL: [120, -30], lean: 6, eyes: 'wide', headTilt: -20, lookX: 0.6, lookY: -1}, antic: 3},
+    {at: B.grab - 2, pose: {armR: [150, 10], armL: [125, 15], lean: 6, eyes: 'wide', headTilt: -20, lookX: 0.6, lookY: -1}, antic: 3},
     // L15: lit blue, eyes wide
     {at: B.vtLit, pose: {eyes: 'wide', headTilt: -24, lean: 2}, kind: 'pose'},
   ];
@@ -148,7 +143,7 @@ export const StairwellScene: React.FC<{lang: Lang}> = ({lang}) => {
   // ── the cat: asleep on the half-landing; yowl + leap at catStep
   const catU = clamp01((f - B.catStep) / 10);
   const catLeap = clamp01((f - B.catStep - 3) / 12);
-  const catX = 226;
+  const catX = 266;
 
   const wallTone = mix('#3A3326', VT_BLUE, blue * 0.55);
   const lowerTone = mix('#24301F', VT_BLUE, blue * 0.45);
@@ -234,7 +229,7 @@ export const StairwellScene: React.FC<{lang: Lang}> = ({lang}) => {
           </g>
           {/* blue light on the kid's face */}
           {f >= B.vtLit - 4 && (
-            <circle cx={onB(1.3).x} cy={onB(1.6).y - 70} r={120} fill="url(#phoneBloom)" opacity={0.5 * clamp01((f - B.vtLit + 4) / 6)} />
+            <circle cx={onB(3.4).x} cy={onB(3.5).y - 70} r={120} fill="url(#phoneBloom)" opacity={0.5 * clamp01((f - B.vtLit + 4) / 6)} />
           )}
         </g>
         {/* the light fills the frame (ramps over ≥10 frames: no flash) */}

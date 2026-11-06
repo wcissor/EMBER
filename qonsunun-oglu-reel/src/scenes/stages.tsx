@@ -6,6 +6,7 @@ import {mix, rgba} from '../color';
 import {clamp01, lerp, springAt, noise1D, ease, EASE, blueOn} from '../motion';
 import {ANA, SON, QONSU, CHILD, RUNNER, makeKid, BASE, Figure, joints, poseAt, secondary, withBlink, idle, type Key, type Pose, type Build} from '../chars/rig';
 import {Phone, TeaGlass, Cup, Sapling, Modem, Board, Laptop} from '../chars/props';
+import {runCycle} from '../chars/gait';
 import {BlueRoom, Halo, VT_RIM, VT_CORE} from '../chars/vtbits';
 import {WINDOW_D_SUBTITLE} from '../config';
 
@@ -141,11 +142,8 @@ export const TeachStage: React.FC<SP & {start: number; level: number; who: 'son'
   );
 };
 
-/** A running pose at phase ph (radians). */
-const runPose = (ph: number, facing: 1 | -1): Partial<Pose> => {
-  const s = Math.sin(ph);
-  return {profile: 1, facing, lean: 14, legL: [-38 * s + 8, 50 + 30 * Math.max(0, s)], legR: [38 * s + 8, 50 + 30 * Math.max(0, -s)], armL: [40 * s, -80], armR: [-40 * s, -80], y: -2 * Math.abs(Math.cos(ph))};
-};
+/** A running pose at phase ph (radians): see src/chars/gait.ts. */
+const runPose = (ph: number, facing: 1 | -1): Partial<Pose> => runCycle(RUNNER, ph, facing);
 
 // ───────────────────────────── Window C: water at the marathon; one cup flies, he catches it ─────────────────────────────
 export const WaterStage: React.FC<SP & {start: number; level: number; who: 'son' | 'kid'}> = ({f, zpx, start, level, who}) => {
@@ -163,9 +161,9 @@ export const WaterStage: React.FC<SP & {start: number; level: number; who: 'son'
   const cupX = lerp(560, 395, u);
   const cupY = 610 - Math.sin(u * Math.PI) * 330 - u * 60;
   const runners = [0, 1, 2, 3, 4].map((i) => {
-    const t0 = start - 10 + i * 9;
-    const x = -200 + (f - t0) * 95;
-    return {i, x, ph: (f - t0) * 0.9 + i};
+    const t0 = start - 12 + i * 10;
+    const x = -200 + (f - t0) * 68; // ~620 units per stride pair at 0.7 rad/frame: feet don't slide
+    return {i, x, ph: (f - t0) * 0.7 + i * 1.3};
   });
   return (
     <g>
@@ -195,7 +193,7 @@ export const WaterStage: React.FC<SP & {start: number; level: number; who: 'son'
           <g key={r.i}>
             {[3, 2, 1].map((k) => (
               <g key={k} opacity={0.12 * (4 - k)}>
-                <Actor b={RUNNER} base={runPose(r.ph - k * 0.3, 1)} keys={[]} f={f} seed={`rn-${r.i}`} x={r.x - k * 34} y={FLOOR + 20} s={5.6} zpx={zpx} rim={VT_RIM} rimDir={[-1, -0.8]} />
+                <Actor b={RUNNER} base={runPose(r.ph - k * 0.23, 1)} keys={[]} f={f} seed={`rn-${r.i}`} x={r.x - k * 22} y={FLOOR + 20} s={5.6} zpx={zpx} rim={VT_RIM} rimDir={[-1, -0.8]} />
               </g>
             ))}
             <Actor b={RUNNER} base={runPose(r.ph, 1)} keys={[]} f={f} seed={`rn-${r.i}`} x={r.x} y={FLOOR + 20} s={5.6} zpx={zpx} rim={VT_RIM} rimDir={[-1, -0.8]}
@@ -260,20 +258,23 @@ export const KidRoomStage: React.FC<SP & {blue: number; amber: number; phase: 's
 
   // the kid
   const flip = B.flip;
+  // S3: on his back across the bed, legs straight up the wall (the tall headboard), phone held up over his face
+  const LIE: Partial<Pose> = {profile: 1, facing: -1, rot: 90, x: -27, y: 36, lean: 0, legL: [92, 0], legR: [86, -6], armL: [116, -22], armR: [110, -30], headTilt: 20, headTurn: 0, lookX: -0.6, lookY: 0.1};
+  const STAND = {rot: 0, x: -12.5, y: 31.8, profile: 0, facing: 1 as const};
   const kidBase: Partial<Pose> = phase === 's3'
-    ? {rot: 180, x: 0, y: -6, legL: [-3, 0], legR: [5, 0], armL: [170, 10], armR: [150, 30], headTurn: 0, lookY: 0.4, lookX: 0, lean: 0}
+    ? LIE
     : {y: 22, legL: [88, -88], legR: [84, -84], armR: [40, -70], armL: [20, 30], lookY: 0.5, headTilt: 8, lean: 4};
   const kidKeys: Key[] = phase === 's3'
     ? [
-        {at: B.eyesSlide, pose: {lookX: 1, lookY: -0.2}, kind: 'snap'},
-        {at: B.eyesSlide + 12, pose: {lookX: 0, lookY: 0.4}, kind: 'settle'},
-        {at: B.plugReach + 22, pose: {lookX: 0.6, eyes: 'wide'}, kind: 'snap'},
+        // on "Mən?.." his eyes slide toward her (the door), then back to the phone
+        {at: B.eyesSlide, pose: {lookY: -1, lookX: 0.25}, kind: 'snap'},
+        {at: B.eyesSlide + 12, pose: {lookY: 0.1, lookX: -0.6}, kind: 'settle'},
+        {at: B.plugReach + 22, pose: {lookY: -1, lookX: 0.2, eyes: 'wide'}, kind: 'snap'},
         // flip upright in one move: stretch on the way up, squash on landing (f452–464)
-        {at: flip, pose: {rot: 0, y: 0, x: 40, legL: [6, 0], legR: [6, 0], armL: [150, 0], armR: [160, 0], sy: 1.15, sx: 0.92, eyes: 'wide', lookY: -0.6}, antic: 3},
-        {at: flip + 9, pose: {sy: 0.9, sx: 1.08, legL: [20, -30], legR: [20, -30]}, kind: 'pose', antic: 1},
+        {at: flip, pose: {...STAND, legL: [6, 0], legR: [6, 0], armL: [140, 10], armR: [150, 10], sy: 1.15, sx: 0.92, headTilt: 0, eyes: 'wide', lookX: 0.4, lookY: -0.7}, antic: 3},
+        {at: flip + 9, pose: {sy: 0.9, sx: 1.08, legL: [22, -38], legR: [20, -36]}, kind: 'pose', antic: 1},
         {at: flip + 13, pose: {sy: 1, sx: 1, legL: [4, 0], legR: [4, 0], armR: [150, -20], lookY: -0.9}, kind: 'settle'},
-        {at: B.bolt - 6, pose: {armR: [40, -40], armL: [30, 30], lookY: 0, lookX: 1, headTurn: 0.6, eyes: 'open'}},
-        {at: B.bolt, pose: {profile: 1, facing: 1, x: 120, y: 32, lean: 22, legL: [-40, 70], legR: [45, 30], armL: [50, -80], armR: [-40, -80]}, kind: 'slow', dur: 10},
+        {at: B.bolt - 6, pose: {armR: [40, 40], armL: [30, 30], lookY: 0, lookX: 1, headTurn: 0.6, eyes: 'open'}},
       ]
     : phase === 's5'
       ? [{at: B.bedroomBlue + 2, pose: {eyes: 'smile', headTurn: 0.3, lookY: 0.2}}]
@@ -281,7 +282,15 @@ export const KidRoomStage: React.FC<SP & {blue: number; amber: number; phase: 's
   const phoneScreen = phase === 's3' ? C.phoneWhite : C.phoneWhite;
   // phone flies up on the flip and he catches it
   const phoneFly = phase === 's3' ? clamp01((f - flip) / 14) : 0;
-  const kidVisible = phase !== 's6' && !(phase === 's3' && f > B.bolt + 9);
+  const kidVisible = phase !== 's6' && !(phase === 's3' && f >= B.bolt);
+  // the dash out of the door: a real run cycle, from where he landed to beyond the doorway before the slam
+    const boltModAt = (ff: number) => (p: Pose): Pose => {
+    if (phase !== 's3' || ff < B.bolt) return p;
+    const u = clamp01((ff - B.bolt) / Math.max(4, B.doorSlam - B.bolt));
+    const run = runCycle(KID_HOOD, (ff - B.bolt) * 0.85, 1, {lean: 20, reach: 1.15});
+    return {...p, ...run, x: lerp(STAND.x, 118, u * u * (3 - 2 * u)), y: STAND.y + (run.y ?? 0), rot: 0, sx: 1, sy: 1, headTurn: 0.6} as Pose;
+  };
+  const boltMod = boltModAt(f);
 
   // Ana in the doorway
   const anaBase: Partial<Pose> = {x: 0, armL: [40, -112], armR: [40, -112], facing: -1, headTurn: -0.3, lookX: -0.5};
@@ -341,11 +350,14 @@ export const KidRoomStage: React.FC<SP & {blue: number; amber: number; phase: 's
       <rect x={88} y={470} width={8} height={90} fill={C.shadow} />
       <path d="M60 470 l18 -60 h28 l18 60 z" fill={mix(C.amber, '#FFE2B0', 0.5)} opacity={0.4 + 0.6 * lampGlow} />
       {/* bed */}
-      <rect x={170} y={520} width={22} height={310} fill={C.shadow} />
+      <rect x={150} y={230} width={74} height={600} fill="#4A2E1A" />
+      <rect x={150} y={230} width={74} height={600} fill={`url(#${roomId}-a)`} opacity={0.35} />
+      <rect x={218} y={230} width={6} height={600} fill="#7A4E2C" opacity={0.7} />
+      <rect x={146} y={222} width={82} height={12} fill={C.shadow} />
       <rect x={180} y={650} width={470} height={60} rx={10} fill={C.shadow} />
       <rect x={190} y={710} width={14} height={120} fill={C.shadow} />
       <rect x={624} y={710} width={14} height={120} fill={C.shadow} />
-      <rect x={205} y={620} width={110} height={34} rx={16} fill={C.shadow} />
+      <rect x={470} y={620} width={130} height={34} rx={16} fill={C.shadow} />
       {/* the kid */}
       {kidVisible && (
         <Actor
@@ -360,11 +372,12 @@ export const KidRoomStage: React.FC<SP & {blue: number; amber: number; phase: 's
           zpx={zpx}
           rim={phase === 's5' && blue > 0.5 ? VT_RIM : mix(C.amber, '#FFFFFF', 0.25)}
           rimDir={[-1, -0.6]}
-          holdR={phoneFly > 0 && phoneFly < 1 ? undefined : <Phone screen={phase === 's5' && blue > 0.5 ? VT_CORE : phoneScreen} glow={1} angle={phase === 's3' ? 180 : 0} />}
+          mod={boltMod}
+          holdR={phoneFly > 0 && phoneFly < 1 ? undefined : <Phone screen={phase === 's5' && blue > 0.5 ? VT_CORE : phoneScreen} glow={1} angle={phase === 's3' && f < flip ? -90 : 0} />}
         />
       )}
       {phase === 's3' && phoneFly > 0 && phoneFly < 1 && (
-        <g transform={`translate(${470 + phoneFly * 20} ${430 - Math.sin(phoneFly * Math.PI) * 190 + phoneFly * 30}) rotate(${phoneFly * 540}) scale(5.6)`}>
+        <g transform={`translate(${lerp(432, 487, phoneFly)} ${lerp(415, 262, phoneFly) - Math.sin(phoneFly * Math.PI) * 200}) rotate(${phoneFly * 540}) scale(5.6)`}>
           <Phone screen={phoneScreen} glow={0.6} />
         </g>
       )}
@@ -374,6 +387,15 @@ export const KidRoomStage: React.FC<SP & {blue: number; amber: number; phase: 's
           <Actor b={ANA} base={anaBase} keys={anaKeys} f={f} seed="ana-room" x={845} s={5.2} zpx={zpx} rim={'#FFD9A0'} rimDir={[-1, -0.4]} />
         </g>
       )}
+      {/* the dash past her: drawn in front, with a smear */}
+      {phase === 's3' && f >= B.bolt && f <= B.doorSlam &&
+        [3, 2, 1, 0].map((k) => (
+          <g key={k} opacity={k === 0 ? 1 : 0.16 * (4 - k)}>
+            <Actor b={KID_HOOD} base={kidBase} keys={kidKeys} f={f - k * 0.5} seed="kid" x={400} y={652} s={5.6} zpx={zpx}
+              rim={mix(C.amber, '#FFFFFF', 0.25)} rimDir={[-1, -0.6]} mod={boltModAt(f - k * 0.5)}
+              holdR={k === 0 ? <Phone screen={phoneScreen} glow={0.6} angle={0} /> : undefined} />
+          </g>
+        ))}
     </g>
   );
 };
@@ -424,13 +446,14 @@ export const QonsuOnBalcony: React.FC<{f: number; B: Record<string, number>; zpx
 
 export const QonsuInside: React.FC<{f: number; zpx: number; r: {x: number; y: number; w: number; h: number}}> = ({f, zpx, r}) => {
   const sofaY = r.y + r.h * 0.56 - 4; // the seat sits just above the parapet so the upside-down kid reads
-  const base: Partial<Pose> = {rot: 180, y: -6, legL: [-4, 0], legR: [6, 0], armL: [170, 10], armR: [150, 30], lookY: 0.4};
+  const base: Partial<Pose> = {profile: 1, facing: -1, rot: 90, x: -52, y: 34.2, legL: [92, 0], legR: [86, -6], armL: [116, -22], armR: [110, -30], headTilt: 20, lookX: -0.6, lookY: 0.1};
   return (
     <g>
       <rect x={r.x + 6} y={sofaY - 24} width={70} height={30} rx={6} fill={C.shadow} />
       <rect x={r.x + 4} y={sofaY - 46} width={14} height={52} rx={5} fill={C.shadow} />
-      <Actor b={Q_KID} base={base} keys={[]} f={f} seed="qkid" x={r.x + 42} y={sofaY - 24} s={0.5} zpx={zpx} rim={C.phoneWhite} rimDir={[-1, -0.6]}
-        holdR={<Phone screen={C.phoneWhite} angle={180} glow={1} />} />
+      <rect x={r.x + 3} y={sofaY - 60} width={6} height={66} fill={C.shadow} />
+      <Actor b={Q_KID} base={base} keys={[]} f={f} seed="qkid" x={r.x + 40} y={sofaY} s={0.5} zpx={zpx} rim={C.phoneWhite} rimDir={[-1, -0.6]}
+        holdR={<Phone screen={C.phoneWhite} angle={-90} glow={1} />} />
     </g>
   );
 };

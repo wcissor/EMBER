@@ -202,7 +202,11 @@ export const handAt = (b: Build, p: Pose, side: 'L' | 'R') => {
 };
 
 // ───────────────────────────── Builds ─────────────────────────────
-const torsoPath = (j: Joints, wTop: number, wHip: number, belly = 0, lean = 0) => {
+const torsoPath = (j: Joints, wTop: number, wHip: number, belly = 0, lean = 0, profile = 0) => {
+  const k = 1 - 0.28 * profile;
+  wTop *= k;
+  wHip *= k;
+  belly *= k;
   const up = rotv({x: 0, y: -1}, lean);
   const perp = rotv({x: 1, y: 0}, lean);
   const a = add(j.H, mul(perp, -wHip));
@@ -286,7 +290,7 @@ export const makeKid = (hood: () => boolean, opts: {id?: string; hairOnly?: bool
   },
   body: (j, p) => (
     <g>
-      <path d={torsoPath(j, 12.8, 11.5, 2, p.lean)} />
+      <path d={torsoPath(j, 12.8, 11.5, 2, p.lean, p.profile)} />
       <path d={`M${P(add(j.N, rotv({x: -8, y: 1}, p.lean)))} q8 5 16 0 l-2 6 h-12 z`} />
     </g>
   ),
@@ -317,7 +321,7 @@ export const SON: Build = {
     const card = add(add(j.N, mul(down, 14)), mul(perp, sw * 0.6 + p.headTurn * 1.2));
     return (
       <g>
-        <path d={torsoPath(j, 11.6, 9.6, 0.6, p.lean)} />
+        <path d={torsoPath(j, 11.6, 9.6, 0.6, p.lean, p.profile)} />
         <path d={`M${P(add(j.N, rotv({x: -5, y: -1}, p.lean)))} l5 4 l5 -4 l-1 3 l-4 3 l-4 -3 z`} />
         <path d={`M${P(add(j.N, mul(perp, -3.6)))} L${P(card)} L${P(add(j.N, mul(perp, 3.6)))}`} stroke="#2A3352" strokeWidth={0.9} fill="none" />
         <rect x={card.x - 2.6} y={card.y} width={5.2} height={6.6} rx={0.8} fill="#9AA6C8" transform={`rotate(${p.lean + sw} ${card.x} ${card.y})`} />
@@ -350,7 +354,7 @@ export const QONSU: Build = {
     const hem = j.H.y + 26;
     return (
       <g>
-        <path d={torsoPath(j, 11.5, 10.5, 2.4, p.lean)} />
+        <path d={torsoPath(j, 11.5, 10.5, 2.4, p.lean, p.profile)} />
         <path d={`M${top.x - 11} ${top.y} L${j.H.x - 17} ${hem} L${j.H.x + 17} ${hem} L${top.x + 11} ${top.y} Z`} />
       </g>
     );
@@ -375,7 +379,7 @@ export const QONSU: Build = {
 export const CHILD: Build = {
   id: 'child', hipY: 26, torso: 19, shoulderW: 8, hipW: 3.6, upperArm: 12.5, foreArm: 11.5, armW: 4.6, handR: 2.4,
   thigh: 12.5, shin: 12.5, legW: 5, foot: 7, headR: 8.2, neck: 1.5, eyeScale: 1.1,
-  body: (j, p) => <path d={torsoPath(j, 8, 8.5, 1.5, p.lean)} />,
+  body: (j, p) => <path d={torsoPath(j, 8, 8.5, 1.5, p.lean, p.profile)} />,
   head: (j) => (
     <g>
       <circle cx={j.head.x} cy={j.head.y} r={8.2} />
@@ -388,7 +392,7 @@ export const CHILD: Build = {
 export const RUNNER: Build = {
   id: 'runner', hipY: 47, torso: 31, shoulderW: 10, hipW: 4, upperArm: 15, foreArm: 14, armW: 5.8, handR: 2.8,
   thigh: 23, shin: 23, legW: 6.6, foot: 10, headR: 8.4, neck: 3,
-  body: (j, p) => <path d={torsoPath(j, 10.5, 9, 0.5, p.lean)} />,
+  body: (j, p) => <path d={torsoPath(j, 10.5, 9, 0.5, p.lean, p.profile)} />,
   head: (j) => <circle cx={j.head.x} cy={j.head.y} r={8.4} />,
 };
 

@@ -58,16 +58,55 @@ const Glass: React.FC<{style?: React.CSSProperties; children?: React.ReactNode}>
   </div>
 );
 
-/** The kid's thumb (silhouette, lit by the screen). Tip at 0,0. */
+/** The kid's thumb, seen from behind as it touches the screen: the nail, the knuckle, the base widening into the
+ *  palm and out of frame. Lit by the screen (VolunTrack blue rim). The pad's touch point is at 0,0. */
+const THUMB = [
+  'M -24 18 C -24 -6, 24 -6, 24 18',
+  'C 25 40, 28 60, 27 78 C 26 92, 29 110, 31 140',
+  'C 36 190, 60 240, 95 290 C 130 340, 190 380, 260 410',
+  'L 260 760 L -170 760',
+  'C -160 600, -126 430, -98 332 C -72 252, -37 200, -29 150',
+  'C -27 120, -26 96, -27 80 C -28 60, -25 38, -24 18 Z',
+].join(' ');
 const Thumb: React.FC<{press: number}> = ({press}) => (
-  <svg width={420} height={620} viewBox="-60 -40 420 620" style={{position: 'absolute', left: -60, top: -40, overflow: 'visible'}}>
-    <g transform={`scale(${1 - 0.04 * press})`}>
-      <path d="M-10 70 C-30 10 10 -32 46 -18 C78 -6 84 40 96 92 L150 300 C170 380 240 430 330 470 L330 600 L40 600 C20 470 10 330 -10 70 Z" fill={VT.rim} transform="translate(4 -4)" />
-      <path d="M-10 70 C-30 10 10 -32 46 -18 C78 -6 84 40 96 92 L150 300 C170 380 240 430 330 470 L330 600 L40 600 C20 470 10 330 -10 70 Z" fill={C.shadow} />
-      <path d="M6 18 C8 0 24 -8 38 -4 C52 0 58 14 56 30 C44 40 18 40 6 18 Z" fill={rgba(C.eye, 0.08)} />
+  <svg width={10} height={10} style={{position: 'absolute', left: 0, top: 0, overflow: 'visible'}}>
+    <defs>
+      <linearGradient id="thumbShade" x1="0" y1="0" x2="0.35" y2="1">
+        <stop offset="0%" stopColor="#1B2442" />
+        <stop offset="30%" stopColor="#0C1122" />
+        <stop offset="100%" stopColor={C.shadow} />
+      </linearGradient>
+      <linearGradient id="nailShade" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor={rgba(VT.core, 0.34)} />
+        <stop offset="100%" stopColor={rgba(VT.core, 0.06)} />
+      </linearGradient>
+    </defs>
+    <g transform={`rotate(-28) scale(${3.1 * (1 - 0.035 * press)}) translate(0 ${3 * press})`}>
+      <path d={THUMB} fill={VT.rim} transform="translate(-1.6 -1.2)" opacity={0.9} />
+      <path d={THUMB} fill="url(#thumbShade)" />
+      {/* the nail and its cuticle */}
+      <path d="M -14 4 C -14 -2, 16 -2, 16 4 L 15 30 C 15 38, -13 38, -13 30 Z" fill="url(#nailShade)" />
+      <path d="M -12 33 C -4 37, 6 37, 14 33" stroke={rgba(VT.core, 0.14)} strokeWidth={1.2} fill="none" />
+      {/* the knuckle crease */}
+      <path d="M -20 82 C -8 87, 10 87, 22 81" stroke={rgba(C.eye, 0.07)} strokeWidth={1.4} fill="none" />
+      <path d="M -18 90 C -6 94, 8 94, 20 89" stroke={rgba(C.eye, 0.05)} strokeWidth={1.1} fill="none" />
     </g>
   </svg>
 );
+
+/** A glass tap: a ring that spreads from the touch point. */
+const TapRipple: React.FC<{f: number; at: number; x: number; y: number}> = ({f, at, x, y}) => {
+  const u = (f - at) / 14;
+  if (u < 0 || u > 1) return null;
+  return (
+    <div style={{position: 'absolute', left: x - 90, top: y - 90, width: 180, height: 180, pointerEvents: 'none'}}>
+      <svg width={180} height={180}>
+        <circle cx={90} cy={90} r={12 + 70 * (1 - Math.pow(1 - u, 3))} fill="none" stroke={VT.core} strokeWidth={4 * (1 - u)} opacity={0.75 * (1 - u)} />
+        <circle cx={90} cy={90} r={10 + 18 * u} fill={VT.core} opacity={0.22 * (1 - u)} />
+      </svg>
+    </div>
+  );
+};
 
 export const UIMoment: React.FC<{lang: Lang}> = ({lang}) => {
   const f = useCurrentFrame();
@@ -190,9 +229,13 @@ export const UIMoment: React.FC<{lang: Lang}> = ({lang}) => {
           </div>
         );
       })}
+      {/* glass taps */}
+      <TapRipple f={f} at={B.type1} x={UI.x + 64 + 20} y={470} />
+      <TapRipple f={f} at={B.type6} x={UI.x + 64 + 78} y={470} />
+      <TapRipple f={f} at={B.tap} x={pillX} y={pillY} />
       {/* the thumb */}
       {thumbIn > 0 && thumbOut < 1 && (
-        <div style={{position: 'absolute', left: tx, top: ty, width: 0, height: 0, transform: 'scale(0.62) rotate(-14deg)', transformOrigin: '0 0'}}>
+        <div style={{position: 'absolute', left: tx, top: ty, width: 0, height: 0}}>
           <Thumb press={pressNow} />
         </div>
       )}
