@@ -29,6 +29,7 @@ export const ASSETS = {
 	x1: staticFile('layers/x1.png'),
 	x2: staticFile('layers/x2.png'),
 	o: staticFile('layers/o.png'),
+	x2shade: staticFile('layers/x2-shade.png'),
 };
 
 const abs: React.CSSProperties = {position: 'absolute', left: 0, top: 0};
@@ -295,32 +296,52 @@ export const LogoReveal: React.FC<LogoProps> = ({width, height, k, tx, ty, state
 						</React.Fragment>
 					))}
 		</defs>
-		{/* The three layers partition the logo's alpha, so adding them (plus-lighter)
-		    in an isolated group rebuilds the exact logo — no seams where they meet. */}
-		<g transform={`matrix(${k} 0 0 ${k} ${tx} ${ty})`} style={{isolation: 'isolate'}}>
-			{STROKES.map((s) => {
-				const visible = !hide.includes(s) && (full || state[s].phase !== 'hidden');
-				const masked = !full && isActive(state[s]);
-				if (showMask === s) {
-					return masked ? (
-						<rect key={s} x={0} y={0} width={CANVAS_W} height={CANVAS_H} fill="white" mask={`url(#reveal-${s})`} />
-					) : null;
-				}
+		<g transform={`matrix(${k} 0 0 ${k} ${tx} ${ty})`}>
+			{/* The three layers partition the logo's alpha, so adding them (plus-lighter)
+			    in an isolated group rebuilds the exact logo — no seams where they meet. */}
+			<g style={{isolation: 'isolate'}}>
+				{STROKES.map((s) => {
+					const visible = !hide.includes(s) && (full || state[s].phase !== 'hidden');
+					const masked = !full && isActive(state[s]);
+					if (showMask === s) {
+						return masked ? (
+							<rect key={s} x={0} y={0} width={CANVAS_W} height={CANVAS_H} fill="white" mask={`url(#reveal-${s})`} />
+						) : null;
+					}
+					return (
+						<image
+							key={s}
+							href={ASSETS[s]}
+							x={0}
+							y={0}
+							width={CANVAS_W}
+							height={CANVAS_H}
+							preserveAspectRatio="none"
+							visibility={visible ? 'visible' : 'hidden'}
+							mask={visible && masked ? `url(#reveal-${s})` : undefined}
+							style={{mixBlendMode: 'plus-lighter'}}
+						/>
+					);
+				})}
+			</g>
+			{/* X2's dark edge lines where it lies over X1: X1 stays continuous on its
+			    own; X2 brings this ground-coloured shade with its own mask. */}
+			{(() => {
+				const visible = !hide.includes('x2') && showMask !== 'x2' && (full || state.x2.phase !== 'hidden');
+				const masked = !full && isActive(state.x2);
 				return (
 					<image
-						key={s}
-						href={ASSETS[s]}
+						href={ASSETS.x2shade}
 						x={0}
 						y={0}
 						width={CANVAS_W}
 						height={CANVAS_H}
 						preserveAspectRatio="none"
 						visibility={visible ? 'visible' : 'hidden'}
-						mask={visible && masked ? `url(#reveal-${s})` : undefined}
-						style={{mixBlendMode: 'plus-lighter'}}
+						mask={visible && masked ? 'url(#reveal-x2)' : undefined}
 					/>
 				);
-			})}
+			})()}
 		</g>
 	</svg>
 );

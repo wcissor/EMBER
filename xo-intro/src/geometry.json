@@ -1,5 +1,5 @@
 {
-  "_comment": "Single source of truth for logo-canvas geometry (brief section 4/5/7). Canvas pixels of the 1518x1036 logo canvas. Read by src/*.ts and scripts/*.py.",
+  "_comment": "Single source of truth for logo-canvas geometry (brief section 4/5/7). Canvas pixels of the 1518x1036 logo canvas. Read by src/*.ts and scripts/*.py. startPad extends a mask path backwards to catch ink behind the brief's start point; it is 0 for the O because the ensō's dry tail runs into the gap right behind its start.",
   "canvas": [1518, 1036],
   "inkBBox": [400, 278, 1137, 720],
   "opticalCentre": [768, 499],
@@ -26,7 +26,7 @@
       "start": [816.9, 632.7],
       "maskPath": "M 816.9 632.7 A 167 167 0 0 1 906.3 357.7 A 167 167 0 0 1 1099.8 572.6 A 167 167 0 0 1 816.9 632.7",
       "maskWidth": 130,
-      "startPad": 16
+      "startPad": 0
     }
   },
   "layerRule": {

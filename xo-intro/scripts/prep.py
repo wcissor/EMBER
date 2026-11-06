@@ -27,6 +27,7 @@ from xo_common import (
     CANVAS_H,
     CANVAS_W,
     GOFUN,
+    GROUND,
     INK_BBOX,
     LAYERS,
     MASK_WIDTH,
@@ -60,20 +61,33 @@ EDGE_MARGIN = 12.0  # brush-edge filter reach (displacement 5 + blur ~2.3 sigma)
 # 1 + 2. alpha and stroke layers
 # --------------------------------------------------------------------------
 def extract_alpha(rgb: np.ndarray, brief_hi: bool) -> tuple[np.ndarray, dict]:
+    """a = clamp((luma - 53) / (hi - 53)), a = 0 below 0.015 (brief 3.1).
+
+    hi is the brief's 230 whenever the logo's solid ink is at least that bright
+    (the real XO file: interior luma ~228-233, so the dry-brush texture keeps
+    its tone). If the solid ink is darker than 230 (e.g. ink painted at exactly
+    #E6DCD1, luma 221), 230 would leave the whole logo semi-transparent, so hi
+    falls back to the measured solid-ink luma."""
     y = luma709(rgb)
-    ink = y[y > 150.0]
-    measured = float(np.median(ink)) if ink.size > 2000 else float(luma709(np.array(GOFUN, np.float32)))
-    hi = ALPHA_HI_BRIEF if brief_hi else measured
+    solid = y > 150.0
+    pad = np.pad(solid, 3)
+    interior = np.ones_like(solid)
+    for dy in range(7):                                     # 7x7 erosion: away from AA edges
+        for dx in range(7):
+            interior &= pad[dy : dy + solid.shape[0], dx : dx + solid.shape[1]]
+    vals = y[interior]
+    measured = float(np.percentile(vals, 90)) if vals.size > 2000 else float(luma709(np.array(GOFUN, np.float32)))
+    hi = ALPHA_HI_BRIEF if (brief_hi or measured >= ALPHA_HI_BRIEF) else measured
     a = np.clip((y - ALPHA_LO) / (hi - ALPHA_LO), 0.0, 1.0)
     a[a < ALPHA_FLOOR] = 0.0
-    full_ink = a[y > hi - 2.0]
+    q = np.percentile(vals, [5, 50, 95]) if vals.size else [0, 0, 0]
     info = {
         "formula": "a = clamp((luma709 - 53) / (hi - 53), 0, 1); a = 0 where a < 0.015",
         "hi": round(hi, 2),
-        "hi_source": "brief (230)" if brief_hi else "measured cream luma (median of ink pixels)",
-        "measured_cream_luma": round(measured, 2),
-        "alpha_of_full_ink": round(float(full_ink.mean()) if full_ink.size else 1.0, 4),
-        "alpha_if_hi_were_230": round((measured - ALPHA_LO) / (ALPHA_HI_BRIEF - ALPHA_LO), 4),
+        "hi_source": "brief (230)" if hi == ALPHA_HI_BRIEF else "measured solid-ink luma (ink darker than 230)",
+        "solid_ink_luma_p90": round(measured, 2),
+        "solid_ink_luma_p5_p50_p95": [round(float(v), 1) for v in q],
+        "solid_ink_alpha_p5_p50_p95": [round(float(min(1.0, max(0.0, (v - ALPHA_LO) / (hi - ALPHA_LO)))), 3) for v in q],
     }
     return a.astype(np.float32), info
 
@@ -95,6 +109,7 @@ def x1_claim_band(a, px, py, d2, do, margin=0.5, bin_px=4.0):
     hit = np.convolve(hit, np.ones(3), mode="same") > 0          # one bin of slack each way
     band = np.full(a.shape, X1_WITHIN, np.float32)
     report = {}
+    profiles = {"centres": centres}
     for name, side in (("left", u < 0), ("right", u >= 0)):
         sel = near & side & ~crossing & (s >= 0) & (s <= L)
         area = np.bincount(bins[sel], weights=a[sel], minlength=nb)[:nb]
@@ -105,10 +120,67 @@ def x1_claim_band(a, px, py, d2, do, margin=0.5, bin_px=4.0):
         prof = np.interp(centres, centres[ok], prof[ok])           # bridge the crossing
         win = np.lib.stride_tricks.sliding_window_view(np.pad(prof, 2, mode="edge"), 5)
         prof = np.median(win, axis=1)
+        profiles[name] = prof
         claim = np.minimum(prof + margin, X1_WITHIN)
         band[side] = claim[bins[side]]
         report[name] = round(float(claim[hit].mean()) if hit.any() else float(claim.mean()), 1)
+    report["_profiles"] = profiles
     return band, report
+
+
+def bilinear(img: np.ndarray, x: np.ndarray, y: np.ndarray) -> np.ndarray:
+    """Sample img at canvas-pixel coordinates (pixel centres at +0.5)."""
+    h, w = img.shape
+    fx = np.clip(x - 0.5, 0, w - 1.001)
+    fy = np.clip(y - 0.5, 0, h - 1.001)
+    x0 = fx.astype(np.int64)
+    y0 = fy.astype(np.int64)
+    tx, ty = fx - x0, fy - y0
+    return ((img[y0, x0] * (1 - tx) + img[y0, x0 + 1] * tx) * (1 - ty)
+            + (img[y0 + 1, x0] * (1 - tx) + img[y0 + 1, x0 + 1] * tx) * ty)
+
+
+def x1_crossing_texture(a, px, py, claim, profiles, half_x2=38.0):
+    """X1's own alpha through the crossing.
+
+    The overlap pixels are the union of both inks, so X1 alone would show a
+    solid patch edged by X2's dark lines. Instead, X1 gets its dry-brush
+    texture mirrored along the stroke across each end of X2's band, in
+    stroke-normalised coordinates (offset / local half-width per side): it is
+    continuous at the ends, its edges land on X1's true edges, and the
+    streaks stay intact. The halves blend across the middle third. X2 then
+    carries the overlap's extra density (plus a shade for its dark edge
+    lines), and the final frame is still the exact logo."""
+    (ax, ay), (bx, by) = X1
+    L1 = math.hypot(bx - ax, by - ay)
+    ux, uy = (bx - ax) / L1, (by - ay) / L1
+    vx, vy = -uy, ux                                            # X1 normal (u axis)
+    (cx, cy), (dx, dy) = X2
+    L2 = math.hypot(dx - cx, dy - cy)
+    nx, ny = -(dy - cy) / L2, (dx - cx) / L2
+    d2 = (px - cx) * nx + (py - cy) * ny                       # signed distance to X2's line
+    k = ux * nx + uy * ny                                      # its change per px along X1
+    s1 = (px - ax) * ux + (py - ay) * uy
+    u1 = (px - ax) * vx + (py - ay) * vy
+    zone = (np.abs(u1) <= X1_WITHIN) & (s1 > 0) & (s1 < L1) & (np.abs(d2) <= half_x2)
+    t1 = (-half_x2 - d2) / k
+    t2 = (half_x2 - d2) / k
+    lo, hi = np.minimum(t1, t2), np.maximum(t1, t2)            # zone extent along X1 (pixel at t = 0)
+    cen = profiles["centres"]
+    hw = lambda side, sv: np.interp(sv, cen, profiles[side])
+    left = u1 < 0
+    def copy(s_src):
+        h_here = np.where(left, hw("left", s1), hw("right", s1))
+        h_src = np.where(left, hw("left", s_src), hw("right", s_src))
+        u_src = u1 / np.maximum(h_here, 1.0) * h_src
+        return bilinear(a, ax + ux * s_src + vx * u_src, ay + uy * s_src + vy * u_src)
+    # mirror across each end of the zone: continuous at the boundary, streaks kept
+    before = copy(s1 + 2 * lo - 1.0)
+    after = copy(s1 + 2 * hi + 1.0)
+    f = np.clip(-lo / np.maximum(hi - lo, 1e-3), 0.0, 1.0)
+    w = np.clip((f - 1 / 3) * 3, 0.0, 1.0)
+    w = w * w * (3 - 2 * w)
+    return zone, before * (1 - w) + after * w
 
 
 def assign_strokes(a: np.ndarray, literal: bool) -> tuple[dict[str, np.ndarray], dict]:
@@ -129,13 +201,27 @@ def assign_strokes(a: np.ndarray, literal: bool) -> tuple[dict[str, np.ndarray],
     w1 = np.maximum(claim, (d1 < d2).astype(np.float32))       # crossing belongs to X1 (drawn first)
     x1 = a * (1 - is_o) * w1
     o = a * is_o
-    return {"x1": x1, "x2": a - x1 - o, "o": o}, info           # X2 gets the rest
+    shade = np.zeros_like(a)
+    if not literal:
+        zone, est = x1_crossing_texture(a, px, py, claim, info["_profiles"])
+        refined = np.where(zone, est * (1 - is_o), x1)
+        moved = float(np.clip(x1 - refined, 0, None)[zone].sum())
+        excess = np.clip(refined + o - a, 0.0, None)
+        info["crossing_alpha_moved_to_x2"] = round(moved, 1)
+        info["x2_shade_alpha_sum"] = round(float(excess.sum()), 1)
+        x1 = refined.astype(np.float32)
+    info.pop("_profiles", None)
+    return {"x1": x1, "x2": np.clip(a - x1 - o, 0.0, None), "o": o}, info
 
 
-def save_layer(alpha: np.ndarray, path):
+def to8(alpha: np.ndarray) -> np.ndarray:
+    return np.round(np.clip(alpha, 0, 1) * 255.0).astype(np.int32)
+
+
+def save_layer(alpha8: np.ndarray, path):
     out = np.empty((CANVAS_H, CANVAS_W, 4), np.uint8)
     out[..., :3] = GOFUN                                      # RGB is always #E6DCD1
-    out[..., 3] = np.round(np.clip(alpha, 0, 1) * 255.0).astype(np.uint8)
+    out[..., 3] = np.clip(alpha8, 0, 255).astype(np.uint8)
     Image.fromarray(out, "RGBA").save(path, optimize=True)
 
 
@@ -215,15 +301,30 @@ def build_layers(brief_hi: bool, literal_band: bool) -> dict:
         sys.exit(f"{logo_path} is {rgb.shape[1]}x{rgb.shape[0]}; the brief's geometry needs {CANVAS_W}x{CANVAS_H}.")
 
     a, alpha_info = extract_alpha(rgb, brief_hi)
-    print(f"alpha: hi = {alpha_info['hi']} ({alpha_info['hi_source']}); "
-          f"full ink -> a = {alpha_info['alpha_of_full_ink']}  "
-          f"(the brief's literal 230 would give {alpha_info['alpha_if_hi_were_230']})")
+    print(f"alpha: hi = {alpha_info['hi']} ({alpha_info['hi_source']}); solid-ink luma p5/p50/p95 "
+          f"{alpha_info['solid_ink_luma_p5_p50_p95']} -> alpha {alpha_info['solid_ink_alpha_p5_p50_p95']}")
     layers, band_info = assign_strokes(a, literal_band)
     print(f"layers: X1 crossing claim {band_info}")
     LAYERS.mkdir(parents=True, exist_ok=True)
-    for k, la in layers.items():
+    # Integer partition: x1 + x2 + o == full wherever X1 is not ahead of the
+    # total; where X1's crossing texture exceeds it (X2's dark edge lines), X2
+    # brings a shade that darkens back to the exact logo when it is drawn.
+    full8 = to8(a)
+    x1_8, o_8 = to8(layers["x1"]), to8(layers["o"])
+    o_8 = np.minimum(o_8, full8)
+    x1_8 = np.minimum(x1_8, 255 - o_8)
+    x2_8 = np.clip(full8 - x1_8 - o_8, 0, 255)
+    added = x1_8 + o_8 + x2_8                                   # >= full8
+    # shade (source-over, ground colour) so that (1 - s) * added == full8
+    shade = np.where(added > full8, 1.0 - full8 / np.maximum(added, 1), 0.0)
+    for k, la in (("x1", x1_8), ("x2", x2_8), ("o", o_8)):
         save_layer(la, LAYERS / f"{k}.png")
-    save_layer(a, LAYERS / "full.png")
+    save_layer(full8, LAYERS / "full.png")
+    sh = np.zeros((CANVAS_H, CANVAS_W, 4), np.uint8)
+    sh[..., :3] = GROUND
+    sh[..., 3] = np.round(shade * 255).astype(np.uint8)
+    Image.fromarray(sh, "RGBA").save(LAYERS / "x2-shade.png", optimize=True)
+    print(f"layers: X2 shade covers {int((shade > 0).sum())} px (max {shade.max():.2f})")
     save_debug(layers, LAYERS / "debug.png")
 
     ys, xs = np.nonzero(a > 0)
@@ -392,7 +493,7 @@ def make_komorebi(path, n=2400, seed=7):
 
 
 def up_to_date() -> bool:
-    outs = [LAYERS / f for f in ("x1.png", "x2.png", "o.png", "full.png", "debug.png", "meta.json")]
+    outs = [LAYERS / f for f in ("x1.png", "x2.png", "x2-shade.png", "o.png", "full.png", "debug.png", "meta.json")]
     outs += [PUBLIC / "washi.png", PUBLIC / "komorebi.png"]
     if not all(p.exists() for p in outs):
         return False

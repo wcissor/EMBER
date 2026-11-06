@@ -13,21 +13,15 @@ painted as an ensō in one breath and left open. Then only stillness and light.
 
 All are H.264 CRF 16, yuv420p, BT.709, 60 fps, with AAC 256 kb/s natural sound.
 
-## ⚠️ Status: stand-in logo
+## Logo
 
-The real `public/xo-logo.png` was not supplied. Until it is, everything runs
-on **`public/xo-logo.standin.png`**, a brush XO painted by
-`scripts/make_standin_logo.py` on the brief's exact geometry (same 1518×1036
-canvas, centrelines, widths and ink box). The pipeline warns loudly whenever
-the stand-in is used. To make the real film:
+`public/xo-logo.png` is the real XO logo (1518×1036, cream on #333333). After
+replacing it, run `npm run build` (prep → render → QA), then check
+`public/layers/debug.png` (the brief asks for this) and `out/qa/report.md`.
 
-```bash
-cp /path/to/xo-logo.png public/xo-logo.png   # 1518×1036, cream on flat #333333
-npm run build                                 # prep → render → QA
-```
-
-Then open `public/layers/debug.png` (the brief asks you to check it) and
-`out/qa/report.md`.
+`public/xo-logo.standin.png` is a geometry-matched brush XO, painted by
+`scripts/make_standin_logo.py`. It is used only when `xo-logo.png` is
+missing, and the pipeline warns loudly when it does.
 
 ## Setup
 
@@ -84,7 +78,8 @@ Layer stack, bottom to top:
    plus a 24 px drift and a ±10 px, 7 s sway. Also the paper's +2% of the warm
    light pass. All of this is composited per frame in float, with dither.
 2. **Logo**: the three layer PNGs (real logo pixels, never redrawn), each
-   revealed through an SVG mask, composited additively.
+   revealed through an SVG mask, composited additively. X2 also carries its
+   small crossing shade.
 3. **Wet ink**: the same pixels at +8% (108%) over the trailing 12% of the
    path; dries over 48 frames.
 4. **Light pass** on the logo: a warm band masked by the full logo alpha
@@ -94,17 +89,26 @@ Layer stack, bottom to top:
 
 ### Brief interpretations and deviations (deliberate, all switchable)
 
-- **Alpha upper reference.** The brief's `(luma − 53) / (230 − 53)` uses the
-  cream's red value. The cream's luma is ≈221, so fully inked pixels would only
-  reach a = 0.95 and the paper would show through the logo. prep calibrates the
-  upper reference to the measured cream luma (full ink → a = 1.0).
-  `--brief-hi` restores 230.
-- **X1's crossing claim.** "Within 36 px of the X1 line" also hands X1 a stub
-  of X2 on each side of the crossing, so X1 shows two nubs for 1.4 s. prep
-  measures X1's own edge (ink area per 4 px bin, bridged across the crossing)
-  and claims up to that edge + 0.5 px (never more than 36), with an
-  anti-aliased split. The crossing still belongs to X1. `--x1-within-literal`
-  restores the exact rule.
+- **Alpha upper reference.** prep uses the brief's 230 whenever the logo's
+  solid ink is at least that bright. The real file's interior luma is about
+  225–233, so its dry-brush texture keeps its tone: alpha 0.80 / 0.97 / 1.0 at
+  the 5th, 50th and 95th percentiles. Only if the ink is darker (for example,
+  painted at exactly #E6DCD1, luma 221) does it fall back to the measured
+  value, so the logo can't turn semi-transparent.
+- **The X crossing.** The crossing still belongs to X1, but two things change.
+  First, "within 36 px of the X1 line" would hand X1 stubs of X2 (nubs for
+  1.4 s), so X1 claims only to its measured edge + 0.5 px (never more than 36).
+  Second, the overlap pixels are the union of both inks: more solid than X1's
+  dry brush, and edged with the artwork's dark lines along X2. Inside the
+  crossing, X1 therefore gets its own texture, mirrored along the stroke from
+  either side in stroke-normalised coordinates. X2 carries the remaining
+  density, plus a small ground-coloured shade layer (`x2-shade.png`) for its
+  dark edge lines, revealed by X2's own mask. X1 alone reads as one
+  continuous stroke. The layers sum bit-exactly, so the final frame is still
+  the exact logo. `--x1-within-literal` restores the brief's rule.
+- **Ensō start pad.** The X paths get a 16 px start pad. The O's is 0: the real
+  ensō's dry tail runs into the gap right behind its start, and a pad would
+  reveal it 3 s early.
 - **Bristles.** The prescribed mask (brief path, 110/130 px, butt caps,
   pathLength 1, dasharray "1 1", dashoffset 1 − progress) and filter
   (feTurbulence 0.9 / 2 octaves / fixed seed → displacement 10 → blur 3) are
@@ -112,8 +116,7 @@ Layer stack, bottom to top:
   cycles/px is above Nyquist, so the noise only adds blur. Each mask is
   therefore cut into ~1.5 px parallel lanes (concentric arcs for the ensō). Their
   tips form pointed bristle clumps on a rounded belly, with tapered ends. All
-  lanes are solid at progress 1, so the final frame is the exact logo. A 16 px
-  start pad on each path catches ink behind the brief's start points.
+  lanes are solid at progress 1, so the final frame is the exact logo.
 - **Komorebi on the logo.** A 3% layer over the logo cannot be done cleanly in
   8-bit CSS compositing, because low-opacity layers posterise a soft shadow
   into hard plateaus. The leaf masses are placed clear of the logo instead:
