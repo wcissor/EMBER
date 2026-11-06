@@ -11,6 +11,17 @@ export const OPTICAL = {x: geo.opticalCentre[0], y: geo.opticalCentre[1]};
 /** Logo is 600 px wide (ink bbox 737 px) in both formats: 0.814. */
 export const CANVAS_SCALE = geo.logoWidthPx / (geo.inkBBox[2] - geo.inkBBox[0]);
 
+/** One drop of fresh ink after the ensō (canvas px), see geometry.json. */
+export const DRIP = {
+	x: geo.drip.x,
+	y: geo.drip.y,
+	inset: geo.drip.inset,
+	length: geo.drip.length,
+	neck: geo.drip.neck,
+	column: [geo.drip.column[0], geo.drip.column[1]] as [number, number],
+	bead: geo.drip.bead,
+};
+
 export const layoutFor = (format: Format) => {
 	const l = geo.layout[format];
 	return {width: l.width, height: l.height, pivot: {x: l.pivot[0], y: l.pivot[1]}};

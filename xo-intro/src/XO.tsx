@@ -1,7 +1,19 @@
 import React from 'react';
 import {AbsoluteFill, useCurrentFrame, useVideoConfig} from 'remotion';
-import {Format, layoutFor, logoTransform, StrokeKey, STROKES} from './geometry';
-import {ASSETS, Fade, Grain, LightPass, LogoReveal, PaperCanvas, RevealState, usePreload, Vignette, WetInk} from './layers';
+import {DRIP, Format, layoutFor, logoTransform, StrokeKey, STROKES} from './geometry';
+import {
+	ASSETS,
+	dripFill,
+	Fade,
+	Grain,
+	LightPass,
+	LogoReveal,
+	PaperCanvas,
+	RevealState,
+	usePreload,
+	Vignette,
+	WetInk,
+} from './layers';
 import {
 	GROUND,
 	KOMOREBI_DRIFT_DIR,
@@ -11,7 +23,7 @@ import {
 	KOMOREBI_SWAY_PERIOD_S,
 	KOMOREBI_SWAY_PX,
 } from './look';
-import {Cut, fadeAmount, lightProgress, PUSH_IN, pushProgress, strokePhase, TIMELINES} from './timeline';
+import {Cut, dripState, fadeAmount, lightProgress, PUSH_IN, pushProgress, strokePhase, TIMELINES} from './timeline';
 
 export type XOProps = {
 	format: Format;
@@ -27,6 +39,8 @@ export type XOProps = {
 	wet?: boolean;
 	pushIn?: boolean;
 	showMask?: StrokeKey | null;
+	/** the drop of fresh ink after the ensō (added at the client's request) */
+	drip?: boolean;
 };
 
 const ALL_ASSETS = Object.values(ASSETS);
@@ -44,6 +58,7 @@ export const XO: React.FC<XOProps> = ({
 	wet = true,
 	pushIn = true,
 	showMask = null,
+	drip = true,
 }) => {
 	const ready = usePreload(ALL_ASSETS);
 	const frame = useCurrentFrame();
@@ -70,6 +85,8 @@ export const XO: React.FC<XOProps> = ({
 	const full = reveal === 'full';
 	const logo = {width, height, k, tx, ty, state, hide};
 	const lp = light ? lightProgress(frame, tl) : null;
+	const ds = drip && !hide.includes('o') ? dripState(frame, tl) : null;
+	const dripProps = ds ? {state: ds, fill: dripFill(ds, lp, width, tx + k * DRIP.x)} : null;
 
 	return (
 		<AbsoluteFill style={{backgroundColor: GROUND, overflow: 'hidden'}}>
@@ -83,7 +100,7 @@ export const XO: React.FC<XOProps> = ({
 				komorebi={komorebi ? {scale: kScale, dx: kdx, dy: kdy} : null}
 				light={lp}
 			/>
-			<LogoReveal {...logo} full={full} showMask={showMask} />
+			<LogoReveal {...logo} full={full} showMask={showMask} drip={dripProps} />
 			{wet && !full ? <WetInk {...logo} /> : null}
 			{light ? <LightPass width={width} height={height} progress={lp} k={k} tx={tx} ty={ty} /> : null}
 			{vignette ? <Vignette width={width} height={height} /> : null}

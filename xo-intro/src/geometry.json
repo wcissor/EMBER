@@ -29,6 +29,16 @@
       "startPad": 0
     }
   },
+  "drip": {
+    "_comment": "One drop of fresh ink that runs from the ensō's lowest solid point near the end of the stroke, once it is complete (user request). Canvas px.",
+    "x": 962,
+    "y": 700,
+    "inset": 2.5,
+    "length": 48,
+    "neck": 9.5,
+    "column": [6.0, 3.1],
+    "bead": 3.4
+  },
   "layerRule": {
     "x1Within": 36
   },

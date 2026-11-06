@@ -41,11 +41,38 @@ python3 -m pip install pillow numpy   # prep, sound and QA scripts
 | `npm run qa` | `scripts/qa.py`: the section-10 checklist → `out/qa/report.md` |
 | `npm run build` | all of the above |
 
+## Client addition: one drop of ink
+
+Once the ensō is complete, a single drop of fresh cream ink gathers at its
+lowest solid point, just before the stroke dries into its tail. It runs a short
+way down (≈40 px on screen), slows as the ink runs out, and stops. It is
+teardrop-shaped, wet (108%) while moving, dries to the logo's cream, and
+catches the warm light pass. There are no glints.
+
+- Main: forms at 10.2 s and stops by 12.3 s. Sting: 4.7 s to 6.2 s.
+- Shape: `drip` in `src/geometry.json`. Timing: `drip` in `src/timeline.ts`.
+- `drip: false` turns it off.
+
 ## Sound
 
 Natural sound only. Put the ElevenLabs Sound Effects files in `public/sfx/`
 (the table is in `public/sfx/README.md`), then `npm run render -- --audio-only`.
 Missing files are skipped and listed. With none at all, a silent track is muxed.
+
+**Current status: temporary sound.** ElevenLabs refused generation because
+the account's subscription has a failed or incomplete payment. Until real
+cues exist, `scripts/make_temp_sfx.py` (`npm run sfx:temp`) synthesises
+physically-motivated stand-ins into `public/sfx-temp/`:
+
+- brush strokes whose loudness and brightness follow the brief's stroke easings
+- a water drop with a rising bubble resonance
+- a rin bowl with inharmonic, gently beating partials
+- a seamless room tone
+
+The render uses them only when `public/sfx/` is empty and says so loudly. The
+ElevenLabs canvas "XO One Breath — natural sound" already holds the six
+prompts. Once billing is fixed, run it, save the chosen takes into
+`public/sfx/` under the names above, and re-run `--audio-only`.
 
 - Each cue is gain-staged on what will actually play: the bell peaks at −6 dBFS,
   brushes and the water drop at −13 dBFS, the room tone at −38 dBFS RMS. Every

@@ -33,8 +33,10 @@ COMPS = {
 }
 # Section 6
 BRIEF = {
-    "main": {"x1": (180, 228), "x2": (312, 354), "o": (420, 600), "light": (660, 840), "last_logo": 1007, "frames": 1080},
-    "sting": {"x1": (48, 90), "x2": (102, 138), "o": (156, 276), "light": (276, 396), "last_logo": 479, "frames": 480},
+    "main": {"x1": (180, 228), "x2": (312, 354), "o": (420, 600), "light": (660, 840), "last_logo": 1007, "frames": 1080,
+             "drip": 612},
+    "sting": {"x1": (48, 90), "x2": (102, 138), "o": (156, 276), "light": (276, 396), "last_logo": 479, "frames": 480,
+              "drip": 282},
 }
 QUIET = {"grain": False}
 
@@ -115,6 +117,14 @@ def plan(j: Jobs):
         for f in sorted(set(keys)):
             j.add(comp, f, f"{k}-tl-{f:04d}")
 
+    # the drop of ink (client addition): absent until the ensō is complete, then the only addition
+    for comp in ("XO-Main-16x9", "XO-Sting-9x16"):
+        fmt, cut = COMPS[comp]
+        b = BRIEF[cut]
+        j.add(comp, b["drip"], f"{comp}-drip-before", **QUIET)
+        j.add(comp, b["drip"], f"{comp}-drip-before-off", **QUIET, drip=False)
+        j.add(comp, b["last_logo"], f"{comp}-drip-end", **QUIET)
+        j.add(comp, b["last_logo"], f"{comp}-drip-end-off", **QUIET, drip=False)
     m = "XO-Main-16x9"
     # 3. coverage at progress 1, before the settle (wet off; other layers hidden in the reference)
     for s, f, hide in (("x1", 228, ["x2", "o"]), ("x2", 354, ["o"]), ("o", 600, [])):
@@ -195,7 +205,8 @@ def analyse():
     # 1. final logo frame
     for comp in COMPS:
         d = np.abs(img(f"{comp}-last") - img(f"{comp}-last-full")).max()
-        check(f"final logo exact [{comp}]", d <= ONE + 1e-6, f"max diff {d * 255:.2f}/255 vs all three layers fully shown")
+        check(f"final logo exact [{comp}]", d <= ONE + 1e-6,
+              f"max diff {d * 255:.2f}/255 vs all three layers fully shown (+ the ink drop in both)")
     # 2. leaks
     for comp, (fmt, cut) in COMPS.items():
         b = BRIEF[cut]
@@ -286,6 +297,22 @@ def analyse():
         ys = np.nonzero(dd.any(axis=1))[0]
         check(f"9:16 logo within y 300-1400 [{comp}]", ys.min() >= 300 and ys.max() <= 1400,
               f"logo spans y {ys.min()}-{ys.max()} at full push-in")
+    # the drop of ink
+    for comp in ("XO-Main-16x9", "XO-Sting-9x16"):
+        fmt, cut = COMPS[comp]
+        d0 = np.abs(img(f"{comp}-drip-before") - img(f"{comp}-drip-before-off")).max()
+        check(f"ink drop absent until the ensō is done [{comp}]", d0 <= ONE + 1e-6,
+              f"frame {BRIEF[cut]['drip']}: max diff {d0 * 255:.2f}/255 with/without the drop")
+        dd = np.abs(lum(img(f"{comp}-drip-end")) - lum(img(f"{comp}-drip-end-off"))) > 2 * ONE
+        ys, xs = np.nonzero(dd)
+        lay = GEOMETRY["layout"][fmt]
+        k = GEOMETRY["logoWidthPx"] / (GEOMETRY["inkBBox"][2] - GEOMETRY["inkBBox"][0]) * 1.0349
+        ex = lay["pivot"][0] + k * (GEOMETRY["drip"]["x"] - OPTICAL_CENTRE[0])
+        ey = lay["pivot"][1] + k * (GEOMETRY["drip"]["y"] - OPTICAL_CENTRE[1])
+        ok = len(xs) > 0 and abs(xs.mean() - ex) < 6 and ys.min() >= ey - 6 and ys.max() <= ey + k * GEOMETRY["drip"]["length"] + 4
+        check(f"ink drop is the only addition, below the ensō [{comp}]", ok,
+              f"{len(xs)} px changed, x {xs.min() if len(xs) else 0}-{xs.max() if len(xs) else 0}, "
+              f"y {ys.min() if len(ys) else 0}-{ys.max() if len(ys) else 0} (expected near x {ex:.0f}, from y {ey:.0f})")
     # first/last frames
     f0, f1 = img("XO-Main-16x9-tl-0000"), img("XO-Main-16x9-tl-1079")
     check("Main opens and closes on #0D0D0D", np.all(np.round(f0 * 255) == 13) and np.all(np.round(f1 * 255) == 13),

@@ -183,6 +183,8 @@ def render_video(comp: str, concurrency: int) -> Path:
 def prepare_cue(cue: Cue, cut: str, sfx_dir: Path, tmp: Path) -> dict | None:
     src = sfx_dir / cue.file
     if not src.exists():
+        src = src.with_suffix(".wav")
+    if not src.exists():
         return None
     D = DURATION[cut]
     room = D - cue.start
@@ -320,6 +322,12 @@ def main():
         videos[comp] = v
 
     sfx_dir = Path(args.sfx_dir)
+    temp_dir = PUBLIC / "sfx-temp"
+    has_cues = lambda d: any((d / c.file).exists() or (d / c.file).with_suffix(".wav").exists() for c in SHEET["main"])
+    if args.sfx_dir == str(PUBLIC / "sfx") and not has_cues(sfx_dir) and has_cues(temp_dir):
+        sfx_dir = temp_dir
+        report["temporary_sfx"] = True
+        print(banner("SOUND: TEMPORARY SYNTHESISED CUES (public/sfx-temp) — put the real files in public/sfx"))
     for cut in sorted({COMPS[c] for c in comps}):
         info = build_mix(cut, sfx_dir)
         report["mixes"][cut] = info
@@ -351,6 +359,8 @@ def main():
         print(f"\nMissing sound files (add to {sfx_dir}, then run `npm run render -- --audio-only`):\n  " + "\n  ".join(missing))
     if report["standin_logo"]:
         print(banner("STAND-IN LOGO: add public/xo-logo.png, then `npm run build`"))
+    if report.get("temporary_sfx"):
+        print(banner("TEMPORARY SOUND: add the real cues to public/sfx, then `npm run render -- --audio-only`"))
 
 
 if __name__ == "__main__":

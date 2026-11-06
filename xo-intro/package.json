@@ -9,6 +9,7 @@
     "studio": "remotion studio src/index.ts",
     "prep": "python3 scripts/prep.py",
     "standin": "python3 scripts/make_standin_logo.py",
+    "sfx:temp": "python3 scripts/make_temp_sfx.py",
     "render": "python3 scripts/render.py",
     "qa": "python3 scripts/qa.py",
     "build": "python3 scripts/prep.py && python3 scripts/render.py && python3 scripts/qa.py",

@@ -8,3 +8,4 @@ public/sfx/*
 .remotion/
 *.log
 __pycache__/
+public/sfx-temp/*.wav

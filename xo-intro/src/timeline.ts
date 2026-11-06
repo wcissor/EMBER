@@ -19,6 +19,8 @@ export type Timeline = {
 	light: [number, number];
 	/** Wet ink dries to the base over this many frames after each stroke. */
 	dry: number;
+	/** One drop of fresh ink after the ensō: forms (swell), runs, then dries. */
+	drip: {start: number; swell: number; run: number; dry: number};
 };
 
 // Brush easings from the brief (section 6). The Sting uses the same hands.
@@ -38,6 +40,7 @@ export const TIMELINES: Record<Cut, Timeline> = {
 		},
 		light: [660, 840],
 		dry: 48,
+		drip: {start: 612, swell: 24, run: 100, dry: 60},
 	},
 	sting: {
 		duration: 480, // 8.0 s, no fade-out: ends on the logo
@@ -50,6 +53,7 @@ export const TIMELINES: Record<Cut, Timeline> = {
 		},
 		light: [276, 396],
 		dry: 48,
+		drip: {start: 282, swell: 18, run: 72, dry: 48},
 	},
 };
 
@@ -106,3 +110,29 @@ export const lightProgress = (frame: number, tl: Timeline) => {
 };
 
 export const smooth = sineInOut;
+
+export type DripState = {
+	/** 0..1 bead size while it forms at the edge */
+	swell: number;
+	/** 0..1 of the full run length */
+	run: number;
+	/** speed, 0..1, for the bead's slight stretch while it moves */
+	speed: number;
+	/** 1 fresh -> 0 dry */
+	wet: number;
+};
+
+const dripRun = Easing.bezier(0.33, 0, 0.18, 1); // eases away, slows as the ink runs out
+const dripSwell = Easing.out(Easing.cubic);
+
+export const dripState = (frame: number, tl: Timeline): DripState | null => {
+	const d = tl.drip;
+	const t = frame - d.start;
+	if (t <= 0) return null;
+	const swell = dripSwell(Math.min(1, t / d.swell));
+	const r = ramp(t, d.swell, d.swell + d.run);
+	const run = dripRun(r);
+	const speed = r > 0 && r < 1 ? Math.min(1, (dripRun(Math.min(1, r + 0.02)) - run) / 0.02 / 1.6) : 0;
+	const wet = 1 - sineInOut(ramp(t, d.swell + d.run, d.swell + d.run + d.dry));
+	return {swell, run, speed, wet};
+};

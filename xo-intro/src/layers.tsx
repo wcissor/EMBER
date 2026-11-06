@@ -1,6 +1,6 @@
 import React, {useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 import {cancelRender, continueRender, delayRender, staticFile} from 'remotion';
-import {CANVAS_H, CANVAS_W, laneTip, STROKE_MASKS, StrokeKey, STROKES, taperSegments, wetTip} from './geometry';
+import {CANVAS_H, CANVAS_W, DRIP, laneTip, STROKE_MASKS, StrokeKey, STROKES, taperSegments, wetTip} from './geometry';
 import {
 	BLACK,
 	BRUSH_BLUR,
@@ -19,7 +19,7 @@ import {
 	WET_STEPS,
 } from './look';
 import {hash32, mulberry32} from './random';
-import type {StrokePhase} from './timeline';
+import type {DripState, StrokePhase} from './timeline';
 import {smooth} from './timeline';
 
 export const ASSETS = {
@@ -282,9 +282,90 @@ type LogoProps = {
 	full: boolean;
 	hide: StrokeKey[];
 	showMask: StrokeKey | null;
+	drip?: {state: DripState; fill: string} | null;
 };
 
-export const LogoReveal: React.FC<LogoProps> = ({width, height, k, tx, ty, state, full, hide, showMask}) => (
+// ---------------------------------------------------------------------------
+// One drop of fresh ink: once the ensō is complete it gathers at the lowest
+// solid point near the end of the stroke, runs a short way and stops (canvas
+// coordinates; drawn under the logo so its neck tucks beneath the stroke).
+// ---------------------------------------------------------------------------
+const GOFUN = [230, 220, 209];
+
+const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+const smoothstep = (a: number, b: number, x: number) => {
+	const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+	return t * t * (3 - 2 * t);
+};
+
+/** One closed outline: a neck that flares into the stroke, a column that
+ * tapers as it runs, and a bead it swells into (smooth union, no hard neck). */
+const DripShape: React.FC<{state: DripState; fill: string}> = ({state, fill}) => {
+	const {x: x0, y: y0, inset, length, neck, column, bead} = DRIP;
+	const s = state.swell;
+	const rx = bead * s * (1 - 0.06 * state.speed);
+	const ry = bead * s * (1 + 0.24 * state.speed);
+	const len = lerp(1.6 * bead * s, length, state.run);
+	const yb = y0 + len - ry; // bead centre
+	const yTop = y0 - inset;
+	const yBot = yb + ry;
+	const top = (column[0] / 2) * Math.min(1, s * 1.25);
+	const bot = (column[1] / 2) * Math.min(1, s * 1.25);
+	const flare = (neck / 2) * Math.sqrt(s);
+	const half = (y: number) => {
+		const t = Math.min(1, Math.max(0, (y - y0) / Math.max(yb - y0, 1e-3)));
+		let wc = lerp(top, bot, t) + (flare - top) * (1 - smoothstep(y0 - 1, y0 + 6, y));
+		if (y > yb) wc *= 1 - smoothstep(yb, yBot, y);
+		// pear-shaped bead: round below its centre, tapering up into the column above
+		const q = (y - yb) / Math.max(ry, 1e-3);
+		const up = 2.4; // the bead's shoulder reaches this many radii up the column
+		const wb =
+			q >= 0
+				? q < 1
+					? rx * Math.sqrt(1 - q * q)
+					: 0
+				: -q < up
+					? rx * Math.pow(1 - Math.pow(-q / up, 1.7), 1.15)
+					: 0;
+		const w = Math.pow(wc ** 3 + wb ** 3, 1 / 3);
+		return w * (1 + 0.045 * Math.sin(0.42 * (y - y0) + 1.3));
+	};
+	const xc = (y: number) => x0 + 0.35 * Math.sin((y - y0) / 11);
+	// dense where the outline turns: the neck and the bead
+	const ys: number[] = [];
+	const nCol = 28;
+	const yBead = Math.max(yTop, yb - 2.4 * ry);
+	for (let i = 0; i < nCol; i++) ys.push(lerp(yTop, yBead, i / nCol));
+	for (let i = 0; i <= 24; i++) ys.push(lerp(yBead, yBot, 0.5 - 0.5 * Math.cos((Math.PI * i) / 24)));
+	const f = (v: number) => v.toFixed(2);
+	const right = ys.map((y) => `${f(xc(y) + half(y))} ${f(y)}`);
+	const left = ys
+		.slice()
+		.reverse()
+		.map((y) => `${f(xc(y) - half(y))} ${f(y)}`);
+	const d = `M ${right.join(' L ')} L ${left.join(' L ')} Z`;
+	return <path d={d} fill={fill} />;
+};
+
+/** Fresh-ink colour for the drop: gofun cream, 108 % while wet, plus the warm
+ * light band where it crosses (the drop is not in the logo-alpha light mask). */
+export const dripFill = (state: DripState, light: number | null, width: number, screenX: number) => {
+	let g = 0;
+	if (light !== null) {
+		const sigma = (LIGHT_BAND_FWHM * width) / 2.3548;
+		const c = -2.5 * sigma + light * (width + 5 * sigma);
+		g = Math.exp(-0.5 * ((screenX - c) / sigma) ** 2);
+	}
+	// wet sheen + warm light, scaled together so the brightest channel stays at
+	// 250: a fresh drop catching the light, never clipped to flat white
+	const boost = GOFUN.map((c, i) => c * WET_BOOST * state.wet + WARM[i] * LIGHT_LOGO * g);
+	const k = Math.min(1, (250 - GOFUN[0]) / Math.max(boost[0], 1e-6));
+	const ch = (i: number) => Math.round(GOFUN[i] + boost[i] * k);
+	return `rgb(${ch(0)}, ${ch(1)}, ${ch(2)})`;
+};
+
+export const LogoReveal: React.FC<LogoProps> = ({width, height, k, tx, ty, state, full, hide, showMask, drip}) => (
 	<svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} style={abs}>
 		<defs>
 			{full
@@ -297,6 +378,7 @@ export const LogoReveal: React.FC<LogoProps> = ({width, height, k, tx, ty, state
 					))}
 		</defs>
 		<g transform={`matrix(${k} 0 0 ${k} ${tx} ${ty})`}>
+			{drip ? <DripShape state={drip.state} fill={drip.fill} /> : null}
 			{/* The three layers partition the logo's alpha, so adding them (plus-lighter)
 			    in an isolated group rebuilds the exact logo — no seams where they meet. */}
 			<g style={{isolation: 'isolate'}}>
@@ -348,7 +430,7 @@ export const LogoReveal: React.FC<LogoProps> = ({width, height, k, tx, ty, state
 
 /** Fresh ink at 108 %: the same layer pixels at 8 % added light (plus-lighter),
  * masked to the trailing 12 % of the path; dries over 48 frames. */
-export const WetInk: React.FC<Omit<LogoProps, 'full' | 'showMask'>> = ({width, height, k, tx, ty, state, hide}) => {
+export const WetInk: React.FC<Omit<LogoProps, 'full' | 'showMask' | 'drip'>> = ({width, height, k, tx, ty, state, hide}) => {
 	const wetness = (s: StrokePhase) =>
 		s.phase === 'drawing' ? 1 : s.phase === 'drying' ? 1 - smooth(s.t) : 0;
 	return (
