@@ -1,0 +1,39 @@
+{
+  "_comment": "Single source of truth for logo-canvas geometry (brief section 4/5/7). Canvas pixels of the 1518x1036 logo canvas. Read by src/*.ts and scripts/*.py.",
+  "canvas": [1518, 1036],
+  "inkBBox": [400, 278, 1137, 720],
+  "opticalCentre": [768, 499],
+  "logoWidthPx": 600,
+  "strokes": {
+    "x1": {
+      "type": "line",
+      "from": [408, 276],
+      "to": [807, 743],
+      "maskWidth": 110,
+      "startPad": 16
+    },
+    "x2": {
+      "type": "line",
+      "from": [382, 750],
+      "to": [805, 250],
+      "maskWidth": 110,
+      "startPad": 16
+    },
+    "o": {
+      "type": "circle",
+      "centre": [941, 521],
+      "radius": 167,
+      "start": [816.9, 632.7],
+      "maskPath": "M 816.9 632.7 A 167 167 0 0 1 906.3 357.7 A 167 167 0 0 1 1099.8 572.6 A 167 167 0 0 1 816.9 632.7",
+      "maskWidth": 130,
+      "startPad": 16
+    }
+  },
+  "layerRule": {
+    "x1Within": 36
+  },
+  "layout": {
+    "horizontal": { "width": 1920, "height": 1080, "pivot": [960, 540] },
+    "vertical": { "width": 1080, "height": 1920, "pivot": [540, 900] }
+  }
+}

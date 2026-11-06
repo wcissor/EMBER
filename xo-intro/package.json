@@ -1,0 +1,31 @@
+{
+  "name": "xo-one-breath",
+  "private": true,
+  "version": "1.0.0",
+  "description": "XO \u2014 \"One Breath\" logo intro (Remotion)",
+  "type": "module",
+  "scripts": {
+    "prestudio": "python3 scripts/prep.py --if-needed",
+    "studio": "remotion studio src/index.ts",
+    "prep": "python3 scripts/prep.py",
+    "standin": "python3 scripts/make_standin_logo.py",
+    "render": "python3 scripts/render.py",
+    "qa": "python3 scripts/qa.py",
+    "build": "python3 scripts/prep.py && python3 scripts/render.py && python3 scripts/qa.py",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.541",
+    "@remotion/cli": "4.0.541",
+    "@remotion/renderer": "4.0.541",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "remotion": "4.0.541"
+  },
+  "devDependencies": {
+    "@types/node": "22.18.0",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "typescript": "5.9.3"
+  }
+}
