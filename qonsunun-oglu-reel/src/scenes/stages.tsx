@@ -5,7 +5,7 @@ import {C} from '../theme';
 import {mix, rgba} from '../color';
 import {clamp01, lerp, springAt, noise1D, ease, EASE, blueOn} from '../motion';
 import {ANA, SON, QONSU, CHILD, RUNNER, makeKid, BASE, Figure, joints, poseAt, secondary, withBlink, idle, type Key, type Pose, type Build} from '../chars/rig';
-import {Phone, TeaGlass, Cup, Sapling, Modem, Board, Laptop} from '../chars/props';
+import {Phone, TeaGlass, Cup, Sapling, Modem, Board} from '../chars/props';
 import {runCycle} from '../chars/gait';
 import {BlueRoom, Halo, VT_RIM, VT_CORE} from '../chars/vtbits';
 import {WINDOW_D_SUBTITLE} from '../config';
@@ -205,39 +205,75 @@ export const WaterStage: React.FC<SP & {start: number; level: number; who: 'son'
   );
 };
 
-// ───────────────────────────── Window D: a laptop, a subtitle typing "Hello → Salam" ─────────────────────────────
+// ───────────────────────────── Window D: at a desk, typing a subtitle "Hello → Salam" ─────────────────────────────
+// Side view: he sits on a chair (thighs level, shins straight down), hands on the laptop keyboard, eyes on the screen;
+// he turns to us with a smile once the line is translated, then goes back to work.
 export const TranslateStage: React.FC<SP & {start: number; level: number}> = ({f, zpx, start, level}) => {
-  const base: Partial<Pose> = {y: 25, legL: [86, -86], legR: [82, -82], armL: [62, -40], armR: [58, -44], lean: 8, lookY: 0.5, headTilt: 6};
-  const tap = Math.sin(f * 1.7) * 6;
-  const keys: Key[] = [{at: start + 26, pose: {headTurn: 0.25, lookY: 0, eyes: 'smile', headTilt: -4}}];
+  const typing = 1 - 0.8 * ease(f, start + 22, 6, EASE.inOut) + 0.8 * ease(f, start + 54, 8, EASE.inOut);
+  const tap = Math.sin(f * 1.9) * 5 * typing;
+  const base: Partial<Pose> = {
+    profile: 1, facing: 1, y: 24.5, lean: 8,
+    legL: [90, -90], legR: [86, -86],
+    armL: [30, 70], armR: [27, 73],
+    headTurn: 0.7, lookX: 0.6, lookY: 0.35, headTilt: 6,
+  };
+  const keys: Key[] = [
+    {at: start + 24, pose: {headTurn: 0.12, lookX: 0, lookY: 0, eyes: 'smile', headTilt: -3, lean: 4}},
+    {at: start + 54, pose: {headTurn: 0.7, lookX: 0.6, lookY: 0.35, eyes: 'open', headTilt: 6, lean: 8}},
+  ];
+  const nod = Math.sin(f * 0.45) * 1.5 * typing;
   const text = `${WINDOW_D_SUBTITLE.from}  ${WINDOW_D_SUBTITLE.to}`;
   const n = Math.max(0, Math.min(text.length, Math.floor((f - start - 4) / 2)));
   const shownFrom = WINDOW_D_SUBTITLE.from.slice(0, Math.min(n, WINDOW_D_SUBTITLE.from.length));
   const arrowOn = n > WINDOW_D_SUBTITLE.from.length;
   const shownTo = WINDOW_D_SUBTITLE.to.slice(0, Math.max(0, n - WINDOW_D_SUBTITLE.from.length - 2));
   const caret = Math.floor(f / 8) % 2 === 0;
+  const glow = 0.75 + 0.25 * Math.sin(f * 0.3);
   return (
     <g>
       <BlueRoom id="rm-translate" level={level} />
-      <rect x={250} y={600} width={480} height={16} fill={C.shadow} />
-      <rect x={270} y={616} width={14} height={214} fill={C.shadow} />
-      <rect x={696} y={616} width={14} height={214} fill={C.shadow} />
-      <g transform="translate(560 600)">
-        <Laptop screen={VT_CORE} level={0.9} />
+      <defs>
+        <linearGradient id="tr-screen" x1="1" y1="0" x2="0" y2="0">
+          <stop offset="0%" stopColor={VT_CORE} stopOpacity={0.55} />
+          <stop offset="100%" stopColor={VT_CORE} stopOpacity={0} />
+        </linearGradient>
+      </defs>
+      {/* chair: back, seat, two legs (behind him) */}
+      <g fill={C.shadow}>
+        <rect x={282} y={462} width={18} height={258} rx={6} />
+        <rect x={282} y={704} width={170} height={16} rx={5} />
+        <rect x={288} y={716} width={13} height={114} />
+        <rect x={430} y={716} width={13} height={114} />
       </g>
-      <rect x={300} y={690} width={130} height={14} fill={C.shadow} />
-      <Actor b={SON} base={{...base, armL: [62 + tap, -40], armR: [58 - tap, -44]}} keys={keys} f={f} seed="tr" x={370} y={FLOOR - 120} zpx={zpx} rim={VT_RIM} rimDir={[1, -0.8]}
+      {/* desk: top and two legs clear of his feet */}
+      <g fill={C.shadow}>
+        <rect x={458} y={616} width={482} height={16} rx={3} />
+        <rect x={586} y={630} width={14} height={200} />
+        <rect x={912} y={630} width={14} height={200} />
+      </g>
+      <path d="M460 616.5 h478" stroke={VT_RIM} strokeWidth={2.5} opacity={0.55} />
+      {/* the screen's light falling on his face and hands */}
+      <path d="M662 606 L698 462 L390 360 L390 640 Z" fill="url(#tr-screen)" opacity={0.5 * glow * clamp01(level)} />
+      <Actor b={SON} base={{...base, armL: [30, 70 + tap], armR: [27, 73 - tap], headTilt: 6 + nod}} keys={keys} f={f} seed="tr" x={360} zpx={zpx} rim={VT_RIM} rimDir={[1, -0.8]}
         overlay={haloFor(SON, base, keys, f)} />
+      {/* laptop in profile: base on the desk, lid open toward him, the screen face lit */}
+      <g>
+        <rect x={478} y={604} width={190} height={12} rx={3} fill={C.shadow} />
+        <path d="M660 610 L696 461 L708 464 L672 612 Z" fill={C.shadow} />
+        <path d="M663 604 L697 466" stroke={VT_CORE} strokeWidth={5} strokeLinecap="round" opacity={0.95} />
+        <path d="M480 604.5 h176" stroke={VT_RIM} strokeWidth={2} opacity={0.6} />
+      </g>
       {n > 0 && (
         <g>
-          <rect x={150} y={700} width={700} height={118} rx={18} fill={rgba(C.shadow, 0.72)} />
-          <text x={226} y={786} fontFamily="Inter" fontWeight={700} fontSize={78} fill={C.eye}>
+          <rect x={240} y={96} width={700} height={118} rx={18} fill={rgba(C.shadow, 0.72)} />
+          <text x={316} y={182} fontFamily="Inter" fontWeight={700} fontSize={78} fill={C.eye}>
             {shownFrom}
+            {caret && !arrowOn ? '|' : ''}
           </text>
-          {arrowOn && <path d="M455 758 h80 m-26 -24 l26 24 l-26 24" stroke={C.eye} strokeWidth={10} strokeLinecap="round" strokeLinejoin="round" fill="none" />}
-          <text x={566} y={786} fontFamily="Inter" fontWeight={700} fontSize={78} fill={C.eye}>
+          {arrowOn && <path d="M545 154 h80 m-26 -24 l26 24 l-26 24" stroke={C.eye} strokeWidth={10} strokeLinecap="round" strokeLinejoin="round" fill="none" />}
+          <text x={656} y={182} fontFamily="Inter" fontWeight={700} fontSize={78} fill={C.eye}>
             {shownTo}
-            {caret && n < text.length + 2 ? '|' : ''}
+            {caret && arrowOn ? '|' : ''}
           </text>
         </g>
       )}
