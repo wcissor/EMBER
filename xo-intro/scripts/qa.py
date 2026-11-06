@@ -1,7 +1,7 @@
 """XO "One Breath" — QA (brief section 10). Renders stills through the real
 composition (with QA switches), measures them, and writes out/qa/report.md
-plus contact sheets. Frame numbers are the brief's, divided by the tempo in
-src/tempo.json exactly as src/timeline.ts does it.
+plus contact sheets. The timeline comes from src/timeline.json, the file
+src/timeline.ts reads.
 
   python3 scripts/qa.py            # stills + checks (+ audio/video checks if out/*.mp4 exist)
   python3 scripts/qa.py --no-render  # re-measure existing stills
@@ -32,35 +32,37 @@ COMPS = {
     "XO-Sting-9x16": ("vertical", "sting"),
     "XO-Sting-16x9": ("horizontal", "sting"),
 }
-TEMPO = float(json.loads((ROOT / "src" / "tempo.json").read_text())["tempo"])
+TL = json.loads((ROOT / "src" / "timeline.json").read_text())
 
 
-def at(brief_frame: float) -> int:
-    """A brief frame at the film's tempo; Math.round, as in src/timeline.ts."""
-    return math.floor(brief_frame / TEMPO + 0.5)
+def _times(t: dict) -> dict:
+    out = {k: tuple(t["strokes"][k]) for k in ("x1", "x2", "o")}
+    out.update(light=tuple(t["light"]), frames=t["duration"], fade_in_end=t["fadeIn"][1],
+               # the last frame before the fade-out (Main); the Sting ends on the logo
+               last_logo=t["fadeOut"][0] - 1 if t["fadeOut"] else t["duration"] - 1)
+    return out
 
 
-# Section 6 at tempo 1, then scaled. Main's last logo frame is the one before the fade-out.
-_BRIEF1 = {
-    "main": {"x1": (180, 228), "x2": (312, 354), "o": (420, 600), "light": (660, 840), "frames": 1080, "fade_out": 1008},
-    "sting": {"x1": (48, 90), "x2": (102, 138), "o": (156, 276), "light": (276, 396), "frames": 480, "fade_out": None},
-}
-BRIEF = {
-    cut: {
-        **{k: (at(b[k][0]), at(b[k][1])) for k in ("x1", "x2", "o", "light")},
-        "frames": at(b["frames"]),
-        "last_logo": at(b["fade_out"]) - 1 if b["fade_out"] else at(b["frames"]) - 1,
-    }
-    for cut, b in _BRIEF1.items()
-}
-MAIN = BRIEF["main"]
-# Probe frames (brief frames, scaled): fronts mid-stroke, komorebi, light-band centre, wet ink, grain, vignette.
-FRONT = {"x1": at(204), "x2": at(336), "o": at(500)}
-KOMOREBI = (("XO-Main-16x9", at(700)), ("XO-Main-16x9", at(950)), ("XO-Main-9x16", at(950)), ("XO-Sting-9x16", at(450)))
-LIGHT_F = at(750)
-WET_F = at(470)
-GRAIN_F = 2 * (at(900) // 2)  # even, so f and f+1 share a grain seed
-VIG_F = at(150)
+TIMES = {cut: _times(TL[cut]) for cut in ("main", "sting")}
+MAIN, STING = TIMES["main"], TIMES["sting"]
+
+
+def frac(span, f: float) -> int:
+    """The frame f of the way through [a, b]."""
+    return span[0] + int(f * (span[1] - span[0]) + 0.5)
+
+
+# Probe frames at the same relative points of each beat as the brief's QA frames
+# (with the brief's timeline these give exactly 204/336/500, 700/950/450, 750, 470, 900, 150).
+_hold = (MAIN["light"][1], MAIN["last_logo"] + 1)  # after the light pass, before the fade-out
+_sting_hold = (STING["light"][1], STING["frames"])
+FRONT = {"x1": frac(MAIN["x1"], 1 / 2), "x2": frac(MAIN["x2"], 4 / 7), "o": frac(MAIN["o"], 4 / 9)}
+KOMOREBI = (("XO-Main-16x9", frac(MAIN["light"], 2 / 9)), ("XO-Main-16x9", frac(_hold, 0.655)),
+            ("XO-Main-9x16", frac(_hold, 0.655)), ("XO-Sting-9x16", frac(_sting_hold, 0.64)))
+LIGHT_F = frac(MAIN["light"], 1 / 2)
+WET_F = frac(MAIN["o"], 5 / 18)
+GRAIN_F = 2 * (frac(_hold, 5 / 14) // 2)  # even, so f and f+1 share a grain seed
+VIG_F = frac((MAIN["fade_in_end"], MAIN["x1"][0]), 2 / 3)
 QUIET = {"grain": False}
 
 
@@ -118,7 +120,7 @@ def box5(a):
 # ---------------------------------------------------------------------------
 def plan(j: Jobs):
     for comp, (fmt, cut) in COMPS.items():
-        b = BRIEF[cut]
+        b = TIMES[cut]
         k = comp
         # 1. last logo frame == all three layers fully shown
         j.add(comp, b["last_logo"], f"{k}-last")
@@ -223,7 +225,7 @@ def analyse():
         check(f"final logo exact [{comp}]", d <= ONE + 1e-6, f"max diff {d * 255:.2f}/255 vs all three layers fully shown")
     # 2. leaks
     for comp, (fmt, cut) in COMPS.items():
-        b = BRIEF[cut]
+        b = TIMES[cut]
         for tag, f in (("x2", b["x2"][0] - 1), ("o", b["o"][0] - 1)):
             d = np.abs(img(f"{comp}-leak-{tag}") - img(f"{comp}-leak-{tag}-ref")).max()
             check(f"no {tag.upper()} leak at frame {f} [{comp}]", d <= ONE + 1e-6, f"max diff {d * 255:.2f}/255")
@@ -231,9 +233,9 @@ def analyse():
     for s in ("x1", "x2", "o"):
         a, r = img(f"cov-{s}"), img(f"cov-{s}-ref")
         d = np.abs(a - r).max()
-        frac = float((np.abs(a - r).max(axis=2) > 2 * ONE).mean() * 100)
+        pct = float((np.abs(a - r).max(axis=2) > 2 * ONE).mean() * 100)
         check(f"{s.upper()} mask solid at progress 1 (before settle)", d <= 2 * ONE + 1e-6,
-              f"max diff {d * 255:.2f}/255, {frac:.4f}% px > 2/255")
+              f"max diff {d * 255:.2f}/255, {pct:.4f}% px > 2/255")
     # 4. brush fronts
     tiles = []
     for comp in ("XO-Main-16x9", "XO-Main-9x16"):
@@ -347,7 +349,7 @@ def media_checks():
         a = next((s for s in info["streams"] if s["codec_type"] == "audio"), None)
         want = (1080, 1920) if fmt == "vertical" else (1920, 1080)
         ok = (v["codec_name"] == "h264" and v["pix_fmt"] == "yuv420p" and v["r_frame_rate"] == "60/1"
-              and (v["width"], v["height"]) == want and int(v["nb_read_packets"]) == BRIEF[cut]["frames"]
+              and (v["width"], v["height"]) == want and int(v["nb_read_packets"]) == TIMES[cut]["frames"]
               and v.get("color_space") == "bt709")
         check(f"deliverable {p.name}", ok, f"{v['width']}x{v['height']} h264 {v['pix_fmt']} {v['r_frame_rate']} "
               f"{v['nb_read_packets']} frames, {float(info['format']['duration']):.3f}s, color {v.get('color_space')}, "
@@ -379,7 +381,7 @@ def write_report(meta):
         tag = {True: "PASS", False: "**FAIL**", None: "info"}[ok]
         lines.append(f"| {tag} | {name} | {detail} |")
     lines += ["", "Visual items (watch on a phone at full brightness, with sound): `brush-fronts.png`, "
-              "`*-timeline.png`. The pace is one number: tempo in src/tempo.json.", ""]
+              "`*-timeline.png`. Every beat is in src/timeline.json.", ""]
     (QA / "report.md").write_text("\n".join(lines))
     fails = [r for r in results if r[1] is False]
     print(f"\n{len([r for r in results if r[1]])} passed, {len(fails)} failed -> {QA / 'report.md'}")

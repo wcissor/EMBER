@@ -6,10 +6,10 @@ painted as an ensō in one breath and left open. Then only stillness and light.
 
 | Deliverable | Size | Length |
 | --- | --- | --- |
-| `out/XO-Main-9x16.mp4` | 1080×1920 | 6.0 s (360 frames) |
-| `out/XO-Main-16x9.mp4` | 1920×1080 | 6.0 s |
-| `out/XO-Sting-9x16.mp4` | 1080×1920 | 2.67 s (160 frames, ends on the logo) |
-| `out/XO-Sting-16x9.mp4` | 1920×1080 | 2.67 s |
+| `out/XO-Main-9x16.mp4` | 1080×1920 | 5.0 s (300 frames) |
+| `out/XO-Main-16x9.mp4` | 1920×1080 | 5.0 s |
+| `out/XO-Sting-9x16.mp4` | 1080×1920 | 3.5 s (210 frames, ends on the logo) |
+| `out/XO-Sting-16x9.mp4` | 1920×1080 | 3.5 s |
 
 All are H.264 CRF 16, yuv420p, BT.709, 60 fps, with a silent AAC track (the
 client asked for no sound; see Sound).
@@ -42,24 +42,27 @@ python3 -m pip install pillow numpy   # prep, sound and QA scripts
 | `npm run qa` | `scripts/qa.py`: the section-10 checklist → `out/qa/report.md` |
 | `npm run build` | all of the above |
 
-## Pace
+## Timing
 
-The client asked for a faster film three times, so it runs at 3× the brief's
-pace: Main 6 s, Sting 2.67 s. The pace is one number, `tempo` in
-`src/tempo.json`. Every beat of the brief's timeline is divided by it: fades,
-strokes, the light pass, the drying and the sound cues. The rhythm stays the
-same and only the speed changes. `1` restores the brief (18 s / 8 s). The
-earlier cuts were `1.5` (12 s / 5.33 s) and `1.8` (10 s / 4.45 s); `2.5` gives
-7.2 s / 3.2 s. After changing it, run `npm run build`.
+The client wants the logo written fast: the whole logo appears between 1 s and
+2 s. The film is 5 s (Main) or 3.5 s (Sting). Every beat is in frames at 60 fps
+in `src/timeline.json`, the one file read by `src/timeline.ts`, `render.py`,
+`make_temp_sfx.py` and `qa.py`. The brush easings stay the brief's; only the
+spans changed. After editing it, run `npm run build`.
 
-| Main | Brief (tempo 1) | Now (tempo 3) |
+| Main | Brief | Now |
 | --- | --- | --- |
-| Fade in | 0–1.5 s | 0–0.5 s |
-| X1 | 3.0–3.8 s | 1.0–1.27 s |
-| X2 | 5.2–5.9 s | 1.73–1.97 s |
-| O (ensō) | 7.0–10.0 s | 2.33–3.33 s |
-| Light pass | 11.0–14.0 s | 3.67–4.67 s |
-| Fade out | 16.8–18.0 s | 5.6–6.0 s |
+| Fade in | 0–1.5 s | 0–0.75 s |
+| X1 | 3.0–3.8 s | 1.00–1.25 s |
+| X2 | 5.2–5.9 s | 1.30–1.50 s |
+| O (ensō) | 7.0–10.0 s | 1.55–2.00 s |
+| Light pass | 11.0–14.0 s | 2.20–3.40 s |
+| Fade out | 16.8–18.0 s | 4.40–5.00 s |
+| Length | 18 s | 5 s |
+
+The Sting writes the logo on the same beats. Its light passes at 2.0–3.0 s,
+and it ends on the logo at 3.5 s (the brief: 8 s). Wet ink dries in 24 frames
+(the brief: 48).
 
 ## Sound
 
@@ -75,25 +78,25 @@ in place for later:
   brightness follow the stroke easings, a water drop with a rising bubble
   resonance, a rin bowl with inharmonic, gently beating partials, and a
   seamless room tone. `npm run render -- --audio-only --temp-sfx` mixes them in.
-  Regenerate them after changing the tempo.
+  Regenerate them after changing the timeline.
 - **ElevenLabs:** the canvas "XO One Breath — natural sound" holds the six
   prompts. Generation is refused because the account's subscription has a
   failed or incomplete payment. It was tried twice, the second time on
-  6 Nov 2026, and nothing was charged. Its brush cues are cut for tempo 1.5
-  (0.75, 0.7 and 2 s). At another tempo, set them to the brief's stroke
-  lengths (0.8, 0.7 and 3 s) divided by the tempo, plus about 0.2 s of tail.
+  6 Nov 2026, and nothing was charged. Its brush cues are 0.75, 0.7 and 2 s
+  long. For the current strokes, set them to about 0.5, 0.5 and 0.5 s (the
+  minimum is 0.5 s); `brush-long` is time-stretched to the ensō anyway.
 
 How a mix is built:
 
 - Each cue is gain-staged on what will actually play: the bell peaks at −6 dBFS,
   brushes and the water drop at −13 dBFS, the room tone at −38 dBFS RMS. Every
-  cue gets 5 ms fades, and `brush-long` is time-stretched to the ensō's length
-  (3 s in Main and 2 s in the Sting, divided by the tempo). Cue times follow
-  the tempo. If the room tone is shorter than the cut, it loops with
-  equal-power crossfades.
+  cue gets 5 ms fades, and `brush-long` is time-stretched to the ensō's length.
+  Every cue sits on a beat of `src/timeline.json`: each brush on its stroke,
+  the bell as the light starts. If the room tone is shorter than the cut, it
+  loops with equal-power crossfades.
 - `adelay` per cue → `amix normalize=0` → fades on the ends (Main follows the
-  picture's fade-out, 1.2 s ÷ tempo; the Sting gets a 0.6 s ÷ tempo tail
-  because it ends on the logo).
+  picture's fade-out; the Sting gets a 0.3 s tail because it ends on the
+  logo).
 - Two passes, **linear only**: the mix is measured with `ebur128` (BS.1770, the
   meter QA uses), then gets one plain `volume` gain toward I=−22 LUFS. The gain
   is capped by true-peak headroom (TP −3) and at +3 dB. Nothing compresses or
@@ -105,8 +108,8 @@ How a mix is built:
 
 ```
 src/geometry.json   section-4 geometry, shared by the TS and Python code
-src/timeline.ts     section-6 timelines and easings (Main, Sting), scaled by the tempo
-src/tempo.json      the pace: 3 = the client's fast cut
+src/timeline.json   every beat in frames (Main, Sting), shared by the TS and Python code
+src/timeline.ts     the timelines with the section-6 brush easings
 src/look.ts         the style bible as numbers
 src/geometry.ts     layout per format, bristled mask lanes
 src/layers.tsx      paper canvas, SVG reveal, wet ink, light pass, vignette, grain, fade
@@ -124,7 +127,7 @@ Layer stack, bottom to top:
    revealed through an SVG mask, composited additively. X2 also carries its
    small crossing shade.
 3. **Wet ink**: the same pixels at +8% (108%) over the trailing 12% of the
-   path; dries over 48 frames at the brief's pace (16 at 3).
+   path; dries over 24 frames (the brief: 48).
 4. **Light pass** on the logo: a warm band masked by the full logo alpha
    (+8% at the peak, so warm light reaches ~9%, under the 10% cap).
 5. Dithered 8% **vignette**, 1.5% monochrome **film grain** (a new seeded
@@ -176,8 +179,8 @@ Layer stack, bottom to top:
 switches, then checks every automatable item in the brief's section 10:
 
 - the last logo frame equals all three layers fully shown, within 1/255
-- no leaks one frame before X2 and before the O starts (Main 103/139, Sting 33/51 at
-  tempo 3; QA reads the tempo)
+- no leaks one frame before X2 and before the O starts (frames 77 and 92 in both
+  cuts; QA reads src/timeline.json)
 - each mask is solid at progress 1, before the settle
 - the fronts are bristled, not a wipe (measured front raggedness)
 - komorebi ≤ 3% on the logo
@@ -192,8 +195,8 @@ switches, then checks every automatable item in the brief's section 10:
 
 It also writes `out/qa/brush-fronts.png` and a timeline contact sheet per
 composition. Two checks stay manual: watch at full speed with sound on a phone
-at full brightness, and judge the pace. It is the client's call now: change
-`tempo` in `src/tempo.json`.
+at full brightness, and judge the pace. It is the client's call now: edit
+`src/timeline.json`.
 
 ## Notes
 

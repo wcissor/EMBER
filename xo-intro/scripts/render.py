@@ -46,12 +46,13 @@ COMPS = {
     "XO-Sting-9x16": "sting",
     "XO-Sting-16x9": "sting",
 }
-# Pace (src/tempo.json): the brief's times are divided by TEMPO, exactly as
-# src/timeline.ts divides its frames, so sound and picture stay locked.
-TEMPO = float(json.loads((ROOT / "src" / "tempo.json").read_text())["tempo"])
-FRAMES = {"main": int(1080 / TEMPO + 0.5), "sting": int(480 / TEMPO + 0.5)}  # Math.round, as timeline.ts
-DURATION = {k: v / 60 for k, v in FRAMES.items()}
-T = lambda brief_s: round(brief_s / TEMPO, 4)  # brief seconds -> film seconds
+# Timing (src/timeline.json, frames at 60 fps): the same file src/timeline.ts
+# reads, so sound and picture stay locked.
+FPS = 60
+TL = json.loads((ROOT / "src" / "timeline.json").read_text())
+FRAMES = {cut: int(TL[cut]["duration"]) for cut in ("main", "sting")}
+DURATION = {k: v / FPS for k, v in FRAMES.items()}
+sec = lambda f: round(f / FPS, 4)  # frames -> seconds
 
 
 @dataclass
@@ -69,26 +70,38 @@ class Cue:
 # at -14..-12 dBFS (we aim at -13); room tone ~ -38 dBFS RMS.
 TARGET = {"room": ("rms", -38.0), "fx": ("peak", -13.0), "bell": ("peak", -6.0)}
 
-SHEET = {
-    "main": [
-        Cue("room-tone.mp3", 0.0, "room", loop=True, fade_in=T(1.5), fade_out=T(1.2)),
-        Cue("water-drop.mp3", T(2.4), "fx"),
-        Cue("brush.mp3", T(3.0), "fx"),
-        Cue("brush-lift.mp3", T(5.2), "fx"),
-        Cue("brush-long.mp3", T(7.0), "fx", fit=T(3.0)),
-        Cue("bell.mp3", T(11.2), "bell"),
-    ],
-    "sting": [
-        Cue("room-tone.mp3", 0.0, "room", loop=True, fade_in=T(0.8)),
-        Cue("brush.mp3", T(0.8), "fx"),
-        Cue("brush-lift.mp3", T(1.7), "fx"),
-        Cue("brush-long.mp3", T(2.6), "fx", fit=T(2.0)),
-        Cue("bell.mp3", T(4.7), "bell"),
-    ],
-}
-# Master fade at the end: Main follows the picture's 1.2 s fade to #0D0D0D;
-# the Sting ends on the logo, so only a short tail to avoid a hard cut.
-MASTER_FADE_OUT = {"main": T(1.2), "sting": T(0.6)}
+def sheet(cut: str) -> list[Cue]:
+    """The cue sheet (section 8), placed on the timeline's beats: each brush lands
+    with its stroke, the ensō's cue is stretched to the stroke, the bell rings as
+    the warm light starts. Main also has the room tone fading in with the picture
+    and one water drop in the empty-paper pause."""
+    t = TL[cut]
+    x1, x2, o = (t["strokes"][k] for k in ("x1", "x2", "o"))
+    fade_in = sec(t["fadeIn"][1])
+    if cut == "main":
+        fade_out = sec(t["fadeOut"][1] + 1 - t["fadeOut"][0])
+        drop = sec(t["fadeIn"][1] + 0.6 * (x1[0] - t["fadeIn"][1]))  # the brief's 2.4 s
+        return [
+            Cue("room-tone.mp3", 0.0, "room", loop=True, fade_in=fade_in, fade_out=fade_out),
+            Cue("water-drop.mp3", drop, "fx"),
+            Cue("brush.mp3", sec(x1[0]), "fx"),
+            Cue("brush-lift.mp3", sec(x2[0]), "fx"),
+            Cue("brush-long.mp3", sec(o[0]), "fx", fit=sec(o[1] - o[0])),
+            Cue("bell.mp3", sec(t["light"][0] + 12), "bell"),  # 0.2 s into the light, as in the brief
+        ]
+    return [
+        Cue("room-tone.mp3", 0.0, "room", loop=True, fade_in=fade_in),
+        Cue("brush.mp3", sec(x1[0]), "fx"),
+        Cue("brush-lift.mp3", sec(x2[0]), "fx"),
+        Cue("brush-long.mp3", sec(o[0]), "fx", fit=sec(o[1] - o[0])),
+        Cue("bell.mp3", sec(t["light"][0] + 6), "bell"),  # 0.1 s into the light, as in the brief
+    ]
+
+
+SHEET = {cut: sheet(cut) for cut in ("main", "sting")}
+# Master fade at the end: Main follows the picture's fade to #0D0D0D; the
+# Sting ends on the logo, so only a short tail to avoid a hard cut.
+MASTER_FADE_OUT = {"main": sec(TL["main"]["fadeOut"][1] + 1 - TL["main"]["fadeOut"][0]), "sting": 0.3}
 
 LOUD_I, LOUD_TP = -22.0, -3.0
 MAX_LIFT_DB = 3.0  # never push the whole mix (room tone included) up more than this

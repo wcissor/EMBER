@@ -7,9 +7,9 @@ when public/sfx/ has no cues, and says so loudly.
 
   room-tone   quiet tatami room: still air + faint garden rustle, seamless loop
   water-drop  one drop into a stone basin: impact, rising bubble resonance
-  brush       X1 stroke  (0.8 s / tempo), loudness/brightness follow the brief's easing
-  brush-lift  X2 stroke  (0.7 s / tempo), speeds up into a quick airy lift
-  brush-long  the ensō   (3.0 s / tempo), one breath, the brush leaves still moving
+  brush       X1 stroke  (src/timeline.json), loudness/brightness follow the brief's easing
+  brush-lift  X2 stroke  (src/timeline.json), speeds up into a quick airy lift
+  brush-long  the ensō   (src/timeline.json), one breath, the brush leaves still moving
   bell        small rin bowl: inharmonic partials with slow beating
 
 Deterministic (fixed seeds). 48 kHz stereo, 24-bit WAV.
@@ -255,9 +255,9 @@ def main():
     rng = np.random.default_rng(20261106)
     ir = room_ir(rng)
     X1, X2, O = (0.4, 0, 0.6, 0.85), (0.5, 0, 0.9, 0.6), (0.45, 0, 0.75, 0.85)
-    # stroke lengths at the film's pace (src/tempo.json): X1 0.8 s, X2 0.7 s, ensō 3 s at tempo 1
-    tempo = float(__import__("json").loads((ROOT / "src" / "tempo.json").read_text())["tempo"])
-    x1, x2, o = 0.8 / tempo, 0.7 / tempo, 3.0 / tempo
+    # stroke lengths from the film's timeline (src/timeline.json, Main, 60 fps)
+    strokes = __import__("json").loads((ROOT / "src" / "timeline.json").read_text())["main"]["strokes"]
+    x1, x2, o = ((strokes[k][1] - strokes[k][0]) / 60 for k in ("x1", "x2", "o"))
     cues = {
         "room-tone": room_tone(rng),
         "water-drop": water_drop(rng, ir),

@@ -1,10 +1,11 @@
 import {Easing} from 'remotion';
 import type {StrokeKey} from './geometry';
-import tempo from './tempo.json';
+import data from './timeline.json';
 
 export type Cut = 'main' | 'sting';
 
 type Bezier = [number, number, number, number];
+type Span = [number, number];
 
 export type StrokeTiming = {start: number; end: number; easing: Bezier};
 
@@ -12,70 +13,47 @@ export type Timeline = {
 	/** Total length in frames (60 fps). */
 	duration: number;
 	/** #0D0D0D -> paper. Fully dark on the first frame, clear on the last. */
-	fadeIn: [number, number];
+	fadeIn: Span;
 	/** Paper -> #0D0D0D, fully dark on the last frame. Null: ends on the logo. */
-	fadeOut: [number, number] | null;
+	fadeOut: Span | null;
 	strokes: Record<StrokeKey, StrokeTiming>;
 	/** Warm light pass, left to right. */
-	light: [number, number];
+	light: Span;
 	/** Wet ink dries to the base over this many frames after each stroke. */
 	dry: number;
 };
 
 // Brush easings from the brief (section 6). The Sting uses the same hands.
-const X1_EASE: Bezier = [0.4, 0, 0.6, 0.85]; // press, glide, still moving at the lift
-const X2_EASE: Bezier = [0.5, 0, 0.9, 0.6]; // speeds up into the quick lift
-const O_EASE: Bezier = [0.45, 0, 0.75, 0.85]; // one breath; leaves the paper moving
-
-// The brief's timeline (section 6), in frames at 60 fps, at the brief's pace.
-const BRIEF: Record<Cut, Timeline> = {
-	main: {
-		duration: 1080, // 18.0 s at tempo 1
-		fadeIn: [0, 90],
-		fadeOut: [1008, 1080],
-		strokes: {
-			x1: {start: 180, end: 228, easing: X1_EASE},
-			x2: {start: 312, end: 354, easing: X2_EASE},
-			o: {start: 420, end: 600, easing: O_EASE},
-		},
-		light: [660, 840],
-		dry: 48,
-	},
-	sting: {
-		duration: 480, // 8.0 s at tempo 1, no fade-out: ends on the logo
-		fadeIn: [0, 48],
-		fadeOut: null,
-		strokes: {
-			x1: {start: 48, end: 90, easing: X1_EASE},
-			x2: {start: 102, end: 138, easing: X2_EASE},
-			o: {start: 156, end: 276, easing: O_EASE},
-		},
-		light: [276, 396],
-		dry: 48,
-	},
+const EASE: Record<StrokeKey, Bezier> = {
+	x1: [0.4, 0, 0.6, 0.85], // press, glide, still moving at the lift
+	x2: [0.5, 0, 0.9, 0.6], // speeds up into the quick lift
+	o: [0.45, 0, 0.75, 0.85], // one breath; leaves the paper moving
 };
 
-/** Pace of the whole film (src/tempo.json): every beat of the brief's timeline
- * is divided by it, so the rhythm is kept and only the speed changes. */
-export const TEMPO = tempo.tempo;
-
-const at = (f: number) => Math.round(f / TEMPO);
-const scale = (tl: Timeline): Timeline => {
-	const duration = at(tl.duration);
-	return {
-		duration,
-		fadeIn: [at(tl.fadeIn[0]), at(tl.fadeIn[1])],
-		// the fade-out always lands fully dark on the very last frame
-		fadeOut: tl.fadeOut ? [at(tl.fadeOut[0]), duration - 1] : null,
-		strokes: Object.fromEntries(
-			Object.entries(tl.strokes).map(([k, s]) => [k, {...s, start: at(s.start), end: at(s.end)}]),
-		) as Timeline['strokes'],
-		light: [at(tl.light[0]), at(tl.light[1])],
-		dry: at(tl.dry),
-	};
+// Frames live in src/timeline.json (shared with the Python scripts). The client's
+// cut writes the whole logo between 1.0 s and 2.0 s.
+type CutJson = {
+	duration: number;
+	fadeIn: number[];
+	fadeOut: number[] | null;
+	strokes: Record<StrokeKey, number[]>;
+	light: number[];
+	dry: number;
 };
+const span = (v: number[]): Span => [v[0], v[1]];
+const build = (c: CutJson): Timeline => ({
+	duration: c.duration,
+	fadeIn: span(c.fadeIn),
+	fadeOut: c.fadeOut ? span(c.fadeOut) : null,
+	strokes: Object.fromEntries(
+		(Object.keys(EASE) as StrokeKey[]).map((k) => [k, {start: c.strokes[k][0], end: c.strokes[k][1], easing: EASE[k]}]),
+	) as Timeline['strokes'],
+	light: span(c.light),
+	dry: c.dry,
+});
+const json = data as unknown as Record<Cut, CutJson>;
 
-export const TIMELINES: Record<Cut, Timeline> = {main: scale(BRIEF.main), sting: scale(BRIEF.sting)};
+export const TIMELINES: Record<Cut, Timeline> = {main: build(json.main), sting: build(json.sting)};
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 const ramp = (f: number, a: number, b: number) => clamp01((f - a) / (b - a));
