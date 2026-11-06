@@ -73,9 +73,9 @@ for lang in LANGS:
         except Exception:
             word_rows = []
     ok5 = not missing and word_rows and all(r['ok'] for r in word_rows)
-    wt = '\n'.join(f"| L{r['id']} | {r['expected']} | {r['heard']} | {'✓' if r['ok'] else '✗'} |" for r in word_rows)
+    wt = '\n'.join(f"| L{r['id']} | {r['expected']} | {r['stem']} {'✓' if r['ok'] else '✗'} | {r['heard']} {'✓' if r.get('mixOk') else '✗'} |" for r in word_rows)
     gate(lang, 5, 'Words', True if ok5 else False,
-         f"No ElevenLabs key is available in this environment, so the final mix is checked locally: each placed line is cut from the mix and decoded against a grammar of the whole script (pocketsphinx; Azerbaijani through letter-to-phone mapping). This confirms the right line plays where its caption shows; it is not a full transcription.\n\n| line | caption | decoded as | match |\n|---|---|---|---|\n{wt or '| — | — | — | — |'}\n\n**Missing takes: lines {', '.join(missing) if missing else 'none'}** (silent placeholders on their target times).")
+         f"No ElevenLabs key is available in this environment, so the audio is checked locally: each placed line is cut at its caption's time from its voice stem (dry) and from the final mix, and decoded against a grammar of the whole script (pocketsphinx; Azerbaijani through letter-to-phone mapping). This confirms the right line plays where its caption shows; it is not a full transcription, and the decoder is less reliable under music and reverb (the mix column).\n\n| line | caption | decoded from the stem | decoded from the mix |\n|---|---|---|---|\n{wt or '| — | — | — | — |'}\n\n**Missing takes: lines {', '.join(missing) if missing else 'none'}** (silent placeholders on their target times).")
     # 6 · loudness
     if FINAL.exists():
         e = sh('ffmpeg', '-hide_banner', '-nostats', '-i', str(FINAL), '-af', 'ebur128=peak=true', '-f', 'null', '-', check=False).stderr
@@ -142,27 +142,13 @@ for lang in LANGS:
             worst = max(worst, (sum(1 for a_, b_ in zip(w, w[1:]) if a_[1] != b_[1]) + 1) // 2)
         lum = Lr.mean(axis=(1, 2))
         full_white = int(np.sum(lum > 0.9))
-        # caption contrast on the real frames: background behind the caption box (pixels darker than the text)
-        raw2 = subprocess.run(['ffmpeg', '-v', 'error', '-i', str(FINAL), '-vf', 'crop=900:150:90:1094,scale=300:50', '-pix_fmt', 'rgb24', '-f', 'rawvideo', '-'], capture_output=True).stdout
-        cap = np.frombuffer(raw2, dtype=np.uint8).reshape(-1, 50, 300, 3).astype(np.float32) / 255
-        clin = np.where(cap <= 0.04045, cap / 12.92, ((cap + 0.055) / 1.055) ** 2.4) @ np.array([0.2126, 0.7152, 0.0722])
-        lines_on = []
-        for x in TL['lines']:
-            a_ = int(round(x['words'][0]['start'] * FPS)) + 4
-            b_ = int(round(x['end'] * FPS)) - 1
-            lines_on += list(range(a_, max(a_ + 1, b_)))
-        bgs = []
-        for f in lines_on:
-            if f >= len(clin):
-                continue
-            px = clin[f][clin[f] < 0.5]
-            if px.size:
-                bgs.append((f, float(np.percentile(px, 95))))
-        worst_bg = max(bgs, key=lambda x: x[1]) if bgs else (0, 0)
-        ratio = (0.912 + 0.05) / (worst_bg[1] + 0.05)
+        # caption contrast on the real frames, behind each text row (scripts/qa/contrast.py)
+        cj = json.loads(sh('python3', 'scripts/qa/contrast.py', str(FINAL), lang).stdout)
+        worst_f, worst_l, ratio = cj['worst']
+        under = cj['under']
         flood = B['uiIn'] - B['flood']
-        ok12 = worst <= 3 and full_white == 0 and ratio >= 4.5 and flood >= 10
-        gate(lang, 12, 'Comfort', ok12, f"Flashes (WCAG general-flash: opposing changes ≥ 0.1 relative luminance over ≥ 25% of the frame): {len(trans)} transitions, worst {worst} in any second (limit 3). Near-white full frames: {full_white}. The blue flood ramps over {B['phoneTurn']}→{B['flood']} (walls, 12 frames) and {B['flood']}→{B['uiIn']} ({flood} frames, ≥ 10).\n\nCaption contrast measured on the final frames: eye colour #F5F7FF on the scrim, worst background behind any caption (95th percentile of non-text pixels) at f{worst_bg[0]}: relative luminance {worst_bg[1]:.3f} → **{ratio:.1f}:1** (≥ 4.5:1).")
+        ok12 = worst <= 3 and full_white == 0 and not under and flood >= 10
+        gate(lang, 12, 'Comfort', ok12, f"Flashes (WCAG general-flash: opposing changes ≥ 0.1 relative luminance over ≥ 25% of the frame): {len(trans)} transitions, worst {worst} in any second (limit 3). Near-white full frames: {full_white}. The blue flood ramps over {B['phoneTurn']}→{B['flood']} (walls, 12 frames) and {B['flood']}→{B['uiIn']} ({flood} frames, ≥ 10).\n\nCaption contrast measured on the final video, on all {cj['frames']} frames where a caption is fully up (`scripts/qa/contrast.py`): eye colour #F5F7FF against the 95th-percentile background behind each text row, with the letters and their anti-aliased edges excluded; a caption's 3-frame fade-out is skipped. Worst: **{ratio:.1f}:1** at f{worst_f} (L{worst_l}); frames under 4.5:1: {len(under)}.")
     else:
         gate(lang, 12, 'Comfort', False, 'final file missing')
     # 13 · clean files
