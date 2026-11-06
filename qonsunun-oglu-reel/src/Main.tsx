@@ -68,7 +68,7 @@ const Rays: React.FC<{lang: Lang}> = ({lang}) => {
   const son = project(worldCam(lang, f), placeCenter('son').x, placeCenter('son').y);
   const col = project(worldCam(lang, f), placeCenter('winB').x, placeCenter('winB').y);
   const kr = placeRect('kidRoom');
-  const kid = project(worldCam(lang, f), kr.x + 50, kr.y + kr.h - 40);
+  const kid = project(worldCam(lang, f), kr.x + 53, kr.y + kr.h - 46); // his head at the window
   return (
     <>
       {f >= B.title && f < B.title + 40 && <GodRays at={B.title} x={son.x} y={son.y - 200} />}

@@ -12,7 +12,7 @@ import {BlueGlowDefs} from '../chars/vtbits';
 import {voiceEnv} from './voice';
 import {useStems} from './useStems';
 import {
-  SonStage, PlantStage, TeachStage, WaterStage, TranslateStage, KidRoomStage, AnaOnBalcony, QonsuOnBalcony, QonsuInside, KidOnLedge,
+  SonStage, PlantStage, TeachStage, WaterStage, TranslateStage, KidRoomStage, AnaOnBalcony, QonsuOnBalcony, QonsuInside,
 } from './stages';
 
 const STAGE_SCALE = 0.124;
@@ -84,7 +84,6 @@ export const WorldScene: React.FC<{lang: Lang; hideSky?: boolean; hideFar?: bool
     stage: <KidRoomStage f={f} t={t} B={B} zpx={zpx} blue={blueKid * kidEnv} amber={amberKid} phase={phase} />,
     front: (
       <g>
-        {phase === 's6' && <KidOnLedge f={f} t={t} B={B} zpx={cam.z} x={kidRect.x + 50} y={kidRect.y + kidRect.h + 50} />}
         <rect x={kidRect.x - 6} y={kidRect.y + kidRect.h + 48} width={kidRect.w + 12} height={6} fill="#2A3350" />
         <rect x={kidRect.x - 6} y={kidRect.y + kidRect.h - 2} width={kidRect.w + 12} height={3.2} fill="#141A2C" />
         {Array.from({length: 12}, (_, i) => (

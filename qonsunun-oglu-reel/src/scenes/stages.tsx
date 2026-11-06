@@ -299,7 +299,7 @@ export const KidRoomStage: React.FC<SP & {blue: number; amber: number; phase: 's
   const STAND = {rot: 0, x: -12.5, y: 31.8, profile: 0, facing: 1 as const};
   const kidBase: Partial<Pose> = phase === 's3'
     ? LIE
-    : {y: 22, legL: [88, -88], legR: [84, -84], armR: [40, -70], armL: [20, 30], lookY: 0.5, headTilt: 8, lean: 4};
+    : {profile: 1, facing: 1, y: 43, lean: -6, legL: [140, -100], legR: [134, -96], armR: [8, 96], armL: [12, 90], headTilt: 16, headTurn: 0.55, lookX: 0.5, lookY: 0.6};
   const kidKeys: Key[] = phase === 's3'
     ? [
         // on "Mən?.." his eyes slide toward her (the door), then back to the phone
@@ -313,7 +313,7 @@ export const KidRoomStage: React.FC<SP & {blue: number; amber: number; phase: 's
         {at: B.bolt - 6, pose: {armR: [40, 40], armL: [30, 30], lookY: 0, lookX: 1, headTurn: 0.6, eyes: 'open'}},
       ]
     : phase === 's5'
-      ? [{at: B.bedroomBlue + 2, pose: {eyes: 'smile', headTurn: 0.3, lookY: 0.2}}]
+      ? [{at: B.bedroomBlue + 2, pose: {eyes: 'smile', headTurn: 0.15, lookX: 0, lookY: 0, headTilt: -2, lean: -4}}]
       : [];
   const phoneScreen = phase === 's3' ? C.phoneWhite : C.phoneWhite;
   // phone flies up on the flip and he catches it
@@ -402,7 +402,7 @@ export const KidRoomStage: React.FC<SP & {blue: number; amber: number; phase: 's
           keys={kidKeys}
           f={f}
           seed="kid"
-          x={phase === 's3' ? 400 : 430}
+          x={phase === 's3' ? 400 : 290}
           y={phase === 's3' ? 652 : 652}
           s={5.6}
           zpx={zpx}
@@ -412,6 +412,7 @@ export const KidRoomStage: React.FC<SP & {blue: number; amber: number; phase: 's
           holdR={phoneFly > 0 && phoneFly < 1 ? undefined : <Phone screen={phase === 's5' && blue > 0.5 ? VT_CORE : phoneScreen} glow={1} angle={phase === 's3' && f < flip ? -90 : 0} />}
         />
       )}
+      {phase === 's6' && f >= B.kidStep - 6 && <KidAtWindow f={f} t={t} B={B} zpx={zpx} />}
       {phase === 's3' && phoneFly > 0 && phoneFly < 1 && (
         <g transform={`translate(${lerp(432, 487, phoneFly)} ${lerp(415, 262, phoneFly) - Math.sin(phoneFly * Math.PI) * 200}) rotate(${phoneFly * 540}) scale(5.6)`}>
           <Phone screen={phoneScreen} glow={0.6} />
@@ -494,20 +495,21 @@ export const QonsuInside: React.FC<{f: number; zpx: number; r: {x: number; y: nu
   );
 };
 
-/** S6: our kid steps onto his balcony with an armudu tea glass; turns to camera; smug squint; the halo fades in. */
-export const KidOnLedge: React.FC<{f: number; t: number; B: Record<string, number>; zpx: number; x: number; y: number}> = ({f, t, B, zpx, x, y}) => {
+/** S6: our kid comes to his window with an armudu tea glass (from the door side), one hand on the sill; turns to camera;
+ * smug squint; the halo fades in. He stands at the window, so the sill cuts him at the waist (stage units). */
+const KidAtWindow: React.FC<{f: number; t: number; B: Record<string, number>; zpx: number}> = ({f, t, B, zpx}) => {
   const step = B.kidStep;
-  if (f < step - 6) return null;
-  const base: Partial<Pose> = {x: -30, y: 18, facing: 1, armR: [36, 96], armL: [14, 24], headTurn: 0.5, lookX: 0.6, lookY: 0.3};
+  const base: Partial<Pose> = {x: 41, lean: -8, facing: 1, armR: [19, -133], armL: [14, 10], headTurn: -0.5, lookX: -0.6, lookY: 0.1};
   const keys: Key[] = [
-    {at: step - 2, pose: {x: 0, y: 0}, antic: 3},
+    {at: step - 2, pose: {x: 0, lean: 0}, antic: 3},
+    {at: step + 2, pose: {armL: [42, -71]}, kind: 'settle'},
     {at: step + 16, pose: {headTurn: 0, lookX: 0, lookY: 0}, kind: 'pose'},
     {at: step + 26, pose: {eyes: 'smug', headTilt: 7, lean: -3}, kind: 'pose'},
-    {at: B.kidRays + 4, pose: {armR: [52, 92]}, kind: 'settle'},
+    {at: B.kidRays + 4, pose: {armR: [80, 131]}, kind: 'settle'},
   ];
   const haloOn = clamp01((f - B.kidRays) / 12);
   return (
-    <Actor b={KID_HAIR} base={base} keys={keys} f={f} seed="kid-ledge" x={x} y={y} s={1.08} zpx={zpx} rim={VT_RIM} rimDir={[-1, -0.7]}
+    <Actor b={KID_HAIR} base={base} keys={keys} f={f} seed="kid-win" x={430} y={1312} s={9} zpx={zpx} rim={VT_RIM} rimDir={[-1, -0.7]}
       holdR={<TeaGlass t={t} s={1} />}
       overlay={haloOn > 0 ? haloFor(KID_HAIR, base, keys, f, haloOn) : undefined} />
   );
