@@ -8,8 +8,8 @@ painted as an ensō in one breath and left open. Then only stillness and light.
 | --- | --- | --- |
 | `out/XO-Main-9x16.mp4` | 1080×1920 | 5.0 s (300 frames) |
 | `out/XO-Main-16x9.mp4` | 1920×1080 | 5.0 s |
-| `out/XO-Sting-9x16.mp4` | 1080×1920 | 3.5 s (210 frames, ends on the logo) |
-| `out/XO-Sting-16x9.mp4` | 1920×1080 | 3.5 s |
+| `out/XO-Sting-9x16.mp4` | 1080×1920 | 3.7 s (222 frames, ends on the logo) |
+| `out/XO-Sting-16x9.mp4` | 1920×1080 | 3.7 s |
 
 All are H.264 CRF 16, yuv420p, BT.709, 60 fps, with a silent AAC track (the
 client asked for no sound; see Sound).
@@ -44,8 +44,9 @@ python3 -m pip install pillow numpy   # prep, sound and QA scripts
 
 ## Timing
 
-The client wants the logo written fast: the whole logo appears between 1 s and
-2 s. The film is 5 s (Main) or 3.5 s (Sting). Every beat is in frames at 60 fps
+The client wants the logo written fast: it first asked for the whole logo
+between 1 s and 2 s, then a touch slower, so it now appears between 1.0 s and
+2.2 s. The film is 5 s (Main) or 3.7 s (Sting). Every beat is in frames at 60 fps
 in `src/timeline.json`, the one file read by `src/timeline.ts`, `render.py`,
 `make_temp_sfx.py` and `qa.py`. The brush easings stay the brief's; only the
 spans changed. After editing it, run `npm run build`.
@@ -53,15 +54,15 @@ spans changed. After editing it, run `npm run build`.
 | Main | Brief | Now |
 | --- | --- | --- |
 | Fade in | 0–1.5 s | 0–0.75 s |
-| X1 | 3.0–3.8 s | 1.00–1.25 s |
-| X2 | 5.2–5.9 s | 1.30–1.50 s |
-| O (ensō) | 7.0–10.0 s | 1.55–2.00 s |
-| Light pass | 11.0–14.0 s | 2.20–3.40 s |
+| X1 | 3.0–3.8 s | 1.00–1.30 s |
+| X2 | 5.2–5.9 s | 1.37–1.60 s |
+| O (ensō) | 7.0–10.0 s | 1.67–2.20 s |
+| Light pass | 11.0–14.0 s | 2.40–3.60 s |
 | Fade out | 16.8–18.0 s | 4.40–5.00 s |
 | Length | 18 s | 5 s |
 
-The Sting writes the logo on the same beats. Its light passes at 2.0–3.0 s,
-and it ends on the logo at 3.5 s (the brief: 8 s). Wet ink dries in 24 frames
+The Sting writes the logo on the same beats. Its light passes at 2.2–3.2 s,
+and it ends on the logo at 3.7 s (the brief: 8 s). Wet ink dries in 24 frames
 (the brief: 48).
 
 ## Sound
@@ -179,7 +180,7 @@ Layer stack, bottom to top:
 switches, then checks every automatable item in the brief's section 10:
 
 - the last logo frame equals all three layers fully shown, within 1/255
-- no leaks one frame before X2 and before the O starts (frames 77 and 92 in both
+- no leaks one frame before X2 and before the O starts (frames 81 and 99 in both
   cuts; QA reads src/timeline.json)
 - each mask is solid at progress 1, before the settle
 - the fronts are bristled, not a wipe (measured front raggedness)

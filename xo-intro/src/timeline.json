@@ -1,19 +1,27 @@
 {
-  "_comment": "The film's timeline in frames at 60 fps: the single source for src/timeline.ts and scripts/*.py. The client's cut: the whole logo writes itself fast between 1.0 s and 2.0 s (X1, X2, then the ensō), then the warm light passes. Spans are [start, end] frames. For reference, the brief's Main (section 6): fade in 0-90, X1 180-228, X2 312-354, O 420-600, light 660-840, fade out 1008-1080, 1080 frames; its Sting: fade in 0-48, X1 48-90, X2 102-138, O 156-276, light 276-396, 480 frames.",
+  "_comment": "The film's timeline in frames at 60 fps: the single source for src/timeline.ts and scripts/*.py. The client's cut: the whole logo writes itself fast between 1.0 s and 2.2 s (X1, X2, then the ensō), then the warm light passes. Spans are [start, end] frames. For reference, the brief's Main (section 6): fade in 0-90, X1 180-228, X2 312-354, O 420-600, light 660-840, fade out 1008-1080, 1080 frames; its Sting: fade in 0-48, X1 48-90, X2 102-138, O 156-276, light 276-396, 480 frames.",
   "main": {
     "duration": 300,
     "fadeIn": [0, 45],
     "fadeOut": [264, 299],
-    "strokes": { "x1": [60, 75], "x2": [78, 90], "o": [93, 120] },
-    "light": [132, 204],
+    "strokes": {
+      "x1": [60, 78],
+      "x2": [82, 96],
+      "o": [100, 132]
+    },
+    "light": [144, 216],
     "dry": 24
   },
   "sting": {
-    "duration": 210,
+    "duration": 222,
     "fadeIn": [0, 45],
     "fadeOut": null,
-    "strokes": { "x1": [60, 75], "x2": [78, 90], "o": [93, 120] },
-    "light": [120, 180],
+    "strokes": {
+      "x1": [60, 78],
+      "x2": [82, 96],
+      "o": [100, 132]
+    },
+    "light": [132, 192],
     "dry": 24
   }
 }
