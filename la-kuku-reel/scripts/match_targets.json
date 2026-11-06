@@ -1,0 +1,19 @@
+{
+  "_note": "ylow: 10th-pct luma, 8-bit limited (brief: ~28, within +-4 across shots); ghue: common mean green hue for S1-S3 (spread <= 4 deg); phue: dusty-rose cushions",
+  "S1": {
+    "ylow": 30.0,
+    "ghue": 112.0,
+    "phue": 347.0
+  },
+  "S2": {
+    "ylow": 30.0,
+    "ghue": 112.0
+  },
+  "S3": {
+    "ylow": 30.0,
+    "ghue": 112.0
+  },
+  "S5": {
+    "ylow": 29.0
+  }
+}

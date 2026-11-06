@@ -1,0 +1,14 @@
+# regenerable / heavy
+work/
+tools/
+luts/lakuku_quiet_S*.cube
+__pycache__/
+
+# client media stays out of this public repository (delivered directly)
+footage/
+out/
+music/track.*
+qa/*.png
+qa/probe/
+!qa/vs_S*.png
+!qa/music_*.png
