@@ -1,0 +1,31 @@
+{
+ "file": "public/audio/takes/az/qq.mp3",
+ "lang": "az",
+ "voice": "qq",
+ "duration": 1.881,
+ "aligner": "pocketsphinx-local",
+ "lines": [
+  {
+   "id": "19",
+   "start": 0.05,
+   "end": 1.54,
+   "words": [
+    {
+     "word": "Qonşunun",
+     "start": 0.05,
+     "end": 0.65
+    },
+    {
+     "word": "oğluna",
+     "start": 0.65,
+     "end": 1.11
+    },
+    {
+     "word": "bax!",
+     "start": 1.11,
+     "end": 1.54
+    }
+   ]
+  }
+ ]
+}

@@ -4,32 +4,32 @@
   "voice": "ana",
   "text": "Qonşunun oğlu YENƏ könüllü olub!",
   "start": 0.1,
-  "end": 2.3,
+  "end": 2.142,
   "words": [
    {
     "word": "Qonşunun",
     "start": 0.1,
-    "end": 0.6
+    "end": 0.65
    },
    {
     "word": "oğlu",
     "start": 0.65,
-    "end": 0.983
+    "end": 0.95
    },
    {
     "word": "YENƏ",
-    "start": 1.033,
-    "end": 1.367
+    "start": 0.95,
+    "end": 1.3
    },
    {
     "word": "könüllü",
-    "start": 1.417,
-    "end": 1.917
+    "start": 1.3,
+    "end": 1.94
    },
    {
     "word": "olub!",
-    "start": 1.967,
-    "end": 2.3
+    "start": 1.94,
+    "end": 2.142
    }
   ]
  },
@@ -38,17 +38,17 @@
   "voice": "ana",
   "text": "Ağac əkir.",
   "start": 3.3,
-  "end": 4.1,
+  "end": 3.918,
   "words": [
    {
     "word": "Ağac",
     "start": 3.3,
-    "end": 3.675
+    "end": 3.638
    },
    {
     "word": "əkir.",
-    "start": 3.725,
-    "end": 4.1
+    "start": 3.638,
+    "end": 3.918
    }
   ]
  },
@@ -57,22 +57,22 @@
   "voice": "ana",
   "text": "Uşaqlara dərs keçir.",
   "start": 4.3,
-  "end": 5.5,
+  "end": 5.47,
   "words": [
    {
     "word": "Uşaqlara",
     "start": 4.3,
-    "end": 4.929
+    "end": 4.8
    },
    {
     "word": "dərs",
-    "start": 4.979,
-    "end": 5.136
+    "start": 4.8,
+    "end": 5.14
    },
    {
     "word": "keçir.",
-    "start": 5.186,
-    "end": 5.5
+    "start": 5.14,
+    "end": 5.47
    }
   ]
  },
@@ -81,22 +81,22 @@
   "voice": "ana",
   "text": "Marafonda su paylayır.",
   "start": 5.7,
-  "end": 7.0,
+  "end": 6.99,
   "words": [
    {
     "word": "Marafonda",
     "start": 5.7,
-    "end": 6.386
+    "end": 6.24
    },
    {
     "word": "su",
-    "start": 6.436,
-    "end": 6.607
+    "start": 6.24,
+    "end": 6.45
    },
    {
     "word": "paylayır.",
-    "start": 6.657,
-    "end": 7.0
+    "start": 6.45,
+    "end": 6.99
    }
   ]
  },
@@ -105,22 +105,22 @@
   "voice": "ana",
   "text": "İngiliscə tərcümə edir!",
   "start": 7.2,
-  "end": 8.7,
+  "end": 8.473,
   "words": [
    {
     "word": "İngiliscə",
     "start": 7.2,
-    "end": 7.822
+    "end": 7.743
    },
    {
     "word": "tərcümə",
-    "start": 7.872,
-    "end": 8.339
+    "start": 7.743,
+    "end": 8.233
    },
    {
     "word": "edir!",
-    "start": 8.389,
-    "end": 8.7
+    "start": 8.233,
+    "end": 8.473
    }
   ]
  },
@@ -129,32 +129,32 @@
   "voice": "ana",
   "text": "Cəmi on altı yaşı var!",
   "start": 8.85,
-  "end": 9.9,
+  "end": 10.271,
   "words": [
    {
     "word": "Cəmi",
     "start": 8.85,
-    "end": 9.062
+    "end": 9.167
    },
    {
     "word": "on",
-    "start": 9.113,
-    "end": 9.219
+    "start": 9.167,
+    "end": 9.45
    },
    {
     "word": "altı",
-    "start": 9.269,
-    "end": 9.481
+    "start": 9.45,
+    "end": 9.742
    },
    {
     "word": "yaşı",
-    "start": 9.531,
-    "end": 9.744
+    "start": 9.742,
+    "end": 10.025
    },
    {
     "word": "var!",
-    "start": 9.794,
-    "end": 9.9
+    "start": 10.025,
+    "end": 10.271
    }
   ]
  },
@@ -162,18 +162,18 @@
   "id": "07",
   "voice": "ana",
   "text": "Bəs sən?",
-  "start": 10.3,
-  "end": 10.9,
+  "start": 10.391,
+  "end": 10.879,
   "words": [
    {
     "word": "Bəs",
-    "start": 10.3,
-    "end": 10.575
+    "start": 10.391,
+    "end": 10.532
    },
    {
     "word": "sən?",
-    "start": 10.625,
-    "end": 10.9
+    "start": 10.532,
+    "end": 10.879
    }
   ]
  },
@@ -206,17 +206,17 @@
   "voice": "ana",
   "text": "Modemi… söndürürəm.",
   "start": 13.932,
-  "end": 15.132,
+  "end": 15.391,
   "words": [
    {
     "word": "Modemi…",
     "start": 13.932,
-    "end": 14.425
+    "end": 14.501
    },
    {
     "word": "söndürürəm.",
-    "start": 14.475,
-    "end": 15.132
+    "start": 14.746,
+    "end": 15.391
    }
   ]
  },
@@ -224,28 +224,28 @@
   "id": "10",
   "voice": "men",
   "text": "Yox-yox-yox! Axtarıram!",
-  "start": 15.252,
-  "end": 16.642,
+  "start": 15.511,
+  "end": 16.88,
   "words": [
    {
     "word": "Yox-",
-    "start": 15.252,
-    "end": 15.472
+    "start": 15.511,
+    "end": 15.728
    },
    {
     "word": "yox-",
-    "start": 15.472,
-    "end": 15.602
+    "start": 15.728,
+    "end": 15.856
    },
    {
     "word": "yox!",
-    "start": 15.602,
-    "end": 15.962
+    "start": 15.856,
+    "end": 16.21
    },
    {
     "word": "Axtarıram!",
-    "start": 15.962,
-    "end": 16.642
+    "start": 16.21,
+    "end": 16.88
    }
   ]
  },
@@ -253,23 +253,23 @@
   "id": "11",
   "voice": "men",
   "text": "Onun sirri nədir?",
-  "start": 17.242,
-  "end": 18.087,
+  "start": 17.48,
+  "end": 18.325,
   "words": [
    {
     "word": "Onun",
-    "start": 17.242,
-    "end": 17.418
+    "start": 17.48,
+    "end": 17.656
    },
    {
     "word": "sirri",
-    "start": 17.418,
-    "end": 17.808
+    "start": 17.656,
+    "end": 18.046
    },
    {
     "word": "nədir?",
-    "start": 17.808,
-    "end": 18.087
+    "start": 18.046,
+    "end": 18.325
    }
   ]
  },
@@ -278,22 +278,22 @@
   "voice": "qo",
   "text": "Salam! Kömək lazımdır?",
   "start": 19.4,
-  "end": 20.8,
+  "end": 20.928,
   "words": [
    {
     "word": "Salam!",
     "start": 19.4,
-    "end": 19.771
+    "end": 19.768
    },
    {
     "word": "Kömək",
-    "start": 19.821,
-    "end": 20.193
+    "start": 20.089,
+    "end": 20.334
    },
    {
     "word": "lazımdır?",
-    "start": 20.243,
-    "end": 20.8
+    "start": 20.334,
+    "end": 20.928
    }
   ]
  },
@@ -301,18 +301,18 @@
   "id": "13",
   "voice": "men",
   "text": "Sirrin nədir?!",
-  "start": 21,
-  "end": 21.98,
+  "start": 21.048,
+  "end": 22.009,
   "words": [
    {
     "word": "Sirrin",
-    "start": 21.0,
-    "end": 21.496
+    "start": 21.048,
+    "end": 21.534
    },
    {
     "word": "nədir?!",
-    "start": 21.496,
-    "end": 21.98
+    "start": 21.534,
+    "end": 22.009
    }
   ]
  },
@@ -320,18 +320,18 @@
   "id": "14",
   "voice": "qo",
   "text": "Sirr yoxdur.",
-  "start": 22.1,
-  "end": 22.9,
+  "start": 22.129,
+  "end": 22.939,
   "words": [
    {
     "word": "Sirr",
-    "start": 22.1,
-    "end": 22.35
+    "start": 22.129,
+    "end": 22.409
    },
    {
     "word": "yoxdur.",
-    "start": 22.4,
-    "end": 22.9
+    "start": 22.409,
+    "end": 22.939
    }
   ]
  },
@@ -339,13 +339,13 @@
   "id": "15",
   "voice": "qo",
   "text": "VolunTrack.",
-  "start": 23.3,
-  "end": 24.2,
+  "start": 23.339,
+  "end": 24.14,
   "words": [
    {
     "word": "VolunTrack.",
-    "start": 23.3,
-    "end": 24.2
+    "start": 23.339,
+    "end": 24.14
    }
   ]
  },
@@ -411,22 +411,22 @@
   "voice": "qq",
   "text": "Qonşunun oğluna bax!",
   "start": 32.1,
-  "end": 33.2,
+  "end": 33.506,
   "words": [
    {
     "word": "Qonşunun",
     "start": 32.1,
-    "end": 32.529
+    "end": 32.666
    },
    {
     "word": "oğluna",
-    "start": 32.579,
-    "end": 33.007
+    "start": 32.666,
+    "end": 33.1
    },
    {
     "word": "bax!",
-    "start": 33.057,
-    "end": 33.2
+    "start": 33.1,
+    "end": 33.506
    }
   ]
  },
@@ -434,23 +434,23 @@
   "id": "20",
   "voice": "ana",
   "text": "O MƏNİM oğlumdur!",
-  "start": 33.32,
-  "end": 34.32,
+  "start": 33.626,
+  "end": 34.801,
   "words": [
    {
     "word": "O",
-    "start": 33.32,
-    "end": 33.47
+    "start": 33.626,
+    "end": 33.768
    },
    {
     "word": "MƏNİM",
-    "start": 33.52,
-    "end": 33.82
+    "start": 33.768,
+    "end": 34.183
    },
    {
     "word": "oğlumdur!",
-    "start": 33.87,
-    "end": 34.32
+    "start": 34.183,
+    "end": 34.801
    }
   ]
  },
@@ -458,28 +458,28 @@
   "id": "21",
   "voice": "men",
   "text": "İndi qonşunun oğlu mənəm.",
-  "start": 34.44,
-  "end": 35.887,
+  "start": 34.921,
+  "end": 36.368,
   "words": [
    {
     "word": "İndi",
-    "start": 34.44,
-    "end": 34.753
+    "start": 34.921,
+    "end": 35.234
    },
    {
     "word": "qonşunun",
-    "start": 34.753,
-    "end": 35.273
+    "start": 35.234,
+    "end": 35.754
    },
    {
     "word": "oğlu",
-    "start": 35.273,
-    "end": 35.533
+    "start": 35.754,
+    "end": 36.014
    },
    {
     "word": "mənəm.",
-    "start": 35.533,
-    "end": 35.887
+    "start": 36.014,
+    "end": 36.368
    }
   ]
  }

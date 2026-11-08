@@ -31,8 +31,13 @@ PAN = {'ana': -0.25, 'qo': 0.25, 'qq': 0.22, 'men': -0.08}
 PAN_LINE = {'11': 0.0, '12': 0.15, '13': -0.05, '14': 0.15, '15': 0.15, '16': -0.12, '17': -0.12, '18': -0.12, '21': -0.12}
 
 
-def decode(path, sr=SR):
-    raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', str(path), '-ac', '1', '-ar', str(sr), '-f', 'f32le', '-'], check=True, capture_output=True).stdout
+# Per-take voice character, applied on decode (timing unchanged, so the alignment of the original take still holds).
+# az: Qonşu's take is in the same voice as Ana (Sona); a 2-semitone lift keeps the two women apart.
+VOICE_FX = {('az', 'qq'): 'rubberband=pitch=1.1225'}
+
+
+def decode(path, sr=SR, af=None):
+    raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', str(path), *(['-af', af] if af else []), '-ac', '1', '-ar', str(sr), '-f', 'f32le', '-'], check=True, capture_output=True).stdout
     return np.frombuffer(raw, dtype=np.float32).astype(np.float64)
 
 
@@ -157,7 +162,7 @@ def mix(lang):
             continue
         f = ROOT / L['src']['file']
         if f not in takes_cache:
-            takes_cache[f] = decode(f)
+            takes_cache[f] = decode(f, af=VOICE_FX.get((lang, L['voice'])))
         take = takes_cache[f]
         a = max(0, int((L['src']['start'] - 0.03) * SR))
         b = min(len(take), int((L['src']['end'] + 0.08) * SR))

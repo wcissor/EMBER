@@ -1,6 +1,62 @@
 {
  "lines": [
   {
+   "id": "01",
+   "voice": "ana",
+   "loudness_in": -22.3,
+   "gain_db": 3.8,
+   "max_gr_db": 6.0,
+   "tempo": 1.0
+  },
+  {
+   "id": "02",
+   "voice": "ana",
+   "loudness_in": -22.3,
+   "gain_db": 2.3,
+   "max_gr_db": 6.0,
+   "tempo": 1.0
+  },
+  {
+   "id": "03",
+   "voice": "ana",
+   "loudness_in": -24.5,
+   "gain_db": 4.5,
+   "max_gr_db": 6.0,
+   "tempo": 1.0
+  },
+  {
+   "id": "04",
+   "voice": "ana",
+   "loudness_in": -23.8,
+   "gain_db": 3.8,
+   "max_gr_db": 6.0,
+   "tempo": 1.0
+  },
+  {
+   "id": "05",
+   "voice": "ana",
+   "loudness_in": -22.8,
+   "gain_db": 2.8,
+   "max_gr_db": 6.0,
+   "tempo": 1.0
+  },
+  {
+   "id": "06",
+   "voice": "ana",
+   "loudness_in": -23.2,
+   "gain_db": 3.2,
+   "max_gr_db": 6.0,
+   "tempo": 1.06
+  },
+  {
+   "id": "07",
+   "voice": "ana",
+   "loudness_in": -25.4,
+   "gain_db": 5.4,
+   "max_gr_db": 5.4,
+   "tempo": 1.0
+  },
+  {
    "id": "08",
    "voice": "men",
    "loudness_in": -29.6,
@@ -9,12 +65,20 @@
    "tempo": 1.0
   },
   {
+   "id": "09",
+   "voice": "ana",
+   "loudness_in": -32.1,
+   "gain_db": 12.1,
+   "max_gr_db": 0.0,
+   "tempo": 1.06
+  },
+  {
    "id": "10",
    "voice": "men",
-   "loudness_in": -24.5,
-   "gain_db": 4.5,
+   "loudness_in": -24.3,
+   "gain_db": 4.3,
    "max_gr_db": 6.0,
-   "tempo": 1.0
+   "tempo": 1.0157
   },
   {
    "id": "11",
@@ -25,12 +89,36 @@
    "tempo": 1.0
   },
   {
+   "id": "12",
+   "voice": "qo",
+   "loudness_in": -28.2,
+   "gain_db": 8.2,
+   "max_gr_db": 3.4,
+   "tempo": 1.06
+  },
+  {
    "id": "13",
    "voice": "men",
    "loudness_in": -23.8,
    "gain_db": 3.8,
    "max_gr_db": 6.0,
-   "tempo": 1.0388
+   "tempo": 1.06
+  },
+  {
+   "id": "14",
+   "voice": "qo",
+   "loudness_in": -27.9,
+   "gain_db": 7.9,
+   "max_gr_db": 4.2,
+   "tempo": 1.0
+  },
+  {
+   "id": "15",
+   "voice": "qo",
+   "loudness_in": -30.1,
+   "gain_db": 10.1,
+   "max_gr_db": 6.0,
+   "tempo": 1.0
   },
   {
    "id": "16",
@@ -57,6 +145,22 @@
    "tempo": 1.0
   },
   {
+   "id": "19",
+   "voice": "qq",
+   "loudness_in": -19.3,
+   "gain_db": 0.8,
+   "max_gr_db": 6.0,
+   "tempo": 1.06
+  },
+  {
+   "id": "20",
+   "voice": "ana",
+   "loudness_in": -23.3,
+   "gain_db": 4.8,
+   "max_gr_db": 6.0,
+   "tempo": 1.06
+  },
+  {
    "id": "21",
    "voice": "men",
    "loudness_in": -26.8,
@@ -65,20 +169,13 @@
    "tempo": 1.0
   }
  ],
- "missing": [
-  "01",
-  "02",
-  "03",
-  "04",
-  "05",
-  "06",
-  "07",
-  "09",
-  "12",
-  "14",
-  "15",
-  "19",
-  "20"
- ],
- "callback": "skipped: L06 (Ana) take not supplied yet"
+ "missing": [],
+ "callback": {
+  "from": "L06",
+  "at_frame": 762,
+  "words": [
+   "on",
+   "alt\u0131"
+  ]
+ }
 }

@@ -1,0 +1,212 @@
+{
+ "file": "public/audio/takes/az/ana.mp3",
+ "lang": "az",
+ "voice": "ana",
+ "duration": 14.446,
+ "aligner": "pocketsphinx-local",
+ "lines": [
+  {
+   "id": "01",
+   "start": 0.05,
+   "end": 2.092,
+   "words": [
+    {
+     "word": "Qonşunun",
+     "start": 0.05,
+     "end": 0.6
+    },
+    {
+     "word": "oğlu",
+     "start": 0.6,
+     "end": 0.9
+    },
+    {
+     "word": "YENƏ",
+     "start": 0.9,
+     "end": 1.25
+    },
+    {
+     "word": "könüllü",
+     "start": 1.25,
+     "end": 1.89
+    },
+    {
+     "word": "olub!",
+     "start": 1.89,
+     "end": 2.092
+    }
+   ]
+  },
+  {
+   "id": "02",
+   "start": 2.382,
+   "end": 3.0,
+   "words": [
+    {
+     "word": "Ağac",
+     "start": 2.382,
+     "end": 2.72
+    },
+    {
+     "word": "əkir.",
+     "start": 2.72,
+     "end": 3.0
+    }
+   ]
+  },
+  {
+   "id": "03",
+   "start": 3.36,
+   "end": 4.53,
+   "words": [
+    {
+     "word": "Uşaqlara",
+     "start": 3.36,
+     "end": 3.86
+    },
+    {
+     "word": "dərs",
+     "start": 3.86,
+     "end": 4.2
+    },
+    {
+     "word": "keçir.",
+     "start": 4.2,
+     "end": 4.53
+    }
+   ]
+  },
+  {
+   "id": "04",
+   "start": 4.87,
+   "end": 6.16,
+   "words": [
+    {
+     "word": "Marafonda",
+     "start": 4.87,
+     "end": 5.41
+    },
+    {
+     "word": "su",
+     "start": 5.41,
+     "end": 5.62
+    },
+    {
+     "word": "paylayır.",
+     "start": 5.62,
+     "end": 6.16
+    }
+   ]
+  },
+  {
+   "id": "05",
+   "start": 6.457,
+   "end": 7.73,
+   "words": [
+    {
+     "word": "İngiliscə",
+     "start": 6.457,
+     "end": 7.0
+    },
+    {
+     "word": "tərcümə",
+     "start": 7.0,
+     "end": 7.49
+    },
+    {
+     "word": "edir!",
+     "start": 7.49,
+     "end": 7.73
+    }
+   ]
+  },
+  {
+   "id": "06",
+   "start": 8.054,
+   "end": 9.56,
+   "words": [
+    {
+     "word": "Cəmi",
+     "start": 8.054,
+     "end": 8.39
+    },
+    {
+     "word": "on",
+     "start": 8.39,
+     "end": 8.69
+    },
+    {
+     "word": "altı",
+     "start": 8.69,
+     "end": 9.0
+    },
+    {
+     "word": "yaşı",
+     "start": 9.0,
+     "end": 9.3
+    },
+    {
+     "word": "var!",
+     "start": 9.3,
+     "end": 9.56
+    }
+   ]
+  },
+  {
+   "id": "07",
+   "start": 9.889,
+   "end": 10.377,
+   "words": [
+    {
+     "word": "Bəs",
+     "start": 9.889,
+     "end": 10.03
+    },
+    {
+     "word": "sən?",
+     "start": 10.03,
+     "end": 10.377
+    }
+   ]
+  },
+  {
+   "id": "09",
+   "start": 10.957,
+   "end": 12.504,
+   "words": [
+    {
+     "word": "Modemi…",
+     "start": 10.957,
+     "end": 11.56
+    },
+    {
+     "word": "söndürürəm.",
+     "start": 11.82,
+     "end": 12.504
+    }
+   ]
+  },
+  {
+   "id": "20",
+   "start": 12.949,
+   "end": 14.195,
+   "words": [
+    {
+     "word": "O",
+     "start": 12.949,
+     "end": 13.1
+    },
+    {
+     "word": "MƏNİM",
+     "start": 13.1,
+     "end": 13.54
+    },
+    {
+     "word": "oğlumdur!",
+     "start": 13.54,
+     "end": 14.195
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,60 @@
+{
+ "file": "public/audio/takes/az/qo.mp3",
+ "lang": "az",
+ "voice": "qo",
+ "duration": 5.068,
+ "aligner": "pocketsphinx-local",
+ "lines": [
+  {
+   "id": "12",
+   "start": 0.05,
+   "end": 1.67,
+   "words": [
+    {
+     "word": "Salam!",
+     "start": 0.05,
+     "end": 0.44
+    },
+    {
+     "word": "Kömək",
+     "start": 0.78,
+     "end": 1.04
+    },
+    {
+     "word": "lazımdır?",
+     "start": 1.04,
+     "end": 1.67
+    }
+   ]
+  },
+  {
+   "id": "14",
+   "start": 2.9,
+   "end": 3.71,
+   "words": [
+    {
+     "word": "Sirr",
+     "start": 2.9,
+     "end": 3.18
+    },
+    {
+     "word": "yoxdur.",
+     "start": 3.18,
+     "end": 3.71
+    }
+   ]
+  },
+  {
+   "id": "15",
+   "start": 4.084,
+   "end": 4.885,
+   "words": [
+    {
+     "word": "VolunTrack.",
+     "start": 4.084,
+     "end": 4.885
+    }
+   ]
+  }
+ ]
+}
