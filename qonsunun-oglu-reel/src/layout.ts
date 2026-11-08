@@ -25,6 +25,8 @@ export const END = {
   line: {y0: 980, y1: 1080, size: 100},
   url: {y0: 1095, y1: 1150, size: 52},
   cta: {y0: 1170, y1: 1240, size: 44},
+  /** the site's QR code, under the CTA (231 px tile) */
+  qr: {y0: 1262},
 };
 
 /** The UI moment (glass on deep navy). Cards 920×176. */

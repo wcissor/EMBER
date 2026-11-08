@@ -8,6 +8,7 @@ import {ACTION, CAPTION, END, RAIL, SAFE, TITLE} from '../layout';
 import {clamp01, ease, EASE, springAt, lerp} from '../motion';
 import {timelineFor, ASSETS} from '../data';
 import {captionRows} from '../timeline';
+import {QR} from '../qr';
 
 // ───────────────────────────── Title (S1) ─────────────────────────────
 export const Title: React.FC<{lang: Lang}> = ({lang}) => {
@@ -150,6 +151,9 @@ export const EndCard: React.FC<{lang: Lang}> = ({lang}) => {
   // the arrow nudges twice toward the Reels comment button (bottom right)
   const nudge = (at: number) => (f >= at && f < at + 10 ? Math.sin(((f - at) / 10) * Math.PI) : 0);
   const n = nudge(B.cta + 16) + nudge(B.cta + 30);
+  // the site's QR code under the call to action: 25 modules + a 4-module quiet zone, 7 px each (crisp module edges)
+  const qr = ease(f, B.cta + 6, 10, EASE.ui);
+  const qrPx = (QR.size + 8) * 7;
   return (
     <div style={{position: 'absolute', inset: 0, pointerEvents: 'none'}}>
       <div style={{position: 'absolute', left: 40, right: 40, top: END.line.y0 - 30, height: END.cta.y1 - END.line.y0 + 60, background: SCRIM, filter: 'blur(26px)', borderRadius: 70, opacity: a}} />
@@ -164,6 +168,12 @@ export const EndCard: React.FC<{lang: Lang}> = ({lang}) => {
         <svg width={64} height={70} viewBox="0 0 64 70" style={{transform: `translate(${n * 10}px, ${n * 12}px)`, overflow: 'visible'}}>
           <path d="M10 6 C 14 30, 26 44, 46 54" stroke={C.eye} strokeWidth={6} fill="none" strokeLinecap="round" />
           <path d="M30 58 L 48 56 L 44 38" stroke={C.eye} strokeWidth={6} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </div>
+      <div style={{position: 'absolute', left: 540 - Math.round(qrPx / 2), top: END.qr.y0, width: qrPx, height: qrPx, opacity: qr, transform: `translateY(${(1 - qr) * 10}px)`}}>
+        <svg width={qrPx} height={qrPx} viewBox={`-4 -4 ${QR.size + 8} ${QR.size + 8}`} shapeRendering="crispEdges" style={{display: 'block'}}>
+          <rect x={-4} y={-4} width={QR.size + 8} height={QR.size + 8} fill="#FFFFFF" />
+          <path d={QR.path} fill="#0A0E19" />
         </svg>
       </div>
     </div>
