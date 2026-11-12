@@ -1,0 +1,113 @@
+#!/usr/bin/env python3
+"""Turn the supplied logo photo (assets/logo-source-2026.png) into vectors.
+Measured geometry → ring + compass points (rebuilt exactly, so the film can animate them);
+traced from the image → the serif "VT" monogram and the four diagonal diamonds (never typeset).
+Outputs: public/logo.svg (the mark), src/logoData.ts (paths + geometry, logo units: disc radius = 100)."""
+import json
+import numpy as np, cv2
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+img = cv2.imread(str(ROOT / 'assets/logo-source-2026.png'))
+rgb = img[:, :, ::-1].astype(np.float32)
+H, W = rgb.shape[:2]
+r, g, b = rgb[..., 0], rgb[..., 1], rgb[..., 2]
+navy = (b - r > 14) & (r < 60) & (b < 90)
+white = (r > 200) & (g > 200) & (b > 200)
+blob = (navy | white).astype(np.uint8)
+n, lab, stats, _ = cv2.connectedComponentsWithStats(blob, 8)
+k = 1 + np.argmax(stats[1:, cv2.CC_STAT_AREA])
+cnt = max(cv2.findContours((lab == k).astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)[0], key=cv2.contourArea)
+pts = cnt[:, 0, :].astype(np.float64)
+A = np.c_[2 * pts[:, 0], 2 * pts[:, 1], np.ones(len(pts))]
+c = np.linalg.lstsq(A, (pts ** 2).sum(1), rcond=None)[0]
+CX, CY = c[0], c[1]
+R = np.sqrt(c[2] + CX ** 2 + CY ** 2)
+navy_rgb = np.median(rgb[navy & (np.hypot(*np.meshgrid(np.arange(W) - CX, np.arange(H) - CY)) < R * 0.55)], axis=0)
+
+# luminance 0..1 between navy and white, upsampled 4× for smooth contours
+lum = (rgb @ np.array([0.2126, 0.7152, 0.0722]))
+lo, hi = float(navy_rgb @ np.array([0.2126, 0.7152, 0.0722])), 245.0
+t = np.clip((lum - lo) / (hi - lo), 0, 1)
+S = 4
+x0, y0 = int(CX - R) - 4, int(CY - R) - 4
+crop = t[y0:y0 + int(2 * R) + 8, x0:x0 + int(2 * R) + 8]
+up = cv2.resize(crop, None, fx=S, fy=S, interpolation=cv2.INTER_CUBIC)
+yy, xx = np.mgrid[0:up.shape[0], 0:up.shape[1]]
+rr = np.hypot(xx / S + x0 - CX, yy / S + y0 - CY) / R
+ang = np.degrees(np.arctan2(yy / S + y0 - CY, xx / S + x0 - CX))
+
+
+def to_logo(px, py):
+    """upsampled pixel → logo units (centre 0,0, disc radius 100)"""
+    return ((px / S + x0 - CX) / R * 100, (py / S + y0 - CY) / R * 100)
+
+
+def trace(mask, eps=0.6):
+    m = (mask * 255).astype(np.uint8)
+    cs, hier = cv2.findContours(m, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_NONE)
+    d = []
+    for cc in cs:
+        if cv2.contourArea(cc) < 40 * S * S / 16:
+            continue
+        ap = cv2.approxPolyDP(cc, eps, True)[:, 0, :]
+        q = [to_logo(x + 0.5, y + 0.5) for x, y in ap]
+        d.append('M' + ' L'.join(f'{x:.2f} {y:.2f}' for x, y in q) + ' Z')
+    return ' '.join(d)
+
+
+mono = (up > 0.5) & (rr < 0.585)
+diamonds = []
+for a0 in (-135, -45, 45, 135):
+    da = (ang - a0 + 180) % 360 - 180
+    diamonds.append(trace((up > 0.5) & (rr > 0.72) & (rr < 0.99) & (np.abs(da) < 16)))
+mono_d = trace(mono, 0.5)
+
+# measured geometry (logo units)
+RING_IN, RING_OUT = 60.74, 70.23
+TIP = 97.3
+HALF_SLOPE = 0.331  # point half-width per unit radius
+TIP_ROUND = 2.65
+INNER_STAR = 0.37  # inner radius / tip radius when the point sides are extended to the centre
+geo = dict(cx=CX, cy=CY, r=R, navy='#%02X%02X%02X' % tuple(int(v) for v in navy_rgb), ringIn=RING_IN, ringOut=RING_OUT, tip=TIP, halfSlope=HALF_SLOPE, tipRound=TIP_ROUND, innerStar=INNER_STAR)
+
+
+def point_path(theta, tip=TIP, slope=HALF_SLOPE, base=RING_IN - 2):
+    """one compass point from the ring inward edge to the rounded tip, pointing at angle theta (deg)."""
+    a = np.radians(theta)
+    ux, uy = np.cos(a), np.sin(a)
+    px, py = -uy, ux
+    apex = tip + TIP_ROUND / np.sin(np.arctan(slope)) - TIP_ROUND  # virtual sharp apex
+    hw = lambda rho: slope * (apex - rho)
+    # tangent points of the tip circle
+    cr = apex - TIP_ROUND / np.sin(np.arctan(slope))
+    s = np.sin(np.arctan(slope)); co = np.cos(np.arctan(slope))
+    tl = (cr + TIP_ROUND * s, TIP_ROUND * co)
+    P = lambda rho, w: (ux * rho + px * w, uy * rho + py * w)
+    b1, b2 = P(base, -hw(base)), P(base, hw(base))
+    t1, t2 = P(tl[0], -tl[1]), P(tl[0], tl[1])
+    return f'M{b1[0]:.2f} {b1[1]:.2f} L{t1[0]:.2f} {t1[1]:.2f} A{TIP_ROUND} {TIP_ROUND} 0 0 1 {t2[0]:.2f} {t2[1]:.2f} L{b2[0]:.2f} {b2[1]:.2f} Z'
+
+
+points = ' '.join(point_path(th) for th in (-90, 0, 90, 180))
+ring_mid, ring_w = (RING_IN + RING_OUT) / 2, RING_OUT - RING_IN
+svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="-100 -100 200 200" width="1024" height="1024">
+  <title>VolunTrack</title>
+  <circle id="disc" r="100" fill="{geo['navy']}"/>
+  <path id="points" d="{points}" fill="#FFFFFF"/>
+  <circle id="ring" r="{ring_mid:.2f}" fill="none" stroke="#FFFFFF" stroke-width="{ring_w:.2f}"/>
+  <circle id="inner" r="{RING_IN:.2f}" fill="{geo['navy']}"/>
+  <g id="diamonds" fill="#FFFFFF" fill-rule="evenodd">{''.join(f'<path d="{d}"/>' for d in diamonds)}</g>
+  <path id="monogram" d="{mono_d}" fill="#FFFFFF" fill-rule="evenodd"/>
+</svg>
+'''
+(ROOT / 'public/logo.svg').write_text(svg)
+ts = f'''// Generated by scripts/logo/trace_logo.py from assets/logo-source-2026.png. Logo units: centre 0,0, disc radius 100.
+// Ring + compass points rebuilt from measured geometry; the serif "VT" monogram and the diamonds are traced (never typeset).
+export const LOGO = {json.dumps({k: (round(v, 3) if isinstance(v, float) else v) for k, v in geo.items() if k not in ('cx', 'cy', 'r')})} as const;
+export const LOGO_POINTS = {json.dumps(points)};
+export const LOGO_DIAMONDS = {json.dumps(diamonds)};
+export const LOGO_MONOGRAM = {json.dumps(mono_d)};
+'''
+(ROOT / 'src/logoData.ts').write_text(ts)
+print(json.dumps({k: (round(v, 2) if isinstance(v, float) else v) for k, v in geo.items()}), '| monogram path chars', len(mono_d), '| diamonds', [len(d) for d in diamonds])
