@@ -1,0 +1,86 @@
+{
+ "specs_reel": {
+  "width": 1080,
+  "height": 1920,
+  "codec": "h264",
+  "profile": "High",
+  "pix_fmt": "yuv420p",
+  "r_frame_rate": "30/1",
+  "avg_frame_rate": "30/1",
+  "frames": 923,
+  "duration": 30.767,
+  "audio_codec": "aac",
+  "sample_rate": 48000,
+  "channels": 2,
+  "audio_bitrate": 256836,
+  "faststart": true,
+  "pass": true
+ },
+ "loudness_reel": {
+  "integrated_lufs": -14.2,
+  "true_peak_dbtp": -1.4,
+  "lra": 2.8,
+  "pass": true
+ },
+ "specs_reel_nomusic": {
+  "width": 1080,
+  "height": 1920,
+  "codec": "h264",
+  "profile": "High",
+  "pix_fmt": "yuv420p",
+  "r_frame_rate": "30/1",
+  "avg_frame_rate": "30/1",
+  "frames": 923,
+  "duration": 30.767,
+  "audio_codec": "aac",
+  "sample_rate": 48000,
+  "channels": 2,
+  "audio_bitrate": 243306,
+  "faststart": true,
+  "pass": true
+ },
+ "loudness_reel_nomusic": {
+  "integrated_lufs": -14.1,
+  "true_peak_dbtp": -1.4,
+  "lra": 3.0,
+  "pass": true
+ },
+ "contact_sheet": {
+  "frames": 30,
+  "file": "out/qa/contact-sheet.png"
+ },
+ "comfort": {
+  "max_block_luminance_change_per_frame": 0.046,
+  "max_mean_luminance": 0.0324,
+  "flashes_per_second_max": 0,
+  "pass_flashes": true
+ },
+ "contrast": {
+  "text": 15.8,
+  "olive": 9.2,
+  "grey": 6.34,
+  "logo_cream": 15.42,
+  "logo_sage": 8.62,
+  "pass": true
+ },
+ "safe_box": {
+  "frames": 923,
+  "ink_bbox": [
+   72,
+   295,
+   1005,
+   1213
+  ],
+  "frames_with_ink_outside_safe_box": [],
+  "count_outside": 0,
+  "pass": true
+ },
+ "voice": {
+  "script_words": 67,
+  "transcript_words": 67,
+  "differences": [],
+  "speech_span_s": 28.95,
+  "wpm": 138.9,
+  "pass": true
+ }
+}

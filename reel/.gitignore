@@ -1,0 +1,6 @@
+node_modules/
+build/
+out/tmp/
+audio/stems/
+audio/*.wav
+.npm-install.log

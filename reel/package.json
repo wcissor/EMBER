@@ -1,0 +1,22 @@
+{
+  "name": "ruta-aglink-reel",
+  "private": true,
+  "description": "30-second vertical reel explaining AgLink by RUTA. Remotion + TypeScript.",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "still": "remotion still src/index.ts",
+    "render": "remotion render src/index.ts"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.543",
+    "@remotion/fonts": "^4.0.543",
+    "geist": "^1.9.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "remotion": "^4.0.543"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "typescript": "^7.0.2"
+  }
+}

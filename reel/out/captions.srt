@@ -1,0 +1,42 @@
+1
+00:00:00,200 --> 00:00:03,467
+Out in the field,
+sensor data goes missing.
+
+2
+00:00:03,667 --> 00:00:06,307
+Distance, crops, weather.
+
+3
+00:00:06,307 --> 00:00:09,867
+The signal fades,
+and readings never arrive.
+
+4
+00:00:10,067 --> 00:00:13,567
+AgLink is a smart field modem,
+made by RUTA.
+
+5
+00:00:13,767 --> 00:00:17,600
+Two antennas listen at once,
+and it takes the stronger signal.
+
+6
+00:00:17,800 --> 00:00:20,680
+An AI model on the device
+predicts packet loss
+
+7
+00:00:20,680 --> 00:00:23,833
+before it happens,
+so it can adapt in time.
+
+8
+00:00:24,033 --> 00:00:27,467
+No cloud round trip.
+The data gets through.
+
+9
+00:00:27,667 --> 00:00:30,027
+AgLink. By RUTA.

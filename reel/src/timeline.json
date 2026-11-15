@@ -1,0 +1,456 @@
+{
+ "fps": 30,
+ "durationInFrames": 923,
+ "durationSec": 30.767,
+ "sceneStarts": [
+  0,
+  104,
+  296,
+  407,
+  528,
+  715,
+  824
+ ],
+ "lineStarts": [
+  0.2,
+  3.667,
+  10.067,
+  13.767,
+  17.8,
+  24.033,
+  27.667
+ ],
+ "voEnd": 29.15,
+ "words": [
+  {
+   "text": "Out",
+   "start": 0.2,
+   "end": 0.44,
+   "line": 1
+  },
+  {
+   "text": "in",
+   "start": 0.48,
+   "end": 0.52,
+   "line": 1
+  },
+  {
+   "text": "the",
+   "start": 0.56,
+   "end": 0.6,
+   "line": 1
+  },
+  {
+   "text": "field,",
+   "start": 0.76,
+   "end": 1.48,
+   "line": 1
+  },
+  {
+   "text": "sensor",
+   "start": 1.56,
+   "end": 1.88,
+   "line": 1
+  },
+  {
+   "text": "data",
+   "start": 1.96,
+   "end": 2.2,
+   "line": 1
+  },
+  {
+   "text": "goes",
+   "start": 2.28,
+   "end": 2.44,
+   "line": 1
+  },
+  {
+   "text": "missing.",
+   "start": 2.6,
+   "end": 3.08,
+   "line": 1
+  },
+  {
+   "text": "Distance,",
+   "start": 3.667,
+   "end": 4.307,
+   "line": 2
+  },
+  {
+   "text": "crops,",
+   "start": 4.547,
+   "end": 5.347,
+   "line": 2
+  },
+  {
+   "text": "weather.",
+   "start": 5.547,
+   "end": 5.827,
+   "line": 2
+  },
+  {
+   "text": "The",
+   "start": 6.307,
+   "end": 6.347,
+   "line": 2
+  },
+  {
+   "text": "signal",
+   "start": 6.387,
+   "end": 6.707,
+   "line": 2
+  },
+  {
+   "text": "fades,",
+   "start": 6.867,
+   "end": 7.507,
+   "line": 2
+  },
+  {
+   "text": "and",
+   "start": 7.587,
+   "end": 7.667,
+   "line": 2
+  },
+  {
+   "text": "readings",
+   "start": 7.747,
+   "end": 8.227,
+   "line": 2
+  },
+  {
+   "text": "never",
+   "start": 8.387,
+   "end": 8.627,
+   "line": 2
+  },
+  {
+   "text": "arrive.",
+   "start": 8.707,
+   "end": 9.267,
+   "line": 2
+  },
+  {
+   "text": "AgLink",
+   "start": 10.067,
+   "end": 10.627,
+   "line": 3
+  },
+  {
+   "text": "is",
+   "start": 10.707,
+   "end": 10.787,
+   "line": 3
+  },
+  {
+   "text": "a",
+   "start": 10.867,
+   "end": 10.947,
+   "line": 3
+  },
+  {
+   "text": "smart",
+   "start": 11.027,
+   "end": 11.347,
+   "line": 3
+  },
+  {
+   "text": "field",
+   "start": 11.427,
+   "end": 11.667,
+   "line": 3
+  },
+  {
+   "text": "modem,",
+   "start": 11.747,
+   "end": 12.307,
+   "line": 3
+  },
+  {
+   "text": "made",
+   "start": 12.427,
+   "end": 12.547,
+   "line": 3
+  },
+  {
+   "text": "by",
+   "start": 12.627,
+   "end": 12.707,
+   "line": 3
+  },
+  {
+   "text": "Ruta.",
+   "start": 12.787,
+   "end": 13.187,
+   "line": 3
+  },
+  {
+   "text": "Two",
+   "start": 13.767,
+   "end": 13.847,
+   "line": 4
+  },
+  {
+   "text": "antennas",
+   "start": 13.927,
+   "end": 14.487,
+   "line": 4
+  },
+  {
+   "text": "listen",
+   "start": 14.647,
+   "end": 14.807,
+   "line": 4
+  },
+  {
+   "text": "at",
+   "start": 14.887,
+   "end": 14.967,
+   "line": 4
+  },
+  {
+   "text": "once,",
+   "start": 15.047,
+   "end": 15.527,
+   "line": 4
+  },
+  {
+   "text": "and",
+   "start": 15.567,
+   "end": 15.607,
+   "line": 4
+  },
+  {
+   "text": "it",
+   "start": 15.687,
+   "end": 15.767,
+   "line": 4
+  },
+  {
+   "text": "takes",
+   "start": 15.927,
+   "end": 16.087,
+   "line": 4
+  },
+  {
+   "text": "the",
+   "start": 16.127,
+   "end": 16.167,
+   "line": 4
+  },
+  {
+   "text": "stronger",
+   "start": 16.247,
+   "end": 16.647,
+   "line": 4
+  },
+  {
+   "text": "signal.",
+   "start": 16.727,
+   "end": 17.367,
+   "line": 4
+  },
+  {
+   "text": "An",
+   "start": 17.8,
+   "end": 17.96,
+   "line": 5
+  },
+  {
+   "text": "AI",
+   "start": 18.04,
+   "end": 18.36,
+   "line": 5
+  },
+  {
+   "text": "model",
+   "start": 18.44,
+   "end": 18.68,
+   "line": 5
+  },
+  {
+   "text": "on",
+   "start": 18.76,
+   "end": 18.84,
+   "line": 5
+  },
+  {
+   "text": "the",
+   "start": 18.88,
+   "end": 18.92,
+   "line": 5
+  },
+  {
+   "text": "device",
+   "start": 19.16,
+   "end": 19.4,
+   "line": 5
+  },
+  {
+   "text": "predicts",
+   "start": 19.48,
+   "end": 19.88,
+   "line": 5
+  },
+  {
+   "text": "packet",
+   "start": 19.96,
+   "end": 20.28,
+   "line": 5
+  },
+  {
+   "text": "loss",
+   "start": 20.36,
+   "end": 20.6,
+   "line": 5
+  },
+  {
+   "text": "before",
+   "start": 20.68,
+   "end": 21.0,
+   "line": 5
+  },
+  {
+   "text": "it",
+   "start": 21.08,
+   "end": 21.16,
+   "line": 5
+  },
+  {
+   "text": "happens,",
+   "start": 21.24,
+   "end": 21.88,
+   "line": 5
+  },
+  {
+   "text": "so",
+   "start": 21.96,
+   "end": 22.04,
+   "line": 5
+  },
+  {
+   "text": "it",
+   "start": 22.08,
+   "end": 22.12,
+   "line": 5
+  },
+  {
+   "text": "can",
+   "start": 22.2,
+   "end": 22.28,
+   "line": 5
+  },
+  {
+   "text": "adapt",
+   "start": 22.52,
+   "end": 22.76,
+   "line": 5
+  },
+  {
+   "text": "in",
+   "start": 22.8,
+   "end": 22.84,
+   "line": 5
+  },
+  {
+   "text": "time.",
+   "start": 22.92,
+   "end": 23.6,
+   "line": 5
+  },
+  {
+   "text": "No",
+   "start": 24.033,
+   "end": 24.193,
+   "line": 6
+  },
+  {
+   "text": "cloud",
+   "start": 24.273,
+   "end": 24.593,
+   "line": 6
+  },
+  {
+   "text": "round",
+   "start": 24.673,
+   "end": 24.833,
+   "line": 6
+  },
+  {
+   "text": "trip.",
+   "start": 24.913,
+   "end": 25.233,
+   "line": 6
+  },
+  {
+   "text": "The",
+   "start": 25.473,
+   "end": 25.553,
+   "line": 6
+  },
+  {
+   "text": "data",
+   "start": 25.633,
+   "end": 25.953,
+   "line": 6
+  },
+  {
+   "text": "gets",
+   "start": 26.113,
+   "end": 26.353,
+   "line": 6
+  },
+  {
+   "text": "through.",
+   "start": 26.433,
+   "end": 27.033,
+   "line": 6
+  },
+  {
+   "text": "AgLink.",
+   "start": 27.667,
+   "end": 28.387,
+   "line": 7
+  },
+  {
+   "text": "By",
+   "start": 28.547,
+   "end": 28.707,
+   "line": 7
+  },
+  {
+   "text": "Ruta.",
+   "start": 28.787,
+   "end": 29.427,
+   "line": 7
+  }
+ ],
+ "events": {
+  "s1_pulse1": 0.3,
+  "s1_pulse2": 1.3,
+  "s1_launch": 0.45,
+  "s1_flicker": 1.29,
+  "s1_vanish": 1.55,
+  "s1_photo_out": 1.5,
+  "s2_distance": 3.667,
+  "s2_crops": 4.547,
+  "s2_weather": 5.547,
+  "s2_strip": 6.307,
+  "s2_strip_end": 9.267,
+  "s3_draw": 10.117,
+  "s3_name": 10.067,
+  "s3_by": 12.427,
+  "s4_fadeA": 15.567,
+  "s4_switch": 16.247,
+  "s5_dip": 19.48,
+  "s5_label": 19.96,
+  "s5_chip": 20.68,
+  "s5_adapt": 22.52,
+  "s6_strike": 24.913,
+  "s6_fill": 25.473,
+  "s6_fill_end": 27.033,
+  "s7_card": 27.667,
+  "s4_lock": 16.847,
+  "s5_pass": 23.02
+ }
+}

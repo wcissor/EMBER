@@ -1,0 +1,13 @@
+{
+  "source": "ElevenLabs Scribe (eleven_scribe_v1) on TTS generation iLfYY6BrrmgJVxET4yEv (voice Andy Freeman, eleven_v4)",
+  "text": "Out in the field, sensor data goes missing.\nDistance, crops, weather. The signal fades, and readings never arrive.\nAgLink is a smart field modem, made by Ruta.\nTwo antennas listen at once, and it takes the stronger signal.\nAn AI model on the device predicts packet loss before it happens, so it can adapt in time.\nNo cloud round trip. The data gets through.\nAgLink. By Ruta.",
+  "words": [
+    ["Out",0,0.24],["in",0.28,0.32],["the",0.36,0.4],["field,",0.56,1.28],["sensor",1.36,1.68],["data",1.76,2],["goes",2.08,2.24],["missing.",2.4,2.88],
+    ["Distance,",3.36,4],["crops,",4.24,5.04],["weather.",5.24,5.52],["The",6,6.04],["signal",6.08,6.4],["fades,",6.56,7.2],["and",7.28,7.36],["readings",7.44,7.92],["never",8.08,8.32],["arrive.",8.4,8.96],
+    ["AgLink",9.52,10.08],["is",10.16,10.24],["a",10.32,10.4],["smart",10.48,10.8],["field",10.88,11.12],["modem,",11.2,11.76],["made",11.88,12],["by",12.08,12.16],["Ruta.",12.24,12.64],
+    ["Two",13.12,13.2],["antennas",13.28,13.84],["listen",14,14.16],["at",14.24,14.32],["once,",14.4,14.88],["and",14.92,14.96],["it",15.04,15.12],["takes",15.28,15.44],["the",15.48,15.52],["stronger",15.6,16],["signal.",16.08,16.72],
+    ["An",16.96,17.12],["AI",17.2,17.52],["model",17.6,17.84],["on",17.92,18],["the",18.04,18.08],["device",18.32,18.56],["predicts",18.64,19.04],["packet",19.12,19.44],["loss",19.52,19.76],["before",19.84,20.16],["it",20.24,20.32],["happens,",20.4,21.04],["so",21.12,21.2],["it",21.24,21.28],["can",21.36,21.44],["adapt",21.68,21.92],["in",21.96,22],["time.",22.08,22.76],
+    ["No",23.04,23.2],["cloud",23.28,23.6],["round",23.68,23.84],["trip.",23.92,24.24],["The",24.48,24.56],["data",24.64,24.96],["gets",25.12,25.36],["through.",25.44,26.04],
+    ["AgLink.",26.32,27.04],["By",27.2,27.36],["Ruta.",27.44,28.08]
+  ]
+}

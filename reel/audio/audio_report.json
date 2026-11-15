@@ -1,0 +1,86 @@
+{
+ "voice_lufs_raw": -21.0,
+ "music_lufs_raw": -12.0,
+ "cues": [
+  {
+   "sound": "sensor tick",
+   "file": "sfx/raw/s1-tick-1.mp3",
+   "at": 0.3,
+   "length": 0.12
+  },
+  {
+   "sound": "sensor tick",
+   "file": "sfx/raw/s1-tick-1.mp3",
+   "at": 1.3,
+   "length": 0.12
+  },
+  {
+   "sound": "static dropout",
+   "file": "sfx/raw/s1-dropout-2.mp3",
+   "at": 0.997,
+   "length": 0.55
+  },
+  {
+   "sound": "hum thinning",
+   "file": "sfx/raw/s2-hum-1.mp3",
+   "at": 3.517,
+   "length": 2.0
+  },
+  {
+   "sound": "pen plotter",
+   "file": "sfx/raw/s3-plotter-2.mp3",
+   "at": 10.117,
+   "length": 1.0
+  },
+  {
+   "sound": "lock-on",
+   "file": "sfx/raw/s4-lockon-2.mp3",
+   "at": 16.797,
+   "length": 0.46
+  },
+  {
+   "sound": "forecast rise",
+   "file": "sfx/raw/s5-rise-2.mp3",
+   "at": 19.48,
+   "length": 1.0
+  },
+  {
+   "sound": "adapt click",
+   "file": "sfx/raw/s5-click-1.mp3",
+   "at": 22.52,
+   "length": 0.28
+  },
+  {
+   "sound": "packets arriving",
+   "file": "sfx/raw/s6-ticks-1.mp3",
+   "at": 25.473,
+   "length": 1.6
+  },
+  {
+   "sound": "low note",
+   "file": "sfx/raw/s7-note-2.mp3",
+   "at": 28.067,
+   "length": 1.75
+  }
+ ],
+ "mix": {
+  "pass1": {
+   "input_i": "-17.65",
+   "input_tp": "-4.49",
+   "input_lra": "3.20"
+  },
+  "normalization": "dynamic",
+  "output_i": "-14.22",
+  "output_tp": "-1.50"
+ },
+ "mix_nomusic": {
+  "pass1": {
+   "input_i": "-17.49",
+   "input_tp": "-4.49",
+   "input_lra": "4.70"
+  },
+  "normalization": "dynamic",
+  "output_i": "-14.16",
+  "output_tp": "-1.50"
+ }
+}

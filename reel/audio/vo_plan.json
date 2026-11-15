@@ -1,0 +1,47 @@
+{
+ "take": "vo/takes/take-a.mp3",
+ "slices": [
+  {
+   "line": 1,
+   "take_from": 0.0,
+   "take_to": 3.109505,
+   "place_at": 0.2
+  },
+  {
+   "line": 2,
+   "take_from": 3.109505,
+   "take_to": 9.24,
+   "place_at": 3.416171666666667
+  },
+  {
+   "line": 3,
+   "take_from": 9.24,
+   "take_to": 12.8409,
+   "place_at": 9.786666666666667
+  },
+  {
+   "line": 4,
+   "take_from": 12.8409,
+   "take_to": 16.7513,
+   "place_at": 13.487566666666666
+  },
+  {
+   "line": 5,
+   "take_from": 16.7513,
+   "take_to": 22.76795,
+   "place_at": 17.5913
+  },
+  {
+   "line": 6,
+   "take_from": 22.76795,
+   "take_to": 26.05005,
+   "place_at": 23.76128333333333
+  },
+  {
+   "line": 7,
+   "take_from": 26.05005,
+   "take_to": 28.029388,
+   "place_at": 27.396716666666663
+  }
+ ]
+}
