@@ -5,7 +5,7 @@ Each shot stays on screen for 1.2–2 s.
 
 **Total cost: $0.** All 17 Adobe Stock clips are in Adobe Stock's free collection: the search marks each one "free" and not made with generative AI. The satellite imagery is free (NASA and Copernicus).
 
-**Nothing is licensed yet.** After your OK, I'll license each clip through the Adobe connector and save its licence record in `licenses/`.
+**Licensed:** all 17 clips, on 16 Nov 2026, through the Adobe connector, at $0. The records are in `licenses/adobe-stock/`. 14 are in the reel; the 3 alternatives are not used.
 
 **Preview:**
 - `shotlist-contact-sheet.jpg` shows one frame of every pick.
@@ -67,7 +67,34 @@ A horizontal 4K clip still fills the vertical frame at full sharpness: a 9:16 cr
   - A dotted virtual fence drawn on the real herd.
 - **Numbers:** counters land exactly on the sourced number, each with a mono source tag (see `sources.md`).
 
-## Shots per variant
+## As built (16 Nov 2026)
+
+What each line shows in the finished reel, with each shot's length in seconds (English / Azerbaijani).
+No shot runs longer than 2.5 s except the closing question. `python3 scripts/shots.py` recomputes the lengths from the cut rules in `src/scenes.tsx`.
+
+| Line | Shots |
+|---|---|
+| H1 | H1-a racks (1.6 / 1.7) → H1-c lettuce channels (1.5 / 1.6) → H1-a racks, lights out (1.9 / 2.2) |
+| H2 | B2-a rows (1.1 / 1.2) → B2-a punch-in (1.8 / 1.1) → B2-a rows (1.8 / 1.4) |
+| H3 | B4-a2 NZ herd (1.5 / 1.8) → B4-a1 NZ herd (1.4 / 1.3) |
+| B1 | B1-a wheat (1.1 / 0.8) → B1-a punch-in (1.8 / 1.5) |
+| B1b | B1-b tractor from above (1.1 / 2.0) → B1-a wheat at sunset (2.0 / 2.3) |
+| B2 | B2-a rows (1.1 / 1.4) → B2-a punch-in, detections (1.6 / 2.0) → B2-b corn, crosshairs (1.8 / 1.4) → B2-a rows, 10,000 (1.8 / 1.6) → B2-a punch-in (1.0 / 0.8) |
+| B3 | B3-a spray drone (1.5 / 1.1) → B3-d pilot and drone (2.3 / 2.3) |
+| B4 | B4-a1 NZ herd (1.5 / 1.6) → B4-b cow, collar inset (1.6 / 1.7) → B4-b punch-in, sound (1.9 / 2.1) → B4-c herd from above, fence (1.4 / 1.7) |
+| B4s | B4-b cow, collar inset (1.7 / 2.3) → B4-b punch-in, sound (1.9 / 2.1) → B4-c herd from above, fence (1.4 / 1.2) |
+| B5 | globe, orbit diagram (1.9 / 2.3) → Sentinel-2 Kansas, capture frame (2.2 / 1.9) → Sentinel-2 Kansas, punch-in (1.4 / 0.5) |
+| B6 | B6-a sprinklers (1.1 / 2.2) → B6-b rain cannon (1.9 / 1.9) → B6-b punch-in (1.5 / 1.2) |
+| B7 | map zoom to Azerbaijan (1.7 / 2.1) → Sentinel-2 Kura-Araz (2.5 / 1.6) → Sentinel-2 Kura-Araz, punch-in (1.7 / 2.1) |
+| B8 | B1-c golden field, the question (3.4 / 3.1) |
+
+**Changes from the plan below:**
+- **B5** shows centre-pivot fields in Kansas (Sentinel-2, 2 Aug 2026), after a turning NASA globe with Sentinel-2's orbit drawn as a labelled diagram. The Kura–Araz image is used in B7 only.
+- **B4, B4s:** the collar is a line drawing in a dark round inset, linked to the cow's neck. A drawing straight on the white fur didn't read.
+- **H2** uses three B2-a shots, dimmed under the "10,000 a minute" number, instead of opening on B2-b.
+- **B2** punches in on the field as the detection boxes appear ("spots weeds"), which keeps every shot under 2.5 s.
+
+## Shots per variant (the plan at Checkpoint 2)
 
 ### Variant A: H1, B1, B2, B3, B4, B5, B6, B7, B8 (about 42 s)
 

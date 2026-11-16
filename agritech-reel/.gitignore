@@ -10,3 +10,19 @@ research/drone-alt.jpg
 research/satellite/*.ppm
 # Licensed footage is never committed (the licence covers use, not redistribution)
 footage/
+research/maps/ne_10m_admin_0_countries.geojson
+research/satellite/*saudi*
+# Renders, mixes and other rebuildable outputs (scripts/render.sh, audio/build_audio.py, scripts/assemble.py)
+build/
+out/beats/
+out/tmp/
+out/qa/textonly/
+out/*.mp4
+out/*.log
+out/qa/*.log
+audio/mix/*.wav
+vo/lines/*/*.wav
+__pycache__/
+audio/mix/*.log
+# A full-size frame of licensed footage (the cover background); rebuild: ffmpeg -ss 2.5 -i public/footage/H1-a.mp4 -frames:v 1 -q:v 2 public/img/cover-h1a.jpg
+public/img/cover-h1a.jpg

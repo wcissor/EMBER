@@ -1,0 +1,932 @@
+{
+ "specs": {
+  "ruta-agritech-en-A.mp4": {
+   "width": 1080,
+   "height": 1920,
+   "codec": "h264",
+   "profile": "High",
+   "pix_fmt": "yuv420p",
+   "r_frame_rate": "30/1",
+   "avg_frame_rate": "30/1",
+   "frames": 1344,
+   "expected_frames": 1344,
+   "frame_interval_max_error_ms": 0.001,
+   "duration": 44.8,
+   "video_bitrate_mbps": 11.2,
+   "audio_codec": "aac",
+   "sample_rate": 48000,
+   "channels": 2,
+   "audio_bitrate_kbps": 277,
+   "faststart": true,
+   "size_mb": 64.5,
+   "pass": true
+  },
+  "ruta-agritech-en-A-nomusic.mp4": {
+   "width": 1080,
+   "height": 1920,
+   "codec": "h264",
+   "profile": "High",
+   "pix_fmt": "yuv420p",
+   "r_frame_rate": "30/1",
+   "avg_frame_rate": "30/1",
+   "frames": 1344,
+   "expected_frames": 1344,
+   "frame_interval_max_error_ms": 0.001,
+   "duration": 44.8,
+   "video_bitrate_mbps": 11.2,
+   "audio_codec": "aac",
+   "sample_rate": 48000,
+   "channels": 2,
+   "audio_bitrate_kbps": 246,
+   "faststart": true,
+   "size_mb": 64.3,
+   "pass": true
+  },
+  "ruta-agritech-en-B.mp4": {
+   "width": 1080,
+   "height": 1920,
+   "codec": "h264",
+   "profile": "High",
+   "pix_fmt": "yuv420p",
+   "r_frame_rate": "30/1",
+   "avg_frame_rate": "30/1",
+   "frames": 1121,
+   "expected_frames": 1121,
+   "frame_interval_max_error_ms": 0.001,
+   "duration": 37.367,
+   "video_bitrate_mbps": 11.2,
+   "audio_codec": "aac",
+   "sample_rate": 48000,
+   "channels": 2,
+   "audio_bitrate_kbps": 275,
+   "faststart": true,
+   "size_mb": 53.8,
+   "pass": true
+  },
+  "ruta-agritech-en-B-nomusic.mp4": {
+   "width": 1080,
+   "height": 1920,
+   "codec": "h264",
+   "profile": "High",
+   "pix_fmt": "yuv420p",
+   "r_frame_rate": "30/1",
+   "avg_frame_rate": "30/1",
+   "frames": 1121,
+   "expected_frames": 1121,
+   "frame_interval_max_error_ms": 0.001,
+   "duration": 37.367,
+   "video_bitrate_mbps": 11.2,
+   "audio_codec": "aac",
+   "sample_rate": 48000,
+   "channels": 2,
+   "audio_bitrate_kbps": 245,
+   "faststart": true,
+   "size_mb": 53.6,
+   "pass": true
+  },
+  "ruta-agritech-en-C.mp4": {
+   "width": 1080,
+   "height": 1920,
+   "codec": "h264",
+   "profile": "High",
+   "pix_fmt": "yuv420p",
+   "r_frame_rate": "30/1",
+   "avg_frame_rate": "30/1",
+   "frames": 1246,
+   "expected_frames": 1246,
+   "frame_interval_max_error_ms": 0.001,
+   "duration": 41.533,
+   "video_bitrate_mbps": 12.4,
+   "audio_codec": "aac",
+   "sample_rate": 48000,
+   "channels": 2,
+   "audio_bitrate_kbps": 279,
+   "faststart": true,
+   "size_mb": 66.1,
+   "pass": true
+  },
+  "ruta-agritech-en-C-nomusic.mp4": {
+   "width": 1080,
+   "height": 1920,
+   "codec": "h264",
+   "profile": "High",
+   "pix_fmt": "yuv420p",
+   "r_frame_rate": "30/1",
+   "avg_frame_rate": "30/1",
+   "frames": 1246,
+   "expected_frames": 1246,
+   "frame_interval_max_error_ms": 0.001,
+   "duration": 41.533,
+   "video_bitrate_mbps": 12.4,
+   "audio_codec": "aac",
+   "sample_rate": 48000,
+   "channels": 2,
+   "audio_bitrate_kbps": 246,
+   "faststart": true,
+   "size_mb": 65.9,
+   "pass": true
+  },
+  "ruta-agritech-az-A.mp4": {
+   "width": 1080,
+   "height": 1920,
+   "codec": "h264",
+   "profile": "High",
+   "pix_fmt": "yuv420p",
+   "r_frame_rate": "30/1",
+   "avg_frame_rate": "30/1",
+   "frames": 1348,
+   "expected_frames": 1348,
+   "frame_interval_max_error_ms": 0.001,
+   "duration": 44.933,
+   "video_bitrate_mbps": 11.9,
+   "audio_codec": "aac",
+   "sample_rate": 48000,
+   "channels": 2,
+   "audio_bitrate_kbps": 254,
+   "faststart": true,
+   "size_mb": 68.5,
+   "pass": true
+  },
+  "ruta-agritech-az-A-nomusic.mp4": {
+   "width": 1080,
+   "height": 1920,
+   "codec": "h264",
+   "profile": "High",
+   "pix_fmt": "yuv420p",
+   "r_frame_rate": "30/1",
+   "avg_frame_rate": "30/1",
+   "frames": 1348,
+   "expected_frames": 1348,
+   "frame_interval_max_error_ms": 0.001,
+   "duration": 44.933,
+   "video_bitrate_mbps": 11.9,
+   "audio_codec": "aac",
+   "sample_rate": 48000,
+   "channels": 2,
+   "audio_bitrate_kbps": 233,
+   "faststart": true,
+   "size_mb": 68.4,
+   "pass": true
+  },
+  "ruta-agritech-az-B.mp4": {
+   "width": 1080,
+   "height": 1920,
+   "codec": "h264",
+   "profile": "High",
+   "pix_fmt": "yuv420p",
+   "r_frame_rate": "30/1",
+   "avg_frame_rate": "30/1",
+   "frames": 1133,
+   "expected_frames": 1133,
+   "frame_interval_max_error_ms": 0.001,
+   "duration": 37.767,
+   "video_bitrate_mbps": 11.8,
+   "audio_codec": "aac",
+   "sample_rate": 48000,
+   "channels": 2,
+   "audio_bitrate_kbps": 254,
+   "faststart": true,
+   "size_mb": 57.2,
+   "pass": true
+  },
+  "ruta-agritech-az-B-nomusic.mp4": {
+   "width": 1080,
+   "height": 1920,
+   "codec": "h264",
+   "profile": "High",
+   "pix_fmt": "yuv420p",
+   "r_frame_rate": "30/1",
+   "avg_frame_rate": "30/1",
+   "frames": 1133,
+   "expected_frames": 1133,
+   "frame_interval_max_error_ms": 0.001,
+   "duration": 37.767,
+   "video_bitrate_mbps": 11.8,
+   "audio_codec": "aac",
+   "sample_rate": 48000,
+   "channels": 2,
+   "audio_bitrate_kbps": 232,
+   "faststart": true,
+   "size_mb": 57.1,
+   "pass": true
+  },
+  "ruta-agritech-az-C.mp4": {
+   "width": 1080,
+   "height": 1920,
+   "codec": "h264",
+   "profile": "High",
+   "pix_fmt": "yuv420p",
+   "r_frame_rate": "30/1",
+   "avg_frame_rate": "30/1",
+   "frames": 1287,
+   "expected_frames": 1287,
+   "frame_interval_max_error_ms": 0.001,
+   "duration": 42.9,
+   "video_bitrate_mbps": 12.8,
+   "audio_codec": "aac",
+   "sample_rate": 48000,
+   "channels": 2,
+   "audio_bitrate_kbps": 254,
+   "faststart": true,
+   "size_mb": 70.0,
+   "pass": true
+  },
+  "ruta-agritech-az-C-nomusic.mp4": {
+   "width": 1080,
+   "height": 1920,
+   "codec": "h264",
+   "profile": "High",
+   "pix_fmt": "yuv420p",
+   "r_frame_rate": "30/1",
+   "avg_frame_rate": "30/1",
+   "frames": 1287,
+   "expected_frames": 1287,
+   "frame_interval_max_error_ms": 0.001,
+   "duration": 42.9,
+   "video_bitrate_mbps": 12.8,
+   "audio_codec": "aac",
+   "sample_rate": 48000,
+   "channels": 2,
+   "audio_bitrate_kbps": 233,
+   "faststart": true,
+   "size_mb": 69.9,
+   "pass": true
+  }
+ },
+ "loudness": {
+  "ruta-agritech-en-A.mp4": {
+   "integrated_lufs": -13.9,
+   "true_peak_dbtp": -1.8,
+   "lra": 2.7,
+   "pass": true
+  },
+  "ruta-agritech-en-A-nomusic.mp4": {
+   "integrated_lufs": -13.9,
+   "true_peak_dbtp": -1.8,
+   "lra": 2.8,
+   "pass": true
+  },
+  "ruta-agritech-en-B.mp4": {
+   "integrated_lufs": -13.9,
+   "true_peak_dbtp": -1.8,
+   "lra": 2.8,
+   "pass": true
+  },
+  "ruta-agritech-en-B-nomusic.mp4": {
+   "integrated_lufs": -13.9,
+   "true_peak_dbtp": -1.7,
+   "lra": 2.9,
+   "pass": true
+  },
+  "ruta-agritech-en-C.mp4": {
+   "integrated_lufs": -13.9,
+   "true_peak_dbtp": -1.8,
+   "lra": 2.7,
+   "pass": true
+  },
+  "ruta-agritech-en-C-nomusic.mp4": {
+   "integrated_lufs": -13.9,
+   "true_peak_dbtp": -1.7,
+   "lra": 2.9,
+   "pass": true
+  },
+  "ruta-agritech-az-A.mp4": {
+   "integrated_lufs": -13.9,
+   "true_peak_dbtp": -2.1,
+   "lra": 3.3,
+   "pass": true
+  },
+  "ruta-agritech-az-A-nomusic.mp4": {
+   "integrated_lufs": -13.9,
+   "true_peak_dbtp": -2.1,
+   "lra": 3.5,
+   "pass": true
+  },
+  "ruta-agritech-az-B.mp4": {
+   "integrated_lufs": -13.9,
+   "true_peak_dbtp": -2.0,
+   "lra": 3.1,
+   "pass": true
+  },
+  "ruta-agritech-az-B-nomusic.mp4": {
+   "integrated_lufs": -13.9,
+   "true_peak_dbtp": -2.0,
+   "lra": 3.2,
+   "pass": true
+  },
+  "ruta-agritech-az-C.mp4": {
+   "integrated_lufs": -13.9,
+   "true_peak_dbtp": -2.1,
+   "lra": 2.7,
+   "pass": true
+  },
+  "ruta-agritech-az-C-nomusic.mp4": {
+   "integrated_lufs": -13.9,
+   "true_peak_dbtp": -2.1,
+   "lra": 2.8,
+   "pass": true
+  }
+ },
+ "comfort": {
+  "en-A": {
+   "flashes_per_second_max": 0,
+   "max_block_change": 0.93,
+   "pass": true
+  },
+  "en-B": {
+   "flashes_per_second_max": 0,
+   "max_block_change": 0.93,
+   "pass": true
+  },
+  "en-C": {
+   "flashes_per_second_max": 0,
+   "max_block_change": 0.93,
+   "pass": true
+  },
+  "az-A": {
+   "flashes_per_second_max": 0,
+   "max_block_change": 0.93,
+   "pass": true
+  },
+  "az-B": {
+   "flashes_per_second_max": 0,
+   "max_block_change": 0.93,
+   "pass": true
+  },
+  "az-C": {
+   "flashes_per_second_max": 0,
+   "max_block_change": 0.93,
+   "pass": true
+  }
+ },
+ "loop": {
+  "en-A": {
+   "last_to_first_mean_abs_diff": 1.36,
+   "same_shot_median_frame_diff": 1.89,
+   "reel_median_frame_diff": 1.94,
+   "pass": true
+  },
+  "en-B": {
+   "last_to_first_mean_abs_diff": 4.04,
+   "same_shot_median_frame_diff": 4.94,
+   "reel_median_frame_diff": 1.76,
+   "pass": true
+  },
+  "en-C": {
+   "last_to_first_mean_abs_diff": 6.02,
+   "same_shot_median_frame_diff": 5.65,
+   "reel_median_frame_diff": 1.9,
+   "pass": true
+  },
+  "az-A": {
+   "last_to_first_mean_abs_diff": 1.37,
+   "same_shot_median_frame_diff": 1.83,
+   "reel_median_frame_diff": 2.03,
+   "pass": true
+  },
+  "az-B": {
+   "last_to_first_mean_abs_diff": 4.04,
+   "same_shot_median_frame_diff": 4.92,
+   "reel_median_frame_diff": 1.8,
+   "pass": true
+  },
+  "az-C": {
+   "last_to_first_mean_abs_diff": 6.02,
+   "same_shot_median_frame_diff": 5.66,
+   "reel_median_frame_diff": 2.09,
+   "pass": true
+  }
+ },
+ "pace": {
+  "en-A": {
+   "cuts": 19,
+   "mean_shot_s": 2.24,
+   "longest_before_question": 4.166666666666667,
+   "shots_over_2_5s": [
+    [
+     4.97,
+     2.93
+    ],
+    [
+     7.9,
+     2.7
+    ],
+    [
+     12.43,
+     2.8
+    ],
+    [
+     19.0,
+     3.03
+    ],
+    [
+     22.03,
+     3.37
+    ],
+    [
+     31.93,
+     3.4
+    ],
+    [
+     37.03,
+     4.17
+    ]
+   ],
+   "line_starts": {
+    "H1": 0.0,
+    "B1": 4.97,
+    "B2": 7.9,
+    "B3": 15.23,
+    "B4": 19.0,
+    "B5": 25.4,
+    "B6": 30.8,
+    "B7": 35.33,
+    "B8": 41.2
+   }
+  },
+  "en-B": {
+   "cuts": 15,
+   "mean_shot_s": 2.34,
+   "longest_before_question": 4.666666666666667,
+   "shots_over_2_5s": [
+    [
+     0.0,
+     4.67
+    ],
+    [
+     11.57,
+     3.03
+    ],
+    [
+     14.6,
+     3.37
+    ],
+    [
+     24.5,
+     3.4
+    ],
+    [
+     29.6,
+     4.17
+    ]
+   ],
+   "line_starts": {
+    "H2": 0.0,
+    "B1b": 4.67,
+    "B3": 7.8,
+    "B4": 11.57,
+    "B5": 17.97,
+    "B6": 23.37,
+    "B7": 27.9,
+    "B8": 33.77
+   }
+  },
+  "en-C": {
+   "cuts": 18,
+   "mean_shot_s": 2.19,
+   "longest_before_question": 4.166666666666667,
+   "shots_over_2_5s": [
+    [
+     1.53,
+     3.13
+    ],
+    [
+     4.67,
+     3.23
+    ],
+    [
+     11.03,
+     2.7
+    ],
+    [
+     15.57,
+     2.8
+    ],
+    [
+     28.67,
+     3.4
+    ],
+    [
+     33.77,
+     4.17
+    ]
+   ],
+   "line_starts": {
+    "H3": 0.0,
+    "B4s": 2.9,
+    "B1b": 7.9,
+    "B2": 11.03,
+    "B3": 18.37,
+    "B5": 22.13,
+    "B6": 27.53,
+    "B7": 32.07,
+    "B8": 37.93
+   }
+  },
+  "az-A": {
+   "cuts": 19,
+   "mean_shot_s": 2.25,
+   "longest_before_question": 3.8666666666666667,
+   "shots_over_2_5s": [
+    [
+     7.8,
+     3.47
+    ],
+    [
+     18.53,
+     3.33
+    ],
+    [
+     21.87,
+     3.87
+    ],
+    [
+     32.67,
+     3.13
+    ],
+    [
+     37.93,
+     3.73
+    ]
+   ],
+   "line_starts": {
+    "H1": 0.0,
+    "B1": 5.5,
+    "B2": 7.8,
+    "B3": 15.13,
+    "B4": 18.53,
+    "B5": 25.73,
+    "B6": 30.43,
+    "B7": 35.8,
+    "B8": 41.67
+   }
+  },
+  "az-B": {
+   "cuts": 15,
+   "mean_shot_s": 2.36,
+   "longest_before_question": 3.8666666666666667,
+   "shots_over_2_5s": [
+    [
+     0.0,
+     3.67
+    ],
+    [
+     11.37,
+     3.33
+    ],
+    [
+     14.7,
+     3.87
+    ],
+    [
+     25.5,
+     3.13
+    ],
+    [
+     30.77,
+     3.73
+    ]
+   ],
+   "line_starts": {
+    "H2": 0.0,
+    "B1b": 3.67,
+    "B3": 7.97,
+    "B4": 11.37,
+    "B5": 18.57,
+    "B6": 23.27,
+    "B7": 28.63,
+    "B8": 34.5
+   }
+  },
+  "az-C": {
+   "cuts": 18,
+   "mean_shot_s": 2.26,
+   "longest_before_question": 3.7333333333333334,
+   "shots_over_2_5s": [
+    [
+     1.83,
+     3.53
+    ],
+    [
+     5.37,
+     3.3
+    ],
+    [
+     12.97,
+     3.47
+    ],
+    [
+     30.63,
+     3.13
+    ],
+    [
+     35.9,
+     3.73
+    ]
+   ],
+   "line_starts": {
+    "H3": 0.0,
+    "B4s": 3.1,
+    "B1b": 8.67,
+    "B2": 12.97,
+    "B3": 20.3,
+    "B5": 23.7,
+    "B6": 28.4,
+    "B7": 33.77,
+    "B8": 39.63
+   }
+  }
+ },
+ "hook_motion": {
+  "en-A": {
+   "frame0_to_1_mean_abs_diff": 1.87,
+   "pass": true
+  },
+  "en-B": {
+   "frame0_to_1_mean_abs_diff": 4.99,
+   "pass": true
+  },
+  "en-C": {
+   "frame0_to_1_mean_abs_diff": 5.8,
+   "pass": true
+  },
+  "az-A": {
+   "frame0_to_1_mean_abs_diff": 1.81,
+   "pass": true
+  },
+  "az-B": {
+   "frame0_to_1_mean_abs_diff": 5.03,
+   "pass": true
+  },
+  "az-C": {
+   "frame0_to_1_mean_abs_diff": 5.84,
+   "pass": true
+  }
+ },
+ "contact_sheets": {
+  "en-A": "out/qa/contact-sheet-en-A.jpg",
+  "en-B": "out/qa/contact-sheet-en-B.jpg",
+  "en-C": "out/qa/contact-sheet-en-C.jpg",
+  "az-A": "out/qa/contact-sheet-az-A.jpg",
+  "az-B": "out/qa/contact-sheet-az-B.jpg",
+  "az-C": "out/qa/contact-sheet-az-C.jpg"
+ },
+ "hook_words": {
+  "en-H1": {
+   "first_key_word_s": 1.12,
+   "times": {
+    "billions": 1.12,
+    "indoor": 1.92,
+    "farms": 2.32
+   },
+   "first_word_s": 0.0,
+   "pass": true
+  },
+  "az-H1": {
+   "first_key_word_s": 0.83,
+   "times": {
+    "qapalı": 0.828,
+    "fermalara": 1.235,
+    "milyardlarla": 1.754
+   },
+   "first_word_s": 0.013,
+   "pass": true
+  },
+  "en-H2": {
+   "first_key_word_s": 0.42,
+   "times": {
+    "robot": 0.425,
+    "burns": 1.225,
+    "weeds": 1.465,
+    "lasers": 2.105
+   },
+   "first_word_s": 0.025,
+   "pass": true
+  },
+  "az-H2": {
+   "first_key_word_s": 0.12,
+   "times": {
+    "alaq": 0.119,
+    "otlarını": 0.379,
+    "lazerlə": 0.86
+   },
+   "first_word_s": 0.119,
+   "pass": true
+  },
+  "en-H3": {
+   "first_key_word_s": 0.18,
+   "times": {
+    "new": 0.185,
+    "zealand": 0.385,
+    "cows": 1.265
+   },
+   "first_word_s": 0.065,
+   "pass": true
+  },
+  "az-H3": {
+   "first_key_word_s": 0.13,
+   "times": {
+    "yeni": 0.129,
+    "zelandiyada": 0.351,
+    "inəklərə": 1.351
+   },
+   "first_word_s": 0.129,
+   "pass": true
+  }
+ },
+ "voice": {
+  "en": {
+   "take": "en-2",
+   "tempo": 1.0,
+   "lines": {
+    "H1": {
+     "script_words": 12,
+     "transcript_words": 12,
+     "differences": []
+    },
+    "B1": {
+     "script_words": 7,
+     "transcript_words": 7,
+     "differences": []
+    },
+    "B2": {
+     "script_words": 21,
+     "transcript_words": 21,
+     "differences": []
+    },
+    "B3": {
+     "script_words": 7,
+     "transcript_words": 7,
+     "differences": []
+    },
+    "B4": {
+     "script_words": 17,
+     "transcript_words": 17,
+     "differences": []
+    },
+    "B5": {
+     "script_words": 12,
+     "transcript_words": 12,
+     "differences": []
+    },
+    "B6": {
+     "script_words": 14,
+     "transcript_words": 14,
+     "differences": []
+    },
+    "B7": {
+     "script_words": 17,
+     "transcript_words": 17,
+     "differences": []
+    },
+    "B8": {
+     "script_words": 9,
+     "transcript_words": 9,
+     "differences": []
+    },
+    "H2": {
+     "script_words": 14,
+     "transcript_words": 14,
+     "differences": []
+    },
+    "B1b": {
+     "script_words": 11,
+     "transcript_words": 11,
+     "differences": []
+    },
+    "H3": {
+     "script_words": 9,
+     "transcript_words": 9,
+     "differences": []
+    },
+    "B4s": {
+     "script_words": 14,
+     "transcript_words": 14,
+     "differences": []
+    }
+   },
+   "pace": {
+    "A": {
+     "words": 116,
+     "speech_s": 41.5,
+     "span_s": 43.6,
+     "wpm_speaking": 167.7,
+     "wpm_overall": 159.7
+    },
+    "B": {
+     "words": 101,
+     "speech_s": 34.31,
+     "span_s": 36.14,
+     "wpm_speaking": 176.6,
+     "wpm_overall": 167.7
+    },
+    "C": {
+     "words": 114,
+     "speech_s": 38.25,
+     "span_s": 40.26,
+     "wpm_speaking": 178.8,
+     "wpm_overall": 169.9
+    }
+   },
+   "transcript_match": true
+  },
+  "az": {
+   "take": "az-2",
+   "tempo": 1.08,
+   "lines": {
+    "H1": {
+     "script_words": 12,
+     "transcript_words": 12,
+     "differences": []
+    },
+    "B1": {
+     "script_words": 6,
+     "transcript_words": 6,
+     "differences": []
+    },
+    "B2": {
+     "script_words": 17,
+     "transcript_words": 17,
+     "differences": []
+    },
+    "B3": {
+     "script_words": 9,
+     "transcript_words": 9,
+     "differences": []
+    },
+    "B4": {
+     "script_words": 16,
+     "transcript_words": 16,
+     "differences": []
+    },
+    "B5": {
+     "script_words": 12,
+     "transcript_words": 12,
+     "differences": []
+    },
+    "B6": {
+     "script_words": 13,
+     "transcript_words": 13,
+     "differences": []
+    },
+    "B7": {
+     "script_words": 12,
+     "transcript_words": 12,
+     "differences": []
+    },
+    "B8": {
+     "script_words": 5,
+     "transcript_words": 5,
+     "differences": []
+    },
+    "H2": {
+     "script_words": 10,
+     "transcript_words": 10,
+     "differences": []
+    },
+    "B1b": {
+     "script_words": 10,
+     "transcript_words": 10,
+     "differences": []
+    },
+    "H3": {
+     "script_words": 8,
+     "transcript_words": 8,
+     "differences": []
+    },
+    "B4s": {
+     "script_words": 13,
+     "transcript_words": 13,
+     "differences": []
+    }
+   },
+   "pace": {
+    "A": {
+     "words": 102,
+     "speech_s": 41.63,
+     "span_s": 43.72,
+     "wpm_speaking": 147.0,
+     "wpm_overall": 140.0,
+     "syllables_per_s_speaking": 6.17
+    },
+    "B": {
+     "words": 87,
+     "speech_s": 34.69,
+     "span_s": 36.45,
+     "wpm_speaking": 150.5,
+     "wpm_overall": 143.2,
+     "syllables_per_s_speaking": 6.23
+    },
+    "C": {
+     "words": 99,
+     "speech_s": 39.56,
+     "span_s": 41.57,
+     "wpm_speaking": 150.1,
+     "wpm_overall": 142.9,
+     "syllables_per_s_speaking": 6.22
+    }
+   },
+   "transcript_match": true
+  }
+ }
+}

@@ -1,0 +1,518 @@
+{
+ "en-A": {
+  "lang": "en",
+  "variant": "A",
+  "duration": 44.8,
+  "frames": 1344,
+  "voice_lufs_raw": -12.9,
+  "music_lufs_raw": -1.6,
+  "cues": [
+   {
+    "line": "H1",
+    "sound": "breaker",
+    "at": 4.467,
+    "length": 0.6
+   },
+   {
+    "line": "B1",
+    "sound": "wind",
+    "at": 4.967,
+    "length": 2.93
+   },
+   {
+    "line": "B2",
+    "sound": "laser1",
+    "at": 11.16,
+    "length": 0.14
+   },
+   {
+    "line": "B2",
+    "sound": "laser2",
+    "at": 11.66,
+    "length": 0.14
+   },
+   {
+    "line": "B2",
+    "sound": "laser3",
+    "at": 11.84,
+    "length": 0.14
+   },
+   {
+    "line": "B3",
+    "sound": "drone",
+    "at": 15.283,
+    "length": 1.25
+   },
+   {
+    "line": "B4",
+    "sound": "beep",
+    "at": 22.145,
+    "length": 0.38
+   },
+   {
+    "line": "B4",
+    "sound": "buzz",
+    "at": 22.625,
+    "length": 0.42
+   },
+   {
+    "line": "B5",
+    "sound": "shutter",
+    "at": 27.715,
+    "length": 0.32
+   },
+   {
+    "line": "B6",
+    "sound": "drop",
+    "at": 32.275,
+    "length": 0.45
+   },
+   {
+    "line": "B7",
+    "sound": "whoosh",
+    "at": 35.933,
+    "length": 0.95
+   },
+   {
+    "line": "B8",
+    "sound": "hit",
+    "at": 41.2,
+    "length": 0.9
+   }
+  ],
+  "mix": {
+   "normalization": "linear",
+   "lufs": -13.9,
+   "true_peak": -1.9
+  },
+  "mix_nomusic": {
+   "normalization": "linear",
+   "lufs": -13.9,
+   "true_peak": -1.9
+  }
+ },
+ "en-B": {
+  "lang": "en",
+  "variant": "B",
+  "duration": 37.367,
+  "frames": 1121,
+  "voice_lufs_raw": -12.8,
+  "music_lufs_raw": -1.8,
+  "cues": [
+   {
+    "line": "H2",
+    "sound": "laser1",
+    "at": 1.225,
+    "length": 0.14
+   },
+   {
+    "line": "H2",
+    "sound": "laser2",
+    "at": 2.105,
+    "length": 0.14
+   },
+   {
+    "line": "H2",
+    "sound": "laser3",
+    "at": 2.225,
+    "length": 0.14
+   },
+   {
+    "line": "B3",
+    "sound": "drone",
+    "at": 7.85,
+    "length": 1.25
+   },
+   {
+    "line": "B4",
+    "sound": "beep",
+    "at": 14.712,
+    "length": 0.38
+   },
+   {
+    "line": "B4",
+    "sound": "buzz",
+    "at": 15.192,
+    "length": 0.42
+   },
+   {
+    "line": "B5",
+    "sound": "shutter",
+    "at": 20.282,
+    "length": 0.32
+   },
+   {
+    "line": "B6",
+    "sound": "drop",
+    "at": 24.842,
+    "length": 0.45
+   },
+   {
+    "line": "B7",
+    "sound": "whoosh",
+    "at": 28.5,
+    "length": 0.95
+   },
+   {
+    "line": "B8",
+    "sound": "hit",
+    "at": 33.767,
+    "length": 0.9
+   }
+  ],
+  "mix": {
+   "normalization": "linear",
+   "lufs": -13.9,
+   "true_peak": -1.9
+  },
+  "mix_nomusic": {
+   "normalization": "linear",
+   "lufs": -13.9,
+   "true_peak": -1.8
+  }
+ },
+ "en-C": {
+  "lang": "en",
+  "variant": "C",
+  "duration": 41.533,
+  "frames": 1246,
+  "voice_lufs_raw": -12.9,
+  "music_lufs_raw": -1.7,
+  "cues": [
+   {
+    "line": "H3",
+    "sound": "wind",
+    "at": 0.0,
+    "length": 2.9
+   },
+   {
+    "line": "B4s",
+    "sound": "beep",
+    "at": 4.75,
+    "length": 0.38
+   },
+   {
+    "line": "B4s",
+    "sound": "buzz",
+    "at": 5.23,
+    "length": 0.42
+   },
+   {
+    "line": "B2",
+    "sound": "laser1",
+    "at": 14.293,
+    "length": 0.14
+   },
+   {
+    "line": "B2",
+    "sound": "laser2",
+    "at": 14.793,
+    "length": 0.14
+   },
+   {
+    "line": "B2",
+    "sound": "laser3",
+    "at": 14.973,
+    "length": 0.14
+   },
+   {
+    "line": "B3",
+    "sound": "drone",
+    "at": 18.417,
+    "length": 1.25
+   },
+   {
+    "line": "B5",
+    "sound": "shutter",
+    "at": 24.448,
+    "length": 0.32
+   },
+   {
+    "line": "B6",
+    "sound": "drop",
+    "at": 29.008,
+    "length": 0.45
+   },
+   {
+    "line": "B7",
+    "sound": "whoosh",
+    "at": 32.667,
+    "length": 0.95
+   },
+   {
+    "line": "B8",
+    "sound": "hit",
+    "at": 37.933,
+    "length": 0.9
+   }
+  ],
+  "mix": {
+   "normalization": "linear",
+   "lufs": -13.9,
+   "true_peak": -1.9
+  },
+  "mix_nomusic": {
+   "normalization": "linear",
+   "lufs": -13.9,
+   "true_peak": -1.8
+  }
+ },
+ "az-A": {
+  "lang": "az",
+  "variant": "A",
+  "duration": 44.933,
+  "frames": 1348,
+  "voice_lufs_raw": -15.5,
+  "music_lufs_raw": -1.7,
+  "cues": [
+   {
+    "line": "H1",
+    "sound": "breaker",
+    "at": 4.867,
+    "length": 0.6
+   },
+   {
+    "line": "B1",
+    "sound": "wind",
+    "at": 5.5,
+    "length": 2.3
+   },
+   {
+    "line": "B2",
+    "sound": "laser1",
+    "at": 11.761,
+    "length": 0.14
+   },
+   {
+    "line": "B2",
+    "sound": "laser2",
+    "at": 11.661,
+    "length": 0.14
+   },
+   {
+    "line": "B2",
+    "sound": "laser3",
+    "at": 11.841,
+    "length": 0.14
+   },
+   {
+    "line": "B3",
+    "sound": "drone",
+    "at": 15.183,
+    "length": 1.25
+   },
+   {
+    "line": "B4",
+    "sound": "beep",
+    "at": 21.972,
+    "length": 0.38
+   },
+   {
+    "line": "B4",
+    "sound": "buzz",
+    "at": 22.343,
+    "length": 0.42
+   },
+   {
+    "line": "B5",
+    "sound": "shutter",
+    "at": 29.025,
+    "length": 0.32
+   },
+   {
+    "line": "B6",
+    "sound": "drop",
+    "at": 33.822,
+    "length": 0.45
+   },
+   {
+    "line": "B7",
+    "sound": "whoosh",
+    "at": 36.4,
+    "length": 0.95
+   },
+   {
+    "line": "B8",
+    "sound": "hit",
+    "at": 41.667,
+    "length": 0.9
+   }
+  ],
+  "mix": {
+   "normalization": "linear",
+   "lufs": -13.9,
+   "true_peak": -2.2
+  },
+  "mix_nomusic": {
+   "normalization": "linear",
+   "lufs": -13.9,
+   "true_peak": -2.1
+  }
+ },
+ "az-B": {
+  "lang": "az",
+  "variant": "B",
+  "duration": 37.767,
+  "frames": 1133,
+  "voice_lufs_raw": -15.9,
+  "music_lufs_raw": -1.6,
+  "cues": [
+   {
+    "line": "H2",
+    "sound": "laser1",
+    "at": 1.342,
+    "length": 0.14
+   },
+   {
+    "line": "H2",
+    "sound": "laser2",
+    "at": 0.86,
+    "length": 0.14
+   },
+   {
+    "line": "H2",
+    "sound": "laser3",
+    "at": 0.98,
+    "length": 0.14
+   },
+   {
+    "line": "B3",
+    "sound": "drone",
+    "at": 8.017,
+    "length": 1.25
+   },
+   {
+    "line": "B4",
+    "sound": "beep",
+    "at": 14.806,
+    "length": 0.38
+   },
+   {
+    "line": "B4",
+    "sound": "buzz",
+    "at": 15.177,
+    "length": 0.42
+   },
+   {
+    "line": "B5",
+    "sound": "shutter",
+    "at": 21.859,
+    "length": 0.32
+   },
+   {
+    "line": "B6",
+    "sound": "drop",
+    "at": 26.656,
+    "length": 0.45
+   },
+   {
+    "line": "B7",
+    "sound": "whoosh",
+    "at": 29.233,
+    "length": 0.95
+   },
+   {
+    "line": "B8",
+    "sound": "hit",
+    "at": 34.5,
+    "length": 0.9
+   }
+  ],
+  "mix": {
+   "normalization": "linear",
+   "lufs": -13.9,
+   "true_peak": -2.1
+  },
+  "mix_nomusic": {
+   "normalization": "linear",
+   "lufs": -13.9,
+   "true_peak": -2.1
+  }
+ },
+ "az-C": {
+  "lang": "az",
+  "variant": "C",
+  "duration": 42.9,
+  "frames": 1287,
+  "voice_lufs_raw": -16.0,
+  "music_lufs_raw": -1.6,
+  "cues": [
+   {
+    "line": "H3",
+    "sound": "wind",
+    "at": 0.0,
+    "length": 3.1
+   },
+   {
+    "line": "B4s",
+    "sound": "beep",
+    "at": 5.476,
+    "length": 0.38
+   },
+   {
+    "line": "B4s",
+    "sound": "buzz",
+    "at": 5.822,
+    "length": 0.42
+   },
+   {
+    "line": "B2",
+    "sound": "laser1",
+    "at": 16.928,
+    "length": 0.14
+   },
+   {
+    "line": "B2",
+    "sound": "laser2",
+    "at": 16.828,
+    "length": 0.14
+   },
+   {
+    "line": "B2",
+    "sound": "laser3",
+    "at": 17.008,
+    "length": 0.14
+   },
+   {
+    "line": "B3",
+    "sound": "drone",
+    "at": 20.35,
+    "length": 1.25
+   },
+   {
+    "line": "B5",
+    "sound": "shutter",
+    "at": 26.992,
+    "length": 0.32
+   },
+   {
+    "line": "B6",
+    "sound": "drop",
+    "at": 31.789,
+    "length": 0.45
+   },
+   {
+    "line": "B7",
+    "sound": "whoosh",
+    "at": 34.367,
+    "length": 0.95
+   },
+   {
+    "line": "B8",
+    "sound": "hit",
+    "at": 39.633,
+    "length": 0.9
+   }
+  ],
+  "mix": {
+   "normalization": "linear",
+   "lufs": -13.9,
+   "true_peak": -2.2
+  },
+  "mix_nomusic": {
+   "normalization": "linear",
+   "lufs": -13.9,
+   "true_peak": -2.1
+  }
+ }
+}

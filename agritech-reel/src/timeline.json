@@ -1,0 +1,1813 @@
+{
+ "fps": 30,
+ "tail": 6,
+ "variants": {
+  "A": [
+   "H1",
+   "B1",
+   "B2",
+   "B3",
+   "B4",
+   "B5",
+   "B6",
+   "B7",
+   "B8"
+  ],
+  "B": [
+   "H2",
+   "B1b",
+   "B3",
+   "B4",
+   "B5",
+   "B6",
+   "B7",
+   "B8"
+  ],
+  "C": [
+   "H3",
+   "B4s",
+   "B1b",
+   "B2",
+   "B3",
+   "B5",
+   "B6",
+   "B7",
+   "B8"
+  ]
+ },
+ "lines": {
+  "en": {
+   "H1": {
+    "frames": 149,
+    "audioOffset": 0.01,
+    "audioFile": "vo/lines/en/H1.wav",
+    "speechStart": 0.05,
+    "speechEnd": 4.89,
+    "words": [
+     {
+      "text": "Investors",
+      "start": 0.0,
+      "end": 0.56
+     },
+     {
+      "text": "poured",
+      "start": 0.64,
+      "end": 0.88
+     },
+     {
+      "text": "billions",
+      "start": 1.12,
+      "end": 1.6
+     },
+     {
+      "text": "into",
+      "start": 1.68,
+      "end": 1.84
+     },
+     {
+      "text": "indoor",
+      "start": 1.92,
+      "end": 2.24
+     },
+     {
+      "text": "farms.",
+      "start": 2.32,
+      "end": 2.99
+     },
+     {
+      "text": "Many",
+      "start": 3.175,
+      "end": 3.335
+     },
+     {
+      "text": "of",
+      "start": 3.375,
+      "end": 3.415
+     },
+     {
+      "text": "the",
+      "start": 3.495,
+      "end": 3.575
+     },
+     {
+      "text": "biggest",
+      "start": 3.655,
+      "end": 4.055
+     },
+     {
+      "text": "went",
+      "start": 4.135,
+      "end": 4.295
+     },
+     {
+      "text": "bust.",
+      "start": 4.455,
+      "end": 5.095
+     }
+    ]
+   },
+   "B1": {
+    "frames": 88,
+    "audioOffset": 0.14,
+    "audioFile": "vo/lines/en/B1.wav",
+    "speechStart": 0.18,
+    "speechEnd": 2.87,
+    "words": [
+     {
+      "text": "The",
+      "start": 0.115,
+      "end": 0.195
+     },
+     {
+      "text": "real",
+      "start": 0.355,
+      "end": 0.595
+     },
+     {
+      "text": "farm",
+      "start": 0.675,
+      "end": 0.915
+     },
+     {
+      "text": "revolution",
+      "start": 1.235,
+      "end": 1.555
+     },
+     {
+      "text": "is",
+      "start": 1.635,
+      "end": 1.715
+     },
+     {
+      "text": "happening",
+      "start": 1.795,
+      "end": 2.195
+     },
+     {
+      "text": "outside.",
+      "start": 2.275,
+      "end": 3.235
+     }
+    ]
+   },
+   "B2": {
+    "frames": 220,
+    "audioOffset": 0.14,
+    "audioFile": "vo/lines/en/B2.wav",
+    "speechStart": 0.18,
+    "speechEnd": 7.25,
+    "words": [
+     {
+      "text": "A",
+      "start": 0.16,
+      "end": 0.32
+     },
+     {
+      "text": "U.S.",
+      "start": 0.36,
+      "end": 0.56
+     },
+     {
+      "text": "robot",
+      "start": 0.72,
+      "end": 1.12
+     },
+     {
+      "text": "spots",
+      "start": 1.2,
+      "end": 1.52
+     },
+     {
+      "text": "weeds",
+      "start": 1.6,
+      "end": 1.92
+     },
+     {
+      "text": "with",
+      "start": 2.04,
+      "end": 2.16
+     },
+     {
+      "text": "A.I.",
+      "start": 2.24,
+      "end": 2.72
+     },
+     {
+      "text": "and",
+      "start": 2.8,
+      "end": 3.04
+     },
+     {
+      "text": "burns",
+      "start": 3.16,
+      "end": 3.36
+     },
+     {
+      "text": "them",
+      "start": 3.44,
+      "end": 3.52
+     },
+     {
+      "text": "with",
+      "start": 3.6,
+      "end": 3.68
+     },
+     {
+      "text": "lasers.",
+      "start": 3.76,
+      "end": 4.565
+     },
+     {
+      "text": "Up",
+      "start": 4.645,
+      "end": 4.725
+     },
+     {
+      "text": "to",
+      "start": 4.845,
+      "end": 4.965
+     },
+     {
+      "text": "ten",
+      "start": 5.085,
+      "end": 5.205
+     },
+     {
+      "text": "thousand",
+      "start": 5.365,
+      "end": 5.685
+     },
+     {
+      "text": "a",
+      "start": 5.765,
+      "end": 5.925
+     },
+     {
+      "text": "minute,",
+      "start": 6.085,
+      "end": 6.325
+     },
+     {
+      "text": "its",
+      "start": 6.405,
+      "end": 6.565
+     },
+     {
+      "text": "maker",
+      "start": 6.725,
+      "end": 6.885
+     },
+     {
+      "text": "says.",
+      "start": 7.045,
+      "end": 7.765
+     }
+    ]
+   },
+   "B3": {
+    "frames": 113,
+    "audioOffset": 0.14,
+    "audioFile": "vo/lines/en/B3.wav",
+    "speechStart": 0.18,
+    "speechEnd": 3.705,
+    "words": [
+     {
+      "text": "China",
+      "start": 0.205,
+      "end": 0.605
+     },
+     {
+      "text": "now",
+      "start": 0.685,
+      "end": 0.845
+     },
+     {
+      "text": "has",
+      "start": 0.925,
+      "end": 1.085
+     },
+     {
+      "text": "over",
+      "start": 1.165,
+      "end": 1.485
+     },
+     {
+      "text": "300,000",
+      "start": 1.605,
+      "end": 2.765
+     },
+     {
+      "text": "farm",
+      "start": 2.925,
+      "end": 3.165
+     },
+     {
+      "text": "drones.",
+      "start": 3.245,
+      "end": 4.285
+     }
+    ]
+   },
+   "B4": {
+    "frames": 192,
+    "audioOffset": 0.14,
+    "audioFile": "vo/lines/en/B4.wav",
+    "speechStart": 0.18,
+    "speechEnd": 6.31,
+    "words": [
+     {
+      "text": "In",
+      "start": 0.21,
+      "end": 0.29
+     },
+     {
+      "text": "New",
+      "start": 0.37,
+      "end": 0.45
+     },
+     {
+      "text": "Zealand,",
+      "start": 0.49,
+      "end": 1.09
+     },
+     {
+      "text": "cows",
+      "start": 1.17,
+      "end": 1.49
+     },
+     {
+      "text": "wear",
+      "start": 1.57,
+      "end": 1.89
+     },
+     {
+      "text": "solar",
+      "start": 1.93,
+      "end": 2.29
+     },
+     {
+      "text": "collars.",
+      "start": 2.41,
+      "end": 3.065
+     },
+     {
+      "text": "Sound",
+      "start": 3.145,
+      "end": 3.465
+     },
+     {
+      "text": "and",
+      "start": 3.505,
+      "end": 3.545
+     },
+     {
+      "text": "vibration",
+      "start": 3.625,
+      "end": 4.265
+     },
+     {
+      "text": "steer",
+      "start": 4.345,
+      "end": 4.585
+     },
+     {
+      "text": "them.",
+      "start": 4.665,
+      "end": 4.975
+     },
+     {
+      "text": "The",
+      "start": 5.055,
+      "end": 5.135
+     },
+     {
+      "text": "fence",
+      "start": 5.215,
+      "end": 5.615
+     },
+     {
+      "text": "is",
+      "start": 5.695,
+      "end": 5.775
+     },
+     {
+      "text": "an",
+      "start": 5.855,
+      "end": 5.935
+     },
+     {
+      "text": "app.",
+      "start": 6.015,
+      "end": 6.895
+     }
+    ]
+   },
+   "B5": {
+    "frames": 162,
+    "audioOffset": 0.14,
+    "audioFile": "vo/lines/en/B5.wav",
+    "speechStart": 0.18,
+    "speechEnd": 5.32,
+    "words": [
+     {
+      "text": "European",
+      "start": 0.205,
+      "end": 0.685
+     },
+     {
+      "text": "satellites",
+      "start": 0.765,
+      "end": 1.325
+     },
+     {
+      "text": "photograph",
+      "start": 1.405,
+      "end": 1.885
+     },
+     {
+      "text": "every",
+      "start": 1.965,
+      "end": 2.285
+     },
+     {
+      "text": "field",
+      "start": 2.365,
+      "end": 2.685
+     },
+     {
+      "text": "on",
+      "start": 2.765,
+      "end": 2.845
+     },
+     {
+      "text": "Earth",
+      "start": 2.925,
+      "end": 3.245
+     },
+     {
+      "text": "every",
+      "start": 3.325,
+      "end": 3.725
+     },
+     {
+      "text": "five",
+      "start": 3.885,
+      "end": 4.045
+     },
+     {
+      "text": "days.",
+      "start": 4.125,
+      "end": 4.815
+     },
+     {
+      "text": "For",
+      "start": 4.895,
+      "end": 4.975
+     },
+     {
+      "text": "free.",
+      "start": 5.135,
+      "end": 5.775
+     }
+    ]
+   },
+   "B6": {
+    "frames": 136,
+    "audioOffset": 0.14,
+    "audioFile": "vo/lines/en/B6.wav",
+    "speechStart": 0.18,
+    "speechEnd": 4.465,
+    "words": [
+     {
+      "text": "Why",
+      "start": 0.27,
+      "end": 0.39
+     },
+     {
+      "text": "now?",
+      "start": 0.47,
+      "end": 1.045
+     },
+     {
+      "text": "About",
+      "start": 1.245,
+      "end": 1.445
+     },
+     {
+      "text": "seventy",
+      "start": 1.525,
+      "end": 1.805
+     },
+     {
+      "text": "percent",
+      "start": 1.845,
+      "end": 2.245
+     },
+     {
+      "text": "of",
+      "start": 2.285,
+      "end": 2.325
+     },
+     {
+      "text": "the",
+      "start": 2.405,
+      "end": 2.485
+     },
+     {
+      "text": "fresh",
+      "start": 2.605,
+      "end": 2.725
+     },
+     {
+      "text": "water",
+      "start": 2.805,
+      "end": 3.045
+     },
+     {
+      "text": "we",
+      "start": 3.165,
+      "end": 3.285
+     },
+     {
+      "text": "use",
+      "start": 3.365,
+      "end": 3.605
+     },
+     {
+      "text": "goes",
+      "start": 3.685,
+      "end": 3.845
+     },
+     {
+      "text": "to",
+      "start": 3.925,
+      "end": 4.005
+     },
+     {
+      "text": "farming.",
+      "start": 4.085,
+      "end": 4.885
+     }
+    ]
+   },
+   "B7": {
+    "frames": 176,
+    "audioOffset": 0.14,
+    "audioFile": "vo/lines/en/B7.wav",
+    "speechStart": 0.18,
+    "speechEnd": 5.79,
+    "words": [
+     {
+      "text": "In",
+      "start": 0.175,
+      "end": 0.255
+     },
+     {
+      "text": "Azerbaijan,",
+      "start": 0.335,
+      "end": 1.215
+     },
+     {
+      "text": "over",
+      "start": 1.335,
+      "end": 1.455
+     },
+     {
+      "text": "a",
+      "start": 1.575,
+      "end": 1.695
+     },
+     {
+      "text": "third",
+      "start": 1.815,
+      "end": 1.935
+     },
+     {
+      "text": "of",
+      "start": 2.015,
+      "end": 2.175
+     },
+     {
+      "text": "all",
+      "start": 2.255,
+      "end": 2.415
+     },
+     {
+      "text": "workers",
+      "start": 2.495,
+      "end": 2.895
+     },
+     {
+      "text": "are",
+      "start": 2.975,
+      "end": 3.055
+     },
+     {
+      "text": "in",
+      "start": 3.095,
+      "end": 3.135
+     },
+     {
+      "text": "agriculture.",
+      "start": 3.215,
+      "end": 4.105
+     },
+     {
+      "text": "So",
+      "start": 4.265,
+      "end": 4.425
+     },
+     {
+      "text": "this",
+      "start": 4.665,
+      "end": 4.745
+     },
+     {
+      "text": "is",
+      "start": 4.825,
+      "end": 4.905
+     },
+     {
+      "text": "our",
+      "start": 4.985,
+      "end": 5.065
+     },
+     {
+      "text": "future",
+      "start": 5.145,
+      "end": 5.465
+     },
+     {
+      "text": "too.",
+      "start": 5.545,
+      "end": 6.265
+     }
+    ]
+   },
+   "B8": {
+    "frames": 102,
+    "audioOffset": 0.14,
+    "audioFile": "vo/lines/en/B8.wav",
+    "speechStart": 0.18,
+    "speechEnd": 2.395,
+    "words": [
+     {
+      "text": "Which",
+      "start": 0.245,
+      "end": 0.365
+     },
+     {
+      "text": "one",
+      "start": 0.445,
+      "end": 0.525
+     },
+     {
+      "text": "would",
+      "start": 0.605,
+      "end": 0.765
+     },
+     {
+      "text": "you",
+      "start": 0.845,
+      "end": 0.925
+     },
+     {
+      "text": "bring",
+      "start": 1.005,
+      "end": 1.165
+     },
+     {
+      "text": "to",
+      "start": 1.245,
+      "end": 1.325
+     },
+     {
+      "text": "your",
+      "start": 1.405,
+      "end": 1.565
+     },
+     {
+      "text": "village",
+      "start": 1.645,
+      "end": 1.885
+     },
+     {
+      "text": "first?",
+      "start": 1.965,
+      "end": 2.685
+     }
+    ]
+   },
+   "H2": {
+    "frames": 140,
+    "audioOffset": 0.01,
+    "audioFile": "vo/lines/en/H2.wav",
+    "speechStart": 0.05,
+    "speechEnd": 4.595,
+    "words": [
+     {
+      "text": "There's",
+      "start": 0.025,
+      "end": 0.185
+     },
+     {
+      "text": "a",
+      "start": 0.265,
+      "end": 0.345
+     },
+     {
+      "text": "robot",
+      "start": 0.425,
+      "end": 0.825
+     },
+     {
+      "text": "that",
+      "start": 0.945,
+      "end": 1.065
+     },
+     {
+      "text": "burns",
+      "start": 1.225,
+      "end": 1.425
+     },
+     {
+      "text": "weeds",
+      "start": 1.465,
+      "end": 1.785
+     },
+     {
+      "text": "with",
+      "start": 1.865,
+      "end": 2.025
+     },
+     {
+      "text": "lasers.",
+      "start": 2.105,
+      "end": 2.905
+     },
+     {
+      "text": "Up",
+      "start": 2.985,
+      "end": 3.065
+     },
+     {
+      "text": "to",
+      "start": 3.145,
+      "end": 3.225
+     },
+     {
+      "text": "ten",
+      "start": 3.305,
+      "end": 3.465
+     },
+     {
+      "text": "thousand",
+      "start": 3.705,
+      "end": 4.025
+     },
+     {
+      "text": "a",
+      "start": 4.105,
+      "end": 4.185
+     },
+     {
+      "text": "minute.",
+      "start": 4.265,
+      "end": 4.985
+     }
+    ]
+   },
+   "B1b": {
+    "frames": 94,
+    "audioOffset": 0.14,
+    "audioFile": "vo/lines/en/B1b.wav",
+    "speechStart": 0.18,
+    "speechEnd": 3.045,
+    "words": [
+     {
+      "text": "And",
+      "start": 0.165,
+      "end": 0.205
+     },
+     {
+      "text": "that's",
+      "start": 0.285,
+      "end": 0.445
+     },
+     {
+      "text": "just",
+      "start": 0.565,
+      "end": 0.685
+     },
+     {
+      "text": "one",
+      "start": 0.765,
+      "end": 0.845
+     },
+     {
+      "text": "of",
+      "start": 0.925,
+      "end": 1.005
+     },
+     {
+      "text": "the",
+      "start": 1.045,
+      "end": 1.085
+     },
+     {
+      "text": "technologies",
+      "start": 1.245,
+      "end": 1.805
+     },
+     {
+      "text": "changing",
+      "start": 2.005,
+      "end": 2.205
+     },
+     {
+      "text": "farming",
+      "start": 2.245,
+      "end": 2.605
+     },
+     {
+      "text": "right",
+      "start": 2.685,
+      "end": 2.765
+     },
+     {
+      "text": "now.",
+      "start": 2.845,
+      "end": 3.645
+     }
+    ]
+   },
+   "H3": {
+    "frames": 87,
+    "audioOffset": 0.01,
+    "audioFile": "vo/lines/en/H3.wav",
+    "speechStart": 0.05,
+    "speechEnd": 2.83,
+    "words": [
+     {
+      "text": "In",
+      "start": 0.065,
+      "end": 0.105
+     },
+     {
+      "text": "New",
+      "start": 0.185,
+      "end": 0.345
+     },
+     {
+      "text": "Zealand,",
+      "start": 0.385,
+      "end": 0.985
+     },
+     {
+      "text": "some",
+      "start": 1.105,
+      "end": 1.225
+     },
+     {
+      "text": "cows",
+      "start": 1.265,
+      "end": 1.545
+     },
+     {
+      "text": "don't",
+      "start": 1.625,
+      "end": 1.785
+     },
+     {
+      "text": "need",
+      "start": 1.905,
+      "end": 2.025
+     },
+     {
+      "text": "fences",
+      "start": 2.065,
+      "end": 2.345
+     },
+     {
+      "text": "anymore.",
+      "start": 2.425,
+      "end": 3.118
+     }
+    ]
+   },
+   "B4s": {
+    "frames": 150,
+    "audioOffset": 0.14,
+    "audioFile": "vo/lines/en/B4s.wav",
+    "speechStart": 0.18,
+    "speechEnd": 4.935,
+    "words": [
+     {
+      "text": "They",
+      "start": 0.207,
+      "end": 0.26
+     },
+     {
+      "text": "wear",
+      "start": 0.42,
+      "end": 0.58
+     },
+     {
+      "text": "solar",
+      "start": 0.62,
+      "end": 0.98
+     },
+     {
+      "text": "collars.",
+      "start": 1.1,
+      "end": 1.77
+     },
+     {
+      "text": "Sound",
+      "start": 1.85,
+      "end": 2.09
+     },
+     {
+      "text": "and",
+      "start": 2.17,
+      "end": 2.25
+     },
+     {
+      "text": "vibration",
+      "start": 2.33,
+      "end": 2.89
+     },
+     {
+      "text": "steer",
+      "start": 2.97,
+      "end": 3.21
+     },
+     {
+      "text": "them.",
+      "start": 3.29,
+      "end": 3.66
+     },
+     {
+      "text": "The",
+      "start": 3.7,
+      "end": 3.78
+     },
+     {
+      "text": "fence",
+      "start": 3.86,
+      "end": 4.26
+     },
+     {
+      "text": "is",
+      "start": 4.34,
+      "end": 4.42
+     },
+     {
+      "text": "an",
+      "start": 4.5,
+      "end": 4.58
+     },
+     {
+      "text": "app.",
+      "start": 4.66,
+      "end": 5.06
+     }
+    ]
+   }
+  },
+  "az": {
+   "H1": {
+    "frames": 165,
+    "audioOffset": 0.013,
+    "audioFile": "vo/lines/az/H1.wav",
+    "speechStart": 0.05,
+    "speechEnd": 5.425,
+    "words": [
+     {
+      "text": "İnvestorlar",
+      "start": 0.013,
+      "end": 0.754
+     },
+     {
+      "text": "qapalı",
+      "start": 0.828,
+      "end": 1.124
+     },
+     {
+      "text": "fermalara",
+      "start": 1.235,
+      "end": 1.717
+     },
+     {
+      "text": "milyardlarla",
+      "start": 1.754,
+      "end": 2.383
+     },
+     {
+      "text": "dollar",
+      "start": 2.457,
+      "end": 2.754
+     },
+     {
+      "text": "qoydu.",
+      "start": 2.828,
+      "end": 3.369
+     },
+     {
+      "text": "Ən",
+      "start": 3.407,
+      "end": 3.518
+     },
+     {
+      "text": "böyüklərinin",
+      "start": 3.592,
+      "end": 4.184
+     },
+     {
+      "text": "bir",
+      "start": 4.258,
+      "end": 4.332
+     },
+     {
+      "text": "çoxu",
+      "start": 4.407,
+      "end": 4.777
+     },
+     {
+      "text": "iflas",
+      "start": 4.851,
+      "end": 5.147
+     },
+     {
+      "text": "etdi.",
+      "start": 5.221,
+      "end": 5.74
+     }
+    ]
+   },
+   "B1": {
+    "frames": 69,
+    "audioOffset": 0.143,
+    "audioFile": "vo/lines/az/B1.wav",
+    "speechStart": 0.18,
+    "speechEnd": 2.236,
+    "words": [
+     {
+      "text": "Əsl",
+      "start": 0.212,
+      "end": 0.472
+     },
+     {
+      "text": "inqilab",
+      "start": 0.546,
+      "end": 0.842
+     },
+     {
+      "text": "isə",
+      "start": 0.916,
+      "end": 1.212
+     },
+     {
+      "text": "açıq",
+      "start": 1.287,
+      "end": 1.509
+     },
+     {
+      "text": "tarlada",
+      "start": 1.583,
+      "end": 1.953
+     },
+     {
+      "text": "gedir.",
+      "start": 2.027,
+      "end": 2.546
+     }
+    ]
+   },
+   "B2": {
+    "frames": 220,
+    "audioOffset": 0.143,
+    "audioFile": "vo/lines/az/B2.wav",
+    "speechStart": 0.18,
+    "speechEnd": 7.259,
+    "words": [
+     {
+      "text": "Amerikada",
+      "start": 0.231,
+      "end": 0.787
+     },
+     {
+      "text": "bir",
+      "start": 0.898,
+      "end": 1.009
+     },
+     {
+      "text": "robot",
+      "start": 1.231,
+      "end": 1.453
+     },
+     {
+      "text": "alaq",
+      "start": 1.527,
+      "end": 1.749
+     },
+     {
+      "text": "otlarını",
+      "start": 1.824,
+      "end": 2.268
+     },
+     {
+      "text": "süni",
+      "start": 2.305,
+      "end": 2.564
+     },
+     {
+      "text": "intellektlə",
+      "start": 2.638,
+      "end": 3.157
+     },
+     {
+      "text": "tapır",
+      "start": 3.231,
+      "end": 3.527
+     },
+     {
+      "text": "və",
+      "start": 3.564,
+      "end": 3.824
+     },
+     {
+      "text": "lazerlə",
+      "start": 3.861,
+      "end": 4.268
+     },
+     {
+      "text": "yandırır.",
+      "start": 4.305,
+      "end": 4.935
+     },
+     {
+      "text": "İstehsalçısına",
+      "start": 4.984,
+      "end": 5.675
+     },
+     {
+      "text": "görə,",
+      "start": 5.724,
+      "end": 6.046
+     },
+     {
+      "text": "dəqiqədə",
+      "start": 6.071,
+      "end": 6.564
+     },
+     {
+      "text": "10",
+      "start": 6.638,
+      "end": 6.712
+     },
+     {
+      "text": "minə",
+      "start": 6.787,
+      "end": 6.935
+     },
+     {
+      "text": "qədər.",
+      "start": 7.009,
+      "end": 7.601
+     }
+    ]
+   },
+   "B3": {
+    "frames": 102,
+    "audioOffset": 0.143,
+    "audioFile": "vo/lines/az/B3.wav",
+    "speechStart": 0.18,
+    "speechEnd": 3.31,
+    "words": [
+     {
+      "text": "Çində",
+      "start": 0.249,
+      "end": 0.731
+     },
+     {
+      "text": "artıq",
+      "start": 0.842,
+      "end": 1.175
+     },
+     {
+      "text": "300",
+      "start": 1.249,
+      "end": 1.472
+     },
+     {
+      "text": "mindən",
+      "start": 1.546,
+      "end": 1.842
+     },
+     {
+      "text": "çox",
+      "start": 1.879,
+      "end": 1.99
+     },
+     {
+      "text": "kənd",
+      "start": 2.064,
+      "end": 2.212
+     },
+     {
+      "text": "təsərrüfatı",
+      "start": 2.287,
+      "end": 2.805
+     },
+     {
+      "text": "dronu",
+      "start": 2.842,
+      "end": 3.101
+     },
+     {
+      "text": "var.",
+      "start": 3.212,
+      "end": 3.62
+     }
+    ]
+   },
+   "B4": {
+    "frames": 216,
+    "audioOffset": 0.143,
+    "audioFile": "vo/lines/az/B4.wav",
+    "speechStart": 0.18,
+    "speechEnd": 7.12,
+    "words": [
+     {
+      "text": "Yeni",
+      "start": 0.217,
+      "end": 0.402
+     },
+     {
+      "text": "Zelandiyada",
+      "start": 0.439,
+      "end": 1.143
+     },
+     {
+      "text": "inəklər",
+      "start": 1.217,
+      "end": 1.662
+     },
+     {
+      "text": "günəş",
+      "start": 1.736,
+      "end": 1.958
+     },
+     {
+      "text": "enerjili",
+      "start": 2.069,
+      "end": 2.328
+     },
+     {
+      "text": "boyunluq",
+      "start": 2.402,
+      "end": 2.847
+     },
+     {
+      "text": "taxır.",
+      "start": 2.921,
+      "end": 3.365
+     },
+     {
+      "text": "Səs",
+      "start": 3.439,
+      "end": 3.662
+     },
+     {
+      "text": "və",
+      "start": 3.699,
+      "end": 3.773
+     },
+     {
+      "text": "titrəmə",
+      "start": 3.81,
+      "end": 4.328
+     },
+     {
+      "text": "onları",
+      "start": 4.402,
+      "end": 4.624
+     },
+     {
+      "text": "yönləndirir.",
+      "start": 4.662,
+      "end": 5.439
+     },
+     {
+      "text": "Hasar",
+      "start": 5.55,
+      "end": 5.736
+     },
+     {
+      "text": "isə",
+      "start": 5.81,
+      "end": 6.106
+     },
+     {
+      "text": "telefondakı",
+      "start": 6.217,
+      "end": 6.624
+     },
+     {
+      "text": "tətbiqdir.",
+      "start": 6.699,
+      "end": 7.439
+     }
+    ]
+   },
+   "B5": {
+    "frames": 141,
+    "audioOffset": 0.143,
+    "audioFile": "vo/lines/az/B5.wav",
+    "speechStart": 0.18,
+    "speechEnd": 4.638,
+    "words": [
+     {
+      "text": "Avropa",
+      "start": 0.231,
+      "end": 0.527
+     },
+     {
+      "text": "peykləri",
+      "start": 0.601,
+      "end": 1.194
+     },
+     {
+      "text": "hər",
+      "start": 1.219,
+      "end": 1.416
+     },
+     {
+      "text": "beş",
+      "start": 1.49,
+      "end": 1.638
+     },
+     {
+      "text": "gündən",
+      "start": 1.712,
+      "end": 2.083
+     },
+     {
+      "text": "bir",
+      "start": 2.194,
+      "end": 2.305
+     },
+     {
+      "text": "Yer",
+      "start": 2.379,
+      "end": 2.453
+     },
+     {
+      "text": "üzündəki",
+      "start": 2.527,
+      "end": 3.046
+     },
+     {
+      "text": "hər",
+      "start": 3.071,
+      "end": 3.268
+     },
+     {
+      "text": "tarlanı",
+      "start": 3.342,
+      "end": 3.638
+     },
+     {
+      "text": "çəkir.",
+      "start": 3.712,
+      "end": 4.231
+     },
+     {
+      "text": "Pulsuz.",
+      "start": 4.305,
+      "end": 4.972
+     }
+    ]
+   },
+   "B6": {
+    "frames": 161,
+    "audioOffset": 0.143,
+    "audioFile": "vo/lines/az/B6.wav",
+    "speechStart": 0.18,
+    "speechEnd": 5.282,
+    "words": [
+     {
+      "text": "Niyə",
+      "start": 0.254,
+      "end": 0.439
+     },
+     {
+      "text": "məhz",
+      "start": 0.476,
+      "end": 0.699
+     },
+     {
+      "text": "indi?",
+      "start": 0.773,
+      "end": 1.439
+     },
+     {
+      "text": "İstifadə",
+      "start": 1.488,
+      "end": 1.847
+     },
+     {
+      "text": "etdiyimiz",
+      "start": 1.884,
+      "end": 2.254
+     },
+     {
+      "text": "şirin",
+      "start": 2.328,
+      "end": 2.55
+     },
+     {
+      "text": "suyun",
+      "start": 2.624,
+      "end": 2.921
+     },
+     {
+      "text": "təxminən",
+      "start": 2.946,
+      "end": 3.365
+     },
+     {
+      "text": "70",
+      "start": 3.439,
+      "end": 3.736
+     },
+     {
+      "text": "faizi",
+      "start": 3.81,
+      "end": 4.18
+     },
+     {
+      "text": "kənd",
+      "start": 4.254,
+      "end": 4.402
+     },
+     {
+      "text": "təsərrüfatına",
+      "start": 4.439,
+      "end": 4.995
+     },
+     {
+      "text": "gedir.",
+      "start": 5.069,
+      "end": 5.513
+     }
+    ]
+   },
+   "B7": {
+    "frames": 176,
+    "audioOffset": 0.143,
+    "audioFile": "vo/lines/az/B7.wav",
+    "speechStart": 0.18,
+    "speechEnd": 5.787,
+    "words": [
+     {
+      "text": "Azərbaycanda",
+      "start": 0.24,
+      "end": 0.833
+     },
+     {
+      "text": "işləyənlərin",
+      "start": 0.907,
+      "end": 1.499
+     },
+     {
+      "text": "üçdə",
+      "start": 1.537,
+      "end": 1.796
+     },
+     {
+      "text": "birindən",
+      "start": 1.833,
+      "end": 2.166
+     },
+     {
+      "text": "çoxu",
+      "start": 2.24,
+      "end": 2.537
+     },
+     {
+      "text": "kənd",
+      "start": 2.574,
+      "end": 2.685
+     },
+     {
+      "text": "təsərrüfatındadır.",
+      "start": 2.759,
+      "end": 3.777
+     },
+     {
+      "text": "Deməli,",
+      "start": 3.851,
+      "end": 4.444
+     },
+     {
+      "text": "bu,",
+      "start": 4.518,
+      "end": 4.74
+     },
+     {
+      "text": "bizim",
+      "start": 4.814,
+      "end": 4.962
+     },
+     {
+      "text": "də",
+      "start": 5.037,
+      "end": 5.111
+     },
+     {
+      "text": "gələcəyimizdir.",
+      "start": 5.148,
+      "end": 6.148
+     }
+    ]
+   },
+   "B8": {
+    "frames": 92,
+    "audioOffset": 0.143,
+    "audioFile": "vo/lines/az/B8.wav",
+    "speechStart": 0.18,
+    "speechEnd": 2.064,
+    "words": [
+     {
+      "text": "Sən",
+      "start": 0.254,
+      "end": 0.402
+     },
+     {
+      "text": "kəndinə",
+      "start": 0.439,
+      "end": 0.958
+     },
+     {
+      "text": "ilk",
+      "start": 1.069,
+      "end": 1.18
+     },
+     {
+      "text": "hansını",
+      "start": 1.217,
+      "end": 1.55
+     },
+     {
+      "text": "gətirərdin?",
+      "start": 1.587,
+      "end": 2.439
+     }
+    ]
+   },
+   "H2": {
+    "frames": 110,
+    "audioOffset": 0.013,
+    "audioFile": "vo/lines/az/H2.wav",
+    "speechStart": 0.05,
+    "speechEnd": 3.578,
+    "words": [
+     {
+      "text": "Alaq",
+      "start": 0.119,
+      "end": 0.305
+     },
+     {
+      "text": "otlarını",
+      "start": 0.379,
+      "end": 0.823
+     },
+     {
+      "text": "lazerlə",
+      "start": 0.86,
+      "end": 1.268
+     },
+     {
+      "text": "yandıran",
+      "start": 1.342,
+      "end": 1.638
+     },
+     {
+      "text": "robot",
+      "start": 1.712,
+      "end": 2.008
+     },
+     {
+      "text": "var.",
+      "start": 2.082,
+      "end": 2.379
+     },
+     {
+      "text": "Dəqiqədə",
+      "start": 2.404,
+      "end": 2.897
+     },
+     {
+      "text": "10",
+      "start": 2.971,
+      "end": 3.045
+     },
+     {
+      "text": "minə",
+      "start": 3.119,
+      "end": 3.268
+     },
+     {
+      "text": "qədər.",
+      "start": 3.342,
+      "end": 3.86
+     }
+    ]
+   },
+   "B1b": {
+    "frames": 129,
+    "audioOffset": 0.143,
+    "audioFile": "vo/lines/az/B1b.wav",
+    "speechStart": 0.18,
+    "speechEnd": 4.217,
+    "words": [
+     {
+      "text": "Və",
+      "start": 0.303,
+      "end": 0.402
+     },
+     {
+      "text": "bu,",
+      "start": 0.476,
+      "end": 0.847
+     },
+     {
+      "text": "bu",
+      "start": 0.884,
+      "end": 0.921
+     },
+     {
+      "text": "gün",
+      "start": 0.995,
+      "end": 1.143
+     },
+     {
+      "text": "kənd",
+      "start": 1.217,
+      "end": 1.365
+     },
+     {
+      "text": "təsərrüfatını",
+      "start": 1.439,
+      "end": 2.032
+     },
+     {
+      "text": "dəyişən",
+      "start": 2.069,
+      "end": 2.402
+     },
+     {
+      "text": "texnologiyalardan",
+      "start": 2.476,
+      "end": 3.439
+     },
+     {
+      "text": "yalnız",
+      "start": 3.513,
+      "end": 3.884
+     },
+     {
+      "text": "biridir.",
+      "start": 3.958,
+      "end": 4.624
+     }
+    ]
+   },
+   "H3": {
+    "frames": 93,
+    "audioOffset": 0.013,
+    "audioFile": "vo/lines/az/H3.wav",
+    "speechStart": 0.05,
+    "speechEnd": 3.008,
+    "words": [
+     {
+      "text": "Yeni",
+      "start": 0.129,
+      "end": 0.314
+     },
+     {
+      "text": "Zelandiyada",
+      "start": 0.351,
+      "end": 1.055
+     },
+     {
+      "text": "bəzi",
+      "start": 1.08,
+      "end": 1.277
+     },
+     {
+      "text": "inəklərə",
+      "start": 1.351,
+      "end": 1.869
+     },
+     {
+      "text": "artıq",
+      "start": 1.944,
+      "end": 2.166
+     },
+     {
+      "text": "hasar",
+      "start": 2.24,
+      "end": 2.462
+     },
+     {
+      "text": "lazım",
+      "start": 2.536,
+      "end": 2.832
+     },
+     {
+      "text": "deyil.",
+      "start": 2.869,
+      "end": 3.277
+     }
+    ]
+   },
+   "B4s": {
+    "frames": 167,
+    "audioOffset": 0.143,
+    "audioFile": "vo/lines/az/B4s.wav",
+    "speechStart": 0.18,
+    "speechEnd": 5.49,
+    "words": [
+     {
+      "text": "Onlar",
+      "start": 0.277,
+      "end": 0.499
+     },
+     {
+      "text": "günəş",
+      "start": 0.648,
+      "end": 0.87
+     },
+     {
+      "text": "enerjili",
+      "start": 0.944,
+      "end": 1.314
+     },
+     {
+      "text": "boyunluq",
+      "start": 1.388,
+      "end": 1.759
+     },
+     {
+      "text": "taxır.",
+      "start": 1.833,
+      "end": 2.351
+     },
+     {
+      "text": "Səs",
+      "start": 2.376,
+      "end": 2.574
+     },
+     {
+      "text": "və",
+      "start": 2.611,
+      "end": 2.685
+     },
+     {
+      "text": "titrəmə",
+      "start": 2.722,
+      "end": 3.166
+     },
+     {
+      "text": "onları",
+      "start": 3.24,
+      "end": 3.537
+     },
+     {
+      "text": "yönləndirir.",
+      "start": 3.611,
+      "end": 4.351
+     },
+     {
+      "text": "Hasar",
+      "start": 4.462,
+      "end": 4.648
+     },
+     {
+      "text": "isə",
+      "start": 4.722,
+      "end": 5.018
+     },
+     {
+      "text": "tətbiqdir.",
+      "start": 5.055,
+      "end": 5.759
+     }
+    ]
+   }
+  }
+ }
+}
