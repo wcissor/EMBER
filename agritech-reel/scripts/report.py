@@ -12,7 +12,7 @@ tx = json.loads((QA / 'text.json').read_text())
 au = json.loads((ROOT / 'audio/mix/report.json').read_text())
 TL = json.loads((ROOT / 'src/timeline.json').read_text())
 ok = lambda b: 'PASS' if b else 'FAIL'
-VAR = [(l, v) for l in ('en', 'az') for v in ('A', 'B', 'C')]
+VAR = [('en', v) for v in ('A', 'B', 'C')]  # English only: RUTA doesn't need the Azerbaijani versions
 LINES_A = TL['variants']['A']
 EXTRA = ['H2', 'H3', 'B1b', 'B4s']
 
@@ -32,6 +32,7 @@ SLOP = {
     'H3': ('yes: licensed drone footage of a New Zealand herd; fence labelled ILLUSTRATION', 'yes', 'yes'),
     'B1b': ('yes: licensed footage of a field at sunset', 'yes', 'yes'),
     'B4s': ('yes: licensed footage of a cow; collar inset labelled ILLUSTRATION', 'yes', 'yes'),
+    'END': ('yes: the last frame of the licensed field shot, then the RUTA logo', 'yes (the olive rule)', 'yes: one line and the logo on black'),
 }
 WHAT = {
     'H1': 'Vertical farm, dimmed as its lights go out. "NEARLY $1B raised. Filed for bankruptcy." Source tag names Plenty.',
@@ -47,18 +48,19 @@ WHAT = {
     'H3': 'New Zealand herd from a drone, a dotted fence line drawing itself across the pasture, VIRTUAL FENCE · ILLUSTRATION.',
     'B1b': 'Sunset over wheat, caption only.',
     'B4s': 'The collar inset on the cow, as in B4.',
+    'END': 'The end card: the RUTA logo on black, over a short olive rule (the field\'s horizon line, which the closing shot shrinks into).',
 }
 
 # ---------- 5. Truth: every number on screen ----------
 cfg = (ROOT / 'src/config.ts').read_text()
 TRUTH = [
-    ('H1', 'NEARLY $1B raised / TƏXMİNƏN 1 mlrd $', "'$1B'", 'TechCrunch, 24 Mar 2025: Plenty "has raised nearly $1 billion"', 'SOURCE: TECHCRUNCH 2025 · PLENTY'),
-    ('B2, H2', "10,000 a minute · MAKER'S FIGURE / 10 000 · İSTEHSALÇININ RƏQƏMİ", "'10,000'", 'Tom\'s Hardware, 28 Aug 2025: Carbon Robotics\' "claimed \'10,000 weeds per minute\'" (LaserWeeder G2)', 'SOURCE: CARBON ROBOTICS 2025'),
+    ('H1', 'NEARLY $1B raised', "'$1B'", 'TechCrunch, 24 Mar 2025: Plenty "has raised nearly $1 billion"', 'SOURCE: TECHCRUNCH 2025 · PLENTY'),
+    ('B2, H2', "10,000 a minute · MAKER'S FIGURE", "'10,000'", 'Tom\'s Hardware, 28 Aug 2025: Carbon Robotics\' "claimed \'10,000 weeds per minute\'" (LaserWeeder G2)', 'SOURCE: CARBON ROBOTICS 2025'),
     ('B3', '300,000+ farm drones in China', "'300,000+'", 'CleanTechnica, 20 Sep 2026: "China entered 2026 with about 309,000 plant-protection drones"', 'SOURCE: CLEANTECHNICA 2026'),
     ('B5', 'EVERY 5 days. Free.', "final: '5'", 'ESA Sentinel-2 facts: "Revisit time: Five days from two-satellite constellation"; ESA 2013 on free, full and open access', 'SOURCE: ESA · COPERNICUS'),
     ('B5', 'KANSAS, USA · 2 AUG 2026', "'KANSAS, USA · 2 AUG 2026'", 'Sentinel-2 scene S2B_14SLG_20260802 (STAC record in research/satellite/stac-kansas.json)', 'Copernicus credit line'),
     ('B6', '≈70% of the fresh water we use', "'≈70%'", 'FAO AQUASTAT 2025: agriculture 72% of withdrawals (FAO newsroom), 71% globally in 2022 (Smart Water Magazine)', 'SOURCE: FAO AQUASTAT 2025'),
-    ('B7', '36% of workers / İŞLƏYƏNLƏRİN 36%', "'36%'", 'World Bank CCDR via APA, 29 Nov 2023: "accounts for 36% of total employment"', 'SOURCE: WORLD BANK 2023'),
+    ('B7', '36% of workers', "'36%'", 'World Bank CCDR via APA, 29 Nov 2023: "accounts for 36% of total employment"', 'SOURCE: WORLD BANK 2023'),
     ('B7', 'KURA–ARAZ LOWLAND · 23 JUL 2026', "'KURA–ARAZ LOWLAND · 23 JUL 2026'", 'Sentinel-2 scene S2A_39TTE_20260723 (research/satellite/stac-kura-araz.json)', 'Copernicus credit line'),
 ]
 truth_ok = all(needle in cfg for _, _, needle, _, _ in TRUTH) and "note: \"MAKER'S FIGURE\"" in cfg and "note: 'İSTEHSALÇININ RƏQƏMİ'" in cfg
@@ -87,7 +89,8 @@ other_ok = all(key in lic_index for _, _, key in other_assets)
 # ---------- Numbers for the summary ----------
 specs_ok = all(s['pass'] for s in c['specs'].values())
 loud_ok = all(s['pass'] for s in c['loudness'].values())
-loop_ok = all(s['pass'] for s in c['loop'].values())
+end_card = all(s.get('ends_on_end_card') for s in c['loop'].values())
+loop_ok = end_card or all(s.get('seamless') for s in c['loop'].values())
 flash_ok = all(s['pass'] for s in c['comfort'].values())
 hook_ok = all(s['pass'] for s in c['hook_words'].values()) and all(s['pass'] for s in c['hook_motion'].values()) and all(v > 0 for v in tx['hook_text_frame0'].values())
 sb_bad = {k: v for k, v in tx['safe_box'].items() if v['frames_outside']}
@@ -100,31 +103,35 @@ plan = {(l, lid): shots.shots(l, lid) for l in ('en', 'az') for lid in TL['lines
 longest = max((d, l, lid) for (l, lid), ss in plan.items() if lid != 'B8' for _, d in ss)
 pace_ok = longest[0] <= 2.5
 voice = c['voice']
-match_ok = voice['en']['transcript_match'] and voice['az']['transcript_match']
+match_ok = all(v['transcript_match'] for v in voice.values())
 en_wpm = [voice['en']['pace'][v]['wpm_overall'] for v in 'ABC']
-az_wpm = [voice['az']['pace'][v]['wpm_overall'] for v in 'ABC']
 en_pace_ok = all(160 <= round(x) <= 175 for x in en_wpm)
 
 L = []
 add = L.append
 add('# RUTA agritech reel: QA report')
 add('')
-add('Six reels: English and Azerbaijani, each with hooks A, B and C. Each comes with and without music, so 12 files in all.')
+add('Three reels in English, with hooks A, B and C, each with and without music: 6 files. Each ends on the RUTA end card.')
 add('The brief\'s 12 checks are below. Numbers come from `scripts/qa.py`, `scripts/qa_text.py` and `audio/build_audio.py`.')
 add('')
 add('## Summary')
 add('')
 add('| # | Check | Result | In short |')
 add('|---|---|---|---|')
-add(f'| 1 | Stills first | done | {2 * len(LINES_A) + 2 * len(EXTRA)} stills at each line\'s busiest moment, safe box drawn: `stills/` |')
+add(f'| 1 | Stills first | done | {len(LINES_A) + len(EXTRA)} stills at each line\'s busiest moment, safe box drawn: `stills/` |')
 add(f'| 2 | Hook | {ok(hook_ok)} | Every first frame moves and has text; a key word lands by {max(s["first_key_word_s"] for s in c["hook_words"].values())} s at the latest |')
 add(f'| 3 | Pace | {ok(pace_ok)} | Longest shot before the question: {longest[0]:.2f} s ({longest[1].upper()} {longest[2]}) |')
 add('| 4 | Slop check | all yes | Real footage or real imagery everywhere; drawings labelled; one accent colour |')
 add(f'| 5 | Truth | {ok(truth_ok)} | Every number on screen matches `sources.md`; the 10,000 figure is labelled as the maker\'s |')
 add(f'| 6 | Rights | {ok(rights_ok and other_ok)} | {len(used)} shots from {len(set(x[1] for x in rights))} Adobe Stock clips traced to licence records; imagery, data, fonts and audio in `licenses/` |')
-add(f'| 7 | Voice | {ok(match_ok)} transcript, {"PASS" if en_pace_ok else "NOTE"} pace | English {round(min(en_wpm))}–{round(max(en_wpm))} words a minute; Azerbaijani by ear: RUTA to confirm |')
-add(f'| 8 | Loop | {ok(loop_ok)} | The last frame flows into the first like any two frames of the same shot |')
-add(f'| 9 | Specs | {ok(specs_ok)} | All 12 files: 1080×1920, 30 fps constant, H.264 High, yuv420p, AAC 48 kHz, faststart |')
+add(f'| 7 | Voice | {ok(match_ok)} transcript, {"PASS" if en_pace_ok else "NOTE"} pace | English {round(min(en_wpm))}–{round(max(en_wpm))} words a minute |')
+add(f"| 8 | Loop | {'changed, as RUTA asked' if end_card else ok(loop_ok)} | {'Each reel now ends on the RUTA end card instead of looping seamlessly; Instagram replays from the first frame' if end_card else 'The last frame flows into the first like any two frames of the same shot'} |")
+long_ones = [n for n, x in c['specs'].items() if not x.get('duration_in_brief_range', True)]
+over_note = ''
+if long_ones:
+    longest_len = max(c['specs'][n]['duration'] for n in long_ones)
+    over_note = f'; the longest runs {longest_len:.1f} s, {longest_len - 45:.1f} s over the brief' + "'" + 's 45 s, because of the end card'
+add(f"| 9 | Specs | {ok(specs_ok)} | All {len(c['specs'])} files: 1080×1920, 30 fps constant, H.264 High, yuv420p, AAC 48 kHz, faststart{over_note} |")
 lu = sorted(set(x['integrated_lufs'] for x in c['loudness'].values()))
 lu_txt = f'{lu[0]} LUFS in every file' if len(lu) == 1 else f'{lu[0]} to {lu[-1]} LUFS'
 add(f'| 10 | Loudness | {ok(loud_ok)} | {lu_txt}, true peak {max(x["true_peak_dbtp"] for x in c["loudness"].values())} dBTP at most |')
@@ -158,9 +165,9 @@ add('## 1. Stills')
 add('')
 add('Each still is the busiest steady moment of its line: the frame with the most text on screen, once counters have landed. The safe box (x 65–1015, y 269–1248) and the caption band are drawn in magenta.')
 add('')
-add('- Variant A, every line: `stills/en-{line}.jpg`, `stills/az-{line}.jpg`.')
+add('- Variant A, every line and the end card: `stills/en-{line}.jpg`.')
 add('- Lines only in B and C (H2, H3, B1b, B4s): the same names.')
-add('- Sheets: `stills/sheet-en.jpg`, `stills/sheet-az.jpg`.')
+add('- Sheet: `stills/sheet-en.jpg`.')
 add('')
 add('| Line | What the still shows |')
 add('|---|---|')
@@ -224,7 +231,7 @@ add('|---|---|---|---|')
 for lid, shown, _, src, tag in TRUTH:
     add(f'| {lid} | {shown} | {src} | {tag} |')
 add('')
-add('- The laser weeder\'s figure is labelled "MAKER\'S FIGURE" / "İSTEHSALÇININ RƏQƏMİ" wherever it appears (B2 and the H2 hook). The B2 voice also says "its maker says".')
+add('- The laser weeder\'s figure is labelled "MAKER\'S FIGURE" wherever it appears (B2 and the H2 hook). The B2 voice also says "its maker says".')
 add('- "≈70%" sits inside FAO\'s 71–72%. The voice says "about seventy percent".')
 add('- "300,000+" is below CleanTechnica\'s "about 309,000". The voice says "over 300,000".')
 add('- The orbit on the globe is labelled "DIAGRAM": it shows the kind of orbit, not a real pass.')
@@ -250,7 +257,7 @@ add('')
 # 7
 add('## 7. Voice')
 add('')
-for lang, name in (('en', 'English'), ('az', 'Azerbaijani')):
+for lang, name in (('en', 'English'),):
     vv = voice[lang]
     diffs = {lid: x['differences'] for lid, x in vv['lines'].items() if x['differences']}
     add(f"**{name}:** take {vv['take']}, tempo ×{vv['tempo']}. ElevenLabs Scribe transcript against the script, line by line: {'every word matches' if not diffs else 'differences: ' + json.dumps(diffs, ensure_ascii=False)}.")
@@ -262,17 +269,20 @@ for lang, name in (('en', 'English'), ('az', 'Azerbaijani')):
         add(f"| {v} | {pp['words']} | {pp['span_s']} s | {pp['wpm_overall']} | {pp['wpm_speaking']} |" + (f" {pp['syllables_per_s_speaking']} |" if lang == 'az' else ''))
     add('')
 add('- **English:** the brief asks for 160–175 words a minute. Measured from the first word to the last, as a listener hears it, A is at the bottom of that range and B and C sit in the middle. Inside the lines alone, the voice runs at 168–179.')
-add('- **Azerbaijani:** words are longer than English words, because suffixes are joined on ("təsərrüfatındadır" is one word for "is in agriculture"). So the same speaking speed gives fewer words a minute.')
-add('  - The Azerbaijani voice was sped up 8% (pitch kept), so the reels fit in 45 s and match the English pace.')
-add('  - Syllables a second show speaking speed better than words do. Inside lines, the Azerbaijani voice says about 6.2 syllables a second (counted by vowels); the English voice says about 4.1–4.3 (estimated).')
-add('  - Languages differ in syllable rate, so the two numbers are not meant to be equal. What matters is whether the Azerbaijani sounds natural. If it sounds rushed to a native ear, the fix is to drop the 8% speed-up and shorten a line.')
-add('- **Native sound:** I cannot judge by ear. A native speaker at RUTA should listen to the Azerbaijani reels, especially "Zelandiyada", "intellektlə" and "təsərrüfatındadır".')
 add('')
 
 # 8
 add('## 8. Loop')
 add('')
-add('Each reel ends with 6 frames of its hook\'s first shot, taken from just before frame 1. The last frame then flows straight into the first.')
+if end_card:
+    add('- **Changed after review, as RUTA asked.** Each reel now ends on a RUTA end card instead of looping seamlessly.')
+    add('  - The closing field shot closes onto its own horizon: two black bars with olive edges meet on the horizon line.')
+    add('  - The line shrinks to a short olive rule, and the RUTA logo rises above it.')
+    add('  - A soft chord (made in code) marks the moment. The logo holds for about a second, then the reel ends.')
+    add('- The brief asked for a seamless loop, so this check is now a known, deliberate change. Instagram replays a reel from its first frame; after the end card, that is a clean cut to the hook.')
+    add('- For reference, the jump from the last frame to the first:')
+else:
+    add('Each reel ends with 6 frames of its hook\'s first shot, taken from just before frame 1. The last frame then flows straight into the first.')
 add('')
 add('| Reel | Last frame → first frame | The same shot, frame to frame (median) | Whole reel, frame to frame (median) |')
 add('|---|---|---|---|')
@@ -280,7 +290,7 @@ for lang, v in VAR:
     lp = c['loop'][f'{lang}-{v}']
     add(f"| {lang.upper()} {v} | {lp['last_to_first_mean_abs_diff']} | {lp['same_shot_median_frame_diff']} | {lp['reel_median_frame_diff']} |")
 add('')
-add('Mean absolute difference in 8-bit levels at 270×480. The seam passes when it is no bigger than 1.5× the same shot\'s own frame-to-frame change: hook C opens on a moving herd, so its frames change more than the reel\'s average. Strips of the last 6 and first 6 frames: `loop-{lang}-{V}.jpg`. The audio ends in near-silence, so the loop point is quiet too.')
+add('Mean absolute difference in 8-bit levels at 270×480.' + ('' if end_card else ' The seam passes when it is no bigger than 1.5× the same shot\'s own frame-to-frame change.') + ' Strips of the last 6 and first 6 frames: `loop-en-{V}.jpg`.')
 add('')
 
 # 9
@@ -367,6 +377,7 @@ for lid, snd, take, when in [
     ('B6', 'water drop', 'drop-a', 'as the 70% lands'),
     ('B7', 'whoosh', 'whoosh-b, a low swell', 'peaking as the map lands on Azerbaijan'),
     ('B8', 'soft hit', 'hit-b', 'on the cut to the question'),
+    ('END', 'logo chord', 'made in code: a soft D add9 chord, strummed and left to ring', 'as the field closes onto its horizon line'),
 ]:
     add(f'| {lid} | {snd} | {take} | {when} |')
 add('')

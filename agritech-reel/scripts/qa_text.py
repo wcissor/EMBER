@@ -65,7 +65,7 @@ def band(ty, tx):
 inside = np.zeros((H, W), bool)
 inside[Y0 - TOL:Y1 + TOL, X0 - TOL:X1 + TOL] = True
 res = {'safe_box': {}, 'contrast': {}, 'busiest': {}, 'hook_text_frame0': {}}
-for lang in ('en', 'az'):
+for lang in ('en',):  # English only
     for lid in TL['lines'][lang]:
         key = f'{lang}-{lid}'
         counts, strength, meas, outside = [], [], [], []

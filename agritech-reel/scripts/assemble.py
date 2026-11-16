@@ -20,12 +20,12 @@ def run(args):
         raise SystemExit(f"ffmpeg failed ({p.returncode}): {' '.join(args)}\n{p.stderr[-2000:]}")
 
 
-todo = [(l, v) for l in ('en', 'az') for v in ('A', 'B', 'C')]
+todo = [(l, v) for l in ('en',) for v in ('A', 'B', 'C')]  # English only; name az-A etc. to build Azerbaijani
 if len(sys.argv) > 1:
-    todo = [(l, v) for l, v in todo if f'{l}-{v}' in sys.argv[1:]]
+    todo = [(l, v) for l in ('en', 'az') for v in ('A', 'B', 'C') if f'{l}-{v}' in sys.argv[1:]]
 for lang, v in todo:
     seq = TL['variants'][v]
-    files = [BEATS / f'{lang}-{lid}.mp4' for lid in seq] + [BEATS / f'{lang}-tail-{v}.mp4']
+    files = [BEATS / f'{lang}-{lid}.mp4' for lid in seq] + ([BEATS / f'{lang}-tail-{v}.mp4'] if TL['tail'] > 0 else [])
     lst = tmpdir / f'{lang}-{v}.txt'
     lst.write_text(''.join(f"file '{f}'\n" for f in files))
     video = tmpdir / f'{lang}-{v}-video.mp4'

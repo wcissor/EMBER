@@ -1,12 +1,12 @@
 # Posting kit: RUTA agritech reel
 
-Three reels in English, each with a different hook.
+Three reels in English, each with a different hook. All three end on the RUTA end card.
 
 | Variant | Hook | Length |
 |---|---|---|
-| A | Indoor farms raised billions, many went bust | 44.8 s |
-| B | A robot that burns weeds with lasers | 37.4 s |
-| C | Cows that don't need fences | 41.5 s |
+| A | Indoor farms raised billions, many went bust | 46.4 s |
+| B | A robot that burns weeds with lasers | 39.0 s |
+| C | Cows that don't need fences | 43.1 s |
 
 ## Which file to upload
 

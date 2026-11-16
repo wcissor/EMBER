@@ -1,22 +1,22 @@
 # RUTA agritech reel: QA report
 
-Six reels: English and Azerbaijani, each with hooks A, B and C. Each comes with and without music, so 12 files in all.
+Three reels in English, with hooks A, B and C, each with and without music: 6 files. Each ends on the RUTA end card.
 The brief's 12 checks are below. Numbers come from `scripts/qa.py`, `scripts/qa_text.py` and `audio/build_audio.py`.
 
 ## Summary
 
 | # | Check | Result | In short |
 |---|---|---|---|
-| 1 | Stills first | done | 26 stills at each line's busiest moment, safe box drawn: `stills/` |
+| 1 | Stills first | done | 14 stills at each line's busiest moment, safe box drawn: `stills/` |
 | 2 | Hook | PASS | Every first frame moves and has text; a key word lands by 1.12 s at the latest |
 | 3 | Pace | PASS | Longest shot before the question: 2.47 s (EN B7) |
 | 4 | Slop check | all yes | Real footage or real imagery everywhere; drawings labelled; one accent colour |
 | 5 | Truth | PASS | Every number on screen matches `sources.md`; the 10,000 figure is labelled as the maker's |
 | 6 | Rights | PASS | 15 shots from 14 Adobe Stock clips traced to licence records; imagery, data, fonts and audio in `licenses/` |
-| 7 | Voice | PASS transcript, PASS pace | English 160–170 words a minute; Azerbaijani by ear: RUTA to confirm |
-| 8 | Loop | PASS | The last frame flows into the first like any two frames of the same shot |
-| 9 | Specs | PASS | All 12 files: 1080×1920, 30 fps constant, H.264 High, yuv420p, AAC 48 kHz, faststart |
-| 10 | Loudness | PASS | -13.9 LUFS in every file, true peak -1.7 dBTP at most |
+| 7 | Voice | PASS transcript, PASS pace | English 160–170 words a minute |
+| 8 | Loop | changed, as RUTA asked | Each reel now ends on the RUTA end card instead of looping seamlessly; Instagram replays from the first frame |
+| 9 | Specs | PASS | All 6 files: 1080×1920, 30 fps constant, H.264 High, yuv420p, AAC 48 kHz, faststart; the longest runs 46.4 s, 1.4 s over the brief's 45 s, because of the end card |
+| 10 | Loudness | PASS | -14.0 to -13.9 LUFS, true peak -1.7 dBTP at most |
 | 11 | Sound off | done | One frame per second per variant: `contact-sheet-*.jpg` |
 | 12 | Comfort | PASS | No flashes; captions at least 4.5:1 everywhere |
 
@@ -38,9 +38,9 @@ The first full render failed several of these checks. Each failure was fixed in 
 
 Each still is the busiest steady moment of its line: the frame with the most text on screen, once counters have landed. The safe box (x 65–1015, y 269–1248) and the caption band are drawn in magenta.
 
-- Variant A, every line: `stills/en-{line}.jpg`, `stills/az-{line}.jpg`.
+- Variant A, every line and the end card: `stills/en-{line}.jpg`.
 - Lines only in B and C (H2, H3, B1b, B4s): the same names.
-- Sheets: `stills/sheet-en.jpg`, `stills/sheet-az.jpg`.
+- Sheet: `stills/sheet-en.jpg`.
 
 | Line | What the still shows |
 |---|---|
@@ -53,12 +53,13 @@ Each still is the busiest steady moment of its line: the frame with the most tex
 | B6 | Rain cannon over a field; "≈70% of the fresh water we use" in dark type on the sky. |
 | B7 | Sentinel-2 Kura–Araz lowland; "36% of workers"; place, credit and source. |
 | B8 | Golden field at dusk; the question in black with the key word in dark olive; the four options below. |
+| END | The end card: the RUTA logo on black, over a short olive rule (the field's horizon line, which the closing shot shrinks into). |
 | H2 | Dimmed crop rows with two crosshairs, the number already on screen, ILLUSTRATION. |
 | H3 | New Zealand herd from a drone, a dotted fence line drawing itself across the pasture, VIRTUAL FENCE · ILLUSTRATION. |
 | B1b | Sunset over wheat, caption only. |
 | B4s | The collar inset on the cow, as in B4. |
 
-**Safe box, text-only scan:** every frame of all 26 beats was rendered with only its text (no pictures, no drawings) and scanned. No text pixel falls outside the safe box.
+**Safe box, text-only scan:** every frame of all 14 beats was rendered with only its text (no pictures, no drawings) and scanned. No text pixel falls outside the safe box.
 
 ## 2. Hook
 
@@ -67,9 +68,6 @@ Each still is the busiest steady moment of its line: the frame with the most tex
 | EN A | 1.87 | yes | 0.00 s | "billions" 1.12 s, "indoor" 1.92 s, "farms" 2.32 s |
 | EN B | 4.99 | yes | 0.03 s | "robot" 0.42 s, "burns" 1.23 s, "weeds" 1.47 s, "lasers" 2.10 s |
 | EN C | 5.8 | yes | 0.07 s | "new" 0.18 s, "zealand" 0.39 s, "cows" 1.26 s |
-| AZ A | 1.81 | yes | 0.01 s | "qapalı" 0.83 s, "fermalara" 1.24 s, "milyardlarla" 1.75 s |
-| AZ B | 5.03 | yes | 0.12 s | "alaq" 0.12 s, "otlarını" 0.38 s, "lazerlə" 0.86 s |
-| AZ C | 5.84 | yes | 0.13 s | "yeni" 0.13 s, "zelandiyada" 0.35 s, "inəklərə" 1.35 s |
 
 The first caption word is on screen from frame 1. In hook B the number and its MAKER'S FIGURE label count up from frame 2.
 
@@ -109,6 +107,7 @@ Shot lengths in seconds (English / Azerbaijani), from the cut rules in `src/scen
 | B6 | yes: licensed footage of irrigation | yes | yes |
 | B7 | yes: NASA imagery, Natural Earth border, a real Sentinel-2 scene | yes | yes |
 | B8 | yes: licensed footage of a field at dusk | yes (dark olive key word) | yes |
+| END | yes: the last frame of the licensed field shot, then the RUTA logo | yes (the olive rule) | yes: one line and the logo on black |
 | H2 | yes: licensed footage of crop rows; crosshairs labelled ILLUSTRATION | yes | yes |
 | H3 | yes: licensed drone footage of a New Zealand herd; fence labelled ILLUSTRATION | yes | yes |
 | B1b | yes: licensed footage of a field at sunset | yes | yes |
@@ -122,16 +121,16 @@ Shot lengths in seconds (English / Azerbaijani), from the cut rules in `src/scen
 
 | Line | On screen | Source in `sources.md` | Source tag |
 |---|---|---|---|
-| H1 | NEARLY $1B raised / TƏXMİNƏN 1 mlrd $ | TechCrunch, 24 Mar 2025: Plenty "has raised nearly $1 billion" | SOURCE: TECHCRUNCH 2025 · PLENTY |
-| B2, H2 | 10,000 a minute · MAKER'S FIGURE / 10 000 · İSTEHSALÇININ RƏQƏMİ | Tom's Hardware, 28 Aug 2025: Carbon Robotics' "claimed '10,000 weeds per minute'" (LaserWeeder G2) | SOURCE: CARBON ROBOTICS 2025 |
+| H1 | NEARLY $1B raised | TechCrunch, 24 Mar 2025: Plenty "has raised nearly $1 billion" | SOURCE: TECHCRUNCH 2025 · PLENTY |
+| B2, H2 | 10,000 a minute · MAKER'S FIGURE | Tom's Hardware, 28 Aug 2025: Carbon Robotics' "claimed '10,000 weeds per minute'" (LaserWeeder G2) | SOURCE: CARBON ROBOTICS 2025 |
 | B3 | 300,000+ farm drones in China | CleanTechnica, 20 Sep 2026: "China entered 2026 with about 309,000 plant-protection drones" | SOURCE: CLEANTECHNICA 2026 |
 | B5 | EVERY 5 days. Free. | ESA Sentinel-2 facts: "Revisit time: Five days from two-satellite constellation"; ESA 2013 on free, full and open access | SOURCE: ESA · COPERNICUS |
 | B5 | KANSAS, USA · 2 AUG 2026 | Sentinel-2 scene S2B_14SLG_20260802 (STAC record in research/satellite/stac-kansas.json) | Copernicus credit line |
 | B6 | ≈70% of the fresh water we use | FAO AQUASTAT 2025: agriculture 72% of withdrawals (FAO newsroom), 71% globally in 2022 (Smart Water Magazine) | SOURCE: FAO AQUASTAT 2025 |
-| B7 | 36% of workers / İŞLƏYƏNLƏRİN 36% | World Bank CCDR via APA, 29 Nov 2023: "accounts for 36% of total employment" | SOURCE: WORLD BANK 2023 |
+| B7 | 36% of workers | World Bank CCDR via APA, 29 Nov 2023: "accounts for 36% of total employment" | SOURCE: WORLD BANK 2023 |
 | B7 | KURA–ARAZ LOWLAND · 23 JUL 2026 | Sentinel-2 scene S2A_39TTE_20260723 (research/satellite/stac-kura-araz.json) | Copernicus credit line |
 
-- The laser weeder's figure is labelled "MAKER'S FIGURE" / "İSTEHSALÇININ RƏQƏMİ" wherever it appears (B2 and the H2 hook). The B2 voice also says "its maker says".
+- The laser weeder's figure is labelled "MAKER'S FIGURE" wherever it appears (B2 and the H2 hook). The B2 voice also says "its maker says".
 - "≈70%" sits inside FAO's 71–72%. The voice says "about seventy percent".
 - "300,000+" is below CleanTechnica's "about 309,000". The voice says "over 300,000".
 - The orbit on the globe is labelled "DIAGRAM": it shows the kind of orbit, not a real pass.
@@ -180,69 +179,46 @@ Details: `licenses/adobe-stock/records.md` (17 clips, licensed 16 Nov 2026, $0),
 | B | 101 | 36.14 s | 167.7 | 176.6 |
 | C | 114 | 40.26 s | 169.9 | 178.8 |
 
-**Azerbaijani:** take az-2, tempo ×1.08. ElevenLabs Scribe transcript against the script, line by line: every word matches.
-
-| Variant | Words | First word to last | Words a minute | Inside lines only (gaps between lines left out) | Syllables a second, inside lines |
-|---|---|---|---|---|---|
-| A | 102 | 43.72 s | 140.0 | 147.0 | 6.17 |
-| B | 87 | 36.45 s | 143.2 | 150.5 | 6.23 |
-| C | 99 | 41.57 s | 142.9 | 150.1 | 6.22 |
-
 - **English:** the brief asks for 160–175 words a minute. Measured from the first word to the last, as a listener hears it, A is at the bottom of that range and B and C sit in the middle. Inside the lines alone, the voice runs at 168–179.
-- **Azerbaijani:** words are longer than English words, because suffixes are joined on ("təsərrüfatındadır" is one word for "is in agriculture"). So the same speaking speed gives fewer words a minute.
-  - The Azerbaijani voice was sped up 8% (pitch kept), so the reels fit in 45 s and match the English pace.
-  - Syllables a second show speaking speed better than words do. Inside lines, the Azerbaijani voice says about 6.2 syllables a second (counted by vowels); the English voice says about 4.1–4.3 (estimated).
-  - Languages differ in syllable rate, so the two numbers are not meant to be equal. What matters is whether the Azerbaijani sounds natural. If it sounds rushed to a native ear, the fix is to drop the 8% speed-up and shorten a line.
-- **Native sound:** I cannot judge by ear. A native speaker at RUTA should listen to the Azerbaijani reels, especially "Zelandiyada", "intellektlə" and "təsərrüfatındadır".
 
 ## 8. Loop
 
-Each reel ends with 6 frames of its hook's first shot, taken from just before frame 1. The last frame then flows straight into the first.
+- **Changed after review, as RUTA asked.** Each reel now ends on a RUTA end card instead of looping seamlessly.
+  - The closing field shot closes onto its own horizon: two black bars with olive edges meet on the horizon line.
+  - The line shrinks to a short olive rule, and the RUTA logo rises above it.
+  - A soft chord (made in code) marks the moment. The logo holds for about a second, then the reel ends.
+- The brief asked for a seamless loop, so this check is now a known, deliberate change. Instagram replays a reel from its first frame; after the end card, that is a clean cut to the hook.
+- For reference, the jump from the last frame to the first:
 
 | Reel | Last frame → first frame | The same shot, frame to frame (median) | Whole reel, frame to frame (median) |
 |---|---|---|---|
-| EN A | 1.36 | 1.89 | 1.94 |
-| EN B | 4.04 | 4.94 | 1.76 |
-| EN C | 6.02 | 5.65 | 1.9 |
-| AZ A | 1.37 | 1.83 | 2.03 |
-| AZ B | 4.04 | 4.92 | 1.8 |
-| AZ C | 6.02 | 5.66 | 2.09 |
+| EN A | 25.44 | 1.89 | 1.88 |
+| EN B | 28.58 | 4.94 | 1.72 |
+| EN C | 47.66 | 5.56 | 1.83 |
 
-Mean absolute difference in 8-bit levels at 270×480. The seam passes when it is no bigger than 1.5× the same shot's own frame-to-frame change: hook C opens on a moving herd, so its frames change more than the reel's average. Strips of the last 6 and first 6 frames: `loop-{lang}-{V}.jpg`. The audio ends in near-silence, so the loop point is quiet too.
+Mean absolute difference in 8-bit levels at 270×480. Strips of the last 6 and first 6 frames: `loop-en-{V}.jpg`.
 
 ## 9. Specs
 
 | File | Size | Frames | Duration | Video | Frame rate | Audio | Faststart |
 |---|---|---|---|---|---|---|---|
-| ruta-agritech-en-A.mp4 | 64.5 MB | 1344 (expected 1344) | 44.8 s | h264 High yuv420p 1080×1920, 11.2 Mb/s | 30/1, interval error ≤ 0.001 ms | aac 48000 Hz 2 ch 277 kb/s | yes |
-| ruta-agritech-en-A-nomusic.mp4 | 64.3 MB | 1344 (expected 1344) | 44.8 s | h264 High yuv420p 1080×1920, 11.2 Mb/s | 30/1, interval error ≤ 0.001 ms | aac 48000 Hz 2 ch 246 kb/s | yes |
-| ruta-agritech-en-B.mp4 | 53.8 MB | 1121 (expected 1121) | 37.367 s | h264 High yuv420p 1080×1920, 11.2 Mb/s | 30/1, interval error ≤ 0.001 ms | aac 48000 Hz 2 ch 275 kb/s | yes |
-| ruta-agritech-en-B-nomusic.mp4 | 53.6 MB | 1121 (expected 1121) | 37.367 s | h264 High yuv420p 1080×1920, 11.2 Mb/s | 30/1, interval error ≤ 0.001 ms | aac 48000 Hz 2 ch 245 kb/s | yes |
-| ruta-agritech-en-C.mp4 | 66.1 MB | 1246 (expected 1246) | 41.533 s | h264 High yuv420p 1080×1920, 12.4 Mb/s | 30/1, interval error ≤ 0.001 ms | aac 48000 Hz 2 ch 279 kb/s | yes |
-| ruta-agritech-en-C-nomusic.mp4 | 65.9 MB | 1246 (expected 1246) | 41.533 s | h264 High yuv420p 1080×1920, 12.4 Mb/s | 30/1, interval error ≤ 0.001 ms | aac 48000 Hz 2 ch 246 kb/s | yes |
-| ruta-agritech-az-A.mp4 | 68.5 MB | 1348 (expected 1348) | 44.933 s | h264 High yuv420p 1080×1920, 11.9 Mb/s | 30/1, interval error ≤ 0.001 ms | aac 48000 Hz 2 ch 254 kb/s | yes |
-| ruta-agritech-az-A-nomusic.mp4 | 68.4 MB | 1348 (expected 1348) | 44.933 s | h264 High yuv420p 1080×1920, 11.9 Mb/s | 30/1, interval error ≤ 0.001 ms | aac 48000 Hz 2 ch 233 kb/s | yes |
-| ruta-agritech-az-B.mp4 | 57.2 MB | 1133 (expected 1133) | 37.767 s | h264 High yuv420p 1080×1920, 11.8 Mb/s | 30/1, interval error ≤ 0.001 ms | aac 48000 Hz 2 ch 254 kb/s | yes |
-| ruta-agritech-az-B-nomusic.mp4 | 57.1 MB | 1133 (expected 1133) | 37.767 s | h264 High yuv420p 1080×1920, 11.8 Mb/s | 30/1, interval error ≤ 0.001 ms | aac 48000 Hz 2 ch 232 kb/s | yes |
-| ruta-agritech-az-C.mp4 | 70.0 MB | 1287 (expected 1287) | 42.9 s | h264 High yuv420p 1080×1920, 12.8 Mb/s | 30/1, interval error ≤ 0.001 ms | aac 48000 Hz 2 ch 254 kb/s | yes |
-| ruta-agritech-az-C-nomusic.mp4 | 69.9 MB | 1287 (expected 1287) | 42.9 s | h264 High yuv420p 1080×1920, 12.8 Mb/s | 30/1, interval error ≤ 0.001 ms | aac 48000 Hz 2 ch 233 kb/s | yes |
+| ruta-agritech-en-A.mp4 | 64.4 MB | 1392 (expected 1392) | 46.4 s | h264 High yuv420p 1080×1920, 10.8 Mb/s | 30/1, interval error ≤ 0.001 ms | aac 48000 Hz 2 ch 271 kb/s | yes |
+| ruta-agritech-en-A-nomusic.mp4 | 64.2 MB | 1392 (expected 1392) | 46.4 s | h264 High yuv420p 1080×1920, 10.8 Mb/s | 30/1, interval error ≤ 0.001 ms | aac 48000 Hz 2 ch 242 kb/s | yes |
+| ruta-agritech-en-B.mp4 | 53.4 MB | 1169 (expected 1169) | 38.967 s | h264 High yuv420p 1080×1920, 10.7 Mb/s | 30/1, interval error ≤ 0.001 ms | aac 48000 Hz 2 ch 268 kb/s | yes |
+| ruta-agritech-en-B-nomusic.mp4 | 53.3 MB | 1169 (expected 1169) | 38.967 s | h264 High yuv420p 1080×1920, 10.7 Mb/s | 30/1, interval error ≤ 0.001 ms | aac 48000 Hz 2 ch 239 kb/s | yes |
+| ruta-agritech-en-C.mp4 | 65.6 MB | 1294 (expected 1294) | 43.133 s | h264 High yuv420p 1080×1920, 11.9 Mb/s | 30/1, interval error ≤ 0.001 ms | aac 48000 Hz 2 ch 273 kb/s | yes |
+| ruta-agritech-en-C-nomusic.mp4 | 65.4 MB | 1294 (expected 1294) | 43.133 s | h264 High yuv420p 1080×1920, 11.9 Mb/s | 30/1, interval error ≤ 0.001 ms | aac 48000 Hz 2 ch 240 kb/s | yes |
 
 ## 10. Loudness
 
 | File | Integrated | True peak | LRA |
 |---|---|---|---|
-| ruta-agritech-en-A.mp4 | -13.9 LUFS | -1.8 dBTP | 2.7 LU |
-| ruta-agritech-en-A-nomusic.mp4 | -13.9 LUFS | -1.8 dBTP | 2.8 LU |
-| ruta-agritech-en-B.mp4 | -13.9 LUFS | -1.8 dBTP | 2.8 LU |
-| ruta-agritech-en-B-nomusic.mp4 | -13.9 LUFS | -1.7 dBTP | 2.9 LU |
-| ruta-agritech-en-C.mp4 | -13.9 LUFS | -1.8 dBTP | 2.7 LU |
-| ruta-agritech-en-C-nomusic.mp4 | -13.9 LUFS | -1.7 dBTP | 2.9 LU |
-| ruta-agritech-az-A.mp4 | -13.9 LUFS | -2.1 dBTP | 3.3 LU |
-| ruta-agritech-az-A-nomusic.mp4 | -13.9 LUFS | -2.1 dBTP | 3.5 LU |
-| ruta-agritech-az-B.mp4 | -13.9 LUFS | -2.0 dBTP | 3.1 LU |
-| ruta-agritech-az-B-nomusic.mp4 | -13.9 LUFS | -2.0 dBTP | 3.2 LU |
-| ruta-agritech-az-C.mp4 | -13.9 LUFS | -2.1 dBTP | 2.7 LU |
-| ruta-agritech-az-C-nomusic.mp4 | -13.9 LUFS | -2.1 dBTP | 2.8 LU |
+| ruta-agritech-en-A.mp4 | -14.0 LUFS | -1.9 dBTP | 2.8 LU |
+| ruta-agritech-en-A-nomusic.mp4 | -13.9 LUFS | -1.8 dBTP | 2.9 LU |
+| ruta-agritech-en-B.mp4 | -14.0 LUFS | -1.8 dBTP | 3.0 LU |
+| ruta-agritech-en-B-nomusic.mp4 | -14.0 LUFS | -1.8 dBTP | 3.1 LU |
+| ruta-agritech-en-C.mp4 | -14.0 LUFS | -1.8 dBTP | 2.9 LU |
+| ruta-agritech-en-C-nomusic.mp4 | -14.0 LUFS | -1.7 dBTP | 3.0 LU |
 
 - **Chain:**
   - The voice stem is set to −16 LUFS.
@@ -271,7 +247,7 @@ The burned-in captions carry every spoken word.
 - **Flashes:** none in any reel. WCAG allows 3 a second.
   - Method: relative luminance of each sixteenth of the frame, frame by frame. A flash is a pair of opposite changes of 10% or more.
   - The laser ticks are tiny (a few pixels) and single, so they are not flashes.
-- **Caption contrast:** the lowest is 6.75:1, in az-B3.
+- **Caption contrast:** the lowest is 6.76:1, in en-B3.
   - Method: in each 60×40 tile holding a steady caption (words still fading in or out are left out), the text's luminance against the brightest 10% of the picture around it, after the bottom shade.
 
 | Beat | Captions: lowest | 5th percentile | median |
@@ -288,18 +264,6 @@ The burned-in captions carry every spoken word.
 | en-B1b | 9.33:1 | 16.51:1 | 16.86:1 |
 | en-H3 | 7.98:1 | 8.51:1 | 15.14:1 |
 | en-B4s | 8.26:1 | 8.45:1 | 9.1:1 |
-| az-H1 | 6.79:1 | 6.97:1 | 13.93:1 |
-| az-B1 | 9.22:1 | 9.43:1 | 9.6:1 |
-| az-B2 | 7.62:1 | 8.16:1 | 15.02:1 |
-| az-B3 | 6.75:1 | 6.81:1 | 12.17:1 |
-| az-B4 | 8.1:1 | 8.5:1 | 15.47:1 |
-| az-B5 | 8.52:1 | 9.53:1 | 15.48:1 |
-| az-B6 | 9.38:1 | 12.21:1 | 16.14:1 |
-| az-B7 | 8.0:1 | 8.46:1 | 14.74:1 |
-| az-H2 | 8.75:1 | 8.96:1 | 15.85:1 |
-| az-B1b | 9.19:1 | 16.57:1 | 16.87:1 |
-| az-H3 | 7.7:1 | 9.09:1 | 15.45:1 |
-| az-B4s | 8.07:1 | 8.51:1 | 15.1:1 |
 
 **Other text** (numbers, labels, source tags) is large text by WCAG's definition (24 px and up), so it needs 3:1.
 All of it reaches 3:1 or more at every steady moment.
@@ -320,6 +284,7 @@ One quiet, dry sound per reveal, from ElevenLabs Sound Effects (two takes each, 
 | B6 | water drop | drop-a | as the 70% lands |
 | B7 | whoosh | whoosh-b, a low swell | peaking as the map lands on Azerbaijan |
 | B8 | soft hit | hit-b | on the cut to the question |
+| END | logo chord | made in code: a soft D add9 chord, strummed and left to ring | as the field closes onto its horizon line |
 
 I can't listen to audio, so each take was chosen by measurement: length, envelope, pitch and clipping. RUTA should play each reel once with sound before posting.
 

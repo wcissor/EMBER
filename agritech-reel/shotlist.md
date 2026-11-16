@@ -87,8 +87,10 @@ No shot runs longer than 2.5 s except the closing question. `python3 scripts/sho
 | B6 | B6-a sprinklers (1.1 / 2.2) → B6-b rain cannon (1.9 / 1.9) → B6-b punch-in (1.5 / 1.2) |
 | B7 | map zoom to Azerbaijan (1.7 / 2.1) → Sentinel-2 Kura-Araz (2.5 / 1.6) → Sentinel-2 Kura-Araz, punch-in (1.7 / 2.1) |
 | B8 | B1-c golden field, the question (3.4 / 3.1) |
+| END | The field closes onto its horizon; the line becomes an olive rule under the RUTA logo (1.8) |
 
 **Changes from the plan below:**
+- **End card** (added after RUTA's review): every variant now ends on the RUTA logo instead of looping straight back to the first frame.
 - **B5** shows centre-pivot fields in Kansas (Sentinel-2, 2 Aug 2026), after a turning NASA globe with Sentinel-2's orbit drawn as a labelled diagram. The Kura–Araz image is used in B7 only.
 - **B4, B4s:** the collar is a line drawing in a dark round inset, linked to the cow's neck. A drawing straight on the white fur didn't read.
 - **H2** uses three B2-a shots, dimmed under the "10,000 a minute" number, instead of opening on B2-b.

@@ -2,7 +2,7 @@
 // Numbers and their sources: see sources.md. Company figures are labelled as the maker's.
 
 export type Lang = 'en' | 'az';
-export type LineId = 'H1' | 'H2' | 'H3' | 'B1' | 'B1b' | 'B2' | 'B3' | 'B4' | 'B4s' | 'B5' | 'B6' | 'B7' | 'B8';
+export type LineId = 'H1' | 'H2' | 'H3' | 'B1' | 'B1b' | 'B2' | 'B3' | 'B4' | 'B4s' | 'B5' | 'B6' | 'B7' | 'B8' | 'END';
 export type Variant = 'A' | 'B' | 'C';
 
 /**
@@ -22,6 +22,7 @@ export const CAPTIONS: Record<Lang, Record<LineId, string[]>> = {
     B6: ['Why now?', 'About *70%+2', 'of the fresh water', 'we use', 'goes to *farming.'],
     B7: ['In *Azerbaijan,', 'over *a *third', 'of all workers', 'are in agriculture.', 'So this is', 'our *future too.'],
     B8: [],
+    END: [],
     H2: ["There's a robot", 'that burns weeds', 'with *lasers.', 'Up to *10,000+2', 'a minute.'],
     B1b: ["And that's just one", 'of the technologies', 'changing farming', 'right *now.'],
     H3: ['In New Zealand,', 'some cows', "don't need", '*fences anymore.'],
@@ -37,6 +38,7 @@ export const CAPTIONS: Record<Lang, Record<LineId, string[]>> = {
     B6: ['Niyə məhz indi?', 'İstifadə etdiyimiz şirin suyun', 'təxminən *70 *faizi', 'kənd təsərrüfatına gedir.'],
     B7: ['*Azərbaycanda işləyənlərin', '*üçdə *birindən çoxu', 'kənd təsərrüfatındadır.', 'Deməli, bu,', 'bizim də *gələcəyimizdir.'],
     B8: [],
+    END: [],
     H2: ['Alaq otlarını *lazerlə', 'yandıran robot var.', 'Dəqiqədə *10 *minə qədər.'],
     B1b: ['Və bu,', 'bu gün kənd təsərrüfatını', 'dəyişən texnologiyalardan', 'yalnız *biridir.'],
     H3: ['Yeni Zelandiyada', 'bəzi inəklərə', 'artıq *hasar lazım deyil.'],
@@ -56,6 +58,7 @@ export const ANCHORS: Record<Lang, Record<LineId, Record<string, number>>> = {
     B6: {cut1: 2, count: 3, cut2: 9},
     B7: {land: 1, count: 2, cut1: 4, cut2: 11},
     B8: {},
+    END: {},
     H2: {cut1: 4, burn: 4, laser: 7, cut2: 8},
     B1b: {cut1: 6},
     H3: {cut1: 5},
@@ -71,6 +74,7 @@ export const ANCHORS: Record<Lang, Record<LineId, Record<string, number>>> = {
     B6: {cut1: 5, count: 8, cut2: 10},
     B7: {land: 0, count: 2, cut1: 4, cut2: 7},
     B8: {},
+    END: {},
     H2: {cut1: 3, burn: 3, laser: 2, cut2: 6},
     B1b: {cut1: 6},
     H3: {cut1: 4},

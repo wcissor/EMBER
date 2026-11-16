@@ -10,7 +10,8 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from lines import ORDER, VARIANTS
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 FPS = 30
-LEAD, LEAD_HOOK, GAP, HOLD, TAIL = 0.18, 0.05, 0.06, 1.0, 6
+LEAD, LEAD_HOOK, GAP, HOLD, TAIL = 0.18, 0.05, 0.06, 1.0, 0  # TAIL 0: the reel ends on the end card, not a loop
+END_FRAMES = 54  # the RUTA end card, 1.8 s
 out = {'fps': FPS, 'tail': TAIL, 'variants': VARIANTS, 'lines': {}}
 for lang in ('en', 'az'):
     meta = json.load(open(ROOT / f'vo/lines/{lang}/lines.json'))
@@ -24,6 +25,7 @@ for lang in ('en', 'az'):
         words = [{'text': w['text'], 'start': round(w['start'] + offset, 3), 'end': round(w['end'] + offset, 3)} for w in m['words']]
         out['lines'][lang][lid] = {'frames': frames, 'audioOffset': round(offset, 3), 'audioFile': m['file'],
                                    'speechStart': lead, 'speechEnd': round(lead + m['speech_off'] - m['speech_on'], 3), 'words': words}
+    out['lines'][lang]['END'] = {'frames': END_FRAMES, 'audioOffset': 0, 'audioFile': None, 'speechStart': 0, 'speechEnd': 0, 'words': []}
     for v, seq in VARIANTS.items():
         total = sum(out['lines'][lang][l]['frames'] for l in seq) + TAIL
         print(lang, v, f'{total} frames = {total / FPS:.2f} s')

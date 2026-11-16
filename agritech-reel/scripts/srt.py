@@ -4,7 +4,7 @@ The cues are the on-screen caption chunks (src/config.ts), timed from the Eleven
 src/timeline.json, so the SRT matches what the video shows. The closing question, shown big on screen
 instead of as a caption, gets its own cues. "*" and "+n" markers are stripped.
 """
-import json, pathlib, re
+import json, pathlib, re, sys
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 TL = json.loads((ROOT / 'src/timeline.json').read_text())
 FPS, TAIL = TL['fps'], TL['tail']
@@ -49,6 +49,8 @@ def cues_for_line(lang, lid, t0):
     line = TL['lines'][lang][lid]
     words = line['words']
     chunks = CAP[lang][lid]
+    if lid == 'END':  # the end card: no words
+        return []
     if not chunks:  # the question: shown big on screen, captioned here in one or two cues
         q = Q[lang]
         half = (len(q) + 1) // 2 if len(q) > 6 else len(q)
@@ -68,7 +70,7 @@ def cues_for_line(lang, lid, t0):
     return out
 
 
-for lang in ('en', 'az'):
+for lang in (sys.argv[1:] or ['en']):  # English by default; pass az for Azerbaijani
     for v, seq in TL['variants'].items():
         t, cues = 0, []
         line_ends = []

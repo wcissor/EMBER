@@ -5,7 +5,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 mkdir -p out/beats
-LANGS=${@:-en az}
+LANGS=${@:-en}
 render() { # name props
   local name=$1 props=$2 tmp="out/beats/$1.tmp.mp4"
   npx remotion render build/bundle Beat "$tmp" --props="$props" --codec=h264 --crf=16 --pixel-format=yuv420p --muted --log=error
@@ -13,10 +13,10 @@ render() { # name props
   echo "rendered $1"
 }
 for lang in $LANGS; do
-  for line in H1 H2 H3 B1 B1b B2 B3 B4 B4s B5 B6 B7 B8; do
+  for line in H1 H2 H3 B1 B1b B2 B3 B4 B4s B5 B6 B7 B8 END; do
     render "$lang-$line" "{\"lang\":\"$lang\",\"line\":\"$line\"}"
   done
-  for v in A:H1 B:H2 C:H3; do
+  [ "$(node -p "require('./src/timeline.json').tail")" -gt 0 ] && for v in A:H1 B:H2 C:H3; do
     render "$lang-tail-${v%%:*}" "{\"lang\":\"$lang\",\"line\":\"${v##*:}\",\"tail\":true}"
   done
 done

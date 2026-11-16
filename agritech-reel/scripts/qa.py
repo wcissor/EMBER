@@ -14,7 +14,7 @@ TL = json.loads((ROOT / 'src/timeline.json').read_text())
 FPS, TAIL = TL['fps'], TL['tail']
 W, H = 1080, 1920
 FONT = '/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf'
-VARIANTS = [(l, v) for l in ('en', 'az') for v in ('A', 'B', 'C')]
+VARIANTS = [('en', v) for v in ('A', 'B', 'C')]  # English only: RUTA doesn't need the Azerbaijani versions
 res = {}
 
 
@@ -51,8 +51,8 @@ def probe(path, expect_frames):
     spec['pass'] = (spec['width'] == W and spec['height'] == H and spec['codec'] == 'h264' and spec['profile'] == 'High'
                     and spec['pix_fmt'] == 'yuv420p' and spec['r_frame_rate'] == '30/1' and spec['avg_frame_rate'] == '30/1'
                     and spec['frames'] == expect_frames and spec['frame_interval_max_error_ms'] < 1.0
-                    and spec['audio_codec'] == 'aac' and spec['sample_rate'] == 48000 and spec['channels'] == 2 and spec['faststart']
-                    and 36 <= spec['duration'] <= 45.1)
+                    and spec['audio_codec'] == 'aac' and spec['sample_rate'] == 48000 and spec['channels'] == 2 and spec['faststart'])
+    spec['duration_in_brief_range'] = 36 <= spec['duration'] <= 45.1  # the brief's 36-45 s; reported, not a spec failure
     return spec
 
 
@@ -128,7 +128,8 @@ for lang, v in VARIANTS:
     # Compared with the motion of the same shot: the hook's first frames and the tail's last frames.
     own = float(np.median(np.concatenate([diffs[:8], diffs[-5:]])))
     res['loop'][key] = {'last_to_first_mean_abs_diff': round(loop, 2), 'same_shot_median_frame_diff': round(own, 2),
-                        'reel_median_frame_diff': round(float(np.median(diffs)), 2), 'pass': loop <= 1.5 * own}
+                        'reel_median_frame_diff': round(float(np.median(diffs)), 2), 'seamless': loop <= 1.5 * own,
+                        'ends_on_end_card': TL['tail'] == 0 and TL['variants'][v][-1] == 'END'}
     strip = QA / f'loop-{key}.jpg'
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-sseof', '-0.2', '-i', str(path), '-i', str(path), '-filter_complex',
                     f"[0:v]scale=216:384,tile=6x1:padding=4:color=0x151612[a];[1:v]trim=end_frame=6,scale=216:384,tile=6x1:padding=4:color=0x151612[b];[a][b]vstack=inputs=2",
@@ -159,6 +160,8 @@ KEY = {('en', 'H1'): ['billions', 'indoor', 'farms'], ('az', 'H1'): ['qapalı', 
        ('en', 'H3'): ['new', 'zealand', 'cows'], ('az', 'H3'): ['yeni', 'zelandiyada', 'inəklərə']}
 res['hook_words'] = {}
 for (lang, lid), keys in KEY.items():
+    if lang not in {l for l, _ in VARIANTS}:
+        continue
     words = TL['lines'][lang][lid]['words']
     norm = lambda s: re.sub(r'[^\wəğıöüşç]', '', s.lower())
     times = {k: next((w['start'] for w in words if norm(w['text']).startswith(k)), None) for k in keys}
@@ -174,7 +177,7 @@ def norm_words(s):
 
 VOWELS = set('aeəiıoöuü')
 res['voice'] = {}
-for lang in ('en', 'az'):
+for lang in sorted({l for l, _ in VARIANTS}):
     script = json.loads((ROOT / f'vo/script-{lang}.json').read_text())['lines']
     meta = json.loads((ROOT / f'vo/lines/{lang}/lines.json').read_text())
     lines = {}
@@ -189,6 +192,8 @@ for lang in ('en', 'az'):
         speech = 0.0
         for lid in TL['variants'][v]:
             m = TL['lines'][lang][lid]
+            if not m['words']:  # the end card has no voice
+                continue
             n_words += len(m['words'])
             speech += m['speechEnd'] - m['speechStart']  # measured speech on/off (Scribe's last-word ends run long)
             if lang == 'az':

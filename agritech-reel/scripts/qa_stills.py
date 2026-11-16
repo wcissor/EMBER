@@ -9,7 +9,7 @@ OUT = ROOT / 'out/qa/stills'
 OUT.mkdir(parents=True, exist_ok=True)
 FONT = '/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf'
 LINES = TL['variants']['A'] + ['H2', 'H3', 'B1b', 'B4s']
-for lang in ('en', 'az'):
+for lang in ('en',):  # English only
     tiles = []
     for lid in LINES:
         k = busy[f'{lang}-{lid}']

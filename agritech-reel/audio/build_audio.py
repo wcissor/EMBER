@@ -159,6 +159,23 @@ def buzz():
 SND['buzz'] = buzz()
 
 
+def logo_chord():
+    """The end card's sound: a soft D add9 chord, strummed 25 ms apart and left to ring out, made in code."""
+    n = int(1.4 * SR)
+    t = np.arange(n) / SR
+    out = np.zeros(n)
+    for k, m in enumerate([50, 57, 62, 64, 66]):  # D3 A3 D4 E4 F#4, the music bed's home chord
+        f0 = 440.0 * 2 ** ((m - 69) / 12)
+        x = sum((0.5 ** (h - 1)) * np.sin(2 * np.pi * h * f0 * t) * np.exp(-t / (0.9 / h ** 0.8)) for h in range(1, 6))
+        x *= 1 - np.exp(-t / 0.004)
+        i = int(k * 0.025 * SR)
+        out[i:] += x[: n - i] * (1.0 - 0.08 * k)
+    return level(fade(lowpass(out, 6000), 0.002, 0.5), 'peak', -18)
+
+
+SND['logo'] = logo_chord()
+
+
 def cues_for(lang, lid, words):
     """Effect cues for one line, in beat seconds, from the same word anchors the scenes use."""
     A = ANCHORS[lang].get(lid, {})
@@ -188,6 +205,8 @@ def cues_for(lang, lid, words):
         return [('whoosh', land - WHOOSH_PEAK)]
     if lid == 'B8':
         return [('hit', 0.0)]
+    if lid == 'END':
+        return [('logo', 0.45)]  # as the field closes onto its horizon line
     return []
 
 
@@ -326,6 +345,8 @@ def build(lang, v):
     vo = np.zeros((N, 2))
     speaking = np.zeros(N, bool)
     for lid, s in zip(seq, starts):
+        if not lines[lid]['audioFile']:  # the end card has no voice
+            continue
         x = load(ROOT / lines[lid]['audioFile'])
         place(vo, fade(x, 0.003, 0.01), s + lines[lid]['audioOffset'])
         for wd in lines[lid]['words']:
@@ -364,9 +385,9 @@ def build(lang, v):
 
 
 if __name__ == '__main__':
-    todo = [(l, v) for l in ('en', 'az') for v in ('A', 'B', 'C')]
+    todo = [(l, v) for l in ('en',) for v in ('A', 'B', 'C')]  # English only (RUTA doesn't need Azerbaijani); name az-A etc. to build it
     if len(sys.argv) > 1:
-        todo = [(l, v) for l, v in todo if f'{l}-{v}' in sys.argv[1:]]
+        todo = [(l, v) for l in ('en', 'az') for v in ('A', 'B', 'C') if f'{l}-{v}' in sys.argv[1:]]
     reports = [build(l, v) for l, v in todo]
     path = OUT / 'report.json'
     old = json.loads(path.read_text()) if path.exists() and len(sys.argv) > 1 else {}

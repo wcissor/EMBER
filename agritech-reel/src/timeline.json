@@ -1,6 +1,6 @@
 {
  "fps": 30,
- "tail": 6,
+ "tail": 0,
  "variants": {
   "A": [
    "H1",
@@ -11,7 +11,8 @@
    "B5",
    "B6",
    "B7",
-   "B8"
+   "B8",
+   "END"
   ],
   "B": [
    "H2",
@@ -21,7 +22,8 @@
    "B5",
    "B6",
    "B7",
-   "B8"
+   "B8",
+   "END"
   ],
   "C": [
    "H3",
@@ -32,7 +34,8 @@
    "B5",
    "B6",
    "B7",
-   "B8"
+   "B8",
+   "END"
   ]
  },
  "lines": {
@@ -973,6 +976,14 @@
       "end": 5.06
      }
     ]
+   },
+   "END": {
+    "frames": 54,
+    "audioOffset": 0,
+    "audioFile": null,
+    "speechStart": 0,
+    "speechEnd": 0,
+    "words": []
    }
   },
   "az": {
@@ -1807,6 +1818,14 @@
       "end": 5.759
      }
     ]
+   },
+   "END": {
+    "frames": 54,
+    "audioOffset": 0,
+    "audioFile": null,
+    "speechStart": 0,
+    "speechEnd": 0,
+    "words": []
    }
   }
  }

@@ -288,4 +288,4 @@ const B8: React.FC = () => {
   );
 };
 
-export const SCENES: Record<LineId, React.FC> = {H1, H2, H3, B1, B1b, B2, B3, B4, B4s, B5, B6, B7, B8};
+export const SCENES: Record<LineId, React.FC> = {H1, H2, H3, B1, B1b, B2, B3, B4, B4s, B5, B6, B7, B8, END: () => null}; // END: see Beat.tsx

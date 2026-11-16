@@ -26,7 +26,7 @@ def cuts(lang, lid):
         'B1': lambda: [c('cut1')], 'B1b': lambda: [c('cut1')],
         'B2': lambda: [c('spot'), c('cut1'), c('cut2'), c('cut3')], 'B3': lambda: [c('cut1', 0.12)],
         'B4': lambda: [c('cut1'), c('sound'), c('cut3')], 'B4s': lambda: [c('sound'), c('cut2')],
-        'B5': lambda: [c('cut1'), c('cut2')], 'B6': lambda: [c('cut1'), c('cut2')], 'B7': lambda: [c('cut1'), c('cut2')], 'B8': lambda: [],
+        'B5': lambda: [c('cut1'), c('cut2')], 'B6': lambda: [c('cut1'), c('cut2')], 'B7': lambda: [c('cut1'), c('cut2')], 'B8': lambda: [], 'END': lambda: [],
     }
     return [0.0] + table[lid]() + [D]
 
@@ -40,6 +40,7 @@ CLIPS = {
     'B5': ['globe, orbit diagram', 'Sentinel-2 Kansas, capture frame', 'Sentinel-2 Kansas, punch-in'],
     'B6': ['B6-a sprinklers', 'B6-b rain cannon', 'B6-b punch-in'], 'B7': ['map zoom to Azerbaijan', 'Sentinel-2 Kura-Araz', 'Sentinel-2 Kura-Araz, punch-in'],
     'B8': ['B1-c golden field, the question'],
+    'END': ['the field closes onto its horizon; RUTA logo'],
 }
 
 

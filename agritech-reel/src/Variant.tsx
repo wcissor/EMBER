@@ -6,7 +6,7 @@ import {Beat, beatFrames} from './Beat';
 
 export type VariantProps = {lang: Lang; variant: V; textOnly?: boolean; safeBox?: boolean};
 
-/** A whole variant, beat after beat, ending with the loop tail. For previews, stills and checks. */
+/** A whole variant, beat after beat, ending on the end card (or the loop tail, if timeline.tail > 0). For previews and checks. */
 export const Variant: React.FC<VariantProps> = ({lang, variant, textOnly = false, safeBox = false}) => {
   const seq = (timeline.variants as Record<string, string[]>)[variant] as LineId[];
   let from = 0;
@@ -23,9 +23,11 @@ export const Variant: React.FC<VariantProps> = ({lang, variant, textOnly = false
   return (
     <AbsoluteFill>
       {items}
-      <Sequence from={from} durationInFrames={timeline.tail} name="tail">
-        <Beat lang={lang} line={seq[0]} tail textOnly={textOnly} safeBox={safeBox} />
-      </Sequence>
+      {timeline.tail > 0 ? (
+        <Sequence from={from} durationInFrames={timeline.tail} name="tail">
+          <Beat lang={lang} line={seq[0]} tail textOnly={textOnly} safeBox={safeBox} />
+        </Sequence>
+      ) : null}
     </AbsoluteFill>
   );
 };
