@@ -1,0 +1,12 @@
+# Python environment for the map scripts (rebuild: python3 -m venv .venv && .venv/bin/pip install rasterio numpy)
+.venv/
+node_modules/
+# Full copies of other publishers' pages and Adobe Stock preview images: kept locally, not committed
+research/raw/
+research/*.txt
+research/stock-thumbs/
+research/drone-alt.jpg
+# Large intermediate files
+research/satellite/*.ppm
+# Licensed footage is never committed (the licence covers use, not redistribution)
+footage/
