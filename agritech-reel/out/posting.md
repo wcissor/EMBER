@@ -15,13 +15,70 @@ Three reels in English, each with a different hook. All three end on the RUTA en
 - **Cover:** `cover-en.png`. In the app: Edit cover → Add from camera roll. All text sits inside the middle 1080×1440, which is what the profile grid shows.
 - **Captions:** Instagram makes its own captions and doesn't take SRT files. The video already shows burned-in captions. `captions-en-{A|B|C}.srt` are for YouTube Shorts, Facebook, LinkedIn or TikTok, where you can upload them.
 
-## Caption
+## Captions (one per variant)
 
-The first sentence changed from the brief, matching the voice-over: "Most went bust" became "Many of the biggest went bust". The sources show several of the biggest indoor farms failing, not most of them (see `sources.md`, H1).
+The first line matches the reel's hook and is all most people see before "more", so it carries the hook. The rest is the same for all three, so the Trial Reels test still compares only the hooks. The list puts searchable words in the caption (lasers, drones, collars, satellites, farming); Instagram search reads captions. The question at the end is the same one the reel ends on, which invites comments.
 
-> Billions went into indoor farms. Many of the biggest went bust. Meanwhile the open field went high-tech: lasers, drones, collars, satellites. Which one would you bring to your village first? Sources in the comments.
->
-> #agritech #farming #futureoffarming #Azerbaijan
+The first sentence differs from the brief, matching the voice-over: "Most went bust" became "Many of the biggest went bust". The sources show several of the biggest indoor farms failing, not most of them (see `sources.md`, H1).
+
+**A: indoor farms**
+
+```
+Billions went into indoor farms. Many of the biggest went bust.
+
+Meanwhile the open field went high-tech:
+- Lasers: a robot that burns weeds, up to 10,000 a minute (its maker's figure)
+- Drones: over 300,000 on farms in China
+- Collars: solar collars steer cows with sound and vibration, and the fence is drawn in an app
+- Satellites: free photos of every field on Earth, every 5 days
+
+In Azerbaijan, over a third of all workers are in agriculture. This is our future too.
+
+Which one would you bring to your village first? Tell us in the comments.
+Send this to someone who farms. Sources in the first comment.
+
+#agritech #farming #farmtech #futureoffarming #Azerbaijan
+```
+
+**B: the laser robot**
+
+```
+There's a robot that burns weeds with lasers. Up to 10,000 a minute, its maker says.
+
+It's one of four ways the open field is going high-tech:
+- Lasers: a robot that burns weeds, up to 10,000 a minute (its maker's figure)
+- Drones: over 300,000 on farms in China
+- Collars: solar collars steer cows with sound and vibration, and the fence is drawn in an app
+- Satellites: free photos of every field on Earth, every 5 days
+
+In Azerbaijan, over a third of all workers are in agriculture. This is our future too.
+
+Which one would you bring to your village first? Tell us in the comments.
+Send this to someone who farms. Sources in the first comment.
+
+#agritech #farming #farmtech #futureoffarming #Azerbaijan
+```
+
+**C: the cows**
+
+```
+In New Zealand, some cows don't need fences anymore.
+
+It's one of four ways the open field is going high-tech:
+- Lasers: a robot that burns weeds, up to 10,000 a minute (its maker's figure)
+- Drones: over 300,000 on farms in China
+- Collars: solar collars steer cows with sound and vibration, and the fence is drawn in an app
+- Satellites: free photos of every field on Earth, every 5 days
+
+In Azerbaijan, over a third of all workers are in agriculture. This is our future too.
+
+Which one would you bring to your village first? Tell us in the comments.
+Send this to someone who farms. Sources in the first comment.
+
+#agritech #farming #farmtech #futureoffarming #Azerbaijan
+```
+
+After posting: pin the sources comment, and answer the first comments within the first hour. Replies count as engagement and keep the thread going.
 
 ## First comment (pin it)
 
