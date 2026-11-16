@@ -1,6 +1,8 @@
 # RUTA agritech reel
 
-A 36–45 s vertical reel about how farming is changing in the open field: laser weeding, farm drones, solar cattle collars and free satellite imagery. It comes in English and Azerbaijani, each with three hooks, built with Remotion and TypeScript, ElevenLabs and ffmpeg.
+A 36–45 s vertical reel about how farming is changing in the open field: laser weeding, farm drones, solar cattle collars and free satellite imagery. It comes in English with three hooks, built with Remotion and TypeScript, ElevenLabs and ffmpeg.
+
+Azerbaijani versions were built and checked too. RUTA only needs English, so they are not delivered, but every script still takes `az` (for example `scripts/render.sh az`, `python3 scripts/assemble.py az-A`).
 
 | Variant | Hook | Lines |
 |---|---|---|
@@ -10,10 +12,10 @@ A 36–45 s vertical reel about how farming is changing in the open field: laser
 
 ## Deliverables (`out/`)
 
-- `ruta-agritech-{en|az}-{A|B|C}.mp4`: voice, sound effects and a placeholder music bed. Not in git (about 70–85 MB each); rebuild below.
-- `ruta-agritech-{en|az}-{A|B|C}-nomusic.mp4`: voice and sound effects, for adding a track in Instagram.
-- `cover-en.png`, `cover-az.png`: the hook claim in big type, inside the middle 1080×1440.
-- `captions-{en|az}-{A|B|C}.srt`
+- `ruta-agritech-en-{A|B|C}.mp4`: voice, sound effects and a placeholder music bed. Not in git (54–66 MB each); rebuild below.
+- `ruta-agritech-en-{A|B|C}-nomusic.mp4`: voice and sound effects, for adding a track in Instagram.
+- `cover-en.png`: the hook claim in big type, inside the middle 1080×1440.
+- `captions-en-{A|B|C}.srt`
 - `posting.md`: captions, hashtags, the first comment with sources, and the test plan.
 - `sources.md`, `licenses/`: copies of the top-level files.
 - `qa/report.md`: the 12 checks, with stills, contact sheets and loop strips.
