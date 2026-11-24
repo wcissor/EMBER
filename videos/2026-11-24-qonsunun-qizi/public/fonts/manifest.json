@@ -1,0 +1,38 @@
+[
+ {
+  "font": "barlow",
+  "subset": "latin",
+  "file": "fonts/barlow-condensed-800-latin.woff2",
+  "source": "https://fonts.gstatic.com/s/barlowcondensed/v13/HTxwL3I-JCGChYJ8VI-L6OO_au7B47b1z3bWuQ.woff2"
+ },
+ {
+  "font": "barlow",
+  "subset": "latin-ext",
+  "file": "fonts/barlow-condensed-800-latin-ext.woff2",
+  "source": "https://fonts.gstatic.com/s/barlowcondensed/v13/HTxwL3I-JCGChYJ8VI-L6OO_au7B47b1z3jWuZEC.woff2"
+ },
+ {
+  "font": "inter",
+  "subset": "latin",
+  "file": "fonts/inter-var-latin.woff2",
+  "source": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2"
+ },
+ {
+  "font": "inter",
+  "subset": "latin-ext",
+  "file": "fonts/inter-var-latin-ext.woff2",
+  "source": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2"
+ },
+ {
+  "font": "interTight",
+  "subset": "latin",
+  "file": "fonts/inter-tight-800-latin.woff2",
+  "source": "https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsH8ag.woff2"
+ },
+ {
+  "font": "interTight",
+  "subset": "latin-ext",
+  "file": "fonts/inter-tight-800-latin-ext.woff2",
+  "source": "https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsJ8ah8QA.woff2"
+ }
+]

@@ -1,0 +1,139 @@
+{
+ "lines": [
+  {
+   "id": "P02",
+   "voice": "men",
+   "loudness_in": -26.8,
+   "gain_db": 6.8,
+   "max_gr_db": 5.1,
+   "tempo": 1.0
+  },
+  {
+   "id": "P04",
+   "voice": "men",
+   "loudness_in": -14.6,
+   "gain_db": -5.4,
+   "max_gr_db": 6.0,
+   "tempo": 1.0
+  },
+  {
+   "id": "P09",
+   "voice": "men",
+   "loudness_in": -18.5,
+   "gain_db": -1.5,
+   "max_gr_db": 6.0,
+   "tempo": 1.0
+  },
+  {
+   "id": "P11",
+   "voice": "men",
+   "loudness_in": -23.9,
+   "gain_db": 3.9,
+   "max_gr_db": 6.0,
+   "tempo": 1.0
+  },
+  {
+   "id": "P12",
+   "voice": "men",
+   "loudness_in": -20.8,
+   "gain_db": 0.8,
+   "max_gr_db": 6.0,
+   "tempo": 1.0
+  },
+  {
+   "id": "P13",
+   "voice": "qo",
+   "loudness_in": -24.5,
+   "gain_db": 4.5,
+   "max_gr_db": 6.0,
+   "tempo": 1.0
+  },
+  {
+   "id": "P14",
+   "voice": "qz",
+   "loudness_in": -21.4,
+   "gain_db": 1.4,
+   "max_gr_db": 6.0,
+   "tempo": 1.0
+  },
+  {
+   "id": "P15",
+   "voice": "men",
+   "loudness_in": -19.4,
+   "gain_db": -0.6,
+   "max_gr_db": 6.0,
+   "tempo": 1.0
+  },
+  {
+   "id": "P16",
+   "voice": "qz",
+   "loudness_in": -20.9,
+   "gain_db": 0.9,
+   "max_gr_db": 6.0,
+   "tempo": 1.0
+  },
+  {
+   "id": "P20",
+   "voice": "qz",
+   "loudness_in": -20.4,
+   "gain_db": 0.4,
+   "max_gr_db": 6.0,
+   "tempo": 1.0
+  }
+ ],
+ "missing": [
+  "P01",
+  "P03",
+  "P05",
+  "P06",
+  "P07",
+  "P08",
+  "P10",
+  "P17",
+  "P18",
+  "P19",
+  "P19b"
+ ],
+ "masters": {
+  "mix-A": {
+   "seconds": 42.133,
+   "I": -14.1,
+   "TP": -1.4
+  },
+  "mix-A-nomusic": {
+   "seconds": 42.133,
+   "I": -14.1,
+   "TP": -1.4
+  },
+  "mix-Areply": {
+   "seconds": 42.133,
+   "I": -14.1,
+   "TP": -1.4
+  },
+  "mix-Areply-nomusic": {
+   "seconds": 42.133,
+   "I": -14.1,
+   "TP": -1.4
+  },
+  "mix-B": {
+   "seconds": 40.8,
+   "I": -14.2,
+   "TP": -1.4
+  },
+  "mix-B-nomusic": {
+   "seconds": 40.8,
+   "I": -14.3,
+   "TP": -1.3
+  },
+  "mix-C": {
+   "seconds": 43.967,
+   "I": -14.1,
+   "TP": -1.4
+  },
+  "mix-C-nomusic": {
+   "seconds": 43.967,
+   "I": -14.2,
+   "TP": -1.4
+  }
+ }
+}

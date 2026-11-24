@@ -1,0 +1,556 @@
+[
+ {
+  "id": "P01",
+  "voice": "ana",
+  "text": "Necə yəni olmur?!",
+  "start": 0.85,
+  "end": 2.05,
+  "words": [
+   {
+    "word": "Necə",
+    "start": 0.85,
+    "end": 1.217
+   },
+   {
+    "word": "yəni",
+    "start": 1.267,
+    "end": 1.633
+   },
+   {
+    "word": "olmur?!",
+    "start": 1.683,
+    "end": 2.05
+   }
+  ]
+ },
+ {
+  "id": "P02",
+  "voice": "men",
+  "text": "İndi qonşunun oğlu mənəm.",
+  "start": 3.05,
+  "end": 4.497,
+  "words": [
+   {
+    "word": "İndi",
+    "start": 3.05,
+    "end": 3.363
+   },
+   {
+    "word": "qonşunun",
+    "start": 3.363,
+    "end": 3.883
+   },
+   {
+    "word": "oğlu",
+    "start": 3.883,
+    "end": 4.143
+   },
+   {
+    "word": "mənəm.",
+    "start": 4.143,
+    "end": 4.497
+   }
+  ]
+ },
+ {
+  "id": "P03",
+  "voice": "ana",
+  "text": "Qonşunun qızına bax!",
+  "start": 4.8,
+  "end": 5.95,
+  "words": [
+   {
+    "word": "Qonşunun",
+    "start": 4.8,
+    "end": 5.25
+   },
+   {
+    "word": "qızına",
+    "start": 5.3,
+    "end": 5.75
+   },
+   {
+    "word": "bax!",
+    "start": 5.8,
+    "end": 5.95
+   }
+  ]
+ },
+ {
+  "id": "P04",
+  "voice": "men",
+  "text": "Yenə?!",
+  "start": 6.6,
+  "end": 7.388,
+  "words": [
+   {
+    "word": "Yenə?!",
+    "start": 6.6,
+    "end": 7.388
+   }
+  ]
+ },
+ {
+  "id": "P05",
+  "voice": "ana",
+  "text": "Həyəti təmizlətdi.",
+  "start": 7.75,
+  "end": 8.8,
+  "words": [
+   {
+    "word": "Həyəti",
+    "start": 7.75,
+    "end": 8.083
+   },
+   {
+    "word": "təmizlətdi.",
+    "start": 8.133,
+    "end": 8.8
+   }
+  ]
+ },
+ {
+  "id": "P06",
+  "voice": "ana",
+  "text": "Uşaqlara kitab yığdı.",
+  "start": 9.05,
+  "end": 10.2,
+  "words": [
+   {
+    "word": "Uşaqlara",
+    "start": 9.05,
+    "end": 9.575
+   },
+   {
+    "word": "kitab",
+    "start": 9.625,
+    "end": 9.887
+   },
+   {
+    "word": "yığdı.",
+    "start": 9.938,
+    "end": 10.2
+   }
+  ]
+ },
+ {
+  "id": "P07",
+  "voice": "ana",
+  "text": "Bütün bina onun dalınca gedir.",
+  "start": 10.45,
+  "end": 11.95,
+  "words": [
+   {
+    "word": "Bütün",
+    "start": 10.45,
+    "end": 10.686
+   },
+   {
+    "word": "bina",
+    "start": 10.736,
+    "end": 10.973
+   },
+   {
+    "word": "onun",
+    "start": 11.023,
+    "end": 11.259
+   },
+   {
+    "word": "dalınca",
+    "start": 11.309,
+    "end": 11.664
+   },
+   {
+    "word": "gedir.",
+    "start": 11.714,
+    "end": 11.95
+   }
+  ]
+ },
+ {
+  "id": "P08",
+  "voice": "ana",
+  "text": "Cəmi on beş yaşı var!",
+  "start": 12.15,
+  "end": 13.25,
+  "words": [
+   {
+    "word": "Cəmi",
+    "start": 12.15,
+    "end": 12.407
+   },
+   {
+    "word": "on",
+    "start": 12.457,
+    "end": 12.586
+   },
+   {
+    "word": "beş",
+    "start": 12.636,
+    "end": 12.764
+   },
+   {
+    "word": "yaşı",
+    "start": 12.814,
+    "end": 13.071
+   },
+   {
+    "word": "var!",
+    "start": 13.121,
+    "end": 13.25
+   }
+  ]
+ },
+ {
+  "id": "P09",
+  "voice": "men",
+  "text": "Ana, axı mən də qonşunun oğluyam!",
+  "start": 13.55,
+  "end": 16.104,
+  "words": [
+   {
+    "word": "Ana,",
+    "start": 13.55,
+    "end": 13.966
+   },
+   {
+    "word": "axı",
+    "start": 14.386,
+    "end": 14.606
+   },
+   {
+    "word": "mən",
+    "start": 14.606,
+    "end": 14.836
+   },
+   {
+    "word": "də",
+    "start": 14.836,
+    "end": 14.926
+   },
+   {
+    "word": "qonşunun",
+    "start": 14.926,
+    "end": 15.426
+   },
+   {
+    "word": "oğluyam!",
+    "start": 15.426,
+    "end": 16.104
+   }
+  ]
+ },
+ {
+  "id": "P10",
+  "voice": "ana",
+  "text": "Qonşunun qızı başqa səviyyədir.",
+  "start": 16.35,
+  "end": 17.7,
+  "words": [
+   {
+    "word": "Qonşunun",
+    "start": 16.35,
+    "end": 16.71
+   },
+   {
+    "word": "qızı",
+    "start": 16.76,
+    "end": 17.0
+   },
+   {
+    "word": "başqa",
+    "start": 17.05,
+    "end": 17.29
+   },
+   {
+    "word": "səviyyədir.",
+    "start": 17.34,
+    "end": 17.7
+   }
+  ]
+ },
+ {
+  "id": "P11",
+  "voice": "men",
+  "text": "Bu dəfə yox.",
+  "start": 18.9,
+  "end": 19.609,
+  "words": [
+   {
+    "word": "Bu",
+    "start": 18.9,
+    "end": 18.969
+   },
+   {
+    "word": "dəfə",
+    "start": 18.969,
+    "end": 19.239
+   },
+   {
+    "word": "yox.",
+    "start": 19.239,
+    "end": 19.609
+   }
+  ]
+ },
+ {
+  "id": "P12",
+  "voice": "men",
+  "text": "Sənin sirrin nədir?",
+  "start": 20.3,
+  "end": 21.447,
+  "words": [
+   {
+    "word": "Sənin",
+    "start": 20.3,
+    "end": 20.625
+   },
+   {
+    "word": "sirrin",
+    "start": 20.625,
+    "end": 21.055
+   },
+   {
+    "word": "nədir?",
+    "start": 21.055,
+    "end": 21.447
+   }
+  ]
+ },
+ {
+  "id": "P13",
+  "voice": "qo",
+  "text": "Etiraf edirəm… VolunTrack-i mənə o göstərib.",
+  "start": 21.8,
+  "end": 24.519,
+  "words": [
+   {
+    "word": "Etiraf",
+    "start": 21.8,
+    "end": 22.31
+   },
+   {
+    "word": "edirəm…",
+    "start": 22.31,
+    "end": 22.58
+   },
+   {
+    "word": "VolunTrack-i",
+    "start": 23.07,
+    "end": 23.62
+   },
+   {
+    "word": "mənə",
+    "start": 23.62,
+    "end": 23.81
+   },
+   {
+    "word": "o",
+    "start": 23.81,
+    "end": 23.93
+   },
+   {
+    "word": "göstərib.",
+    "start": 23.93,
+    "end": 24.519
+   }
+  ]
+ },
+ {
+  "id": "P14",
+  "voice": "qz",
+  "text": "Linki atdım, aç.",
+  "start": 25.2,
+  "end": 26.601,
+  "words": [
+   {
+    "word": "Linki",
+    "start": 25.2,
+    "end": 25.551
+   },
+   {
+    "word": "atdım,",
+    "start": 25.551,
+    "end": 26.121
+   },
+   {
+    "word": "aç.",
+    "start": 26.121,
+    "end": 26.601
+   }
+  ]
+ },
+ {
+  "id": "P15",
+  "voice": "men",
+  "text": "Qeydiyyatsız açıldı?",
+  "start": 27,
+  "end": 28.144,
+  "words": [
+   {
+    "word": "Qeydiyyatsız",
+    "start": 27.0,
+    "end": 27.611
+   },
+   {
+    "word": "açıldı?",
+    "start": 27.611,
+    "end": 28.144
+   }
+  ]
+ },
+ {
+  "id": "P16",
+  "voice": "qz",
+  "text": "Baxmağa hesab lazım deyil. Müraciət bir dəqiqəlik işdir.",
+  "start": 28.4,
+  "end": 31.536,
+  "words": [
+   {
+    "word": "Baxmağa",
+    "start": 28.4,
+    "end": 28.806
+   },
+   {
+    "word": "hesab",
+    "start": 28.806,
+    "end": 29.116
+   },
+   {
+    "word": "lazım",
+    "start": 29.116,
+    "end": 29.606
+   },
+   {
+    "word": "deyil.",
+    "start": 29.606,
+    "end": 29.896
+   },
+   {
+    "word": "Müraciət",
+    "start": 29.896,
+    "end": 30.476
+   },
+   {
+    "word": "bir",
+    "start": 30.476,
+    "end": 30.646
+   },
+   {
+    "word": "dəqiqəlik",
+    "start": 30.646,
+    "end": 31.186
+   },
+   {
+    "word": "işdir.",
+    "start": 31.186,
+    "end": 31.536
+   }
+  ]
+ },
+ {
+  "id": "P17",
+  "voice": "qq",
+  "text": "Qızıma bax!",
+  "start": 32.7,
+  "end": 33.55,
+  "words": [
+   {
+    "word": "Qızıma",
+    "start": 32.7,
+    "end": 33.3
+   },
+   {
+    "word": "bax!",
+    "start": 33.35,
+    "end": 33.55
+   }
+  ]
+ },
+ {
+  "id": "P18",
+  "voice": "ana",
+  "text": "Oğluma bax!",
+  "start": 33.75,
+  "end": 34.6,
+  "words": [
+   {
+    "word": "Oğluma",
+    "start": 33.75,
+    "end": 34.35
+   },
+   {
+    "word": "bax!",
+    "start": 34.4,
+    "end": 34.6
+   }
+  ]
+ },
+ {
+  "id": "P19",
+  "voice": "ana",
+  "text": "…Həyətimizə bax.",
+  "start": 34.95,
+  "end": 36.05,
+  "words": [
+   {
+    "word": "…Həyətimizə",
+    "start": 34.95,
+    "end": 35.79
+   },
+   {
+    "word": "bax.",
+    "start": 35.84,
+    "end": 36.05
+   }
+  ]
+ },
+ {
+  "id": "P19b",
+  "voice": "qq",
+  "text": "…Həyətimizə bax.",
+  "start": 34.95,
+  "end": 36.05,
+  "words": [
+   {
+    "word": "…Həyətimizə",
+    "start": 34.95,
+    "end": 35.79
+   },
+   {
+    "word": "bax.",
+    "start": 35.84,
+    "end": 36.05
+   }
+  ]
+ },
+ {
+  "id": "P20",
+  "voice": "qz",
+  "text": "Ola bilərsiniz. Növbə sizdədir.",
+  "start": 37,
+  "end": 38.879,
+  "words": [
+   {
+    "word": "Ola",
+    "start": 37.0,
+    "end": 37.189
+   },
+   {
+    "word": "bilərsiniz.",
+    "start": 37.189,
+    "end": 37.809
+   },
+   {
+    "word": "Növbə",
+    "start": 37.809,
+    "end": 38.189
+   },
+   {
+    "word": "sizdədir.",
+    "start": 38.189,
+    "end": 38.879
+   }
+  ]
+ }
+]

@@ -1,0 +1,106 @@
+{
+ "file": "public/audio/takes/az/qz.mp3",
+ "lang": "az",
+ "voice": "qz",
+ "take": "qz",
+ "duration": 8.24,
+ "aligner": "pocketsphinx-local",
+ "lines": [
+  {
+   "id": "P14",
+   "start": 0.219,
+   "end": 1.62,
+   "words": [
+    {
+     "word": "Linki",
+     "start": 0.219,
+     "end": 0.57
+    },
+    {
+     "word": "atdım,",
+     "start": 0.57,
+     "end": 1.14
+    },
+    {
+     "word": "aç.",
+     "start": 1.14,
+     "end": 1.62
+    }
+   ]
+  },
+  {
+   "id": "P16",
+   "start": 2.134,
+   "end": 5.27,
+   "words": [
+    {
+     "word": "Baxmağa",
+     "start": 2.134,
+     "end": 2.54
+    },
+    {
+     "word": "hesab",
+     "start": 2.54,
+     "end": 2.85
+    },
+    {
+     "word": "lazım",
+     "start": 2.85,
+     "end": 3.34
+    },
+    {
+     "word": "deyil.",
+     "start": 3.34,
+     "end": 3.63
+    },
+    {
+     "word": "Müraciət",
+     "start": 3.63,
+     "end": 4.21
+    },
+    {
+     "word": "bir",
+     "start": 4.21,
+     "end": 4.38
+    },
+    {
+     "word": "dəqiqəlik",
+     "start": 4.38,
+     "end": 4.92
+    },
+    {
+     "word": "işdir.",
+     "start": 4.92,
+     "end": 5.27
+    }
+   ]
+  },
+  {
+   "id": "P20",
+   "start": 5.881,
+   "end": 7.76,
+   "words": [
+    {
+     "word": "Ola",
+     "start": 5.881,
+     "end": 6.07
+    },
+    {
+     "word": "bilərsiniz.",
+     "start": 6.07,
+     "end": 6.69
+    },
+    {
+     "word": "Növbə",
+     "start": 6.69,
+     "end": 7.07
+    },
+    {
+     "word": "sizdədir.",
+     "start": 7.07,
+     "end": 7.76
+    }
+   ]
+  }
+ ]
+}

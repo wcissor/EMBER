@@ -1,0 +1,26 @@
+{
+ "az": {
+  "source": "partial",
+  "voices": [
+   "men",
+   "qo",
+   "qz"
+  ],
+  "missing": [
+   "ana",
+   "qq"
+  ],
+  "aligner": "pocketsphinx-local"
+ },
+ "en": {
+  "source": "placeholder",
+  "voices": [],
+  "missing": [
+   "ana",
+   "men",
+   "qo",
+   "qq"
+  ],
+  "aligner": null
+ }
+}

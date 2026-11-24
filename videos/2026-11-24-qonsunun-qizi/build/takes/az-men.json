@@ -1,0 +1,120 @@
+{
+ "file": "public/audio/takes/az/men.mp3",
+ "lang": "az",
+ "voice": "men",
+ "take": "men",
+ "duration": 10.24,
+ "aligner": "pocketsphinx-local",
+ "lines": [
+  {
+   "id": "P04",
+   "start": 0.05,
+   "end": 0.838,
+   "words": [
+    {
+     "word": "Yenə?!",
+     "start": 0.05,
+     "end": 0.838
+    }
+   ]
+  },
+  {
+   "id": "P09",
+   "start": 1.714,
+   "end": 4.268,
+   "words": [
+    {
+     "word": "Ana,",
+     "start": 1.714,
+     "end": 2.13
+    },
+    {
+     "word": "axı",
+     "start": 2.55,
+     "end": 2.77
+    },
+    {
+     "word": "mən",
+     "start": 2.77,
+     "end": 3.0
+    },
+    {
+     "word": "də",
+     "start": 3.0,
+     "end": 3.09
+    },
+    {
+     "word": "qonşunun",
+     "start": 3.09,
+     "end": 3.59
+    },
+    {
+     "word": "oğluyam!",
+     "start": 3.59,
+     "end": 4.268
+    }
+   ]
+  },
+  {
+   "id": "P11",
+   "start": 4.961,
+   "end": 5.67,
+   "words": [
+    {
+     "word": "Bu",
+     "start": 4.961,
+     "end": 5.03
+    },
+    {
+     "word": "dəfə",
+     "start": 5.03,
+     "end": 5.3
+    },
+    {
+     "word": "yox.",
+     "start": 5.3,
+     "end": 5.67
+    }
+   ]
+  },
+  {
+   "id": "P12",
+   "start": 6.455,
+   "end": 7.602,
+   "words": [
+    {
+     "word": "Sənin",
+     "start": 6.455,
+     "end": 6.78
+    },
+    {
+     "word": "sirrin",
+     "start": 6.78,
+     "end": 7.21
+    },
+    {
+     "word": "nədir?",
+     "start": 7.21,
+     "end": 7.602
+    }
+   ]
+  },
+  {
+   "id": "P15",
+   "start": 8.599,
+   "end": 9.743,
+   "words": [
+    {
+     "word": "Qeydiyyatsız",
+     "start": 8.599,
+     "end": 9.21
+    },
+    {
+     "word": "açıldı?",
+     "start": 9.21,
+     "end": 9.743
+    }
+   ]
+  }
+ ]
+}

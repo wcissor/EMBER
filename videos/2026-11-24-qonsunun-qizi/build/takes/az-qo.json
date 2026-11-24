@@ -1,0 +1,47 @@
+{
+ "file": "public/audio/takes/az/qo.mp3",
+ "lang": "az",
+ "voice": "qo",
+ "take": "qo",
+ "duration": 2.72,
+ "aligner": "pocketsphinx-local",
+ "lines": [
+  {
+   "id": "P13",
+   "start": 0.0,
+   "end": 2.719,
+   "words": [
+    {
+     "word": "Etiraf",
+     "start": 0.0,
+     "end": 0.51
+    },
+    {
+     "word": "edirəm…",
+     "start": 0.51,
+     "end": 0.78
+    },
+    {
+     "word": "VolunTrack-i",
+     "start": 1.27,
+     "end": 1.82
+    },
+    {
+     "word": "mənə",
+     "start": 1.82,
+     "end": 2.01
+    },
+    {
+     "word": "o",
+     "start": 2.01,
+     "end": 2.13
+    },
+    {
+     "word": "göstərib.",
+     "start": 2.13,
+     "end": 2.719
+    }
+   ]
+  }
+ ]
+}

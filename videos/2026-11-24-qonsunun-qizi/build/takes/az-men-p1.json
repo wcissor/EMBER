@@ -1,0 +1,37 @@
+{
+ "file": "public/audio/takes/az/men-p1.mp3",
+ "lang": "az",
+ "voice": "men",
+ "take": "men-p1",
+ "duration": 11.311,
+ "aligner": "pocketsphinx-local (part 1)",
+ "lines": [
+  {
+   "id": "P02",
+   "start": 9.667,
+   "end": 11.114,
+   "words": [
+    {
+     "word": "İndi",
+     "start": 9.667,
+     "end": 9.98
+    },
+    {
+     "word": "qonşunun",
+     "start": 9.98,
+     "end": 10.5
+    },
+    {
+     "word": "oğlu",
+     "start": 10.5,
+     "end": 10.76
+    },
+    {
+     "word": "mənəm.",
+     "start": 10.76,
+     "end": 11.114
+    }
+   ]
+  }
+ ]
+}
