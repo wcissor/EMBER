@@ -1,0 +1,44 @@
+{
+ "file": "public/audio/takes/az/qq.mp3",
+ "lang": "az",
+ "voice": "qq",
+ "take": "qq",
+ "duration": 3.76,
+ "aligner": "pocketsphinx-local",
+ "lines": [
+  {
+   "id": "P17",
+   "start": 0.05,
+   "end": 1.031,
+   "words": [
+    {
+     "word": "Qızıma",
+     "start": 0.05,
+     "end": 0.53
+    },
+    {
+     "word": "bax!",
+     "start": 0.53,
+     "end": 1.031
+    }
+   ]
+  },
+  {
+   "id": "P19b",
+   "start": 2.433,
+   "end": 3.37,
+   "words": [
+    {
+     "word": "…Həyətimizə",
+     "start": 2.433,
+     "end": 3.12
+    },
+    {
+     "word": "bax.",
+     "start": 3.12,
+     "end": 3.37
+    }
+   ]
+  }
+ ]
+}

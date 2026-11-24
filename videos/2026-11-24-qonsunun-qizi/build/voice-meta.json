@@ -1,15 +1,14 @@
 {
  "az": {
-  "source": "partial",
+  "source": "takes",
   "voices": [
+   "ana",
    "men",
    "qo",
+   "qq",
    "qz"
   ],
-  "missing": [
-   "ana",
-   "qq"
-  ],
+  "missing": [],
   "aligner": "pocketsphinx-local"
  },
  "en": {

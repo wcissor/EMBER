@@ -75,7 +75,7 @@ add(6, 'Script', not mism, 'every caption equals the approved line with its tags
 pl = json.loads((ROOT / 'build/placement-az.json').read_text())
 missing = [l['id'] for l in pl['lines'] if l['source'] != 'take']
 add(5, 'Lip-sync', 'PASS (style)' if not missing else 'PARTIAL', 'the characters have no mouths (part 1\'s design); the speaker\'s head nods 2 frames ahead of every word start and the window light breathes with the voice. '
-    + ('All lines from real takes.' if not missing else f'Waiting for the Sona takes: {", ".join(missing)} (silent, timed by syllables).'))
+    + ('All lines from real takes.' if not missing else f'Waiting for takes: {", ".join(missing)}.'))
 # 10 · flashes: luminance jumps per second in version A
 va = next((v for v in vids if re.search(r'-A' + re.escape(SUF) + r'\.mp4$', v.name)), None)
 if va:
@@ -84,7 +84,7 @@ if va:
     jumps = np.abs(np.diff(g)) > 25
     per_sec = max(int(jumps[i:i + FPS].sum()) for i in range(0, len(jumps) - FPS, 5)) if len(jumps) > FPS else 0
     add(12, 'Comfort (flashes)', per_sec <= 3, f'at most {per_sec} large brightness jumps in any second (limit 3)')
-add(7, 'Privacy', True, 'bubbles: the comments\' text only (no usernames, no photos); phone: demo data ("Həyət Könüllüləri", demo@voluntrack.site), no counts, no real organisers', 'by construction')
+add(7, 'Privacy', 'PASS (team choice)', 'comments: the real screenshots, usernames and profile photos shown at the team\'s request (A-reply has none: Instagram shows the comment itself); phone: demo data ("Həyət Könüllüləri", demo@voluntrack.site), no counts, no real organisers', 'by construction')
 add(8, 'Product truth', True, 'role opens without an account → "Müraciət üçün daxil ol" → sign-in (sped up) → Müraciət et → the organiser\'s form in a new tab (flash) → back → ✓ Müraciət edildi with confetti', 'by construction')
 add(9, 'Slop check', True, 'every frame drawn in code (part 1\'s kit + new drawings); VolunTrack blue only on volunteer windows, the star, the phone and caption accents', 'by construction + eyes')
 add(2, 'Continuity', 'SEE', 'out/qa/continuity-*.png: part 1 next to part 2 (yard wide, the kid\'s window, the stairwell)', 'needs your eyes')

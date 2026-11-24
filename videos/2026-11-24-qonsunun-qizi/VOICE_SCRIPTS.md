@@ -1,18 +1,18 @@
-# Qonşunun qızı — voice takes
+# Qonşunun qızı — voice takes (all generated, Eleven v3, Azerbaijani)
 
-**Done (generated here, 334 credits on Eleven v3):** Mən (Abbas), Qonşunun oğlu (Arif), Qonşunun qızı (Amalya).
-"İndi qonşunun oğlu mənəm." reuses part 1's recording (the callback).
+| character | voice | take | credits |
+|---|---|---|---|
+| Ana | "Ana (Qonşunun qızı)", a designed Azerbaijani voice (bDw1r0j3ONDv091JeHMt) | `public/audio/takes/az/ana.mp3` | 266 |
+| Qonşu | "Qonşu (Qonşunun qızı)", a designed Azerbaijani voice (38pWf41HCuSkz4G9rfuD) | `qq.mp3` | 48 |
+| Mən | Abbas (library voice, as in part 1) | `men.mp3` (+ part 1's "İndi qonşunun oğlu mənəm." in `men-p1.mp3`) | 149 |
+| Qonşunun oğlu | Arif (library voice, as in part 1) | `qo.mp3` | 53 |
+| Qonşunun qızı | Amalya (library voice) | `qz.mp3` | 132 |
 
-**Still needed: 2 takes in your Sona voice** (this session's safety check does not allow me to generate with a cloned
-voice, so please make these two in the ElevenLabs app, as you did for part 1, and send me the MP3s):
+Voice design previews: two rounds of three (Ana, Qonşu), picked by pitch and by a word-for-word transcription check.
 
-| file | voice | characters |
-|---|---|---|
-| `ana.mp3` | Sona | 266 |
-| `qq.mp3` | Sona (I lift it 2 semitones in the mix, as in part 1) | 48 |
-
-- **Model:** Eleven v3, Azerbaijani. One generation per take. Paste each block exactly as it is, one line per line.
-- **Tags** in brackets are directions, never spoken.
+Part 1's Mom was Sona (a clone in the account). This session's safety check does not allow generating with a cloned
+voice, so Mom and Qonşu have new designed voices. To put Sona back, make `ana.mp3` and `qq.mp3` in the ElevenLabs app
+with the text below and run: align_takes → place → export-timeline → synth2 → mix2 → render2.
 
 ### ana.mp3
 ```
@@ -32,5 +32,3 @@ Bütün bina onun dalınca gedir.
 [shouting] Qızıma bax!
 [softly] …Həyətimizə bax.
 ```
-
-When they arrive: `align_takes.py` → `place.py` → `export-timeline.mjs` → `synth2.py` → `mix2.py` → `render2.mjs A Areply B C`.

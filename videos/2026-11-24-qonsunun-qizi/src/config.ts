@@ -43,30 +43,31 @@ export const LINES: LineDef[] = [
   L('P03', 'ana', [4.8, 5.95], {show: '[shouting] Qonşunun qızına bax!', caption: ['Qonşunun qızına bax!']}, {shout: {az: 2, en: 2}}),
   L('P04', 'men', [6.6, 7.4], {show: '[shocked] Yenə?!', caption: ['Yenə?!']}),
   // 3 · The deeds
-  L('P05', 'ana', [7.75, 8.8], {show: '[proudly] Həyəti təmizlətdi.', caption: ['Həyəti təmizlətdi.']}),
-  L('P06', 'ana', [9.05, 10.2], {show: 'Uşaqlara kitab yığdı.', caption: ['Uşaqlara kitab yığdı.']}),
-  L('P07', 'ana', [10.45, 11.95], {show: 'Bütün bina onun dalınca gedir.', caption: ['Bütün bina', 'onun dalınca gedir.']}),
-  L('P08', 'ana', [12.15, 13.25], {show: '[incredulous] Cəmi on beş yaşı var!', caption: ['Cəmi on beş yaşı var!']}),
-  L('P09', 'men', [13.55, 16.11], {show: '[whining] Ana, axı mən də qonşunun oğluyam!', caption: ['Ana, axı mən də', 'qonşunun oğluyam!']}),
-  L('P10', 'ana', [16.35, 17.7], {show: '[dryly] Qonşunun qızı başqa səviyyədir.', caption: ['Qonşunun qızı', 'başqa səviyyədir.']}),
+  L('P05', 'ana', [7.75, 8.84], {show: '[proudly] Həyəti təmizlətdi.', caption: ['Həyəti təmizlətdi.']}),
+  L('P06', 'ana', [9.05, 10.57], {show: 'Uşaqlara kitab yığdı.', caption: ['Uşaqlara kitab yığdı.']}),
+  L('P07', 'ana', [10.8, 12.65], {show: 'Bütün bina onun dalınca gedir.', caption: ['Bütün bina', 'onun dalınca gedir.']}),
+  L('P08', 'ana', [12.85, 14.11], {show: '[incredulous] Cəmi on beş yaşı var!', caption: ['Cəmi on beş yaşı var!']}),
+  L('P09', 'men', [14.35, 16.91], {show: '[whining] Ana, axı mən də qonşunun oğluyam!', caption: ['Ana, axı mən də', 'qonşunun oğluyam!']}),
+  L('P10', 'ana', [17.15, 19.01], {show: '[dryly] Qonşunun qızı başqa səviyyədir.', caption: ['Qonşunun qızı', 'başqa səviyyədir.']}),
   // 4 · The stairwell
-  L('P11', 'men', [18.9, 19.62], {show: '[determined] Bu dəfə yox.', caption: ['Bu dəfə yox.']}),
-  L('P12', 'men', [20.3, 21.45], {show: '[curious] Sənin sirrin nədir?', caption: ['Sənin sirrin nədir?']}),
-  L('P13', 'qo', [21.8, 24.52], {show: '[sheepish] Etiraf edirəm… VolunTrack-i mənə o göstərib.', say: '[sheepish] Etiraf edirəm… Voləntreki mənə o göstərib.', caption: ['Etiraf edirəm…', 'VolunTrack-i mənə o göstərib.']}),
+  L('P11', 'men', [20.21, 20.93], {show: '[determined] Bu dəfə yox.', caption: ['Bu dəfə yox.']}),
+  L('P12', 'men', [21.61, 22.76], {show: '[curious] Sənin sirrin nədir?', caption: ['Sənin sirrin nədir?']}),
+  L('P13', 'qo', [23.11, 25.83], {show: '[sheepish] Etiraf edirəm… VolunTrack-i mənə o göstərib.', say: '[sheepish] Etiraf edirəm… Voləntreki mənə o göstərib.', caption: ['Etiraf edirəm…', 'VolunTrack-i mənə o göstərib.']}),
   // 5 · The phone
-  L('P14', 'qz', [25.2, 26.6], {show: '[casually] Linki atdım, aç.', caption: ['Linki atdım, aç.']}),
-  L('P15', 'men', [27.0, 28.15], {show: '[surprised] Qeydiyyatsız açıldı?', caption: ['Qeydiyyatsız açıldı?']}),
-  L('P16', 'qz', [28.4, 31.55], {show: '[calm] Baxmağa hesab lazım deyil. Müraciət bir dəqiqəlik işdir.', caption: ['Baxmağa hesab lazım deyil.', 'Müraciət bir dəqiqəlik işdir.']}),
+  L('P14', 'qz', [26.51, 27.91], {show: '[casually] Linki atdım, aç.', caption: ['Linki atdım, aç.']}),
+  L('P15', 'men', [28.31, 29.46], {show: '[surprised] Qeydiyyatsız açıldı?', caption: ['Qeydiyyatsız açıldı?']}),
+  L('P16', 'qz', [29.71, 32.86], {show: '[calm] Baxmağa hesab lazım deyil. Müraciət bir dəqiqəlik işdir.', caption: ['Baxmağa hesab lazım deyil.', 'Müraciət bir dəqiqəlik işdir.']}),
   // 6 · Morning
-  L('P17', 'qq', [32.7, 33.55], {show: '[shouting] Qızıma bax!', caption: ['Qızıma bax!']}, {shout: {az: 1, en: 1}}),
-  L('P18', 'ana', [33.75, 34.6], {show: '[proudly] Oğluma bax!', caption: ['Oğluma bax!']}, {shout: {az: 1, en: 1}}),
-  L('P19', 'ana', [34.95, 36.05], {show: '[softly] …Həyətimizə bax.', caption: ['…Həyətimizə bax.']}, {speaker: 'ANA VƏ QONŞU'}),
-  L('P19b', 'qq', [34.95, 36.05], {show: '[softly] …Həyətimizə bax.', caption: ['…Həyətimizə bax.']}, {silentCaption: true}),
+  L('P17', 'qq', [34.01, 34.99], {show: '[shouting] Qızıma bax!', caption: ['Qızıma bax!']}, {shout: {az: 1, en: 1}}),
+  L('P18', 'ana', [35.2, 36.06], {show: '[proudly] Oğluma bax!', caption: ['Oğluma bax!']}, {shout: {az: 1, en: 1}}),
+  L('P19', 'ana', [36.4, 37.31], {show: '[softly] …Həyətimizə bax.', caption: ['…Həyətimizə bax.']}, {speaker: 'ANA VƏ QONŞU'}),
+  L('P19b', 'qq', [36.4, 37.31], {show: '[softly] …Həyətimizə bax.', caption: ['…Həyətimizə bax.']}, {silentCaption: true}),
   // 7 · To camera
-  L('P20', 'qz', [37.0, 38.9], {show: '[warmly] Ola bilərsiniz. Növbə sizdədir.', caption: ['Ola bilərsiniz.', 'Növbə sizdədir.']}),
+  L('P20', 'qz', [38.45, 40.33], {show: '[warmly] Ola bilərsiniz. Növbə sizdədir.', caption: ['Ola bilərsiniz.', 'Növbə sizdədir.']}),
 ];
 
-/** On-screen text with no voice. Comment bubbles carry the comment's exact text and nothing else (no names, no photos). */
+/** On-screen text with no voice. bubble1/bubble2 are the two comments' text; the film shows the real screenshots
+ *  (public/comments/c1.png, c2.png) at the team's request. */
 export const TEXT = {
   title: 'QONŞUNUN QIZI',
   titleSub: '(o da var)',

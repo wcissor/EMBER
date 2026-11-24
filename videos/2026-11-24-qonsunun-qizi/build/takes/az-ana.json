@@ -1,0 +1,218 @@
+{
+ "file": "public/audio/takes/az/ana.mp3",
+ "lang": "az",
+ "voice": "ana",
+ "take": "ana",
+ "duration": 18.48,
+ "aligner": "pocketsphinx-local",
+ "lines": [
+  {
+   "id": "P01",
+   "start": 0.17,
+   "end": 1.279,
+   "words": [
+    {
+     "word": "Necə",
+     "start": 0.17,
+     "end": 0.47
+    },
+    {
+     "word": "yəni",
+     "start": 0.47,
+     "end": 0.74
+    },
+    {
+     "word": "olmur?!",
+     "start": 0.74,
+     "end": 1.279
+    }
+   ]
+  },
+  {
+   "id": "P03",
+   "start": 2.159,
+   "end": 3.658,
+   "words": [
+    {
+     "word": "Qonşunun",
+     "start": 2.159,
+     "end": 2.85
+    },
+    {
+     "word": "qızına",
+     "start": 2.85,
+     "end": 3.33
+    },
+    {
+     "word": "bax!",
+     "start": 3.33,
+     "end": 3.658
+    }
+   ]
+  },
+  {
+   "id": "P05",
+   "start": 4.519,
+   "end": 5.61,
+   "words": [
+    {
+     "word": "Həyəti",
+     "start": 4.519,
+     "end": 4.9
+    },
+    {
+     "word": "təmizlətdi.",
+     "start": 4.9,
+     "end": 5.61
+    }
+   ]
+  },
+  {
+   "id": "P06",
+   "start": 5.61,
+   "end": 7.135,
+   "words": [
+    {
+     "word": "Uşaqlara",
+     "start": 5.61,
+     "end": 6.11
+    },
+    {
+     "word": "kitab",
+     "start": 6.11,
+     "end": 6.6
+    },
+    {
+     "word": "yığdı.",
+     "start": 6.6,
+     "end": 7.135
+    }
+   ]
+  },
+  {
+   "id": "P07",
+   "start": 7.589,
+   "end": 9.44,
+   "words": [
+    {
+     "word": "Bütün",
+     "start": 7.589,
+     "end": 7.99
+    },
+    {
+     "word": "bina",
+     "start": 7.99,
+     "end": 8.28
+    },
+    {
+     "word": "onun",
+     "start": 8.28,
+     "end": 8.55
+    },
+    {
+     "word": "dalınca",
+     "start": 8.55,
+     "end": 9.03
+    },
+    {
+     "word": "gedir.",
+     "start": 9.03,
+     "end": 9.44
+    }
+   ]
+  },
+  {
+   "id": "P08",
+   "start": 10.028,
+   "end": 11.29,
+   "words": [
+    {
+     "word": "Cəmi",
+     "start": 10.028,
+     "end": 10.29
+    },
+    {
+     "word": "on",
+     "start": 10.29,
+     "end": 10.55
+    },
+    {
+     "word": "beş",
+     "start": 10.55,
+     "end": 10.78
+    },
+    {
+     "word": "yaşı",
+     "start": 10.78,
+     "end": 11.15
+    },
+    {
+     "word": "var!",
+     "start": 11.15,
+     "end": 11.29
+    }
+   ]
+  },
+  {
+   "id": "P10",
+   "start": 12.395,
+   "end": 14.25,
+   "words": [
+    {
+     "word": "Qonşunun",
+     "start": 12.395,
+     "end": 12.95
+    },
+    {
+     "word": "qızı",
+     "start": 12.95,
+     "end": 13.21
+    },
+    {
+     "word": "başqa",
+     "start": 13.21,
+     "end": 13.62
+    },
+    {
+     "word": "səviyyədir.",
+     "start": 13.62,
+     "end": 14.25
+    }
+   ]
+  },
+  {
+   "id": "P18",
+   "start": 14.972,
+   "end": 15.83,
+   "words": [
+    {
+     "word": "Oğluma",
+     "start": 14.972,
+     "end": 15.53
+    },
+    {
+     "word": "bax!",
+     "start": 15.53,
+     "end": 15.83
+    }
+   ]
+  },
+  {
+   "id": "P19",
+   "start": 16.663,
+   "end": 17.57,
+   "words": [
+    {
+     "word": "…Həyətimizə",
+     "start": 16.663,
+     "end": 17.31
+    },
+    {
+     "word": "bax.",
+     "start": 17.31,
+     "end": 17.57
+    }
+   ]
+  }
+ ]
+}

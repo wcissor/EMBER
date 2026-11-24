@@ -7,10 +7,10 @@
  },
  "stems": {
   "az": {
-   "ana": false,
+   "ana": true,
    "men": true,
    "qo": true,
-   "qq": false,
+   "qq": true,
    "qz": true
   },
   "en": {

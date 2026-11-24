@@ -11,7 +11,7 @@ import {timelineFor, ASSETS} from './data';
 import {clamp01, ease, EASE, lerp} from './motion';
 import {type Cam} from './camera';
 import {Captions, SafeBoxOverlay} from './overlays/Overlays';
-import {CommentBubble, EndCard2, Title2} from './overlays/Overlays2';
+import {CommentShot, EndCard2, Title2} from './overlays/Overlays2';
 import {WorldScene2, WIDE} from './scenes/p2/World2';
 import {Stairs2} from './scenes/p2/Stairs2';
 import {Phone2} from './scenes/p2/Phone2';
@@ -19,6 +19,9 @@ import {Morning2} from './scenes/p2/Morning2';
 import {End2} from './scenes/p2/End2';
 
 ensureFonts();
+
+/** the two real comments (screenshots from the post), pixel sizes */
+export const COMMENT = {c1: {w: 696, h: 140}, c2: {w: 799, h: 148}};
 
 export type Variant = 'A' | 'Areply' | 'B' | 'C';
 export const VARIANTS: Variant[] = ['A', 'Areply', 'B', 'C'];
@@ -92,9 +95,9 @@ const Film: React.FC<{bubble1: boolean; title: boolean}> = ({bubble1, title}) =>
       ) : (
         <Picture />
       )}
-      {bubble1 && <CommentBubble text={TEXT.bubble1} at={B.bubble1} until={B.title - 4} />}
+      {bubble1 && <CommentShot src="comments/c1.png" w={COMMENT.c1.w} h={COMMENT.c1.h} at={B.bubble1} until={B.title - 4} />}
       {title && <Title2 at={B.title} until={B.title + 38} />}
-      <CommentBubble text={TEXT.bubble2} at={B.bubble2} until={Math.max(B.bubble2 + 46, timelineFor(lang).lineFrames('P20').end - 12)} />
+      <CommentShot src="comments/c2.png" w={COMMENT.c2.w} h={COMMENT.c2.h} at={B.bubble2} until={Math.max(B.bubble2 + 46, timelineFor(lang).lineFrames('P20').end - 12)} />
       <Captions lang={lang} />
       <EndCard2 line={B.endLine} cta={B.cta} fadeFrom={B.loopBack} fadeTo={B.end - 3} />
       <Grain2 at={loopAt} />

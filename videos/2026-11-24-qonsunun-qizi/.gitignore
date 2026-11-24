@@ -22,3 +22,9 @@ out/qa/stills2/
 public/audio/mix-*.wav
 public/audio/sfx-pop1.wav
 public/audio/title-*.wav
+build/cover/
+# the real comment screenshots (other people's usernames and photos) stay out of this public repo,
+# and so does everything that shows them: the finals are delivered directly
+public/comments/
+out/qa/*comments*
+out/qonsunun-qizi-*.mp4

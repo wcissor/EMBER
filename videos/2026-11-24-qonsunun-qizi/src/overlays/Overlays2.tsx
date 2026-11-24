@@ -1,7 +1,7 @@
 // Part 2 screen layers: the comment bubbles (the comment's exact text only: no names, no photos), the title stamp and
 // the end card. Same type and glass as part 1.
 import React from 'react';
-import {useCurrentFrame} from 'remotion';
+import {Img, staticFile, useCurrentFrame} from 'remotion';
 import {C, FONT, GLASS, SCRIM, TYPE} from '../theme';
 import {TEXT} from '../config';
 import {END, TITLE} from '../layout';
@@ -32,6 +32,23 @@ export const CommentBubble: React.FC<{text: string; at: number; until: number; y
         <svg width={60} height={40} style={{position: 'absolute', left: 70, bottom: -34}}>
           <path d="M0 0 L46 0 L8 36 Z" fill="rgba(14,22,48,0.86)" />
         </svg>
+      </div>
+    </div>
+  );
+};
+
+/** The real comment (a screenshot from the post, as the team asked): a white card that pops in and floats. */
+export const CommentShot: React.FC<{src: string; w: number; h: number; at: number; until: number; y?: number}> = ({src, w, h, at, until, y = 300}) => {
+  const f = useCurrentFrame();
+  if (f < at - 1 || f > until + 8) return null;
+  const k = springAt(f, at, 'hero');
+  const out = ease(f, until, 8, EASE.inOut);
+  const scale = Math.min(1.3, 900 / w) * lerp(0.6, 1, k) * (1 - 0.12 * out);
+  const float = Math.sin((f - at) / 14) * 3;
+  return (
+    <div style={{position: 'absolute', left: 0, right: 0, top: y, display: 'flex', justifyContent: 'center', pointerEvents: 'none', opacity: clamp01(k * 2) * (1 - out)}}>
+      <div style={{transform: `translateY(${float - out * 30}px) scale(${scale}) rotate(${lerp(-5, -1.5, k)}deg)`, transformOrigin: '20% 100%', background: '#FFFFFF', borderRadius: 34, padding: '14px 10px 10px 18px', boxShadow: '0 26px 60px rgba(0,0,0,0.55)'}}>
+        <Img src={staticFile(src)} style={{display: 'block', width: w, height: h}} />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 # Licences and sources
 
 **Pictures:** everything is drawn in code (Remotion + SVG) or reused from part 1's own code. No stock, no captures of
-real pages, no AI-generated images or video. The phone screens are drawn in code to match voluntrack.site, with demo
+real pages except the two comment screenshots, no AI-generated images or video. The phone screens are drawn in code to match voluntrack.site, with demo
 data only (a fictional organiser "Həyət Könüllüləri", no counts, no real people). The comment bubbles carry the
 comments' text only (no usernames, no profile photos).
 
@@ -18,6 +18,7 @@ comments' text only (no usernames, no profile photos).
 | Mən | Abbas (IVMbfLv3KqUc4qDj6Yif) | ElevenLabs Voice Library voice (as in part 1) |
 | Qonşunun oğlu | Arif – Azerbaijani Narrator (ZQJv3hwvRAIC7fvWZ1Qr) | ElevenLabs Voice Library voice (as in part 1) |
 | Qonşunun qızı | Amalya – Azerbaijani Conversational (DZaip8UahF0Qri1FxU8M) | ElevenLabs Voice Library voice (new) |
-| Ana, Qonşu | Sona (the account's own cloned voice) | as in part 1; the speaker's consent is the account owner's to hold |
+| Ana | "Ana (Qonşunun qızı)" (bDw1r0j3ONDv091JeHMt) | designed in the account with Voice Design (no real person) |
+| Qonşu | "Qonşu (Qonşunun qızı)" (38pWf41HCuSkz4G9rfuD) | designed in the account with Voice Design (no real person) |
 
 Library voices are used under ElevenLabs' terms for the account's plan (commercial use needs a paid plan).

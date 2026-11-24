@@ -25,7 +25,7 @@ VOICES = ['ana', 'men', 'qo', 'qq', 'qz']
 SHOUTS = {'P01', 'P03', 'P17', 'P18'}
 STAIRS = {'P11', 'P12', 'P13'}
 PAN = {'ana': -0.22, 'men': -0.08, 'qo': 0.18, 'qq': 0.22, 'qz': 0.05}
-VOICE_FX = {'qq': 'rubberband=pitch=1.1225'}  # Qonşu is Sona lifted 2 semitones, as in part 1
+VOICE_FX = {}  # part 2: Qonşu has her own (designed) voice, no pitch lift
 TARGET_LINE = -20.0
 
 
