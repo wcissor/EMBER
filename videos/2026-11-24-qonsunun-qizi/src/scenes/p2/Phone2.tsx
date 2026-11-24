@@ -3,7 +3,7 @@
 // without an account → "sign in to apply" → sign-in (sped up) → Apply → the organiser's form in a new tab (a flash) →
 // back on the role → the applied tick with confetti.
 import React from 'react';
-import {random, useCurrentFrame} from 'remotion';
+import {Img, random, staticFile, useCurrentFrame} from 'remotion';
 import {C, FONT} from '../../theme';
 import {mix, rgba} from '../../color';
 import {DEMO, type Lang} from '../../config';
@@ -22,14 +22,11 @@ const GREEN = '#2FAF6A';
 
 const text = (size: number, weight = 600, color = '#FFFFFF'): React.CSSProperties => ({fontFamily: FONT.ui, fontSize: size, fontWeight: weight, color, lineHeight: 1.18, letterSpacing: '-0.01em'});
 
-/** Little VolunTrack mark (compass ring + star), drawn. */
-const Mark: React.FC<{s: number}> = ({s}) => (
-  <svg width={s} height={s} viewBox="-50 -50 100 100">
-    <circle r={47} fill={VT.blue} />
-    <circle r={30} fill="none" stroke="#FFFFFF" strokeWidth={7} />
-    <path d="M0 -44 L7 -7 L44 0 L7 7 L0 44 L-7 7 L-44 0 L-7 -7 Z" fill="#FFFFFF" />
-  </svg>
-);
+/** The site's own images (voluntrack.site/static/images, read 24 Nov 2026): the header's logo-round.png and the
+ *  link preview's og:image, story.png (the logo on navy, square), shown whole on its own navy. */
+const SITE_LOGO = 'site/logo-round.png';
+const SITE_PREVIEW = 'site/story.png';
+const PREVIEW_BG = '#080E1C';
 
 const Chip: React.FC<{label: string; color?: string; fill?: string}> = ({label, color = '#FFFFFF', fill = 'rgba(255,255,255,0.08)'}) => (
   <div style={{...text(28, 600, color), padding: '10px 22px', borderRadius: 999, background: fill, border: `1.5px solid ${LINE}`, whiteSpace: 'nowrap'}}>{label}</div>
@@ -51,8 +48,8 @@ const Chat: React.FC<{f: number; B: Record<string, number>}> = ({f, B}) => {
         <div style={{...text(34, 500), background: '#262D47', padding: '20px 28px', borderRadius: '30px 30px 30px 8px', maxWidth: 440}}>Linki atdım, aç</div>
       </div>
       <div style={{position: 'absolute', left: 30, top: 350, width: 440, opacity: clamp01(card * 1.5), transform: `translateY(${(1 - card) * 30}px) scale(${(0.9 + 0.1 * card) * press})`, transformOrigin: 'left top', background: '#262D47', borderRadius: 30, overflow: 'hidden'}}>
-        <div style={{height: 190, background: `radial-gradient(400px 220px at 50% 40%, ${rgba(VT.blue, 0.55)} 0%, ${NIGHT} 80%)`, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-          <Mark s={110} />
+        <div style={{height: 220, background: PREVIEW_BG, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+          <Img src={staticFile(SITE_PREVIEW)} style={{width: 220, height: 220, display: 'block'}} />
         </div>
         <div style={{padding: '20px 26px 24px'}}>
           <div style={{...text(32, 700)}}>{DEMO.role}</div>
@@ -75,7 +72,7 @@ const RolePage: React.FC<{f: number; B: Record<string, number>; state: 'guest' |
       <div style={{position: 'absolute', inset: 0, background: `radial-gradient(520px 420px at 80% 8%, ${rgba(VT.blue, 0.3)} 0%, rgba(0,0,0,0) 70%)`}} />
       {/* site header */}
       <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: 150, display: 'flex', alignItems: 'flex-end', padding: '0 34px 24px', gap: 16, borderBottom: `1.5px solid ${LINE}`}}>
-        <Mark s={54} />
+        <Img src={staticFile(SITE_LOGO)} style={{width: 56, height: 56, display: 'block'}} />
         <div style={{...text(34, 800)}}>VolunTrack</div>
         <div style={{flex: 1}} />
         <div style={{...text(24, 700, NIGHT), background: '#FFFFFF', borderRadius: 999, padding: '6px 16px'}}>AZ</div>

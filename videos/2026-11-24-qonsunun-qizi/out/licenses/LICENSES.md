@@ -6,6 +6,8 @@ data only (a fictional organiser "Həyət Könüllüləri", no counts, no real p
 comments' text only (no usernames, no profile photos).
 
 **VolunTrack logo:** VolunTrack's own 2026 logo (supplied by the team), traced to vectors in part 1 (`src/logoData.ts`).
+On the phone, the logo is the site's own image files, as voluntrack.site serves them (`public/site/`): the header's
+`logo-round.png` and the link preview's `story.png` (the site's og:image).
 
 **Fonts:** Inter, Inter Tight, Barlow Condensed — SIL Open Font License 1.1 (Google Fonts), files in `public/fonts`.
 

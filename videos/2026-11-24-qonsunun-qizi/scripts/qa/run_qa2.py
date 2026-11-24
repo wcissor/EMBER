@@ -86,7 +86,7 @@ if va:
     add(12, 'Comfort (flashes)', per_sec <= 3, f'at most {per_sec} large brightness jumps in any second (limit 3)')
 add(7, 'Privacy', 'PASS (team choice)', 'comments: the real screenshots, usernames and profile photos shown at the team\'s request (A-reply has none: Instagram shows the comment itself); phone: demo data ("Həyət Könüllüləri", demo@voluntrack.site), no counts, no real organisers', 'by construction')
 add(8, 'Product truth', True, 'role opens without an account → "Müraciət üçün daxil ol" → sign-in (sped up) → Müraciət et → the organiser\'s form in a new tab (flash) → back → ✓ Müraciət edildi with confetti', 'by construction')
-add(9, 'Slop check', True, 'every frame drawn in code (part 1\'s kit + new drawings); VolunTrack blue only on volunteer windows, the star, the phone and caption accents', 'by construction + eyes')
+add(9, 'Slop check', True, 'every frame drawn in code (part 1\'s kit + new drawings), except VolunTrack\'s own logo files on the phone (from voluntrack.site) and the two comment screenshots; VolunTrack blue only on volunteer windows, the star, the phone and caption accents', 'by construction + eyes')
 add(2, 'Continuity', 'SEE', 'out/qa/continuity-*.png: part 1 next to part 2 (yard wide, the kid\'s window, the stairwell)', 'needs your eyes')
 add(1, 'Stills first', 'SEE', 'out/qa/stills2/ and out/qa/sheet-*.jpg (safe box: out/qa/safe-*.png)', 'needs your eyes')
 lines = ['# Qonşunun qızı — checks', '', f'Files checked: {", ".join(v.name for v in vids)}', '', '| # | check | result | detail | how |', '|---|---|---|---|---|']

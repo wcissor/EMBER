@@ -28,4 +28,5 @@ python3 scripts/qa/run_qa2.py out                       # out/qa/report.md
 - `public/comments/` — the two real comments, cropped from the team's screenshots: `c1.png` (696×140, "qonşunun qızı
   olmur?") opens A, `c2.png` (799×148, "Qonşunun qızı ola bilərik?") comes before the daughter's last line in every
   version. Not in the repo (it is public, and they show other people's names and photos), nor are the finals.
+- `public/site/` — the site's own logo files for the phone: `logo-round.png` (header) and `story.png` (link preview).
 - `VOICE_SCRIPTS.md` — the takes, their voices, and how to swap part 1's Sona back in for Ana and Qonşu.
