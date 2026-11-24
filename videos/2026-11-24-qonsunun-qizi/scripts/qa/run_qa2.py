@@ -60,7 +60,7 @@ for v in vids:
 p01 = next(l for l in TL['lines'] if l['id'] == 'P01')
 add(3, 'Hook', B['bubble1'] / FPS <= 1.5 and p01['start'] <= 1.5, f"frame 0 is moving (push-in from frame 0); bubble at {B['bubble1'] / FPS:.2f} s, \"Necə yəni olmur?!\" at {p01['start']:.2f} s")
 # 4 · pace: cuts and framing changes from the shot list
-marks = sorted({0, B['doorBang'], B['s2'], B['whipToHer'], B['herWin'], B['column'] + 16, B['cutToKid'], B['deed1'] - 9, B['deed2'] - 9, B['deed3'] - 9, B['count'] - 3, B['whine'] - 2, B['level'] - 2,
+marks = sorted({0, B['doorBang'], B['s2'], B['whipToHer'], B['herWin'], B['column'] + 16, B['cutToKid'], B['deed1'] - 9, B['deed2'] - 9, B['deed3'] - 9, B['count'] - 3, B['whine'] - 2, B.get('whinePunch', B['whine']), B['level'] - 2,
                 B['stairs'], B['catOver'], B['bump'], B['nodUp'], B['nodUp'] + 20, B['sting'], B['phoneIn'], B['msgPop'], B['linkTap'], B['pageOpen'], B['signTap'], B['formFlash'], B['backRole'], B['tick'],
                 B['winGlow'], B['morning'], B['qqPoint'] - 3, B['anaPoint'] - 3, B['soften'] - 4, B['bubble2'] - 2, B['toCam'], B['dusk'], B['starOn'] + 12, B['logo'], B['loopBack'], B['end']})
 gaps = [(marks[i + 1] - marks[i]) / FPS for i in range(len(marks) - 1)]

@@ -63,7 +63,9 @@ for (const v of versions) {
   for (const suffix of ['', '-nomusic']) {
     const name = `qonsunun-qizi-${v === 'Areply' ? 'A-reply' : v}${suffix}${preview ? '-preview' : ''}`;
     const tmp = `${dir}/${name}.tmp.mp4`;
-    execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', vid, '-i', `public/audio/mix-${v}${suffix}.wav`, '-map', '0:v:0', '-map', '1:a:0', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '320k', '-ar', '48000', '-movflags', '+faststart', '-shortest', tmp]);
+    // the picture sets the length (no -shortest: AAC padding would cost the last frames and break the loop)
+    const secs = (frames / 30).toFixed(6);
+    execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', vid, '-i', `public/audio/mix-${v}${suffix}.wav`, '-map', '0:v:0', '-map', '1:a:0', '-c:v', 'copy', '-af', 'apad', '-c:a', 'aac', '-b:a', '320k', '-ar', '48000', '-t', secs, '-movflags', '+faststart', tmp]);
     renameSync(tmp, `${dir}/${name}.mp4`);
     console.log(`${dir}/${name}.mp4 (${frames} frames)`);
   }

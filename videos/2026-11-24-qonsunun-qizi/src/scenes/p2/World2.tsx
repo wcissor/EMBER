@@ -73,6 +73,9 @@ export const worldShots2 = (B: Record<string, number>): WorldShot[] => {
       {f: B.count - 3, x: ana.x + 8, y: ana.y - 14, z: 3.1, ease: 'cut' as const},
       {f: B.whine - 3, x: ana.x + 8, y: ana.y - 14, z: 3.1, ease: 'cut' as const},
       {f: B.whine - 2, x: kid.x, y: kid.y + 4, z: 5.4, ease: 'cut' as const},
+      // a punch-in on "…qonşunun oğluyam!" so the long whine is two images
+      {f: B.whinePunch - 1, x: kid.x, y: kid.y + 4, z: 5.4, ease: 'cut' as const},
+      {f: B.whinePunch, x: kid.x + 6, y: kid.y - 8, z: 7.4, ease: 'cut' as const},
       {f: B.level - 3, x: kid.x, y: kid.y + 4, z: 5.4, ease: 'cut' as const},
       {f: B.level - 2, x: ana.x + 8, y: ana.y - 18, z: 3.6, ease: 'cut' as const},
     ],

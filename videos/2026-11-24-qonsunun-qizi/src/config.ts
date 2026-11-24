@@ -137,6 +137,7 @@ export const BEATS: Record<string, Anchor> = {
   deed3: {line: 'P07', edge: 's'},
   count: {line: 'P08', edge: 's', off: -2},
   whine: {line: 'P09', edge: 's', off: -3},
+  whinePunch: {w: ['P09', 4], edge: 's', off: -2},
   level: {line: 'P10', edge: 's', off: -2},
   button: {line: 'P10', edge: 'e', off: 1},
   // 4 · The stairwell
