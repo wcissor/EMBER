@@ -64,10 +64,11 @@ export const captionWindows = (lang: Lang): CapWin[] => {
   });
 };
 
-export const Captions: React.FC<{lang: Lang}> = ({lang}) => {
+/** minFrom: show only lines whose caption starts at or after this frame (C's flash-forward opens clean). */
+export const Captions: React.FC<{lang: Lang; minFrom?: number}> = ({lang, minFrom}) => {
   const f = useCurrentFrame();
   const TL = timelineFor(lang);
-  const win = captionWindows(lang).find((w) => f >= w.from && f < w.to);
+  const win = captionWindows(lang).find((w) => f >= w.from && f < w.to && (minFrom === undefined || w.from >= minFrom));
   if (!win) return null;
   const def = LINES.find((l) => l.id === win.id)!;
   const rows = captionRows(win.id, lang);

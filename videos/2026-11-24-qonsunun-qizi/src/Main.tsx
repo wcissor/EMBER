@@ -81,7 +81,7 @@ const Picture: React.FC = () => {
 };
 
 /** Film frame f with its overlays. */
-const Film: React.FC<{bubble1: boolean; title: boolean}> = ({bubble1, title}) => {
+const Film: React.FC<{bubble1: boolean; title: boolean; capFrom?: number}> = ({bubble1, title, capFrom}) => {
   const f = useCurrentFrame();
   const B = timelineFor(lang).beats;
   const blur = blurFrames().some(([a, b]) => f >= a && f <= b);
@@ -98,7 +98,7 @@ const Film: React.FC<{bubble1: boolean; title: boolean}> = ({bubble1, title}) =>
       {bubble1 && <CommentShot src="comments/c1.png" w={COMMENT.c1.w} h={COMMENT.c1.h} at={B.bubble1} until={B.title - 4} />}
       {title && <Title2 at={B.title} until={B.title + 38} />}
       <CommentShot src="comments/c2.png" w={COMMENT.c2.w} h={COMMENT.c2.h} at={B.bubble2} until={Math.max(B.bubble2 + 46, timelineFor(lang).lineFrames('P20').end - 12)} />
-      <Captions lang={lang} />
+      <Captions lang={lang} minFrom={capFrom} />
       <EndCard2 line={B.endLine} cta={B.cta} fadeFrom={B.loopBack} fadeTo={B.end - 3} />
       <Grain2 at={loopAt} />
     </>
@@ -136,6 +136,8 @@ export const Main: React.FC<{variant?: Variant; safeBox?: boolean; lang?: Lang}>
     at -= len;
   }
   const bubble1 = variant === 'A';
+  // C opens mid-scene: no leftover caption from the line before the confession
+  const capFrom = variant === 'C' && seg === segs[0] && seg.kind === 'film' ? seg.from : undefined;
   const title = variant === 'A' || variant === 'Areply';
   return (
     <LangProvider lang={lang}>
@@ -143,10 +145,10 @@ export const Main: React.FC<{variant?: Variant; safeBox?: boolean; lang?: Lang}>
         {seg.kind === 'title' ? (
           <TitleCard local={at} />
         ) : seg.from + at === frame ? (
-          <Film bubble1={bubble1} title={title} />
+          <Film bubble1={bubble1} title={title} capFrom={capFrom} />
         ) : (
           <Freeze frame={seg.from + at}>
-            <Film bubble1={bubble1} title={title} />
+            <Film bubble1={bubble1} title={title} capFrom={capFrom} />
           </Freeze>
         )}
         {safeBox && <SafeBoxOverlay />}
